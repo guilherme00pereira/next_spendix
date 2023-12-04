@@ -1,6 +1,6 @@
 {
   "name": "next_spendix",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +12,7 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.18",
     "@mui/system": "^5.14.18",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
