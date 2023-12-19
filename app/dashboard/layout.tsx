@@ -1,8 +1,7 @@
 'use client'
 
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -22,7 +21,7 @@ import { mainListItems } from '@/components/dashboard/Sidebar';
 
 
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 280;
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -72,9 +71,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export default function Dashboard({
     children,
   }: {
@@ -86,9 +82,8 @@ export default function Dashboard({
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        
             <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
@@ -157,6 +152,5 @@ export default function Dashboard({
                     {children}
                 </Box>
             </Box>
-        </ThemeProvider>
     );
 }
