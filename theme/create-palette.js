@@ -14,7 +14,8 @@ export function createPalette() {
     },
     background: {
       default: common.white,
-      paper: common.white
+      paper: common.white,
+      sidebar: neutral[800]
     },
     divider: '#F2F4F7',
     error,
@@ -26,8 +27,9 @@ export function createPalette() {
     text: {
       primary: neutral[900],
       secondary: neutral[500],
+      sidebar: neutral[100],
       disabled: alpha(neutral[900], 0.38)
     },
-    warning
+    warning,
   };
 }
