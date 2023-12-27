@@ -11,19 +11,19 @@ export interface Database {
         Tables: {
             categories: {
                 Row: {
-                    category_type: number
                     id: number
                     name: string
+                    type: Database["public"]["Enums"]["category_type"] | null
                 }
                 Insert: {
-                    category_type?: number
                     id?: number
                     name: string
+                    type?: Database["public"]["Enums"]["category_type"] | null
                 }
                 Update: {
-                    category_type?: number
                     id?: number
                     name?: string
+                    type?: Database["public"]["Enums"]["category_type"] | null
                 }
                 Relationships: []
             }
@@ -139,7 +139,7 @@ export interface Database {
                     id: number
                     month_of_year: number | null
                     num_of_occurrences: number
-                    recurring_type: number
+                    recurring_type: Database["public"]["Enums"]["recurring_type"] | null
                     week_of_month: number | null
                 }
                 Insert: {
@@ -149,7 +149,7 @@ export interface Database {
                     id?: number
                     month_of_year?: number | null
                     num_of_occurrences?: number
-                    recurring_type?: number
+                    recurring_type?: Database["public"]["Enums"]["recurring_type"] | null
                     week_of_month?: number | null
                 }
                 Update: {
@@ -159,7 +159,7 @@ export interface Database {
                     id?: number
                     month_of_year?: number | null
                     num_of_occurrences?: number
-                    recurring_type?: number
+                    recurring_type?: Database["public"]["Enums"]["recurring_type"] | null
                     week_of_month?: number | null
                 }
                 Relationships: []
@@ -207,7 +207,8 @@ export interface Database {
             [_ in never]: never
         }
         Enums: {
-            [_ in never]: never
+            category_type: "Receita" | "Despesa Fixa" | "Despesa Variável"
+            recurring_type: "Daily" | "Weekly" | "Monthly" | "Yearly"
         }
         CompositeTypes: {
             [_ in never]: never

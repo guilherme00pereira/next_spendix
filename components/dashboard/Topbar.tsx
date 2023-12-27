@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { DashboardLayoutProps } from '@/types/dashboard';
 
-const drawerWidth: number = 280;
+const drawerWidth: number = 240;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',

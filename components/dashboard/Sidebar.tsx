@@ -13,7 +13,7 @@ import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import { Typography } from "@mui/material";
 import { DashboardLayoutProps } from "@/types/dashboard";
 
-const drawerWidth: number = 280;
+const drawerWidth: number = 240;
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
