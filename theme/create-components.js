@@ -197,13 +197,13 @@ export function createComponents(config) {
               borderColor: palette.neutral[200]
             }
           },
-          [`&.${outlinedInputClasses.focused}`]: {
-            backgroundColor: 'transparent',
-            [`& .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: palette.primary.main,
-              boxShadow: `${palette.primary.main} 0 0 0 2px`
-            }
-          },
+          // [`&.${outlinedInputClasses.focused}`]: {
+          //   backgroundColor: 'transparent',
+          //   [`& .${outlinedInputClasses.notchedOutline}`]: {
+          //     borderColor: palette.primary.main,
+          //     boxShadow: `${palette.primary.main} 0 0 0 2px`
+          //   }
+          // },
           [`&.${filledInputClasses.error}`]: {
             [`& .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: palette.error.main,
