@@ -20,11 +20,15 @@ import {
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { CategoryDAO } from "@/types/entities";
 import { getCategories } from "@/lib/supabase-client";
+import AddNewTransactionCard from "@/components/dashboard/transactions/AddNewTransactionCard";
 
 const TransactionsPage = () => {
+    const [showAdd, setShowAdd] = useState<boolean>(false);
     const [value, setValue] = useState<number>(0);
     const [category, setCategory] = useState<number>(0);
     const [categories, setCategories] = useState<CategoryDAO[]>([]);
+
+
 
   useEffect(() => {
     try {
@@ -51,31 +55,15 @@ const TransactionsPage = () => {
               </SvgIcon>
             }
             variant="contained"
+            onClick={() => setShowAdd(!showAdd)}
           >
             Add
           </Button>
         </Stack>
-        <Card sx={{p: 2}}>
-            <CardHeader title="Novo lançamento" />
-            <CardContent>
-                <Stack direction="row">
-                    <Grid container spacing={3}>
-                        <Grid xs={12} md={4}>
-                            <TextField name="tsx_value" label="Valor" required value={value} />
-                        </Grid>
-                    
-                        <Grid xs={12} md={4}>
-                            <TextField name="tsx_value" label="Valor" required value={value} />
-                        </Grid>
-                    
-                        <Grid xs={12} md={4}>
-                            <TextField name="tsx_value" label="Valor" required value={value} />
-                        </Grid>
-                    </Grid>
-                </Stack>
-            </CardContent>
-        </Card>
-        
+          {showAdd && (
+              <AddNewTransactionCard toggle={showAdd} action={setShowAdd} />
+          )}
+
       </Stack>
     </Container>
   );
