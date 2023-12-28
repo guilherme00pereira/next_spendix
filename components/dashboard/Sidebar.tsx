@@ -11,6 +11,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
 import MonetizationOnRoundedIcon from '@mui/icons-material/MonetizationOnRounded';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import { Typography } from "@mui/material";
 import { DashboardLayoutProps } from "@/types/dashboard";
 
@@ -84,6 +85,13 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
             <ListAltRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Categorias" />
+        </ListItemButton>
+
+        <ListItemButton LinkComponent="a" href="/dashboard/groups">
+          <ListItemIcon>
+            <DashboardCustomizeRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Grupos" />
         </ListItemButton>
       </List>
     </Drawer>

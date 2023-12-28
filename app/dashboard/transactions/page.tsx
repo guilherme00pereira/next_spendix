@@ -6,21 +6,11 @@ import {
   Typography,
   Button,
   SvgIcon,
-  FormControl,
-  Box,
-  TextField,
-  InputLabel,
-  Select,
-  MenuItem,
-  Card,
-  CardHeader,
-  CardContent,
-  Grid,
 } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { CategoryDAO } from "@/types/entities";
 import { getCategories } from "@/lib/supabase-client";
-import AddNewTransactionCard from "@/components/dashboard/transactions/AddNewTransactionCard";
+import AddNewTransactionCard from "@/components/dashboard/cards/AddNewTransactionCard";
 
 const TransactionsPage = () => {
     const [showAdd, setShowAdd] = useState<boolean>(false);

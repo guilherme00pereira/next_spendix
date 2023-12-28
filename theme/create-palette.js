@@ -18,12 +18,18 @@ export function createPalette() {
       sidebar: neutral[800]
     },
     divider: '#F2F4F7',
-    error,
-    info,
+    error: {
+      main: '#f16366'
+    },
+    info: {
+      main: '#63adf1'
+    },
     mode: 'light',
     neutral,
     primary: indigo,
-    success,
+    success: {
+      main: "#66f163"
+    },
     text: {
       primary: neutral[900],
       secondary: neutral[500],

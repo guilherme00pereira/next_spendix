@@ -5,3 +5,8 @@ export interface DashboardLayoutProps extends MuiAppBarProps {
     toggleDrawer?: () => void;
 }
 
+export interface AddNewCardProps {
+    toggle: boolean;
+    action: (showAdd: boolean) => void;
+}
+
