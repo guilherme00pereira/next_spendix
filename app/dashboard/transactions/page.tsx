@@ -22,7 +22,7 @@ const TransactionsPage = () => {
 
   useEffect(() => {
     try {
-      getCategories().then((data) => setCategories(data as CategoryDAO[]));
+     // getCategories().then((data) => setCategories(data as CategoryDAO[]));
     } catch (error) {
       console.error(error);
     }
