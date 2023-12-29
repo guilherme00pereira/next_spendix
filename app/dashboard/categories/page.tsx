@@ -11,8 +11,10 @@ import Paper from '@mui/material/Paper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { CategoryDAO } from "@/types/entities";
 import { getCategories } from "@/lib/supabase-client";
+import AddNewCategoryCard from "@/components/dashboard/cards/AddNewCategoryCard";
 
 const CategoriesPage = () => {
+    const [showAdd, setShowAdd] = useState<boolean>(false);
   const [categories, setCategories] = useState<CategoryDAO[]>([]);
 
   useEffect(() => {
@@ -37,10 +39,15 @@ const CategoriesPage = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
+                  onClick={() => setShowAdd(true)}
                 >
                   Add
             </Button>
         </Stack>
+
+          {showAdd && (
+              <AddNewCategoryCard toggle={showAdd} action={setShowAdd} />
+            )}
         
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

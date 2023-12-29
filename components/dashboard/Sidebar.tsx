@@ -14,6 +14,7 @@ import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import { Typography } from "@mui/material";
 import { DashboardLayoutProps } from "@/types/dashboard";
+import { neutral } from "@/theme/colors";
 
 const drawerWidth: number = 240;
 
@@ -24,9 +25,9 @@ const Drawer = styled(MuiDrawer, {
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
-    backgroundColor: theme.palette.background.sidebar,
+    backgroundColor: neutral[800],
     border: 'none',
-    color: theme.palette.text.sidebar,
+    color: neutral[100],
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,

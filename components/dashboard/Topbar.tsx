@@ -3,10 +3,9 @@ import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { DashboardLayoutProps } from '@/types/dashboard';
+import {Typography} from "@mui/material";
 
 const drawerWidth: number = 240;
 
@@ -48,12 +47,16 @@ const Topbar = ({props}: {props: DashboardLayoutProps}) => {
                         >
                             <MenuIcon />
                         </IconButton>
-                       
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        {!props.open && (
+                       <Typography
+                            variant="h5"
+                            color="inherit"
+                            noWrap
+                        >
+                            Spendix
+                        </Typography>
+                            )}
+
                     </Toolbar>
                 </AppBar>
     );

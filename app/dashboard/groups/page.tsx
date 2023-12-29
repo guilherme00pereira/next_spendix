@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Stack, Container, Typography, Button, SvgIcon } from "@mui/material";
+import {Stack, Container, Typography, Button, SvgIcon} from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -41,7 +41,7 @@ const GroupsPage = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
-                  onClick={() => setShowAdd(!showAdd)}
+                  onClick={() => setShowAdd(true)}
                 >
                   Add
             </Button>

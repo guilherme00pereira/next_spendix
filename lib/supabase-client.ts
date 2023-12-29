@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
-import { Database } from '../types/supabase'
+import { Database } from '@/types/supabase'
+import {CategoryType} from "@/types/entities";
 
 const supabase = createClient<Database>(
   "https://zgjgxiwgvjqaplsjwubx.supabase.co",
@@ -12,6 +13,14 @@ const getCategories = async () => {
     throw error
   }
   return data
+}
+
+const addCategory = async (name: string, type: CategoryType) => {
+    const { data, error } = await supabase.from('categories').insert({ name, type })
+    if (error) {
+        throw error
+    }
+    return data
 }
 
 const getGroups = async () => {
@@ -33,5 +42,6 @@ const addGroup = async (name: string) => {
 export {
     getCategories,
     getGroups,
-    addGroup
+    addGroup,
+    addCategory
 }

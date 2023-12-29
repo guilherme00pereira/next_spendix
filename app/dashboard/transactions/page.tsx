@@ -45,7 +45,7 @@ const TransactionsPage = () => {
               </SvgIcon>
             }
             variant="contained"
-            onClick={() => setShowAdd(!showAdd)}
+            onClick={() => setShowAdd(true)}
           >
             Add
           </Button>

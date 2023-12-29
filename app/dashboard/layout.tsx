@@ -12,7 +12,7 @@ export default function Dashboard({
   }: {
     children: React.ReactNode;
   }) {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };
