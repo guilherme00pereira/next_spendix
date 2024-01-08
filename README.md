@@ -7,3 +7,8 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Base Template
 
 [Devias Kit](https://github.com/devias-io/material-kit-react)
+
+### Version
+
+##### 0.2
+- 0.2.0: Added tanstack query and mutation on Transactions and Categories page.

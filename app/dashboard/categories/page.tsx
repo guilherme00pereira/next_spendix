@@ -1,13 +1,12 @@
 'use client'
-import { useState } from "react";
+import {usePageContext} from "@/lib/hooks";
 import { Stack, Container, Typography, Button, SvgIcon } from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import AddNewCategoryDialog from "@/components/dashboard/modals/AddNewCategoryDialog";
+import CategoryFormDialog from "@/components/dashboard/modals/CategoryFormDialog";
 import ListCategoriesTable from "@/components/dashboard/tables/ListCategoriesTable";
 
 const CategoriesPage = () => {
-    const [showAdd, setShowAdd] = useState<boolean>(false);
-    const [updateTable, setUpdateTable] = useState<boolean>(false);
+  const {showModal, actionShowModal} = usePageContext();
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -23,14 +22,14 @@ const CategoriesPage = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
-                  onClick={() => setShowAdd(true)}
+                  onClick={() => actionShowModal(true)}
                 >
                   Add
             </Button>
         </Stack>
 
-          {showAdd && (
-              <AddNewCategoryDialog toggle={showAdd} action={setShowAdd} dispatchTableUpdate={setUpdateTable} />
+          {showModal && (
+              <CategoryFormDialog />
             )}
             <ListCategoriesTable />
       </Stack>

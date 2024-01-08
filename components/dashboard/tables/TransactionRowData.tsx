@@ -14,11 +14,11 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import TableContainer from "@mui/material/TableContainer";
 import {removeTransaction, updateTransactionCashedStatus} from "@/lib/supabase/methods/transactions";
-import {TransactionDAO} from "@/types/entities";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import {usePageContext} from "@/lib/hooks";
 import {TransactionRowDataProps} from "@/types/interfaces";
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 const getAmountType = (type: string | null) => {
     switch (type) {
@@ -59,19 +59,22 @@ const getCategoryColor = (type: string | null) => {
 }
 
 const TransactionRowData = ({day, transactions, open}: TransactionRowDataProps) => {
-    const {actionShowModal, actionUpdateTable} = usePageContext();
+    const queryClient = useQueryClient();
+    const {actionShowModal} = usePageContext();
 
-    const markAsCashed = (id: number) => {
-        updateTransactionCashedStatus(id).then(() => {
-            actionUpdateTable(true);
-        });
-    }
+    const cashedMutation = useMutation({
+        mutationFn: (id: number) => updateTransactionCashedStatus(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['transactions']});
+        },
+    })
 
-    const deleteTransaction = (id: number) => {
-        removeTransaction(id).then(() => {
-            actionUpdateTable(true);
-        });
-    }
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => removeTransaction(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['transactions']});
+        },
+    })
 
     return (
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -119,7 +122,7 @@ const TransactionRowData = ({day, transactions, open}: TransactionRowDataProps) 
                                         {transaction.cashed || (
                                             <Tooltip title="Marcar como pago" arrow>
                                                 <Button size="small" variant="text" color="success"
-                                                        onClick={() => markAsCashed(transaction.id)}>
+                                                        onClick={() => cashedMutation.mutate(transaction.id)}>
                                                     <CheckRoundedIcon fontSize="small"/>
                                                 </Button>
                                             </Tooltip>
@@ -128,7 +131,7 @@ const TransactionRowData = ({day, transactions, open}: TransactionRowDataProps) 
                                                 onClick={() => actionShowModal(true)}>
                                             <EditRoundedIcon fontSize="small"/>
                                         </Button>
-                                        <Button size="small" variant="text" color="error" onClick={() => deleteTransaction(transaction.id)}>
+                                        <Button size="small" variant="text" color="error" onClick={() => deleteMutation.mutate(transaction.id)}>
                                             <DeleteRoundedIcon fontSize="small"/>
                                         </Button>
                                     </TableCell>

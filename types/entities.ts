@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 type CategoryDAO = {
     id: number;
     name: string;
@@ -5,6 +7,11 @@ type CategoryDAO = {
 }
 
 type CategoryType = "Receita" | "Despesa Fixa" | "Despesa Variável" | null;
+
+type CategoryForm = {
+    name: string;
+    type: CategoryType;
+}
 
 type GroupDAO = {
     id: number;
@@ -20,6 +27,16 @@ type TransactionDAO = {
     cashed: boolean;
 }
 
+type TransactionForm = {
+    amount: number,
+    date: Dayjs,
+    description: string,
+    cashed: boolean,
+    categories: number[],
+    times: number,
+    recurring: boolean,
+}
+
 type TransactionRow = {
     day: string;
     income: number;
@@ -30,7 +47,9 @@ type TransactionRow = {
 export type {
     CategoryDAO,
     CategoryType,
+    CategoryForm,
     GroupDAO,
     TransactionDAO,
+    TransactionForm,
     TransactionRow
 }

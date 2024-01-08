@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "Manage your expenses and income with Spendix",
 };
 
+
+
 export default function RootLayout({
   children,
 }: {
@@ -20,8 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="initial-scale=1, width=device-width" />
-      <body className={`${inter.className} ${jakarta.className}`}>
-        <ThemeRegistry>{children}</ThemeRegistry>
+      <body className={`${inter.className} ${jakarta.className}`}>        
+          <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );

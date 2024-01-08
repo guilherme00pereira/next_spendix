@@ -1,5 +1,5 @@
 'use client'
-import {useState, useMemo} from "react";
+import {useMemo} from "react";
 import {
     Stack,
     Container,
@@ -12,12 +12,10 @@ import TransactionFormDialog from "@/components/dashboard/modals/TransactionForm
 import ListTransactionsTable from "@/components/dashboard/tables/ListTransactionsTable";
 import Box from "@mui/material/Box";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
-import {PageContext} from "@/lib/hooks";
+import { usePageContext } from "@/lib/hooks";
 
 const TransactionsPage = () => {
-    const [showAdd, setShowAdd] = useState<boolean>(false);
-    const [updateTable, setUpdateTable] = useState<boolean>(false);
-
+    const {showModal, actionShowModal} = usePageContext();
     const monthAndYear = useMemo(() => {
         const date = new Date();
         const month = date.toLocaleString("default", {month: "long"});
@@ -26,12 +24,7 @@ const TransactionsPage = () => {
     }, []);
 
     return (
-        <PageContext.Provider value={{
-            showModal: showAdd,
-            actionShowModal: setShowAdd,
-            updateTable: updateTable,
-            actionUpdateTable: setUpdateTable
-        }}>
+        
             <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
                 <Box>
                     <Stack
@@ -49,18 +42,17 @@ const TransactionsPage = () => {
                                 </SvgIcon>
                             }
                             variant="contained"
-                            onClick={() => setShowAdd(true)}
+                            onClick={() => actionShowModal(true)}
                         >
                             Add
                         </Button>
                     </Stack>
-                    {showAdd && (
+                    {showModal && (
                         <TransactionFormDialog />
                     )}
                     <ListTransactionsTable />
                 </Box>
             </Container>
-        </PageContext.Provider>
     );
 };
 

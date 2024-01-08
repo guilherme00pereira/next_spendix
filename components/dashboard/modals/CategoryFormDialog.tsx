@@ -4,28 +4,38 @@ import {
     Grid,
     Stack,
     MenuItem,
-    TextField, AppBar, Typography, DialogProps,
+    TextField, AppBar, Typography
 } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import { AddNewCardProps } from "@/types/interfaces";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { CategoryType } from "@/types/entities";
+import { CategoryForm, CategoryType } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
 import { addCategory } from "@/lib/supabase/supabase-client";
 import LinearProgress from "@mui/material/LinearProgress";
+import {usePageContext} from "@/lib/hooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const validate = yup.object({
     name: yup.string().required("Campo obrigatório"),
     type: yup.string().required("Campo obrigatório"),
 });
 
-const AddNewCategoryDialog = ({ toggle, action }: AddNewCardProps) => {
-    const [saving, setSaving] = React.useState<boolean>(false);
+const CategoryFormDialog = () => {
+    const queryClient = useQueryClient();
+    const {showModal, actionShowModal} = usePageContext();
+
+    const addMutation = useMutation({
+        mutationFn: (values: CategoryForm) => addCategory(values),
+        onSuccess: () => {
+            actionShowModal(!showModal);
+            queryClient.invalidateQueries({queryKey: ['categories']});
+        },
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -34,20 +44,12 @@ const AddNewCategoryDialog = ({ toggle, action }: AddNewCardProps) => {
         },
         validationSchema: validate,
         onSubmit: (values) => {
-            setSaving(true)
-            addCategory(values.name, values.type as CategoryType).then(() => {
-                setSaving(false);
-                action(!toggle);
-            }).catch((error) => {
-                console.error(error);
-                setSaving(false);
-            });
+            addMutation.mutate({name: values.name, type: values.type as CategoryType});
         },
     });
 
-
     return (
-        <Dialog open={toggle} fullWidth maxWidth="md" onClose={() => action(!toggle)}>
+        <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
         <form onSubmit={formik.handleSubmit} autoComplete="off">
             <AppBar sx={{position: 'relative'}}>
                 <Toolbar>
@@ -60,7 +62,7 @@ const AddNewCategoryDialog = ({ toggle, action }: AddNewCardProps) => {
                     <IconButton
                         edge="start"
                         color="inherit"
-                        onClick={() => action(!toggle)}
+                        onClick={() => actionShowModal(!showModal)}
                         aria-label="close"
                     >
                         <CloseIcon />
@@ -68,7 +70,7 @@ const AddNewCategoryDialog = ({ toggle, action }: AddNewCardProps) => {
                 </Toolbar>
             </AppBar>
             <DialogContent>
-                    {saving && (
+                    {addMutation.isPending && (
                         <Stack sx={{width: "100%", pb: 3}} spacing={2}>
                             <LinearProgress/>
                         </Stack>
@@ -114,4 +116,4 @@ const AddNewCategoryDialog = ({ toggle, action }: AddNewCardProps) => {
     );
 };
 
-export default AddNewCategoryDialog;
+export default CategoryFormDialog;

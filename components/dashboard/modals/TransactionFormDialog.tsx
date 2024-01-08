@@ -20,11 +20,12 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {CategoryDAO} from "@/types/entities";
+import {CategoryDAO, TransactionForm} from "@/types/entities";
 import {addTransaction} from "@/lib/supabase/methods/transactions";
 import {getCategories} from "@/lib/supabase/supabase-client";
 import dayjs from "dayjs";
 import {usePageContext} from "@/lib/hooks";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 
 
 const validate = yup.object({
@@ -42,23 +43,27 @@ const validate = yup.object({
 });
 
 const TransactionFormDialog = () => {
-    const {showModal, actionShowModal, actionUpdateTable} = usePageContext();
-    const [saving, setSaving] = useState<boolean>(false);
+    const queryClient = useQueryClient();
+    const {showModal, actionShowModal} = usePageContext();
     const [isRecurring, setIsRecurring] = useState<boolean>(false);
-    const [categories, setCategories] = useState<CategoryDAO[]>([]);
+
+    const { data: categories } = useQuery({
+        queryKey: ["categories"],
+        queryFn: () => getCategories(),
+      });
 
     const handleRecurringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsRecurring(e.target.checked);
         formik.setFieldValue('recurring', e.target.checked);
     }
 
-    useEffect(() => {
-        try {
-            getCategories().then((data) => setCategories(data as CategoryDAO[]));
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
+    const addMutation = useMutation({
+        mutationFn: (values: TransactionForm) => addTransaction(values),
+        onSuccess: () => {
+            actionShowModal(!showModal);
+            queryClient.invalidateQueries({queryKey: ['transactions']});
+        },
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -72,27 +77,18 @@ const TransactionFormDialog = () => {
         },
         validationSchema: validate,
         onSubmit: (values) => {
-            setSaving(true);
-            addTransaction(
-                parseFloat(values['amount']),
-                values['date'],
-                values['description'],
-                values['cashed'],
-                [parseInt(values['category'])],
-                values['times'],
-                values['recurring'],
-            ).then((data) => {
-                    setSaving(false);
-                    actionShowModal(!showModal);
-                    actionUpdateTable(true);
-                }
-            ).catch((error) => {
-                console.error(error);
-                setSaving(false);
-            });
-
+            addMutation.mutate({
+                amount: parseFloat(values['amount']),
+                date: values['date'],
+                description: values['description'],
+                cashed: values['cashed'],
+                categories: [parseInt(values['category'])],
+                times: values['times'],
+                recurring: values['recurring'],
+            })
         },
-    });
+        });   
+    
 
     return (
         <Dialog open={showModal} fullScreen onClose={() => actionShowModal(!showModal)}>
@@ -116,7 +112,7 @@ const TransactionFormDialog = () => {
                 </Toolbar>
             </AppBar>
             <DialogContent>
-                    {saving && (
+                    {addMutation.isPending && (
                         <Stack sx={{width: "100%", pb: 3}} spacing={2}>
                             <LinearProgress/>
                         </Stack>
@@ -151,7 +147,7 @@ const TransactionFormDialog = () => {
                                     name="category"
                                     label="Categoria"
                                 >
-                                    {categories.map((category) => (
+                                    {categories?.map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.name}
                                         </option>

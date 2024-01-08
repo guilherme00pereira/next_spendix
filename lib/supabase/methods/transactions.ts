@@ -1,5 +1,6 @@
 import {Dayjs} from "dayjs";
 import {supabase} from "@/lib/supabase/supabase-client";
+import { TransactionForm } from "@/types/entities";
 
 const getTransactions = async (di: string, df: string) => {
     const {
@@ -13,13 +14,7 @@ const getTransactions = async (di: string, df: string) => {
 }
 
 const addTransaction = async (
-    amount: number,
-    date: Dayjs,
-    description: string,
-    cashed: boolean,
-    categories: number[],
-    times: number,
-    recurring: boolean,
+    {amount, date, description, cashed, categories, times, recurring}: TransactionForm
 ) => {
     if (recurring) {
         const rows = [];

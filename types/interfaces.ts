@@ -21,8 +21,6 @@ interface TransactionRowDataProps {
 interface PageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
-    updateTable: boolean;
-    actionUpdateTable: (action: boolean) => void;
 }
 
 export type {
