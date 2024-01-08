@@ -131,42 +131,10 @@ export interface Database {
                     }
                 ]
             }
-            recurring_patterns: {
-                Row: {
-                    created_at: string
-                    day_of_month: number | null
-                    day_of_week: number | null
-                    id: number
-                    month_of_year: number | null
-                    num_of_occurrences: number
-                    recurring_type: Database["public"]["Enums"]["recurring_type"] | null
-                    week_of_month: number | null
-                }
-                Insert: {
-                    created_at?: string
-                    day_of_month?: number | null
-                    day_of_week?: number | null
-                    id?: number
-                    month_of_year?: number | null
-                    num_of_occurrences?: number
-                    recurring_type?: Database["public"]["Enums"]["recurring_type"] | null
-                    week_of_month?: number | null
-                }
-                Update: {
-                    created_at?: string
-                    day_of_month?: number | null
-                    day_of_week?: number | null
-                    id?: number
-                    month_of_year?: number | null
-                    num_of_occurrences?: number
-                    recurring_type?: Database["public"]["Enums"]["recurring_type"] | null
-                    week_of_month?: number | null
-                }
-                Relationships: []
-            }
             transactions: {
                 Row: {
                     amount: number
+                    cashed: boolean
                     category_id: number | null
                     created_at: string
                     date: string
@@ -175,6 +143,7 @@ export interface Database {
                 }
                 Insert: {
                     amount: number
+                    cashed?: boolean
                     category_id?: number | null
                     created_at?: string
                     date: string
@@ -183,6 +152,7 @@ export interface Database {
                 }
                 Update: {
                     amount?: number
+                    cashed?: boolean
                     category_id?: number | null
                     created_at?: string
                     date?: string

@@ -1,26 +1,31 @@
 import React from "react";
 import {
     Button,
-    Card,
-    CardContent,
-    CardHeader,
     Grid,
     Stack,
     MenuItem,
-    TextField,
+    TextField, AppBar, Typography, DialogProps,
 } from "@mui/material";
-import { AddNewCardProps } from "@/types/dashboard";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from '@mui/icons-material/Close';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import { AddNewCardProps } from "@/types/interfaces";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { CategoryTypeDict, CategoryType } from "@/types/entities";
-import { addCategory } from "@/lib/supabase-client";
+import { CategoryType } from "@/types/entities";
+import { CategoryTypeDict } from "@/lib/data";
+import { addCategory } from "@/lib/supabase/supabase-client";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const validate = yup.object({
     name: yup.string().required("Campo obrigatório"),
     type: yup.string().required("Campo obrigatório"),
 });
 
-const AddNewCategoryCard = ({ toggle, action }: AddNewCardProps) => {
+const AddNewCategoryDialog = ({ toggle, action }: AddNewCardProps) => {
+    const [saving, setSaving] = React.useState<boolean>(false);
 
     const formik = useFormik({
         initialValues: {
@@ -29,26 +34,45 @@ const AddNewCategoryCard = ({ toggle, action }: AddNewCardProps) => {
         },
         validationSchema: validate,
         onSubmit: (values) => {
-            addCategory(values.name, values.type as CategoryType).then(() => action(!toggle));
+            setSaving(true)
+            addCategory(values.name, values.type as CategoryType).then(() => {
+                setSaving(false);
+                action(!toggle);
+            }).catch((error) => {
+                console.error(error);
+                setSaving(false);
+            });
         },
     });
 
 
     return (
+        <Dialog open={toggle} fullWidth maxWidth="md" onClose={() => action(!toggle)}>
         <form onSubmit={formik.handleSubmit} autoComplete="off">
-            <Card sx={{px: 4, mb: 6}}>
-                <CardHeader
-                    title="Novo grupo"
-                    action={
-                        <>
-                            <Button variant="contained" type="submit">
-                                Salvar
-                            </Button>
-                            <Button onClick={() => action(!toggle)}>Fechar</Button>
-                        </>
-                    }
-                />
-                <CardContent>
+            <AppBar sx={{position: 'relative'}}>
+                <Toolbar>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        Nova categoria
+                    </Typography>
+                    <Button variant="contained" size="large" type="submit">
+                        Salvar
+                    </Button>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={() => action(!toggle)}
+                        aria-label="close"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <DialogContent>
+                    {saving && (
+                        <Stack sx={{width: "100%", pb: 3}} spacing={2}>
+                            <LinearProgress/>
+                        </Stack>
+                    )}
                     <Stack direction="row">
                         <Grid container spacing={3}>
                             <Grid xs={12} md={6} item>
@@ -84,10 +108,10 @@ const AddNewCategoryCard = ({ toggle, action }: AddNewCardProps) => {
                             </Grid>
                         </Grid>
                     </Stack>
-                </CardContent>
-            </Card>
+            </DialogContent>
         </form>
+        </Dialog>
     );
 };
 
-export default AddNewCategoryCard;
+export default AddNewCategoryDialog;

@@ -1,27 +1,36 @@
-export interface CategoryDAO {
+type CategoryDAO = {
     id: number;
     name: string;
     type: CategoryType;
 }
 
-export type CategoryType = "Receita" | "Despesa Fixa" | "Despesa Variável" | null;
+type CategoryType = "Receita" | "Despesa Fixa" | "Despesa Variável" | null;
 
-export const CategoryTypeDict = [
-    {
-        value: 'Receita',
-        label: "Receita"
-    },
-    {
-        value: 'Despesa Fixa',
-        label: "Despesa Fixa"
-    },
-    {
-        value: 'Despesa Variável',
-        label: "Despesa Variável"
-    }
-];
-
-export interface GroupDAO {
+type GroupDAO = {
     id: number;
     name: string;
+}
+
+type TransactionDAO = {
+    id: number;
+    date: string;
+    description: string;
+    amount: number;
+    categories: CategoryDAO;
+    cashed: boolean;
+}
+
+type TransactionRow = {
+    day: string;
+    income: number;
+    expense: number;
+    balance: number;
+}
+
+export type {
+    CategoryDAO,
+    CategoryType,
+    GroupDAO,
+    TransactionDAO,
+    TransactionRow
 }

@@ -1,35 +1,19 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Stack, Container, Typography, Button, SvgIcon } from "@mui/material";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { CategoryDAO } from "@/types/entities";
-import { getCategories } from "@/lib/supabase-client";
-import AddNewCategoryCard from "@/components/dashboard/cards/AddNewCategoryCard";
+import AddNewCategoryDialog from "@/components/dashboard/modals/AddNewCategoryDialog";
+import ListCategoriesTable from "@/components/dashboard/tables/ListCategoriesTable";
 
 const CategoriesPage = () => {
     const [showAdd, setShowAdd] = useState<boolean>(false);
-  const [categories, setCategories] = useState<CategoryDAO[]>([]);
+    const [updateTable, setUpdateTable] = useState<boolean>(false);
 
-  useEffect(() => {
-    try {
-      getCategories().then((data) => setCategories(data as CategoryDAO[]));
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-      
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Stack>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-          <Typography variant="h4">
+          <Typography variant="h5">
               Categorias
           </Typography>
           <Button
@@ -46,34 +30,9 @@ const CategoriesPage = () => {
         </Stack>
 
           {showAdd && (
-              <AddNewCategoryCard toggle={showAdd} action={setShowAdd} />
+              <AddNewCategoryDialog toggle={showAdd} action={setShowAdd} dispatchTableUpdate={setUpdateTable} />
             )}
-        
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                <TableRow>
-                    <TableCell>Nome</TableCell>
-                    <TableCell align="right">Tipo</TableCell>
-                    <TableCell align="right">Ação</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                  {categories.map((category) => (
-                    <TableRow
-                      key={category.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {category.name}
-                      </TableCell>
-                      <TableCell align="right">{category.type}</TableCell>
-                      <TableCell align="right">X</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+            <ListCategoriesTable />
       </Stack>
     </Container>
   );

@@ -1,62 +1,67 @@
 'use client'
-import { useEffect, useState } from "react";
+import {useState, useMemo} from "react";
 import {
-  Stack,
-  Container,
-  Typography,
-  Button,
-  SvgIcon,
+    Stack,
+    Container,
+    Typography,
+    Button,
+    SvgIcon,
 } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import { CategoryDAO } from "@/types/entities";
-import { getCategories } from "@/lib/supabase-client";
-import AddNewTransactionCard from "@/components/dashboard/cards/AddNewTransactionCard";
+import TransactionFormDialog from "@/components/dashboard/modals/TransactionFormDialog";
+import ListTransactionsTable from "@/components/dashboard/tables/ListTransactionsTable";
+import Box from "@mui/material/Box";
+import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
+import {PageContext} from "@/lib/hooks";
 
 const TransactionsPage = () => {
     const [showAdd, setShowAdd] = useState<boolean>(false);
-    const [value, setValue] = useState<number>(0);
-    const [category, setCategory] = useState<number>(0);
-    const [categories, setCategories] = useState<CategoryDAO[]>([]);
+    const [updateTable, setUpdateTable] = useState<boolean>(false);
 
+    const monthAndYear = useMemo(() => {
+        const date = new Date();
+        const month = date.toLocaleString("default", {month: "long"});
+        const year = date.getFullYear();
+        return `${month} de ${year}`;
+    }, []);
 
-
-  useEffect(() => {
-    try {
-     // getCategories().then((data) => setCategories(data as CategoryDAO[]));
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Stack>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mb: 2 }}
-        >
-          <Typography variant="h4">Lançamentos</Typography>
-          <Button
-            startIcon={
-              <SvgIcon fontSize="small">
-                <AddRoundedIcon />
-              </SvgIcon>
-            }
-            variant="contained"
-            onClick={() => setShowAdd(true)}
-          >
-            Add
-          </Button>
-        </Stack>
-          {showAdd && (
-              <AddNewTransactionCard toggle={showAdd} action={setShowAdd} />
-          )}
-
-      </Stack>
-    </Container>
-  );
+    return (
+        <PageContext.Provider value={{
+            showModal: showAdd,
+            actionShowModal: setShowAdd,
+            updateTable: updateTable,
+            actionUpdateTable: setUpdateTable
+        }}>
+            <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+                <Box>
+                    <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        sx={{mb: 2}}
+                    >
+                        <Typography variant="h5">Lançamentos {monthAndYear}</Typography>
+                        <SelectMonthYear/>
+                        <Button
+                            startIcon={
+                                <SvgIcon fontSize="small">
+                                    <AddRoundedIcon/>
+                                </SvgIcon>
+                            }
+                            variant="contained"
+                            onClick={() => setShowAdd(true)}
+                        >
+                            Add
+                        </Button>
+                    </Stack>
+                    {showAdd && (
+                        <TransactionFormDialog />
+                    )}
+                    <ListTransactionsTable />
+                </Box>
+            </Container>
+        </PageContext.Provider>
+    );
 };
 
 export default TransactionsPage;
