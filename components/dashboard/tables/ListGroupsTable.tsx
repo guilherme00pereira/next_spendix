@@ -9,23 +9,23 @@ import Paper from '@mui/material/Paper';
 import { Button, CircularProgress } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import {GroupDAO} from "@/types/entities";
-import {getGroups} from "@/lib/supabase/supabase-client";
+import {getGroups, removeGroup} from "@/lib/supabase/methods/groups";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 const ListGroupsTable = () => {
-    const [loading, setLoading] = useState<boolean>(true);
-    const [groups, setGroups] = useState<GroupDAO[]>([]);
+    const queryClient = useQueryClient();
 
-    useEffect(() => {
-        try {
-            getGroups().then((data) => {
-                setGroups(data as GroupDAO[]);
-                setLoading(false);
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
+    const { data: groups, isLoading } = useQuery({
+        queryKey: ["groups"],
+        queryFn: () => getGroups(),
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => removeGroup(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['groups']});
+        },
+    })
 
     return (
         <TableContainer component={Paper}>
@@ -37,7 +37,7 @@ const ListGroupsTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {loading || (groups.map((group) => (
+                    {isLoading || (groups?.map((group) => (
                         <TableRow
                             key={group.id}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -49,7 +49,7 @@ const ListGroupsTable = () => {
                                 <Button size="small" variant="text" color="info">
                                     <EditRoundedIcon fontSize="small" />
                                 </Button>
-                                <Button size="small" variant="text" color="error">
+                                <Button size="small" variant="text" color="error" onClick={() => deleteMutation.mutate(group.id)}>
                                     <DeleteRoundedIcon fontSize="small" />
                                 </Button>
                             </TableCell>
@@ -57,7 +57,7 @@ const ListGroupsTable = () => {
                         </TableRow>
                     )))
                     }
-                    {loading && (
+                    {isLoading && (
                         <TableRow>
                             <TableCell colSpan={2} align="center">
                                 <CircularProgress />

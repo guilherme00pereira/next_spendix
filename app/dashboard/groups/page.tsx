@@ -2,11 +2,12 @@
 import { useState } from "react";
 import {Stack, Container, Typography, Button, SvgIcon} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import AddNewGroupDialog from "@/components/dashboard/modals/AddNewGroupDialog";
+import GroupFormDialog from "@/components/dashboard/modals/GroupFormDialog";
 import ListGroupsTable from "@/components/dashboard/tables/ListGroupsTable";
+import {usePageContext} from "@/lib/hooks";
 
 const GroupsPage = () => {
-    const [showAdd, setShowAdd] = useState<boolean>(false);
+    const {showModal, actionShowModal} = usePageContext();
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -22,14 +23,14 @@ const GroupsPage = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
-                  onClick={() => setShowAdd(true)}
+                  onClick={() => actionShowModal(true)}
                 >
                   Add
             </Button>
         </Stack>
 
-        {showAdd && (
-            <AddNewGroupDialog toggle={showAdd} action={setShowAdd} />
+        {showModal && (
+            <GroupFormDialog />
         )}
         <ListGroupsTable />
 

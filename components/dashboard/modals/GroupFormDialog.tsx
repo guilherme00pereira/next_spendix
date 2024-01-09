@@ -11,19 +11,30 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import {AddNewCardProps} from "@/types/interfaces";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {addGroup} from "@/lib/supabase/supabase-client";
+import {addGroup} from "@/lib/supabase/methods/groups";
 import LinearProgress from "@mui/material/LinearProgress";
+import {usePageContext} from "@/lib/hooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {CategoryForm} from "@/types/entities";
 
 const validate = yup.object({
     name: yup.string().required("Campo obrigatório"),
 });
 
 
-const AddNewGroupDialog = ({toggle, action}: AddNewCardProps) => {
-    const [saving, setSaving] = useState<boolean>(false);
+const GroupFormDialog = () => {
+    const queryClient = useQueryClient();
+    const {showModal, actionShowModal} = usePageContext();
+
+    const addMutation = useMutation({
+        mutationFn: (value: string) => addGroup(value),
+        onSuccess: () => {
+            actionShowModal(!showModal);
+            queryClient.invalidateQueries({queryKey: ['groups']});
+        },
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -31,20 +42,13 @@ const AddNewGroupDialog = ({toggle, action}: AddNewCardProps) => {
         },
         validationSchema: validate,
         onSubmit: (values) => {
-            setSaving(true);
-            addGroup(values.name).then(() => {
-                setSaving(false);
-                action(!toggle);
-            }).catch((error) => {
-                console.error(error);
-                setSaving(false);
-            });
+            addMutation.mutate(values.name);
         },
     });
 
 
     return (
-        <Dialog open={toggle} fullWidth maxWidth="md"  onClose={() => action(!toggle)}>
+        <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
         <form onSubmit={formik.handleSubmit} autoComplete="off">
             <AppBar sx={{position: 'relative'}}>
                 <Toolbar>
@@ -57,7 +61,7 @@ const AddNewGroupDialog = ({toggle, action}: AddNewCardProps) => {
                     <IconButton
                         edge="start"
                         color="inherit"
-                        onClick={() => action(!toggle)}
+                        onClick={() => actionShowModal(!showModal)}
                         aria-label="close"
                     >
                         <CloseIcon />
@@ -65,7 +69,7 @@ const AddNewGroupDialog = ({toggle, action}: AddNewCardProps) => {
                 </Toolbar>
             </AppBar>
             <DialogContent>
-                    {saving && (
+                    {addMutation.isPending && (
                         <Stack sx={{width: "100%", pb: 3}} spacing={2}>
                             <LinearProgress/>
                         </Stack>
@@ -92,4 +96,4 @@ const AddNewGroupDialog = ({toggle, action}: AddNewCardProps) => {
     );
 };
 
-export default AddNewGroupDialog;
+export default GroupFormDialog;

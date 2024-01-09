@@ -15,7 +15,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { CategoryForm, CategoryType } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
-import { addCategory } from "@/lib/supabase/supabase-client";
+import { addCategory } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";
 import {usePageContext} from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

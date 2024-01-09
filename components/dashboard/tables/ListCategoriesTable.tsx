@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,8 +9,7 @@ import { Button, CircularProgress } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { CategoryDAO } from "@/types/entities";
-import { getCategories } from "@/lib/supabase/supabase-client";
+import { getCategories } from "@/lib/supabase/methods/categories";
 import { useQuery } from "@tanstack/react-query";
 
 const getBadgeColor = (type: string | null) => {
