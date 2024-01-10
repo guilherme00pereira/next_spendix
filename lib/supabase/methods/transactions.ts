@@ -87,10 +87,20 @@ const removeTransaction = async (id: number) => {
     return data
 }
 
+const getSumIncomeTransactions = async (di: string, df: string) => {
+    const {data, error} = await supabase.from('transactions').select('amount, categories(type)').gte('date', di).lte('date', df).eq('cashed', true).eq('categories.type', 'Receita').single()
+    if (error) {
+        throw error
+    }
+    return data
+}
+
+
 export {
     getTransactions,
     addTransaction,
     updateTransaction,
     updateTransactionCashedStatus,
-    removeTransaction
+    removeTransaction,
+    getSumIncomeTransactions
 }
