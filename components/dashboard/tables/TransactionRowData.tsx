@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from "@mui/material/Box";
+import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -7,12 +8,11 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Collapse from '@mui/material/Collapse';
 import {Button, Stack, Typography} from "@mui/material";
-import {amountFormatter} from "@/lib/functions";
+import {amountFormatter, categoryTypeColor} from "@/lib/functions";
 import Tooltip from "@mui/material/Tooltip";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import TableContainer from "@mui/material/TableContainer";
 import {removeTransaction, updateTransactionCashedStatus} from "@/lib/supabase/methods/transactions";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
@@ -26,35 +26,6 @@ const getAmountType = (type: string | null) => {
             return <AddCircleRoundedIcon fontSize="small" color="success"/>;
         default:
             return <RemoveCircleRoundedIcon fontSize="small" color="error"/>
-    }
-}
-
-const getCategoryColor = (type: string | null) => {
-    switch (type) {
-        case "Receita":
-            return (
-                <Typography
-                    variant="body2"
-                    color="success.main">
-                    Receita
-                </Typography>
-            );
-        case "Despesa Fixa":
-            return (
-                <Typography
-                    variant="body2"
-                    color="secondary.main">
-                    Fixa
-                </Typography>
-            );
-        default:
-            return (
-                <Typography
-                    variant="body2"
-                    color="warning.main">
-                    Variável
-                </Typography>
-            );
     }
 }
 
@@ -111,7 +82,9 @@ const TransactionRowData = ({day, transactions, open}: TransactionRowDataProps) 
                                         {transaction.categories.name}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {getCategoryColor(transaction.categories.type)}
+                                        <Typography color={categoryTypeColor(transaction.categories.type)} variant="body2" fontWeight="bold">
+                                            {transaction.categories.type}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Typography variant="body2" color="text.secondary">

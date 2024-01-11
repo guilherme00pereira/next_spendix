@@ -1,4 +1,4 @@
-import {TransactionDAO} from "@/types/entities";
+import {TransactionDAO, CategoryType} from "@/types/entities";
 
 const amountFormatter = (v: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -37,9 +37,21 @@ const groupTransactionsByDate = (transactions: TransactionDAO[]) => {
     return groups;
 }
 
+const categoryTypeColor = (type: CategoryType) => {
+    switch (type) {
+        case "Receita":
+            return "success.main";
+        case "Despesa Fixa":
+            return "secondary.main";
+        default:
+            return "warning.main";
+    }
+}
+
 export {
     amountFormatter,
     getFisrtDayOfMonth,
     getLasDayOfMonth,
-    groupTransactionsByDate
+    groupTransactionsByDate,
+    categoryTypeColor
 }

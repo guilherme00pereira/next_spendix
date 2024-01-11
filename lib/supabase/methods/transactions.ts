@@ -13,6 +13,17 @@ const getTransactions = async (di: string, df: string) => {
     return data
 }
 
+const getTransactionsByCategory = async (di: string, df: string, category_id: number) => {
+    const {
+        data,
+        error
+    } = await supabase.from('transactions').select('id, amount, date, description, cashed, categories(name, type)').gte('date', di).lte('date', df).eq('category_id', category_id).order("date", {ascending: true})
+    if (error) {
+        throw error
+    }
+    return data
+}
+
 const addTransaction = async (
     {amount, date, description, cashed, categories, times, recurring}: TransactionForm
 ) => {
@@ -98,6 +109,7 @@ const getSumIncomeTransactions = async (di: string, df: string) => {
 
 export {
     getTransactions,
+    getTransactionsByCategory,
     addTransaction,
     updateTransaction,
     updateTransactionCashedStatus,

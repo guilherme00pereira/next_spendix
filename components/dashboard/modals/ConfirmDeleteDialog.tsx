@@ -11,20 +11,20 @@ const ConfirmDeleteDialog = ({entity, open, handleClose, handleDelete}: DeleteCo
         <Dialog maxWidth="xs" open={open}>
             <DialogTitle>
                 <Typography variant="h6" component="div">
-                    Deletar {entity.name}?
+                    Remover {entity.name}?
                 </Typography>
             </DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>
-                    Deseja realmente deletar a {entity.type} {entity.name}?
+                    Deseja realmente remover o(a) {entity.type} {entity.name}?
                 </Typography>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={() => handleClose(false)} color="error">
                     Cancelar
                 </Button>
-                <Button onClick={handleDelete} color="success">
-                    Deletar
+                <Button variant='contained' size='small' onClick={handleDelete} color="primary">
+                    Remover
                 </Button>
             </DialogActions>
         </Dialog>

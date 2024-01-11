@@ -163,7 +163,7 @@ const TransactionFormDialog = () => {
                                             onChange={(value => formik.setFieldValue('date', value))}
                                             value={formik.values.date}
                                             name="date"
-                                            label="Data"
+                                            label="Vencimento"
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -184,7 +184,7 @@ const TransactionFormDialog = () => {
                                             defaultChecked={true}
                                         />
                                     }
-                                    label="Efetivado"
+                                    label="Pago?"
                                 />
                             </Grid>
 

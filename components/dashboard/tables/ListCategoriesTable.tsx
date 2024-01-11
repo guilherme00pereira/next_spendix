@@ -1,4 +1,5 @@
 import {useState} from "react";
+import Link from "next/link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,24 +7,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {Button, CircularProgress} from "@mui/material";
-import Chip from "@mui/material/Chip";
+import {Button, CircularProgress, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
-
-const getBadgeColor = (type: string | null) => {
-    switch (type) {
-        case "Receita":
-            return <Chip color="success" label={type}/>;
-        case "Despesa Fixa":
-            return <Chip color="secondary" label={type}/>;
-        default:
-            return <Chip color="warning" label={type}/>;
-    }
-};
+import {categoryTypeColor} from "@/lib/functions";
 
 const ListCategoriesTable = () => {
     const queryClient = useQueryClient();
@@ -72,10 +62,14 @@ const ListCategoriesTable = () => {
                                     sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {category.name}
+                                        <Link href={`/dashboard/categories/${category.id}`}>
+                                            {category.name}
+                                        </Link>
                                     </TableCell>
                                     <TableCell align="right">
-                                        {getBadgeColor(category.type)}
+                                        <Typography color={categoryTypeColor(category.type)} variant="body2" fontWeight="bold">
+                                            {category.type}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell align="right">
                                         <Button size="small" variant="text" color="info">

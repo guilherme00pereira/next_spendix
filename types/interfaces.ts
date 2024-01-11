@@ -7,6 +7,16 @@ interface DashboardLayoutProps extends MuiAppBarProps {
     toggleDrawer?: () => void;
 }
 
+interface SinglePageParams {
+    params: {id: number};
+}
+
+interface SinglePageTableProps {
+    id: number;
+    handleName: Dispatch<SetStateAction<string>>;
+    handleType: Dispatch<SetStateAction<string>>;
+}
+
 interface DeleteConfirmDialogProps {
     entity: {id: number, name: string, type: string};
     open: boolean;
@@ -27,6 +37,8 @@ interface PageContextData {
 
 export type {
     DeleteConfirmDialogProps,
+    SinglePageParams,
+    SinglePageTableProps,
     DashboardLayoutProps,
     TransactionRowDataProps,
     PageContextData
