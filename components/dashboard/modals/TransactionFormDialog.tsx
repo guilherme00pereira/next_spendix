@@ -181,6 +181,7 @@ const TransactionFormDialog = () => {
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
                                             value={formik.values.cashed}
+                                            defaultChecked={true}
                                         />
                                     }
                                     label="Efetivado"

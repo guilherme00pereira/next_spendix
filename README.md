@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.2
+- 0.2.4: Confirm delete dialog component added.
 - 0.2.2: Home cards beginning to be implemented.
 - 0.2.1: Supabase methods splited on files by entities.
 - 0.2.0: Added tanstack query and mutation on Transactions and Categories page.
