@@ -9,6 +9,7 @@ type CategoryDAO = {
 type CategoryType = "Receita" | "Despesa Fixa" | "Despesa Variável" | null;
 
 type CategoryForm = {
+    id?: number;
     name: string;
     type: CategoryType;
 }

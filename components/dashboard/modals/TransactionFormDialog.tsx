@@ -1,17 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {
-    AppBar,
-    Button,
     Checkbox,
     FormControlLabel,
     Grid,
     Stack,
-    TextField, Typography,
+    TextField
 } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
@@ -26,6 +21,7 @@ import {getCategories} from "@/lib/supabase/methods/categories";
 import dayjs from "dayjs";
 import {usePageContext} from "@/lib/hooks";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
 
 
 const validate = yup.object({
@@ -93,24 +89,7 @@ const TransactionFormDialog = () => {
     return (
         <Dialog open={showModal} fullScreen onClose={() => actionShowModal(!showModal)}>
         <form onSubmit={formik.handleSubmit} autoComplete="off">
-            <AppBar sx={{position: 'relative'}}>
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Novo lançamento
-                    </Typography>
-                    <Button variant="contained" size="large" type="submit">
-                        Salvar
-                    </Button>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={() => actionShowModal(!showModal)}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
+            <ModalTopBar  title="Novo lançamento" />
             <DialogContent>
                     {addMutation.isPending && (
                         <Stack sx={{width: "100%", pb: 3}} spacing={2}>

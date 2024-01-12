@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import Link from "next/link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,15 +10,19 @@ import Paper from "@mui/material/Paper";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import {categoryTypeColor} from "@/lib/functions";
+import {usePageContext} from "@/lib/hooks";
+import {CategoryForm} from "@/types/entities";
 
-const ListCategoriesTable = () => {
+const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<CategoryForm>>}) => {
     const queryClient = useQueryClient();
-    const [open, setOpen] = useState(false);
-    const [category, setCategory] = useState({id: 0, name: '', type: 'categoria'});
+    const {actionShowModal} = usePageContext();
+    const [openConfirm, setOpenConfirm] = useState(false);
+    const [removableCategory, setRemovableCategory] = useState<CategoryForm>({id: 0, name: '', type: 'Receita'});
 
     const {data: categories, isLoading} = useQuery({
         queryKey: ["categories"],
@@ -32,14 +36,25 @@ const ListCategoriesTable = () => {
         },
     })
 
+    const handleEdit = (id: number) => {
+        actionShowModal(true);
+        handler({
+            id,
+            name: categories?.filter(category => category.id === id)[0].name ?? "",
+            type: categories?.filter(category => category.id === id)[0].type ?? "Receita"
+        })
+    }
+
     const handleConfirmDelete = (id: number, name: string) => {
-        setCategory({id, name, type: 'categoria'});
-        setOpen(true);
+        setRemovableCategory({id, name, type: null});
+        setOpenConfirm(true);
     }
 
     const processDelete = () => {
-        deleteMutation.mutate(category.id);
-        setOpen(false);
+        if(typeof removableCategory.id !== 'undefined') {
+            deleteMutation.mutate(removableCategory?.id);
+            setOpenConfirm(false);
+        }
     }
 
 
@@ -72,7 +87,12 @@ const ListCategoriesTable = () => {
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Button size="small" variant="text" color="info">
+                                        <Link href={`/dashboard/categories/${category.id}`}>
+                                            <Button size="small" variant="text" color="info">
+                                                <VisibilityRoundedIcon fontSize="small"/>
+                                            </Button>
+                                        </Link>
+                                        <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
                                             <EditRoundedIcon fontSize="small"/>
                                         </Button>
                                         <Button size="small" variant="text" color="error"
@@ -92,7 +112,7 @@ const ListCategoriesTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <ConfirmDeleteDialog entity={category} open={open} handleClose={setOpen} handleDelete={processDelete}/>
+            <ConfirmDeleteDialog entity={removableCategory} open={openConfirm} handleClose={setOpenConfirm} handleDelete={processDelete}/>
         </>
     );
 };
