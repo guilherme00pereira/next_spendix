@@ -25,7 +25,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 }
 
 const addTransaction = async (
-    {amount, date, description, cashed, categories, times, recurring}: TransactionForm
+    {amount, date, description, cashed, category_id, times, recurring}: TransactionForm
 ) => {
     if (recurring) {
         const rows = [];
@@ -36,7 +36,7 @@ const addTransaction = async (
                 date: date.add(i, 'month').format('YYYY-MM-DD'),
                 description: desctext,
                 cashed,
-                category_id: categories[0]
+                category_id
             })
         }
         const {data, error} = await supabase.from('transactions').insert(rows)
@@ -50,7 +50,7 @@ const addTransaction = async (
             date: date.format('YYYY-MM-DD'),
             description,
             cashed,
-            category_id: categories[0]
+            category_id
         })
         if (error) {
             throw error
@@ -59,19 +59,13 @@ const addTransaction = async (
     }
 }
 
-const updateTransaction = async (
-    id: number,
-    amount: number,
-    date: Dayjs,
-    description: string,
-    categories: number[],
-) => {
+const editTransaction = async ({id, amount, date, description, category_id}: TransactionForm) => {
     const {data, error} = await supabase.from('transactions').update({
         amount,
         date: date.format('YYYY-MM-DD'),
         description,
-        category_id: categories[0]
-    }).eq('id', id)
+        category_id
+    }).match({id})
     if (error) {
         throw error
     }
@@ -111,7 +105,7 @@ export {
     getTransactions,
     getTransactionsByCategory,
     addTransaction,
-    updateTransaction,
+    editTransaction,
     updateTransactionCashedStatus,
     removeTransaction,
     getSumIncomeTransactions

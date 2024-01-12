@@ -1,5 +1,5 @@
 'use client'
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {
     Stack,
     Container,
@@ -13,6 +13,8 @@ import ListTransactionsTable from "@/components/dashboard/tables/ListTransaction
 import Box from "@mui/material/Box";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 import {usePageContext} from "@/lib/hooks";
+import { TransactionForm } from "@/types/entities";
+import { TransactionDefaultData } from "@/lib/data";
 
 const TransactionsPage = () => {
     const {showModal, actionShowModal} = usePageContext();
@@ -22,18 +24,19 @@ const TransactionsPage = () => {
         const year = date.getFullYear();
         return `${month} de ${year}`;
     }, []);
+    const [editableTransaction, setEditableTransaction] = useState<TransactionForm>(TransactionDefaultData);
 
     return (
 
         <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
             <Box>
                 <Stack
-                    direction="row"
-                    justifyContent="space-between"
+                    direction={{xs: "column", sm: "row"}}
+                    justifyContent={{xs: "center", sm: "space-between"}}
                     alignItems="center"
                     sx={{mb: 2}}
                 >
-                    <Typography variant="h5">Lançamentos {monthAndYear}</Typography>
+                    <Typography variant="h5" textAlign="center">Lançamentos {monthAndYear}</Typography>
                     <SelectMonthYear/>
                     <Button
                         startIcon={
@@ -48,7 +51,7 @@ const TransactionsPage = () => {
                     </Button>
                 </Stack>
                 {showModal && (
-                    <TransactionFormDialog/>
+                    <TransactionFormDialog transaction={editableTransaction}/>
                 )}
                 <ListTransactionsTable/>
             </Box>

@@ -29,11 +29,12 @@ type TransactionDAO = {
 }
 
 type TransactionForm = {
+    id?: number,
     amount: number,
     date: Dayjs,
     description: string,
     cashed: boolean,
-    categories: number[],
+    category_id: number,
     times: number,
     recurring: boolean,
 }

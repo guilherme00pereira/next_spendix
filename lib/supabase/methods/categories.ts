@@ -20,6 +20,14 @@ const addCategory = async ({name, type}: CategoryForm) => {
     return data
 }
 
+const editCategory = async ({id, name, type}: CategoryForm) => {
+    const {data, error} = await supabase.from('categories').update({name, type}).match({id})
+    if (error) {
+        throw error
+    }
+    return data
+}
+
 const removeCategory = async (id: number) => {
     const {data, error} = await supabase.from('categories').delete().match({id})
     if (error) {
@@ -35,5 +43,6 @@ const removeCategory = async (id: number) => {
 export {
     getCategories,
     addCategory,
+    editCategory,
     removeCategory,
 }

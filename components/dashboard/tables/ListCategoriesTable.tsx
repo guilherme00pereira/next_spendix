@@ -17,12 +17,13 @@ import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDial
 import {categoryTypeColor} from "@/lib/functions";
 import {usePageContext} from "@/lib/hooks";
 import {CategoryForm} from "@/types/entities";
+import { RemovableEntity } from "@/types/interfaces";
 
 const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<CategoryForm>>}) => {
     const queryClient = useQueryClient();
     const {actionShowModal} = usePageContext();
     const [openConfirm, setOpenConfirm] = useState(false);
-    const [removableCategory, setRemovableCategory] = useState<CategoryForm>({id: 0, name: '', type: 'Receita'});
+    const [removableCategory, setRemovableCategory] = useState<RemovableEntity>({id: 0, name: '', type: 'categoria'});
 
     const {data: categories, isLoading} = useQuery({
         queryKey: ["categories"],
@@ -46,13 +47,13 @@ const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<Catego
     }
 
     const handleConfirmDelete = (id: number, name: string) => {
-        setRemovableCategory({id, name, type: null});
+        setRemovableCategory({...removableCategory, id, name});
         setOpenConfirm(true);
     }
 
     const processDelete = () => {
-        if(typeof removableCategory.id !== 'undefined') {
-            deleteMutation.mutate(removableCategory?.id);
+        if(removableCategory.id > 0) {
+            deleteMutation.mutate(removableCategory.id);
             setOpenConfirm(false);
         }
     }

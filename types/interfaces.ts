@@ -1,5 +1,5 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {CategoryForm, TransactionDAO, TransactionForm} from "@/types/entities";
+import {TransactionDAO} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 
 interface DashboardLayoutProps extends MuiAppBarProps {
@@ -18,10 +18,16 @@ interface SinglePageTableProps {
 }
 
 interface DeleteConfirmDialogProps {
-    entity: CategoryForm;
+    entity: RemovableEntity;
     open: boolean;
     handleClose: Dispatch<SetStateAction<boolean>>;
     handleDelete: () => void;
+}
+
+interface RemovableEntity {
+    id: number, 
+    name: string, 
+    type: string
 }
 
 interface TransactionRowDataProps {
@@ -33,10 +39,12 @@ interface TransactionRowDataProps {
 interface PageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
+    mediaQuery: string;
 }
 
 export type {
     DeleteConfirmDialogProps,
+    RemovableEntity,
     SinglePageParams,
     SinglePageTableProps,
     DashboardLayoutProps,

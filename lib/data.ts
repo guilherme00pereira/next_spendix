@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+
+
 const CategoryTypeDict = [
     {
         value: 'Receita',
@@ -12,7 +15,17 @@ const CategoryTypeDict = [
         label: "Despesa Variável"
     }
 ];
+const TransactionDefaultData = {
+    amount: 0,
+    category_id: 3,
+    cashed: true,
+    description: "",
+    date: dayjs(Date.now()),
+    times: 2,
+    recurring: false,
+}
 
 export {
-    CategoryTypeDict
+    CategoryTypeDict,
+    TransactionDefaultData
 }
