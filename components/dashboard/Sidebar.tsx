@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import MonetizationOnRoundedIcon from '@mui/icons-material/MonetizationOnRounded';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
+import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import { Typography } from "@mui/material";
 import { DashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -93,6 +94,13 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
             <DashboardCustomizeRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Grupos" />
+        </ListItemButton>
+
+        <ListItemButton LinkComponent="a" href="/dashboard/tags">
+            <ListItemIcon>
+                <LocalOfferRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Tags" />
         </ListItemButton>
       </List>
     </Drawer>

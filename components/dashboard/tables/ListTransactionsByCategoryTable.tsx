@@ -33,6 +33,12 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
         setTotal(transactions?.reduce((acc, curr) => acc + curr.amount, 0) ?? 0)
       }, [transactions])
 
+    const getMeanPerDay = () => {
+          if(transactions) {
+            return (transactions.reduce((acc, curr) => acc + curr.amount, 0) / transactions.length)
+          }
+          return 0
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -52,7 +58,7 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
                                     sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                 >
                                     <TableCell align="center" scope="row">
-                                        {transaction.date.substring(8, 10)}
+                                        {transaction.due_date.substring(8, 10)}
                                     </TableCell>
                                     <TableCell align="center" scope="row">
                                         <Stack direction="row" justifyContent="space-around">
@@ -76,16 +82,22 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
                             ))}
                             <TableRow>
                                 <TableCell align="center">
-                                    <Typography variant="body2" fontWeight="bold">
+                                    <Typography fontWeight="bold">
                                         Total
                                     </Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography variant="body2" fontWeight="bold">
+                                    <Typography fontWeight="bold">
                                         {amountFormatter(total)}
                                     </Typography>
                                 </TableCell>
-                                <TableCell colSpan={2}></TableCell>
+                                <TableCell colSpan={2}>
+                                    {transactions && transactions.length >= 5 && (
+                                        <Typography fontWeight="bold">
+                                            média de {amountFormatter(getMeanPerDay())} por dia
+                                        </Typography>
+                                    )}
+                                </TableCell>
                             </TableRow>
                             {isLoading && (
                             <TableRow>

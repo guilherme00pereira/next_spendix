@@ -27,11 +27,11 @@ const getLasDayOfMonth = (m?: number, y?: number) => {
 const groupTransactionsByDate = (transactions: TransactionDAO[]) => {
     const groups = new Map<string, TransactionDAO[]>();
     transactions.forEach((t) => {
-        if(groups.has(t.date)) {
-            groups.get(t.date)?.push(t);
+        if(groups.has(t.due_date)) {
+            groups.get(t.due_date)?.push(t);
         }
         else {
-            groups.set(t.date, [t]);
+            groups.set(t.due_date, [t]);
         }
     });
     return groups;

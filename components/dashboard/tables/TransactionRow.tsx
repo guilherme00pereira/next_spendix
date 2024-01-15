@@ -34,7 +34,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionDAO[]}) => {
             .map((transaction: TransactionDAO) => transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         setRow({
-            day: transactions[0].date.substring(8),
+            day: transactions[0].due_date.substring(8),
             income: income,
             expense: expense,
             balance: parseFloat(String((income - expense))),

@@ -21,7 +21,7 @@ type GroupDAO = {
 
 type TransactionDAO = {
     id: number;
-    date: string;
+    due_date: string;
     description: string;
     amount: number;
     categories: CategoryDAO;
@@ -31,7 +31,7 @@ type TransactionDAO = {
 type TransactionForm = {
     id?: number,
     amount: number,
-    date: Dayjs,
+    due_date: Dayjs,
     description: string,
     cashed: boolean,
     category_id: number,

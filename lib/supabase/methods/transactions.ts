@@ -6,7 +6,7 @@ const getTransactions = async (di: string, df: string) => {
     const {
         data,
         error
-    } = await supabase.from('transactions').select('id, amount, date, description, cashed, categories(id, name, type)').gte('date', di).lte('date', df).order("date", {ascending: true})
+    } = await supabase.from('transactions').select('id, amount, due_date, description, cashed, categories(id, name, type)').gte('due_date', di).lte('due_date', df).order("due_date", {ascending: true})
     if (error) {
         throw error
     }
@@ -17,7 +17,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
     const {
         data,
         error
-    } = await supabase.from('transactions').select('id, amount, date, description, cashed, categories(name, type)').gte('date', di).lte('date', df).eq('category_id', category_id).order("date", {ascending: true})
+    } = await supabase.from('transactions').select('id, amount, due_date, description, cashed, categories(name, type)').gte('due_date', di).lte('due_date', df).eq('category_id', category_id).order("due_date", {ascending: true})
     if (error) {
         throw error
     }
@@ -25,7 +25,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 }
 
 const addTransaction = async (
-    {amount, date, description, cashed, category_id, times, recurring}: TransactionForm
+    {amount, due_date, description, cashed, category_id, times, recurring}: TransactionForm
 ) => {
     if (recurring) {
         const rows = [];
@@ -33,7 +33,7 @@ const addTransaction = async (
             let desctext = `${description} (${i+1}/${times})`
             rows.push({
                 amount,
-                date: date.add(i, 'month').format('YYYY-MM-DD'),
+                due_date: due_date.add(i, 'month').format('YYYY-MM-DD'),
                 description: desctext,
                 cashed,
                 category_id
@@ -47,7 +47,7 @@ const addTransaction = async (
     } else {
         const {data, error} = await supabase.from('transactions').insert({
             amount,
-            date: date.format('YYYY-MM-DD'),
+            due_date: due_date.format('YYYY-MM-DD'),
             description,
             cashed,
             category_id
@@ -59,10 +59,10 @@ const addTransaction = async (
     }
 }
 
-const editTransaction = async ({id, amount, date, description, category_id}: TransactionForm) => {
+const editTransaction = async ({id, amount, due_date, description, category_id}: TransactionForm) => {
     const {data, error} = await supabase.from('transactions').update({
         amount,
-        date: date.format('YYYY-MM-DD'),
+        due_date: due_date.format('YYYY-MM-DD'),
         description,
         category_id
     }).match({id})

@@ -65,18 +65,18 @@ export interface Database {
             }
             groups_categories: {
                 Row: {
-                    category_id: number | null
-                    group_id: number | null
+                    category_id: number
+                    group_id: number
                     id: number
                 }
                 Insert: {
-                    category_id?: number | null
-                    group_id?: number | null
+                    category_id: number
+                    group_id: number
                     id?: number
                 }
                 Update: {
-                    category_id?: number | null
-                    group_id?: number | null
+                    category_id?: number
+                    group_id?: number
                     id?: number
                 }
                 Relationships: [
@@ -131,33 +131,87 @@ export interface Database {
                     }
                 ]
             }
+            tags: {
+                Row: {
+                    id: number
+                    name: string
+                }
+                Insert: {
+                    id?: number
+                    name: string
+                }
+                Update: {
+                    id?: number
+                    name?: string
+                }
+                Relationships: []
+            }
+            tags_transactions: {
+                Row: {
+                    id: number
+                    tag_id: number
+                    transaction_id: number
+                }
+                Insert: {
+                    id?: number
+                    tag_id: number
+                    transaction_id: number
+                }
+                Update: {
+                    id?: number
+                    tag_id?: number
+                    transaction_id?: number
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "tags_transactions_tag_id_fkey"
+                        columns: ["tag_id"]
+                        isOneToOne: false
+                        referencedRelation: "tags"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "tags_transactions_transaction_id_fkey"
+                        columns: ["transaction_id"]
+                        isOneToOne: false
+                        referencedRelation: "transactions"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
             transactions: {
                 Row: {
                     amount: number
                     cashed: boolean
                     category_id: number | null
                     created_at: string
-                    date: string
                     description: string | null
+                    due_date: string
                     id: number
+                    payed_amount: number | null
+                    payment_date: string | null
                 }
                 Insert: {
                     amount: number
                     cashed?: boolean
                     category_id?: number | null
                     created_at?: string
-                    date: string
                     description?: string | null
+                    due_date: string
                     id?: number
+                    payed_amount?: number | null
+                    payment_date?: string | null
                 }
                 Update: {
                     amount?: number
                     cashed?: boolean
                     category_id?: number | null
                     created_at?: string
-                    date?: string
                     description?: string | null
+                    due_date?: string
                     id?: number
+                    payed_amount?: number | null
+                    payment_date?: string | null
                 }
                 Relationships: [
                     {

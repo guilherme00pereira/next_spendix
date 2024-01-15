@@ -21,7 +21,7 @@ const validate = yup.object({
   category_id: yup.string().required("Campo obrigatório"),
   cashed: yup.boolean(),
   description: yup.string(),
-  date: yup.date().required("Campo obrigatório"),
+  due_date: yup.date().required("Campo obrigatório"),
   times: yup.number().min(2, "Insira apenas valores maiores que 2"),
   recurring: yup.boolean(),
 });
@@ -66,7 +66,7 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
         editMutation.mutate({
           id: values.id,
           amount: values["amount"],
-          date: values["date"],
+          due_date: values["due_date"],
           description: values["description"],
           cashed: values["cashed"],
           category_id: values["category_id"],
@@ -76,7 +76,7 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
       } else {
         addMutation.mutate({
           amount: values["amount"],
-          date: values["date"],
+          due_date: values["due_date"],
           description: values["description"],
           cashed: values["cashed"],
           category_id: values["category_id"],
@@ -137,9 +137,9 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
                   <DemoContainer components={["DatePicker"]}>
                     <DatePicker
                       format="DD/MM/YYYY"
-                      onChange={(value) => formik.setFieldValue("date", value)}
-                      value={formik.values.date}
-                      name="date"
+                      onChange={(value) => formik.setFieldValue("due_date", value)}
+                      value={formik.values.due_date}
+                      name="due_date"
                       label="Vencimento"
                     />
                   </DemoContainer>
