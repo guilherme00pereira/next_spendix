@@ -22,6 +22,8 @@ const validate = yup.object({
   cashed: yup.boolean(),
   description: yup.string(),
   due_date: yup.date().required("Campo obrigatório"),
+  payment_date: yup.date(),
+  payed_amount: yup.number(),
   times: yup.number().min(2, "Insira apenas valores maiores que 2"),
   recurring: yup.boolean(),
 });
@@ -72,6 +74,8 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
           category_id: values["category_id"],
           times: values["times"],
           recurring: values["recurring"],
+          payment_date: values["payment_date"],
+          payed_amount: values["payed_amount"]
         });
       } else {
         addMutation.mutate({
@@ -82,6 +86,8 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
           category_id: values["category_id"],
           times: values["times"],
           recurring: values["recurring"],
+          payment_date: values["payment_date"],
+          payed_amount: values["payed_amount"]
         });
       }
     },
@@ -150,16 +156,43 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
 
           <Stack direction="row" sx={{ py: 2 }}>
             <Grid container spacing={2}>
-              <Grid item xs={6} md={2}>
+              {/* <Grid item xs={6} md={2}>
                 <FormControlLabel
                   control={
                     <Checkbox name="cashed" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.cashed} defaultChecked={true} />
                   }
                   label="Pago?"
                 />
+              </Grid> */}
+
+              <Grid item xs={12} md={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      format="DD/MM/YYYY"
+                      onChange={(value) => formik.setFieldValue("payment_date", value)}
+                      value={formik.values.payment_date}
+                      name="payment_date"
+                      label="Data de pagamento"
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
               </Grid>
 
-              <Grid item xs={6} md={2}>
+              <Grid item xs={12} md={3}>
+                <TextField
+                  helperText={formik.touched.payed_amount && formik.errors.payed_amount}
+                  error={formik.touched.payed_amount && Boolean(formik.errors.payed_amount)}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.payed_amount}
+                  fullWidth
+                  name="payed_amount"
+                  label="Valor"
+                />
+              </Grid>
+
+              <Grid item xs={6} md={3}>
                 <FormControlLabel
                   control={<Checkbox name="recurring" value={formik.values.recurring} onChange={handleRecurringChange} onBlur={formik.handleBlur} />}
                   label="Recorrente?"
@@ -167,7 +200,7 @@ const TransactionFormDialog = ({ transaction }: { transaction: TransactionForm }
               </Grid>
 
               {isRecurring && (
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={3}>
                   <TextField
                     helperText={formik.touched.times && formik.errors.times}
                     error={formik.touched.times && Boolean(formik.errors.times)}

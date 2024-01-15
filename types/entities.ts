@@ -26,6 +26,8 @@ type TransactionDAO = {
     amount: number;
     categories: CategoryDAO;
     cashed: boolean;
+    payment_date: string | null;
+    payed_amount: number | null;
 }
 
 type TransactionForm = {
@@ -35,6 +37,8 @@ type TransactionForm = {
     description: string,
     cashed: boolean,
     category_id: number,
+    payment_date: Dayjs | null,
+    payed_amount: number | null,
     times: number,
     recurring: boolean,
 }

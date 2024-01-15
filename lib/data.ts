@@ -20,9 +20,11 @@ const TransactionDefaultData = {
     category_id: 3,
     cashed: true,
     description: "",
-    date: dayjs(Date.now()),
+    due_date: dayjs(Date.now()),
     times: 2,
     recurring: false,
+    payment_date: null,
+    payed_amount: 0,
 }
 
 export {
