@@ -23,7 +23,7 @@ const TransactionDefaultData = {
     due_date: dayjs(Date.now()),
     times: 2,
     recurring: false,
-    payment_date: null,
+    payment_date: dayjs(Date.now()),
     payed_amount: 0,
 }
 

@@ -25,7 +25,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 }
 
 const addTransaction = async (
-    {amount, due_date, description, cashed, category_id, times, recurring}: TransactionForm
+    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, times, recurring}: TransactionForm
 ) => {
     if (recurring) {
         const rows = [];
@@ -36,7 +36,9 @@ const addTransaction = async (
                 due_date: due_date.add(i, 'month').format('YYYY-MM-DD'),
                 description: desctext,
                 cashed,
-                category_id
+                category_id,
+                payment_date: cashed && payment_date ? payment_date.add(i, 'month').format('YYYY-MM-DD') : null,
+                payed_amount: cashed && payed_amount ? payed_amount : null,
             })
         }
         const {data, error} = await supabase.from('transactions').insert(rows)
@@ -50,7 +52,9 @@ const addTransaction = async (
             due_date: due_date.format('YYYY-MM-DD'),
             description,
             cashed,
-            category_id
+            category_id,
+            payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
+            payed_amount: cashed && payed_amount ? payed_amount : null,
         })
         if (error) {
             throw error
@@ -59,12 +63,14 @@ const addTransaction = async (
     }
 }
 
-const editTransaction = async ({id, amount, due_date, description, category_id}: TransactionForm) => {
+const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount}: TransactionForm) => {
     const {data, error} = await supabase.from('transactions').update({
         amount,
         due_date: due_date.format('YYYY-MM-DD'),
         description,
-        category_id
+        category_id,
+        payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
+        payed_amount: cashed && payed_amount ? payed_amount : null,
     }).match({id})
     if (error) {
         throw error
