@@ -1,11 +1,11 @@
 'use client'
 import {Stack, Container, Typography, Button, SvgIcon} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import GroupFormDialog from "@/components/dashboard/modals/GroupFormDialog";
-import ListGroupsTable from "@/components/dashboard/tables/ListGroupsTable";
 import {usePageContext} from "@/lib/hooks";
+import PaymentOptionsFormDialog from "@/components/dashboard/modals/PaymentOptionsFormDialog";
+import ListPaymentOptionsTable from "@/components/dashboard/tables/ListPaymentOptionsTable";
 
-const GroupsPage = () => {
+const PaymentOptions = () => {
     const {showModal, actionShowModal} = usePageContext();
 
     return (
@@ -13,7 +13,7 @@ const GroupsPage = () => {
       <Stack>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Typography variant="h5">
-              Grupos de Contas
+              Meios de Pagamento
           </Typography>
           <Button
                   startIcon={(
@@ -29,13 +29,12 @@ const GroupsPage = () => {
         </Stack>
 
         {showModal && (
-            <GroupFormDialog />
+            <PaymentOptionsFormDialog />
         )}
-        <ListGroupsTable />
-
+        <ListPaymentOptionsTable />
       </Stack>
     </Container>
     );
 };
 
-export default GroupsPage;
+export default PaymentOptions;

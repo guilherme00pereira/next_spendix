@@ -49,19 +49,18 @@ const ListTransactionsTable = () => {
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {/* TODO: convert to styled component */}
-              <TableCell colSpan={4} sx={{backgroundColor: "white !important"}} />
-              <TableCell align="center" sx={{backgroundColor: "white !important"}} >
+              <TableCell colSpan={4} sx={styles.emptyTableCell} />
+              <TableCell align="center" sx={styles.emptyTableCell} >
                 <Typography fontWeight="bold" color="info.main">
                   {amountFormatter(getIncomeTotal())}
                 </Typography>
               </TableCell>
-              <TableCell align="center" sx={{backgroundColor: "white !important"}} >
+              <TableCell align="center" sx={styles.emptyTableCell} >
                 <Typography fontWeight="bold" color="secondary.main">
                   {amountFormatter(getExpenseTotal())}
                 </Typography>
               </TableCell>
-              <TableCell sx={{backgroundColor: "white !important"}} />
+              <TableCell sx={styles.emptyTableCell} />
             </TableRow>
             <TableRow>
               <TableCell />
@@ -94,3 +93,9 @@ const ListTransactionsTable = () => {
 };
 
 export default ListTransactionsTable;
+
+const styles = {
+  emptyTableCell: {
+    backgroundColor: "white !important",
+  },
+};

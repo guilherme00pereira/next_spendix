@@ -25,6 +25,7 @@ const TransactionDefaultData = {
     recurring: false,
     payment_date: dayjs(Date.now()),
     payed_amount: 0,
+    payment_option_id: 3,
 }
 
 export {

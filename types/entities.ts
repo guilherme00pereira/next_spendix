@@ -19,6 +19,13 @@ type GroupDAO = {
     name: string;
 }
 
+type PaymentOptionDAO = {
+    id: number;
+    name: string;
+    due_date: Dayjs | null;
+    next_best_day: Dayjs | null;
+}
+
 type TransactionDAO = {
     id: number;
     due_date: string;
@@ -28,6 +35,7 @@ type TransactionDAO = {
     cashed: boolean;
     payment_date: string | null;
     payed_amount: number | null;
+    payment_options: PaymentOptionDAO;
 }
 
 type TransactionForm = {
@@ -39,6 +47,7 @@ type TransactionForm = {
     category_id: number,
     payment_date: Dayjs | null,
     payed_amount: number | null,
+    payment_option_id: number,
     times: number,
     recurring: boolean,
 }

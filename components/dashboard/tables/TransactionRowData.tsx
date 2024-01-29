@@ -8,14 +8,10 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Collapse from "@mui/material/Collapse";
 import { Button, Stack, Typography } from "@mui/material";
-import { amountFormatter, categoryTypeColor } from "@/lib/functions";
-import Tooltip from "@mui/material/Tooltip";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import { amountFormatter } from "@/lib/functions";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase/methods/transactions";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import {usePageContext, useTransactionContext} from "@/lib/hooks";
 import { RemovableEntity, TransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
@@ -23,14 +19,6 @@ import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDial
 import dayjs from "dayjs";
 import {TransactionDAO, TransactionUpdateStatusProps} from "@/types/entities";
 
-const getAmountType = (type: string | null) => {
-  switch (type) {
-    case "Receita":
-      return <AddCircleRoundedIcon fontSize="small" color="success" />;
-    default:
-      return <RemoveCircleRoundedIcon fontSize="small" color="error" />;
-  }
-};
 
 const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps) => {
   const queryClient = useQueryClient();
@@ -79,6 +67,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
       category_id: t.categories.id,
       payment_date: t.payment_date ? dayjs(t.payment_date) : null,
       payed_amount: t.payed_amount ?? null,
+      payment_option_id: t.payment_options.id,
       times: 2,
       recurring: false,
     });
@@ -97,32 +86,38 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                 <TableCell align="center">Categoria</TableCell>
                 <TableCell align="center">Tipo</TableCell>
                 <TableCell align="center">Descrição</TableCell>
+                <TableCell align="center">Meio Pagto</TableCell>
                 <TableCell align="center">Ação</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {transactions.map((transaction) => (
                 <TableRow key={transaction.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell align="right">{getAmountType(transaction.categories.type)}</TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell/>
+                  <TableCell component="th" scope="row" align="center">
                     <Stack direction="row" justifyContent="space-around">
                       <Typography variant="body2" fontWeight="bold">
                         {amountFormatter(transaction.payed_amount ?? transaction.amount)}
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" align="center">
                     {transaction.categories.name}
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" align="center">
                     <Typography color={transaction.categories.type === "Receita" ? "success.main" : "secondary.main"}
                                 variant="body2" fontWeight="bold">
                       {transaction.categories.type}
                     </Typography>
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" align="center">
                     <Typography variant="body2" color="text.secondary">
                       {transaction.description}
+                    </Typography>
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="center">
+                    <Typography variant="body2" color="text.secondary">
+                      {transaction.payment_options.name}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
