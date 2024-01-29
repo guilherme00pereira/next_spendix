@@ -17,7 +17,7 @@ const getBalanceColor = (balance: number) => {
 }
 
 const TransactionRow = ({transactions}: { transactions: TransactionDAO[]}) => {
-    let balanceTotal = useTransactionContext();
+    let {balanceTotal} = useTransactionContext();
     const [open, setOpen] = useState(false);
     const [row, setRow] = useState<TransactionRow>();
     const [balanceMonth, setBalanceMonth] = useState<number>(0);
@@ -27,14 +27,14 @@ const TransactionRow = ({transactions}: { transactions: TransactionDAO[]}) => {
         const run = async () => {
         const income: number = transactions
             .filter((transaction: TransactionDAO) => transaction.categories.type === "Receita")
-            .map((transaction: TransactionDAO) => transaction.amount)
+            .map((transaction: TransactionDAO) => transaction.payed_amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         const expense = transactions
             .filter((transaction: TransactionDAO) => transaction.categories.type !== "Receita")
-            .map((transaction: TransactionDAO) => transaction.amount)
+            .map((transaction: TransactionDAO) => transaction.payed_amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         setRow({
-            day: transactions[0].due_date.substring(8),
+            day: transactions[0].payment_date?.substring(8) ?? "0",
             income: income,
             expense: expense,
             balance: parseFloat(String((income - expense))),
@@ -81,7 +81,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionDAO[]}) => {
                             </Typography>
                         </TableCell>
                         <TableCell align="center">
-                            <Typography color="warning.main">
+                            <Typography color="secondary.main">
                                 {amountFormatter(row.expense)}
                             </Typography>
                         </TableCell>

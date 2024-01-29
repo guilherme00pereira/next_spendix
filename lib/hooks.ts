@@ -1,9 +1,9 @@
 import {createContext, useContext} from "react";
-import {PageContextData} from "@/types/interfaces";
+import {PageContextData, TransactionContextData} from "@/types/interfaces";
 
 
 export const PageContext = createContext<PageContextData>({} as PageContextData);
-export const TransactionContext = createContext<number[]>([]);
+export const TransactionContext = createContext<TransactionContextData>({} as TransactionContextData);
 
 export const usePageContext = () => {
     const context = useContext(PageContext);

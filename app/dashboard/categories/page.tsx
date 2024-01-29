@@ -11,6 +11,11 @@ const CategoriesPage = () => {
   const {showModal, actionShowModal} = usePageContext();
   const [editableCategory, setEditableCategory] = useState<CategoryForm>({id: 0, name: '', type: 'Receita'});
 
+  const handleAddNew = () => {
+    actionShowModal(true);
+    setEditableCategory({id: 0, name: '', type: 'Receita'});
+  }
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Stack>
@@ -25,7 +30,7 @@ const CategoriesPage = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
-                  onClick={() => actionShowModal(true)}
+                  onClick={handleAddNew}
                 >
                   Add
             </Button>

@@ -50,6 +50,14 @@ type TransactionRow = {
     balance: number;
 }
 
+type TransactionUpdateStatusProps = {
+    id: number;
+    cashed: boolean;
+    payment_date: Dayjs;
+    payed_amount: number;
+
+}
+
 export type {
     CategoryDAO,
     CategoryType,
@@ -57,5 +65,6 @@ export type {
     GroupDAO,
     TransactionDAO,
     TransactionForm,
-    TransactionRow
+    TransactionRow,
+    TransactionUpdateStatusProps,
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -21,6 +21,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       value={{
         showModal: showAdd,
         actionShowModal: setShowAdd,
+        mediaQuery: "md"
       }}
     >
       <QueryClientProvider client={queryClient}>

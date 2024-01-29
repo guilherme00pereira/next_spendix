@@ -16,10 +16,12 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase/methods/transactions";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
-import { usePageContext } from "@/lib/hooks";
+import {usePageContext, useTransactionContext} from "@/lib/hooks";
 import { RemovableEntity, TransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
+import dayjs from "dayjs";
+import {TransactionDAO, TransactionUpdateStatusProps} from "@/types/entities";
 
 const getAmountType = (type: string | null) => {
   switch (type) {
@@ -33,11 +35,12 @@ const getAmountType = (type: string | null) => {
 const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps) => {
   const queryClient = useQueryClient();
   const { actionShowModal } = usePageContext();
+  const { setTransaction } = useTransactionContext();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [removableTransaction, setRemovableTransaction] = useState<RemovableEntity>({ id: 0, name: "", type: "transação" });
 
   const cashedMutation = useMutation({
-    mutationFn: (id: number) => updateTransactionCashedStatus(id),
+    mutationFn: (value: TransactionUpdateStatusProps) => updateTransactionCashedStatus(value),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
@@ -50,6 +53,10 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
     },
   });
 
+  const handleUpdateStatus = (id: number) => {
+
+  }
+
   const handleConfirmDelete = (id: number, amount: number, category: string) => {
     setRemovableTransaction({ ...removableTransaction, id, name: category + " no valor de R$ " + amountFormatter(amount) });
     setOpenConfirm(true);
@@ -61,6 +68,22 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
       setOpenConfirm(false);
     }
   };
+
+  const handleEdit = (t: TransactionDAO) => {
+    setTransaction({
+      id: t.id,
+      amount: t.amount,
+      due_date: dayjs(t.due_date),
+      description: t.description,
+      cashed: t.cashed,
+      category_id: t.categories.id,
+      payment_date: t.payment_date ? dayjs(t.payment_date) : null,
+      payed_amount: t.payed_amount ?? null,
+      times: 2,
+      recurring: false,
+    });
+    actionShowModal(true);
+  }
 
   return (
     <Collapse in={open} timeout="auto" unmountOnExit>
@@ -84,7 +107,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                   <TableCell component="th" scope="row">
                     <Stack direction="row" justifyContent="space-around">
                       <Typography variant="body2" fontWeight="bold">
-                        {amountFormatter(transaction.amount)}
+                        {amountFormatter(transaction.payed_amount ?? transaction.amount)}
                       </Typography>
                     </Stack>
                   </TableCell>
@@ -92,7 +115,8 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                     {transaction.categories.name}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    <Typography color={categoryTypeColor(transaction.categories.type)} variant="body2" fontWeight="bold">
+                    <Typography color={transaction.categories.type === "Receita" ? "success.main" : "secondary.main"}
+                                variant="body2" fontWeight="bold">
                       {transaction.categories.type}
                     </Typography>
                   </TableCell>
@@ -102,14 +126,14 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {transaction.cashed || (
-                      <Tooltip title="Marcar como pago" arrow>
-                        <Button size="small" variant="text" color="success" onClick={() => cashedMutation.mutate(transaction.id)}>
-                          <CheckRoundedIcon fontSize="small" />
-                        </Button>
-                      </Tooltip>
-                    )}
-                    <Button size="small" variant="text" color="info" onClick={() => actionShowModal(true)}>
+                    {/*{transaction.cashed || (*/}
+                    {/*  <Tooltip title="Marcar como pago" arrow>*/}
+                    {/*    <Button size="small" variant="text" color="success" onClick={() => handleUpdateStatus(transaction.id)}>*/}
+                    {/*      <CheckRoundedIcon fontSize="small" />*/}
+                    {/*    </Button>*/}
+                    {/*  </Tooltip>*/}
+                    {/*)}*/}
+                    <Button size="small" variant="text" color="info" onClick={() => handleEdit(transaction)}>
                       <EditRoundedIcon fontSize="small" />
                     </Button>
                     <Button size="small" variant="text" color="error" onClick={() => handleConfirmDelete(transaction.id, transaction.amount, transaction.categories.name)}>

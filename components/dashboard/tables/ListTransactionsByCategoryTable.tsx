@@ -33,13 +33,6 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
         setTotal(transactions?.reduce((acc, curr) => acc + curr.amount, 0) ?? 0)
       }, [transactions])
 
-    const getMeanPerDay = () => {
-          if(transactions) {
-            return (transactions.reduce((acc, curr) => acc + curr.amount, 0) / transactions.length)
-          }
-          return 0
-    }
-
     return (
         <TableContainer component={Paper}>
                     <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -91,13 +84,7 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
                                         {amountFormatter(total)}
                                     </Typography>
                                 </TableCell>
-                                <TableCell colSpan={2}>
-                                    {transactions && transactions.length >= 5 && (
-                                        <Typography fontWeight="bold">
-                                            média de {amountFormatter(getMeanPerDay())} por dia
-                                        </Typography>
-                                    )}
-                                </TableCell>
+                                <TableCell colSpan={2} />
                             </TableRow>
                             {isLoading && (
                             <TableRow>

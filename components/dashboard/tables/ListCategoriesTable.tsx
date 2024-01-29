@@ -83,7 +83,8 @@ const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<Catego
                                         </Link>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Typography color={categoryTypeColor(category.type)} variant="body2" fontWeight="bold">
+                                        <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
+                                                    variant="body2" fontWeight="bold">
                                             {category.type}
                                         </Typography>
                                     </TableCell>

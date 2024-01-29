@@ -15,6 +15,7 @@ import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 import {usePageContext} from "@/lib/hooks";
 import { TransactionForm } from "@/types/entities";
 import { TransactionDefaultData } from "@/lib/data";
+import { TransactionContext } from "@/lib/hooks";
 
 const TransactionsPage = () => {
     const {showModal, actionShowModal} = usePageContext();
@@ -24,10 +25,19 @@ const TransactionsPage = () => {
         const year = date.getFullYear();
         return `${month} de ${year}`;
     }, []);
-    const [editableTransaction, setEditableTransaction] = useState<TransactionForm>(TransactionDefaultData);
+    const [formTransactionObject, setFormTransactionObject] = useState<TransactionForm>(TransactionDefaultData);
+
+    const handleAddNew = () => {
+        actionShowModal(true);
+        setFormTransactionObject(TransactionDefaultData);
+    }
 
     return (
-
+      <TransactionContext.Provider value={{
+          balanceTotal: [],
+          transaction: formTransactionObject,
+          setTransaction: setFormTransactionObject
+      }}>
         <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
             <Box>
                 <Stack
@@ -45,17 +55,18 @@ const TransactionsPage = () => {
                             </SvgIcon>
                         }
                         variant="contained"
-                        onClick={() => actionShowModal(true)}
+                        onClick={handleAddNew}
                     >
                         Add
                     </Button>
                 </Stack>
                 {showModal && (
-                    <TransactionFormDialog transaction={editableTransaction}/>
+                    <TransactionFormDialog />
                 )}
                 <ListTransactionsTable/>
             </Box>
         </Container>
+      </TransactionContext.Provider>
     );
 };
 

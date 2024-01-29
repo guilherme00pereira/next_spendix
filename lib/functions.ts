@@ -27,24 +27,23 @@ const getLasDayOfMonth = (m?: number, y?: number) => {
 const groupTransactionsByDate = (transactions: TransactionDAO[]) => {
     const groups = new Map<string, TransactionDAO[]>();
     transactions.forEach((t) => {
-        if(groups.has(t.due_date)) {
-            groups.get(t.due_date)?.push(t);
-        }
-        else {
-            groups.set(t.due_date, [t]);
+        if(t.payment_date) {
+            if (groups.has(t.payment_date)) {
+                groups.get(t.payment_date)?.push(t);
+            } else {
+                groups.set(t.payment_date, [t]);
+            }
         }
     });
-    return groups;
+    return new Map([...groups].sort());
 }
 
 const categoryTypeColor = (type: CategoryType) => {
     switch (type) {
         case "Receita":
             return "success.main";
-        case "Despesa Fixa":
-            return "secondary.main";
         default:
-            return "warning.main";
+            return "secondary.main";
     }
 }
 
