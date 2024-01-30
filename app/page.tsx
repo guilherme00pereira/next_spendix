@@ -26,8 +26,13 @@ export default function SignIn() {
     <Container component="main" sx={styles.container} maxWidth={false}>
       <Paper sx={styles.card}>
         <Stack direction="column" spacing={2}>
-          <TextField label="Código" error={error} helperText={helperText} variant="outlined" name="code"/>
-          <Button variant="contained" onClick={handleCodeChange} sx={{mt:2}}>Entrar</Button>
+          <TextField label="Código" error={error} helperText={helperText} variant="outlined" name="code"
+                     onKeyDown={(e) => {
+                       if (e.key === "Enter") {
+                          handleCodeChange();
+                       }
+                     }}/>
+          <Button variant="contained" onClick={handleCodeChange} sx={{mt: 2}}>Entrar</Button>
         </Stack>
       </Paper>
     </Container>
