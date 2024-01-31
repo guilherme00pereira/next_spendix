@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import {useRouter} from "next/navigation";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 export default function SignIn() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function SignIn() {
 
   return (
     <Container component="main" sx={styles.container} maxWidth={false}>
+      <Typography variant="h4" sx={styles.title}>Spendix</Typography>
       <Paper sx={styles.card}>
         <Stack direction="column" spacing={2}>
           <TextField label="Código" error={error} helperText={helperText} variant="outlined" name="code"
@@ -57,5 +59,10 @@ const styles = {
     flexDirection: 'column',
     width: "280px",
     height: "180px"
-  }
+  },
+  title: {
+    textAlign: 'center',
+    mb: 2,
+    color: (theme: any) => theme.palette.primary.main
+  },
 }

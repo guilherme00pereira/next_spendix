@@ -7,12 +7,8 @@ const CategoryTypeDict = [
         label: "Receita"
     },
     {
-        value: 'Despesa Fixa',
-        label: "Despesa Fixa"
-    },
-    {
-        value: 'Despesa Variável',
-        label: "Despesa Variável"
+        value: 'Despesa',
+        label: "Despesa"
     }
 ];
 const TransactionDefaultData = {
