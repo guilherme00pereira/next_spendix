@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -5,27 +6,31 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {CircularProgress, Stack, Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import { TransactionDAO } from "@/types/entities";
 import { getTransactions } from "@/lib/supabase/methods/transactions";
 import {
   amountFormatter,
-  getFisrtDayOfMonth,
-  getLasDayOfMonth,
   groupTransactionsByDate,
 } from "@/lib/functions";
 import TransactionRow from "@/components/dashboard/tables/TransactionRow";
-import { useQuery } from "@tanstack/react-query";
+import { useTransactionContext } from "@/lib/hooks";
+
 
 const ListTransactionsTable = () => {
-  const { data: transactions, isLoading } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => getTransactions(getFisrtDayOfMonth(), getLasDayOfMonth()),
-  });
+  const {date} = useTransactionContext();
+  const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionDAO[]>>(new Map());
+  const [transactions, setTransactions] = useState<TransactionDAO[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const getMappedTransactions = () => {
-    return groupTransactionsByDate(transactions as TransactionDAO[]);
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    getTransactions(date.startOf('M').format('YYYY-MM-DD'), date.endOf('M').format('YYYY-MM-DD')).then((data) => {
+      setIsLoading(false);
+      setMappedTransactions(groupTransactionsByDate(data as TransactionDAO[]));
+    });
+  }, [date]);
+
 
   const getIncomeTotal = () => {
     // @ts-ignore
@@ -74,7 +79,7 @@ const ListTransactionsTable = () => {
           </TableHead>
           <TableBody>
             {isLoading ||
-              Array.from(getMappedTransactions().values()).map(
+              Array.from(mappedTransactions.values()).map(
                 (transaction, key) => (
                   <TransactionRow key={key} transactions={transaction} />
                 )

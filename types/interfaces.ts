@@ -2,6 +2,7 @@ import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {TransactionDAO} from "@/types/entities";
 import {TransactionForm} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
+import { Dayjs } from 'dayjs';
 
 interface DashboardLayoutProps extends MuiAppBarProps {
     open?: boolean;
@@ -34,7 +35,7 @@ interface RemovableEntity {
 interface TransactionRowDataProps {
     day: string,
     transactions: TransactionDAO[],
-    open: boolean
+    open: boolean,
 }
 
 interface PageContextData {
@@ -47,6 +48,8 @@ interface TransactionContextData {
     balanceTotal: number[];
     transaction: TransactionForm;
     setTransaction: Dispatch<SetStateAction<TransactionForm>>;
+    date: Dayjs,
+    setDate: Dispatch<SetStateAction<Dayjs>>,
 }
 
 export type {

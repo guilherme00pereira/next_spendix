@@ -80,7 +80,7 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
           <ListItemIcon>
             <MonetizationOnRoundedIcon />
           </ListItemIcon>
-          <ListItemText primary="Lançamentos" />
+          <ListItemText primary="Transações" />
         </ListItemButton>
 
         <ListItemButton LinkComponent="a" href="/dashboard/categories">

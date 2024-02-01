@@ -8,20 +8,25 @@ const amountFormatter = (v: number) => {
     }).format(v);
 }
 
-const getFisrtDayOfMonth = (m?: number, y?: number) => {
-    if(m && y) {
+const getFisrtDayOfMonth = (m: number, y: number) => {
+    if(m === 0 && y === 0) {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().substring(0, 10);
+        
+    } else {
         return new Date(y, m, 1).toISOString().substring(0, 10);
     }
-    const d = new Date();
-    return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().substring(0, 10);
 }
 
-const getLasDayOfMonth = (m?: number, y?: number) => {
-    if(m && y) {
+const getLasDayOfMonth = (m: number, y: number) => {
+    if(m === 0 && y === 0) {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth()+1, 0).toISOString().substring(0, 10);
+        
+    } else {
         return new Date(y, m+1, 0).toISOString().substring(0, 10);
     }
-    const d = new Date();
-    return new Date(d.getFullYear(), d.getMonth()+1, 0).toISOString().substring(0, 10);
+    
 }
 
 const groupTransactionsByDate = (transactions: TransactionDAO[]) => {

@@ -3,6 +3,7 @@ import {supabase} from "@/lib/supabase/supabase-client";
 import { TransactionForm, TransactionUpdateStatusProps } from "@/types/entities";
 
 const getTransactions = async (di: string, df: string) => {
+    console.log(di, df)
     const {
         data,
         error
