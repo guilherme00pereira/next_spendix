@@ -1,13 +1,14 @@
 
 import {supabase} from "@/lib/supabase/supabase-client";
-import { TransactionForm, TransactionUpdateStatusProps } from "@/types/entities";
+import { TransactionFormData, TransactionUpdateStatusProps } from "@/types/entities";
 
+const getQuery = 'id, amount, due_date, description, cashed, payment_date, payed_amount, categories(id, name, type), payment_options(id, name, due_date, next_best_day)';
 const getTransactions = async (di: string, df: string) => {
     console.log(di, df)
     const {
         data,
         error
-    } = await supabase.from('transactions').select('id, amount, due_date, description, cashed, payment_date, payed_amount, categories(id, name, type), payment_options(id, name, due_date, next_best_day)').gte('due_date', di).lte('due_date', df).order("due_date", {ascending: true})
+    } = await supabase.from('transactions').select(getQuery).gte('due_date', di).lte('due_date', df).order("due_date", {ascending: true})
     if (error) {
         throw error
     }
@@ -18,7 +19,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
     const {
         data,
         error
-    } = await supabase.from('transactions').select('id, amount, due_date, description, cashed, payment_date, payed_amount, categories(name, type), payment_options(id, name, due_date, next_best_day)').gte('due_date', di).lte('due_date', df).eq('category_id', category_id).order("due_date", {ascending: true})
+    } = await supabase.from('transactions').select(getQuery).gte('due_date', di).lte('due_date', df).eq('category_id', category_id).order("due_date", {ascending: true})
     if (error) {
         throw error
     }
@@ -26,7 +27,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 }
 
 const addTransaction = async (
-    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, payment_option_id, times, recurring}: TransactionForm
+    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, payment_option_id, times, recurring}: TransactionFormData
 ) => {
     if (recurring) {
         const rows = [];
@@ -43,7 +44,7 @@ const addTransaction = async (
                 payed_amount: cashed && payed_amount ? payed_amount : null,
             })
         }
-        const {data, error} = await supabase.from('transactions').insert(rows)
+        const {data, error} = await supabase.from('transactions').insert(rows).select(getQuery)
         if (error) {
             throw error
         }
@@ -58,7 +59,7 @@ const addTransaction = async (
             payment_option_id,
             payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
             payed_amount: cashed && payed_amount ? payed_amount : null,
-        })
+        }).select(getQuery)
         if (error) {
             throw error
         }
@@ -66,7 +67,7 @@ const addTransaction = async (
     }
 }
 
-const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount, payment_option_id}: TransactionForm) => {
+const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount, payment_option_id}: TransactionFormData) => {
     const {data, error} = await supabase.from('transactions').update({
         amount,
         due_date: due_date.format('YYYY-MM-DD'),
@@ -76,7 +77,7 @@ const editTransaction = async ({id, amount, cashed, due_date, description, categ
         payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
         payed_amount: cashed && payed_amount ? payed_amount : null,
         cashed
-    }).match({id})
+    }).match({id}).select(getQuery)
     if (error) {
         throw error
     }

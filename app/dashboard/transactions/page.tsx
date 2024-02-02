@@ -7,7 +7,7 @@ import ListTransactionsTable from "@/components/dashboard/tables/ListTransaction
 import Box from "@mui/material/Box";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 import { usePageContext } from "@/lib/hooks";
-import { TransactionForm } from "@/types/entities";
+import {TransactionType, TransactionFormData} from "@/types/entities";
 import { TransactionDefaultData } from "@/lib/data";
 import { TransactionContext } from "@/lib/hooks";
 import dayjs, { Dayjs } from "dayjs";
@@ -15,7 +15,8 @@ import dayjs, { Dayjs } from "dayjs";
 const TransactionsPage = () => {
   const { showModal, actionShowModal } = usePageContext();
   const [selectedDayAndMonth, setSelectedDayAndMonth] = useState<Dayjs>(dayjs());
-  const [formTransactionObject, setFormTransactionObject] = useState<TransactionForm>(TransactionDefaultData);
+  const [transactions, setTransactions] = useState<TransactionType[] | null>(null);
+  const [formTransactionObject, setFormTransactionObject] = useState<TransactionFormData>(TransactionDefaultData);
 
   const handleAddNew = () => {
     actionShowModal(true);
@@ -32,6 +33,8 @@ const TransactionsPage = () => {
         setTransaction: setFormTransactionObject,
         date: selectedDayAndMonth,
         setDate: setSelectedDayAndMonth,
+        list: transactions,
+        setList: setTransactions,
       }}
     >
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>

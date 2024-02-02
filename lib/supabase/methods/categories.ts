@@ -1,4 +1,4 @@
-import {CategoryForm} from "@/types/entities";
+import {CategoryFormData} from "@/types/entities";
 import {supabase} from "@/lib/supabase/supabase-client";
 
 const getCategories = async () => {
@@ -12,7 +12,7 @@ const getCategories = async () => {
     return data
 }
 
-const addCategory = async ({name, type}: CategoryForm) => {
+const addCategory = async ({name, type}: CategoryFormData) => {
     const {data, error} = await supabase.from('categories').insert({name, type})
     if (error) {
         throw error
@@ -20,7 +20,7 @@ const addCategory = async ({name, type}: CategoryForm) => {
     return data
 }
 
-const editCategory = async ({id, name, type}: CategoryForm) => {
+const editCategory = async ({id, name, type}: CategoryFormData) => {
     const {data, error} = await supabase.from('categories').update({name, type}).match({id})
     if (error) {
         throw error

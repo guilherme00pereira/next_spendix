@@ -1,4 +1,4 @@
-import {TransactionDAO, CategoryType} from "@/types/entities";
+import {TransactionType, PaymentOptionType} from "@/types/entities";
 
 const amountFormatter = (v: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -29,8 +29,8 @@ const getLasDayOfMonth = (m: number, y: number) => {
     
 }
 
-const groupTransactionsByDate = (transactions: TransactionDAO[]) => {
-    const groups = new Map<string, TransactionDAO[]>();
+const groupTransactionsByDate = (transactions: TransactionType[]) => {
+    const groups = new Map<string, TransactionType[]>();
     transactions.forEach((t) => {
         if(t.payment_date) {
             if (groups.has(t.payment_date)) {
@@ -43,7 +43,7 @@ const groupTransactionsByDate = (transactions: TransactionDAO[]) => {
     return new Map([...groups].sort());
 }
 
-const categoryTypeColor = (type: CategoryType) => {
+const categoryTypeColor = (type: "Receita" | "Despesa") => {
     switch (type) {
         case "Receita":
             return "success.main";
@@ -52,10 +52,45 @@ const categoryTypeColor = (type: CategoryType) => {
     }
 }
 
+const transactionConverterResponseToType = (
+  {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payment_options} :
+  {
+      id: number,
+      amount: number,
+      due_date: string,
+      description: string | null,
+      cashed: boolean,
+      payment_date: string | null,
+      payed_amount: number | null,
+      categories: {id: number, name: string, type: "Receita" | "Despesa"} | null,
+      payment_options: {id: number, name: string, due_date: number | null, next_best_day: number | null} | null
+  }
+): TransactionType => {
+    let po: PaymentOptionType = {
+        id: payment_options ? payment_options.id : 0,
+        name: "",
+        due_date: null,
+        next_best_day: null
+    };
+
+    return {
+        id,
+        amount,
+        due_date,
+        description: description || "",
+        cashed,
+        payment_date: payment_date || null,
+        payed_amount: payed_amount || null,
+        categories,
+        payment_options: po
+    }
+}
+
 export {
     amountFormatter,
     getFisrtDayOfMonth,
     getLasDayOfMonth,
     groupTransactionsByDate,
-    categoryTypeColor
+    categoryTypeColor,
+    transactionConverterResponseToType
 }

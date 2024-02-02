@@ -4,7 +4,7 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {TransactionDAO, TransactionRow} from "@/types/entities";
+import {TransactionType, TransactionRow} from "@/types/entities";
 import {amountFormatter} from "@/lib/functions";
 import TransactionRowData from "@/components/dashboard/tables/TransactionRowData";
 import {Typography} from "@mui/material";
@@ -16,7 +16,7 @@ const getBalanceColor = (balance: number) => {
     return "success.main";
 }
 
-const TransactionRow = ({transactions}: { transactions: TransactionDAO[]}) => {
+const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     let {balanceTotal} = useTransactionContext();
     const [open, setOpen] = useState(false);
     const [row, setRow] = useState<TransactionRow>();
@@ -26,12 +26,12 @@ const TransactionRow = ({transactions}: { transactions: TransactionDAO[]}) => {
     useEffect(() => {
         const run = async () => {
         const income: number = transactions
-            .filter((transaction: TransactionDAO) => transaction.categories.type === "Receita")
-            .map((transaction: TransactionDAO) => transaction.payed_amount ?? transaction.amount)
+            .filter((transaction: TransactionType) => transaction.categories.type === "Receita")
+            .map((transaction: TransactionType) => transaction.payed_amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         const expense = transactions
-            .filter((transaction: TransactionDAO) => transaction.categories.type !== "Receita")
-            .map((transaction: TransactionDAO) => transaction.payed_amount ?? transaction.amount)
+            .filter((transaction: TransactionType) => transaction.categories.type !== "Receita")
+            .map((transaction: TransactionType) => transaction.payed_amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         setRow({
             day: transactions[0].payment_date?.substring(8) ?? "0",

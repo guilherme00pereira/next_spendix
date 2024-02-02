@@ -1,44 +1,37 @@
 import { Dayjs } from "dayjs";
 
-type CategoryDAO = {
+type CategoryType = {
     id: number;
     name: string;
-    type: CategoryType;
+    type: "Receita" | "Despesa";
 }
 
-type CategoryType = "Receita" | "Despesa Fixa" | "Despesa Variável" | null;
-
-type CategoryForm = {
+type CategoryFormData = {
     id?: number;
     name: string;
-    type: CategoryType;
+    type: "Receita" | "Despesa";
 }
 
-type GroupDAO = {
-    id: number;
-    name: string;
-}
-
-type PaymentOptionDAO = {
+type PaymentOptionType = {
     id: number;
     name: string;
     due_date: Dayjs | null;
     next_best_day: Dayjs | null;
 }
 
-type TransactionDAO = {
+type TransactionType = {
     id: number;
     due_date: string;
     description: string;
     amount: number;
-    categories: CategoryDAO;
+    categories: CategoryType | null;
     cashed: boolean;
     payment_date: string | null;
     payed_amount: number | null;
-    payment_options: PaymentOptionDAO;
+    payment_options: PaymentOptionType | null;
 }
 
-type TransactionForm = {
+type TransactionFormData = {
     id?: number,
     amount: number,
     due_date: Dayjs,
@@ -69,12 +62,11 @@ type TransactionUpdateStatusProps = {
 
 
 export type {
-    CategoryDAO,
     CategoryType,
-    CategoryForm,
-    GroupDAO,
-    TransactionDAO,
-    TransactionForm,
+    CategoryFormData,
+    TransactionType,
+    TransactionFormData,
     TransactionRow,
     TransactionUpdateStatusProps,
+    PaymentOptionType
 }

@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import {CircularProgress, Typography} from "@mui/material";
-import { TransactionDAO } from "@/types/entities";
+import { TransactionType } from "@/types/entities";
 import { getTransactions } from "@/lib/supabase/methods/transactions";
 import {
   amountFormatter,
@@ -18,23 +18,23 @@ import { useTransactionContext } from "@/lib/hooks";
 
 
 const ListTransactionsTable = () => {
-  const {date} = useTransactionContext();
-  const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionDAO[]>>(new Map());
-  const [transactions, setTransactions] = useState<TransactionDAO[] | null>(null);
+  const {date, list, setList} = useTransactionContext();
+  const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     getTransactions(date.startOf('M').format('YYYY-MM-DD'), date.endOf('M').format('YYYY-MM-DD')).then((data) => {
+      setList(data as TransactionType[]);
       setIsLoading(false);
-      setMappedTransactions(groupTransactionsByDate(data as TransactionDAO[]));
+      setMappedTransactions(groupTransactionsByDate(data as TransactionType[]));
     });
   }, [date]);
 
 
   const getIncomeTotal = () => {
     // @ts-ignore
-    return transactions
+    return list
       ?.filter((transaction: any) => transaction.categories.type === "Receita")
       .map((transaction: any) => transaction.payed_amount)
       .reduce((acc: number, curr: number) => acc + curr, 0) ?? 0;
@@ -42,7 +42,7 @@ const ListTransactionsTable = () => {
 
   const getExpenseTotal = () => {
     // @ts-ignore
-    return transactions
+    return list
       ?.filter((transaction: any) => transaction.categories.type !== "Receita")
       .map((transaction: any) => transaction.payed_amount)
       .reduce((acc: number, curr: number) => acc + curr, 0) ?? 0;

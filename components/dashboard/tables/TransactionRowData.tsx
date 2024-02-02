@@ -17,7 +17,7 @@ import { RemovableEntity, TransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import dayjs from "dayjs";
-import {TransactionDAO, TransactionUpdateStatusProps} from "@/types/entities";
+import {TransactionType, TransactionUpdateStatusProps} from "@/types/entities";
 
 
 const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps) => {
@@ -57,7 +57,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
     }
   };
 
-  const handleEdit = (t: TransactionDAO) => {
+  const handleEdit = (t: TransactionType) => {
     setTransaction({
       id: t.id,
       amount: t.amount,

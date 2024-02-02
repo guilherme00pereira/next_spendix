@@ -9,13 +9,15 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {TransactionForm} from "@/types/entities";
+import {TransactionType, TransactionFormData} from "@/types/entities";
 import {addTransaction, editTransaction} from "@/lib/supabase/methods/transactions";
 import {getCategories} from "@/lib/supabase/methods/categories";
 import {usePageContext, useTransactionContext} from "@/lib/hooks";
-import {useMutation, useQueryClient, useQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
-import { getPaymentOptions } from "@/lib/supabase/methods/payment-options";
+import {getPaymentOptions} from "@/lib/supabase/methods/payment-options";
+import dayjs from "dayjs";
+import {transactionConverterResponseToType} from "@/lib/functions";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -31,11 +33,11 @@ const validate = yup.object({
 });
 
 const TransactionFormDialog = () => {
-  const {transaction} = useTransactionContext();
-  const queryClient = useQueryClient();
+  const {transaction, list, setList} = useTransactionContext();
   const {showModal, actionShowModal} = usePageContext();
   const [isCashed, setIsCashed] = useState<boolean>(true);
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const {data: categories} = useQuery({
     queryKey: ["categories"],
@@ -62,29 +64,14 @@ const TransactionFormDialog = () => {
     formik.setFieldValue("cashed", e.target.checked);
   }
 
-  const addMutation = useMutation({
-    mutationFn: (values: TransactionForm) => addTransaction(values),
-    onSuccess: () => {
-      actionShowModal(!showModal);
-      queryClient.invalidateQueries({queryKey: ["transactions"]});
-    },
-  });
-
-  const editMutation = useMutation({
-    mutationFn: (values: TransactionForm) => editTransaction(values),
-    onSuccess: () => {
-      actionShowModal(!showModal);
-      queryClient.invalidateQueries({queryKey: ["transactions"]});
-    },
-  });
 
   const formik = useFormik({
     initialValues: transaction,
     validationSchema: validate,
     onSubmit: (values) => {
-
+      setIsPending(true);
       if (values.id) {
-        editMutation.mutate({
+        editTransaction({
           id: values.id,
           amount: values["amount"],
           due_date: values["due_date"],
@@ -96,9 +83,14 @@ const TransactionFormDialog = () => {
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
           payment_option_id: values["payment_option_id"]
+        }).then(r => {
+          actionShowModal(false);
+          setIsPending(false);
+          const t: TransactionType = transactionConverterResponseToType(r[0]);
+          setList([...list, t]);
         });
       } else {
-        addMutation.mutate({
+        addTransaction({
           amount: values["amount"],
           due_date: values["due_date"],
           description: values["description"],
@@ -109,6 +101,14 @@ const TransactionFormDialog = () => {
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
           payment_option_id: values["payment_option_id"]
+        }).then(r => {
+          actionShowModal(false);
+          setIsPending(false);
+          let ta: TransactionType[] = [];
+          for(let i = 0; i < r?.length; i++) {
+            ta.push(transactionConverterResponseToType(r[i]))
+          }
+          setList([...list, ...ta]);
         });
       }
     },
@@ -119,7 +119,7 @@ const TransactionFormDialog = () => {
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <ModalTopBar title="Novo lançamento"/>
         <DialogContent>
-          {addMutation.isPending && (
+          {isPending && (
             <Stack sx={{width: "100%", pb: 3}} spacing={2}>
               <LinearProgress/>
             </Stack>
@@ -239,33 +239,33 @@ const TransactionFormDialog = () => {
           </Stack>
 
           {transaction.id || (
-              <Stack direction="row" sx={{py: 2}}>
-                <Grid container spacing={2}>
-                  <Grid item xs={6} md={2}>
-                    <FormControlLabel
-                      control={<Checkbox name="recurring" value={formik.values.recurring}
-                                         onChange={handleRecurringChange} onBlur={formik.handleBlur}/>}
-                      label="Recorrente?"
+            <Stack direction="row" sx={{py: 2}}>
+              <Grid container spacing={2}>
+                <Grid item xs={6} md={2}>
+                  <FormControlLabel
+                    control={<Checkbox name="recurring" value={formik.values.recurring}
+                                       onChange={handleRecurringChange} onBlur={formik.handleBlur}/>}
+                    label="Recorrente?"
+                  />
+                </Grid>
+
+                {isRecurring && (
+                  <Grid item xs={12} md={2}>
+                    <TextField
+                      helperText={formik.touched.times && formik.errors.times}
+                      error={formik.touched.times && Boolean(formik.errors.times)}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.times}
+                      fullWidth
+                      name="times"
+                      label="Nº de parcelas"
                     />
                   </Grid>
-
-                  {isRecurring && (
-                    <Grid item xs={12} md={2}>
-                      <TextField
-                        helperText={formik.touched.times && formik.errors.times}
-                        error={formik.touched.times && Boolean(formik.errors.times)}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.times}
-                        fullWidth
-                        name="times"
-                        label="Nº de parcelas"
-                      />
-                    </Grid>
-                  )}
-                </Grid>
-              </Stack>
-            )}
+                )}
+              </Grid>
+            </Stack>
+          )}
 
           <Stack direction="row">
             <Grid container spacing={2}>

@@ -16,7 +16,7 @@ import {
     amountFormatter,
   } from "@/lib/functions";
 import { SinglePageTableProps } from '@/types/interfaces';
-import { TransactionDAO } from '@/types/entities';
+import { TransactionType } from '@/types/entities';
 
 const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePageTableProps) => {
     const [total, setTotal] = React.useState<number>(0);
@@ -27,7 +27,7 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
       });
 
       useEffect(() => {
-        const firstTransaction: TransactionDAO = transactions?.[0] as TransactionDAO ?? {}
+        const firstTransaction: TransactionType = transactions?.[0] as TransactionType ?? {}
         handleName(firstTransaction.categories?.name ?? "")
         handleType(firstTransaction.categories?.type ?? "")
         setTotal(transactions?.reduce((acc, curr) => acc + curr.amount, 0) ?? 0)

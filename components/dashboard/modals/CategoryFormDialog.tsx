@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { CategoryForm, CategoryType } from "@/types/entities";
+import { CategoryFormData, CategoryType } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
 import { addCategory, editCategory } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -17,12 +17,12 @@ const validate = yup.object({
   type: yup.string().required("Campo obrigatório"),
 });
 
-const CategoryFormDialog = ({ category }: { category: CategoryForm }) => {
+const CategoryFormDialog = ({ category }: { category: CategoryFormData }) => {
   const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
 
   const addMutation = useMutation({
-    mutationFn: (values: CategoryForm) => addCategory(values),
+    mutationFn: (values: CategoryFormData) => addCategory(values),
     onSuccess: () => {
       actionShowModal(!showModal);
       queryClient.invalidateQueries({ queryKey: ["categories"] });
@@ -30,7 +30,7 @@ const CategoryFormDialog = ({ category }: { category: CategoryForm }) => {
   });
 
   const editMutation = useMutation({
-    mutationFn: (values: CategoryForm) => editCategory(values),
+    mutationFn: (values: CategoryFormData) => editCategory(values),
     onSuccess: () => {
       actionShowModal(!showModal);
       queryClient.invalidateQueries({ queryKey: ["categories"] });

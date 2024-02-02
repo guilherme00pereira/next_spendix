@@ -16,10 +16,10 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import {categoryTypeColor} from "@/lib/functions";
 import {usePageContext} from "@/lib/hooks";
-import {CategoryForm} from "@/types/entities";
+import {CategoryFormData} from "@/types/entities";
 import { RemovableEntity } from "@/types/interfaces";
 
-const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<CategoryForm>>}) => {
+const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<CategoryFormData>>}) => {
     const queryClient = useQueryClient();
     const {actionShowModal} = usePageContext();
     const [openConfirm, setOpenConfirm] = useState(false);
