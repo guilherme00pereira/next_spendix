@@ -51,10 +51,10 @@ const ListTransactionsTable = () => {
   return (
 
       <TableContainer component={Paper}>
-        <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell colSpan={4} sx={styles.emptyTableCell} />
+              <TableCell colSpan={3} sx={styles.emptyTableCell} />
               <TableCell align="center" sx={styles.emptyTableCell} >
                 <Typography fontWeight="bold" color="info.main">
                   {amountFormatter(getIncomeTotal())}
@@ -65,16 +65,15 @@ const ListTransactionsTable = () => {
                   {amountFormatter(getExpenseTotal())}
                 </Typography>
               </TableCell>
-              <TableCell sx={styles.emptyTableCell} />
+              <TableCell colSpan={2} sx={styles.emptyTableCell} />
             </TableRow>
             <TableRow>
               <TableCell />
               <TableCell align="center">Dia</TableCell>
-              <TableCell align="center">Balanço</TableCell>
-              <TableCell align="center">Saldo do dia</TableCell>
-              <TableCell align="center">Entradas</TableCell>
-              <TableCell align="center">Saídas</TableCell>
-              <TableCell align="center">Lançamentos</TableCell>
+              <TableCell align="center">Saldo</TableCell>
+              <TableCell align="center">Receitas</TableCell>
+              <TableCell align="center">Despesas</TableCell>
+              <TableCell align="center">N° de Lançamentos</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

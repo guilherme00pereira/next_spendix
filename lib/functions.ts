@@ -29,6 +29,15 @@ const getLasDayOfMonth = (m: number, y: number) => {
     
 }
 
+const categoryTypeColor = (type: "Receita" | "Despesa") => {
+    switch (type) {
+        case "Receita":
+            return "success.main";
+        default:
+            return "secondary.main";
+    }
+}
+
 const groupTransactionsByDate = (transactions: TransactionType[]) => {
     const groups = new Map<string, TransactionType[]>();
     transactions.forEach((t) => {
@@ -43,15 +52,6 @@ const groupTransactionsByDate = (transactions: TransactionType[]) => {
     return new Map([...groups].sort());
 }
 
-const categoryTypeColor = (type: "Receita" | "Despesa") => {
-    switch (type) {
-        case "Receita":
-            return "success.main";
-        default:
-            return "secondary.main";
-    }
-}
-
 const transactionConverterResponseToType = (
   {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payment_options} :
   {
@@ -62,8 +62,8 @@ const transactionConverterResponseToType = (
       cashed: boolean,
       payment_date: string | null,
       payed_amount: number | null,
-      categories: {id: number, name: string, type: "Receita" | "Despesa"} | null,
-      payment_options: {id: number, name: string, due_date: number | null, next_best_day: number | null} | null
+      categories: {id: number, name: string, type: "Receita" | "Despesa"},
+      payment_options: {id: number, name: string, due_date: number | null, next_best_day: number | null}
   }
 ): TransactionType => {
     let po: PaymentOptionType = {

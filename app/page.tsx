@@ -12,8 +12,10 @@ export default function SignIn() {
   const router = useRouter();
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const handleCodeChange = () => {
+    setLoading(true);
     let code = (document.querySelector("input[name=code]") as HTMLInputElement).value;
     if (code === "1861") {//"f9d1152547c0bde01830b7e8bd60024c"
       router.push("/dashboard");
@@ -21,6 +23,7 @@ export default function SignIn() {
       setError(true);
       setHelperText("Código inválido");
     }
+    setLoading(false);
   }
 
   return (
@@ -34,7 +37,9 @@ export default function SignIn() {
                           handleCodeChange();
                        }
                      }}/>
-          <Button variant="contained" onClick={handleCodeChange} sx={{mt: 2}}>Entrar</Button>
+          <Button variant="contained" onClick={handleCodeChange} sx={{mt: 2}} disabled={loading}>
+            {loading ? "Aguarde..." : "Entrar"}
+          </Button>
         </Stack>
       </Paper>
     </Container>

@@ -78,10 +78,10 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
     <Collapse in={open} timeout="auto" unmountOnExit>
       <Box sx={{ margin: 1 }}>
         <TableContainer>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <TableCell align="center">Dia {day}</TableCell>
+              <TableRow sx={styles.headrow}>
+                <TableCell />
                 <TableCell align="center">Valor</TableCell>
                 <TableCell align="center">Categoria</TableCell>
                 <TableCell align="center">Tipo</TableCell>
@@ -147,3 +147,11 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
 };
 
 export default TransactionRowData;
+
+const styles = {
+  headrow: {
+    '& > *': {
+      backgroundColor: "#FFF !important",
+    }
+  },
+}

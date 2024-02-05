@@ -9,11 +9,12 @@ import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
-import MonetizationOnRoundedIcon from '@mui/icons-material/MonetizationOnRounded';
+import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
+import PointOfSaleRoundedIcon from '@mui/icons-material/PointOfSaleRounded';
 import { Typography } from "@mui/material";
 import { DashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -34,6 +35,13 @@ const Drawer = styled(MuiDrawer, {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    '& .MuiToolbar-root': {
+      backgroundColor: theme.palette.primary.main,
+      color: "#FFF",
+      '& .MuiIconButton-root': {
+        color: "#FFF",
+      },
+    },
     boxSizing: "border-box",
     ...(!open && {
       overflowX: "hidden",
@@ -43,7 +51,7 @@ const Drawer = styled(MuiDrawer, {
       }),
       width: theme.spacing(0),
       [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
+        width: theme.spacing(7),
       },
     }),
   },
@@ -76,9 +84,16 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
           <ListItemText primary="Dashboard" />
         </ListItemButton>
 
+        <ListItemButton LinkComponent="a" href="/dashboard/cash-flow">
+          <ListItemIcon>
+            <PointOfSaleRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Fluxo de Caixa" />
+        </ListItemButton>
+
         <ListItemButton LinkComponent="a" href="/dashboard/transactions">
           <ListItemIcon>
-            <MonetizationOnRoundedIcon />
+            <ReceiptLongRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Transações" />
         </ListItemButton>

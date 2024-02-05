@@ -7,7 +7,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {TransactionType, TransactionRow} from "@/types/entities";
 import {amountFormatter} from "@/lib/functions";
 import TransactionRowData from "@/components/dashboard/tables/TransactionRowData";
-import {Typography} from "@mui/material";
+import {Chip, Typography} from "@mui/material";
 import {useTransactionContext} from "@/lib/hooks";
 
 const getBalanceColor = (balance: number) => {
@@ -20,7 +20,6 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     let {balanceTotal} = useTransactionContext();
     const [open, setOpen] = useState(false);
     const [row, setRow] = useState<TransactionRow>();
-    const [balanceMonth, setBalanceMonth] = useState<number>(0);
     const wasAlreadyRequested = useRef(false);
 
     useEffect(() => {
@@ -40,7 +39,6 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
             balance: parseFloat(String((income - expense))),
         });
         balanceTotal.push( parseFloat(String((income - expense).toFixed(2))) )
-        setBalanceMonth( balanceTotal.reduce((acc: number, curr: number) => acc + curr, 0) );
         }
         if (!wasAlreadyRequested.current) {
             wasAlreadyRequested.current = true;
@@ -52,7 +50,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
         <>
             {row && (
                 <>
-                    <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+                    <TableRow sx={styles.rowline}>
                         <TableCell>
                             <IconButton
                                 aria-label="expand row"
@@ -62,12 +60,8 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                                 {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                             </IconButton>
                         </TableCell>
-                        <TableCell align="center">{row.day}</TableCell>
-
                         <TableCell align="center">
-                            <Typography fontWeight="bold" color={getBalanceColor(balanceMonth)}>
-                                {amountFormatter(balanceMonth)}
-                            </Typography>
+                            <Chip label={row.day} color="primary" />
                         </TableCell>
 
                         <TableCell align="center">
@@ -99,3 +93,10 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
 };
 
 export default TransactionRow;
+
+const styles = {
+    rowline: {
+        backgroundColor: (theme: any) => theme.palette.neutral[25],
+    },
+    '& > *': {borderBottom: 'unset'}
+}

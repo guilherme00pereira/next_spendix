@@ -54,6 +54,11 @@ const TransactionFormDialog = () => {
     formik.setFieldValue("payed_amount", e.target.value)
   }
 
+  const handleDueDateChange = (value: any) => {
+    formik.setFieldValue("due_date", value);
+    formik.setFieldValue("payment_date", value);
+  }
+
   const handleRecurringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsRecurring(e.target.checked);
     formik.setFieldValue("recurring", e.target.checked);
@@ -83,11 +88,13 @@ const TransactionFormDialog = () => {
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
           payment_option_id: values["payment_option_id"]
-        }).then(r => {
-          actionShowModal(false);
-          setIsPending(false);
-          const t: TransactionType = transactionConverterResponseToType(r[0]);
-          setList([...list, t]);
+        }).then(res => {
+          if(res !== null) {
+            actionShowModal(false);
+            setIsPending(false);
+            const t: TransactionType = transactionConverterResponseToType(res[0]);
+            setList([...list, t]);
+          }
         });
       } else {
         addTransaction({
@@ -101,14 +108,16 @@ const TransactionFormDialog = () => {
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
           payment_option_id: values["payment_option_id"]
-        }).then(r => {
-          actionShowModal(false);
-          setIsPending(false);
-          let ta: TransactionType[] = [];
-          for(let i = 0; i < r?.length; i++) {
-            ta.push(transactionConverterResponseToType(r[i]))
+        }).then(res => {
+          if (res !== null) {
+            actionShowModal(false);
+            setIsPending(false);
+            let ta: TransactionType[] = [];
+            for (let i = 0; i < res?.length; i++) {
+              ta.push(transactionConverterResponseToType(res[i]))
+            }
+            setList([...list, ...ta]);
           }
-          setList([...list, ...ta]);
         });
       }
     },
@@ -164,7 +173,7 @@ const TransactionFormDialog = () => {
                   <DemoContainer components={["DatePicker"]} sx={{pt: "0"}}>
                     <DatePicker
                       format="DD/MM/YYYY"
-                      onChange={(value) => formik.setFieldValue("due_date", value)}
+                      onChange={handleDueDateChange}
                       value={formik.values.due_date}
                       name="due_date"
                       label="Vencimento"

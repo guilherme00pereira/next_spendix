@@ -15,7 +15,7 @@ import dayjs, { Dayjs } from "dayjs";
 const TransactionsPage = () => {
   const { showModal, actionShowModal } = usePageContext();
   const [selectedDayAndMonth, setSelectedDayAndMonth] = useState<Dayjs>(dayjs());
-  const [transactions, setTransactions] = useState<TransactionType[] | null>(null);
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [formTransactionObject, setFormTransactionObject] = useState<TransactionFormData>(TransactionDefaultData);
 
   const handleAddNew = () => {
@@ -41,7 +41,7 @@ const TransactionsPage = () => {
         <Box>
           <Stack direction={{ xs: "column", sm: "row" }} justifyContent={{ xs: "center", sm: "space-between" }} alignItems="center" sx={{ mb: 2 }}>
             <Typography variant="h5" textAlign="center">
-              Lançamentos {monthAndYear}
+              Transações em {monthAndYear}
             </Typography>
             <SelectMonthYear />
             <Button
