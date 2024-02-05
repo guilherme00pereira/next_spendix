@@ -48,10 +48,13 @@ interface TransactionContextData {
     balanceTotal: number[];
     transaction: TransactionFormData;
     setTransaction: Dispatch<SetStateAction<TransactionFormData>>;
-    date: Dayjs,
-    setDate: Dispatch<SetStateAction<Dayjs>>,
     list: TransactionType[];
     setList: Dispatch<SetStateAction<TransactionType[]>>;
+}
+
+interface AppStoreData {
+    date: string;
+    setDate: (d: string) => void;
 }
 
 export type {
@@ -62,6 +65,7 @@ export type {
     DashboardLayoutProps,
     TransactionRowDataProps,
     PageContextData,
-    TransactionContextData
+    TransactionContextData,
+    AppStoreData
 }
 

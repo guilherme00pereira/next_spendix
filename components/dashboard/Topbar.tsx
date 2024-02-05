@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { DashboardLayoutProps } from '@/types/interfaces';
 import {Typography} from "@mui/material";
+import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 
 const drawerWidth: number = 240;
 
@@ -57,7 +58,7 @@ const Topbar = ({props}: {props: DashboardLayoutProps}) => {
                             Spendix
                         </Typography>
                             )}
-
+                        <SelectMonthYear />
                     </Toolbar>
                 </AppBar>
     );

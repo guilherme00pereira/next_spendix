@@ -1,29 +1,30 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack, Container, Typography, Button, SvgIcon } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import TransactionFormDialog from "@/components/dashboard/modals/TransactionFormDialog";
 import ListTransactionsTable from "@/components/dashboard/tables/ListTransactionsTable";
 import Box from "@mui/material/Box";
-import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
-import { usePageContext } from "@/lib/hooks";
+import { useAppStore, usePageContext, TransactionContext } from "@/lib/hooks";
 import {TransactionType, TransactionFormData} from "@/types/entities";
 import { TransactionDefaultData } from "@/lib/data";
-import { TransactionContext } from "@/lib/hooks";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 const TransactionsPage = () => {
+  const {date} = useAppStore();
   const { showModal, actionShowModal } = usePageContext();
-  const [selectedDayAndMonth, setSelectedDayAndMonth] = useState<Dayjs>(dayjs());
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [formTransactionObject, setFormTransactionObject] = useState<TransactionFormData>(TransactionDefaultData);
+  const [monthAndYear, setMonthAndYear] = useState<string>(dayjs().format("MMMM [de] YYYY"));
 
   const handleAddNew = () => {
     actionShowModal(true);
     setFormTransactionObject(TransactionDefaultData);
   };
 
-  const monthAndYear = selectedDayAndMonth.format("MMMM [de] YYYY");
+  useEffect(() => {
+    setMonthAndYear(dayjs(date).format("MMMM [de] YYYY"));
+  }, [date]);
 
   return (
     <TransactionContext.Provider
@@ -31,8 +32,6 @@ const TransactionsPage = () => {
         balanceTotal: [],
         transaction: formTransactionObject,
         setTransaction: setFormTransactionObject,
-        date: selectedDayAndMonth,
-        setDate: setSelectedDayAndMonth,
         list: transactions,
         setList: setTransactions,
       }}
@@ -43,7 +42,6 @@ const TransactionsPage = () => {
             <Typography variant="h5" textAlign="center">
               Transações em {monthAndYear}
             </Typography>
-            <SelectMonthYear />
             <Button
               startIcon={
                 <SvgIcon fontSize="small">
