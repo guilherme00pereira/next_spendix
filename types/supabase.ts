@@ -6,23 +6,26 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       categories: {
         Row: {
           id: number
           name: string
+          parent: number | null
           type: Database["public"]["Enums"]["category_type"]
         }
         Insert: {
           id?: number
           name: string
+          parent?: number | null
           type?: Database["public"]["Enums"]["category_type"]
         }
         Update: {
           id?: number
           name?: string
+          parent?: number | null
           type?: Database["public"]["Enums"]["category_type"]
         }
         Relationships: []

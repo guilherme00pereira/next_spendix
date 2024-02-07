@@ -6,6 +6,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
             {children}
           </Box>
         </Box>
+        <SpeedDialAdd />
       </QueryClientProvider>
     </PageContext.Provider>
   );

@@ -23,7 +23,7 @@ const SelectMonthYear = () => {
     }
 
     return (
-        <Stack direction="row" justifyContent="center" alignItems="center">
+        <Stack direction="row" justifyContent="center" alignItems="center" sx={{flexGrow: "1"}}>
             <IconButton onClick={() => handleClick("del")}>
                 <ArrowCircleLeftRoundedIcon sx={{color:"white"}} />
             </IconButton>
