@@ -62,8 +62,8 @@ const transactionConverterResponseToType = (
       cashed: boolean,
       payment_date: string | null,
       payed_amount: number | null,
-      categories: {id: number, name: string, type: "Receita" | "Despesa"},
-      payment_options: {id: number, name: string, due_date: number | null, next_best_day: number | null}
+      categories: {id: number, name: string, type: "Receita" | "Despesa"} | null,
+      payment_options: {id: number, name: string, due_date: number | null, next_best_day: number | null} | null
   }
 ): TransactionType => {
     let po: PaymentOptionType = {

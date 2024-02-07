@@ -1,5 +1,5 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {TransactionType} from "@/types/entities";
+import {CategoryFormData, TransactionType} from "@/types/entities";
 import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 import { Dayjs } from 'dayjs';
@@ -46,8 +46,6 @@ interface PageContextData {
 
 interface TransactionContextData {
     balanceTotal: number[];
-    transaction: TransactionFormData;
-    setTransaction: Dispatch<SetStateAction<TransactionFormData>>;
     list: TransactionType[];
     setList: Dispatch<SetStateAction<TransactionType[]>>;
 }
@@ -55,6 +53,17 @@ interface TransactionContextData {
 interface AppStoreData {
     date: string;
     setDate: (d: string) => void;
+}
+
+interface SpeedDialStoreData {
+    showTransactionDialog: boolean;
+    actionShowTransactionDialog: (action: boolean) => void;
+    transaction: TransactionFormData;
+    setTransaction: (t: TransactionFormData) => void;
+    showCategoryDialog: boolean;
+    actionShowCategoryDialog: (action: boolean) => void;
+    category: CategoryFormData
+    setCategory: (c: CategoryFormData) => void;
 }
 
 export type {
@@ -66,6 +75,7 @@ export type {
     TransactionRowDataProps,
     PageContextData,
     TransactionContextData,
-    AppStoreData
+    AppStoreData,
+    SpeedDialStoreData
 }
 

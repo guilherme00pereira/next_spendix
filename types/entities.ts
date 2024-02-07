@@ -24,11 +24,11 @@ type TransactionType = {
     due_date: string;
     description: string;
     amount: number;
-    categories: CategoryType;
+    categories: CategoryType | null;
     cashed: boolean;
     payment_date: string | null;
     payed_amount: number | null;
-    payment_options: PaymentOptionType;
+    payment_options: PaymentOptionType | null;
 }
 
 type TransactionFormData = {

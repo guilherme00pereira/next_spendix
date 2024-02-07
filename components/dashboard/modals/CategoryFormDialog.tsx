@@ -8,7 +8,7 @@ import { CategoryFormData, CategoryType } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
 import { addCategory, editCategory } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";
-import { usePageContext } from "@/lib/hooks";
+import { usePageContext, useSpeedDialStore } from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
 
@@ -17,14 +17,14 @@ const validate = yup.object({
   type: yup.string().required("Campo obrigatório"),
 });
 
-const CategoryFormDialog = ({ category }: { category: CategoryFormData }) => {
+const CategoryFormDialog = () => {
   const queryClient = useQueryClient();
-  const { showModal, actionShowModal } = usePageContext();
+  const { showCategoryDialog, actionShowCategoryDialog, category } = useSpeedDialStore();
 
   const addMutation = useMutation({
     mutationFn: (values: CategoryFormData) => addCategory(values),
     onSuccess: () => {
-      actionShowModal(!showModal);
+      actionShowCategoryDialog(!showCategoryDialog);
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
@@ -32,7 +32,7 @@ const CategoryFormDialog = ({ category }: { category: CategoryFormData }) => {
   const editMutation = useMutation({
     mutationFn: (values: CategoryFormData) => editCategory(values),
     onSuccess: () => {
-      actionShowModal(!showModal);
+      actionShowCategoryDialog(!showCategoryDialog);
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
@@ -47,7 +47,7 @@ const CategoryFormDialog = ({ category }: { category: CategoryFormData }) => {
   });
 
   return (
-    <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
+    <Dialog open={showCategoryDialog} fullWidth maxWidth="md" onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <ModalTopBar title="Nova categoria" />
         <DialogContent>

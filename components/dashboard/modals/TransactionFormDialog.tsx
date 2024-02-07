@@ -9,14 +9,13 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {TransactionType, TransactionFormData} from "@/types/entities";
+import {TransactionType} from "@/types/entities";
 import {addTransaction, editTransaction} from "@/lib/supabase/methods/transactions";
 import {getCategories} from "@/lib/supabase/methods/categories";
-import {usePageContext, useTransactionContext} from "@/lib/hooks";
+import {useSpeedDialStore, useTransactionContext} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
 import {getPaymentOptions} from "@/lib/supabase/methods/payment-options";
-import dayjs from "dayjs";
 import {transactionConverterResponseToType} from "@/lib/functions";
 
 const validate = yup.object({
@@ -33,8 +32,8 @@ const validate = yup.object({
 });
 
 const TransactionFormDialog = () => {
-  const {transaction, list, setList} = useTransactionContext();
-  const {showModal, actionShowModal} = usePageContext();
+  const {list, setList} = useTransactionContext();
+  const {showTransactionDialog, actionShowTransactionDialog, transaction} = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [isPending, setIsPending] = useState<boolean>(false);
@@ -90,7 +89,7 @@ const TransactionFormDialog = () => {
           payment_option_id: values["payment_option_id"]
         }).then(res => {
           if(res !== null) {
-            actionShowModal(false);
+            actionShowTransactionDialog(false);
             setIsPending(false);
             const t: TransactionType = transactionConverterResponseToType(res[0]);
             setList([...list, t]);
@@ -110,7 +109,7 @@ const TransactionFormDialog = () => {
           payment_option_id: values["payment_option_id"]
         }).then(res => {
           if (res !== null) {
-            actionShowModal(false);
+            actionShowTransactionDialog(false);
             setIsPending(false);
             let ta: TransactionType[] = [];
             for (let i = 0; i < res?.length; i++) {
@@ -124,7 +123,7 @@ const TransactionFormDialog = () => {
   });
 
   return (
-    <Dialog open={showModal} fullScreen onClose={() => actionShowModal(!showModal)}>
+    <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <ModalTopBar title="Novo lançamento"/>
         <DialogContent>
