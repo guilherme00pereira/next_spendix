@@ -15,13 +15,13 @@ import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import {categoryTypeColor} from "@/lib/functions";
-import {usePageContext} from "@/lib/hooks";
+import {usePageContext, useSpeedDialStore} from "@/lib/hooks";
 import {CategoryFormData} from "@/types/entities";
 import { RemovableEntity } from "@/types/interfaces";
 
-const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<CategoryFormData>>}) => {
+const ListCategoriesTable = () => {
     const queryClient = useQueryClient();
-    const {actionShowModal} = usePageContext();
+    const {actionShowCategoryDialog, setCategory} = useSpeedDialStore();
     const [openConfirm, setOpenConfirm] = useState(false);
     const [removableCategory, setRemovableCategory] = useState<RemovableEntity>({id: 0, name: '', type: 'categoria'});
 
@@ -38,8 +38,8 @@ const ListCategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<Catego
     })
 
     const handleEdit = (id: number) => {
-        actionShowModal(true);
-        handler({
+        actionShowCategoryDialog(true);
+        setCategory({
             id,
             name: categories?.filter(category => category.id === id)[0].name ?? "",
             type: categories?.filter(category => category.id === id)[0].type ?? "Receita"

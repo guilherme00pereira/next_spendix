@@ -8,7 +8,7 @@ import { CategoryFormData, CategoryType } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
 import { addCategory, editCategory } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";
-import { usePageContext, useSpeedDialStore } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
 
@@ -41,8 +41,8 @@ const CategoryFormDialog = () => {
     initialValues: category,
     validationSchema: validate,
     onSubmit: (values) => {
-      if (values.id) editMutation.mutate({ id: values.id, name: values.name, type: values.type as CategoryType });
-      else addMutation.mutate({ name: values.name, type: values.type as CategoryType });
+      if (values.id) editMutation.mutate({ id: values.id, name: values.name, type: values.type });
+      else addMutation.mutate({ name: values.name, type: values.type });
     },
   });
 

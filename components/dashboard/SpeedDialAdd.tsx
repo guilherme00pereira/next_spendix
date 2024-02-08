@@ -1,18 +1,26 @@
-import { useState } from "react";
-import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+import {useState} from "react";
+import {SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import TransactionFormDialog from "./modals/TransactionFormDialog";
-import { useSpeedDialStore } from "@/lib/hooks";
+import {useSpeedDialStore} from "@/lib/hooks";
 import dayjs from "dayjs";
+import CategoryFormDialog from "@/components/dashboard/modals/CategoryFormDialog";
 
 const dialActions = [
-  { icon: <MonetizationOnOutlinedIcon />, name: "Transação", handler: "transaction" },
-  { icon: <CategoryOutlinedIcon />, name: "Categoria", handler: "category" }
+  {icon: <MonetizationOnOutlinedIcon/>, name: "Transação", handler: "transaction"},
+  {icon: <CategoryOutlinedIcon/>, name: "Categoria", handler: "category"}
 ];
 
 const SpeedDialAdd = () => {
-  const { setTransaction, showTransactionDialog, actionShowTransactionDialog } = useSpeedDialStore();
+  const {
+    setTransaction,
+    showTransactionDialog,
+    actionShowTransactionDialog,
+    setCategory,
+    showCategoryDialog,
+    actionShowCategoryDialog
+  } = useSpeedDialStore();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -22,7 +30,7 @@ const SpeedDialAdd = () => {
     switch (entity) {
       case "transaction":
         actionShowTransactionDialog(true);
-        setTransaction( {
+        setTransaction({
           amount: 0,
           category_id: 3,
           cashed: true,
@@ -33,10 +41,11 @@ const SpeedDialAdd = () => {
           payment_date: dayjs(Date.now()),
           payed_amount: 0,
           payment_option_id: 3,
-      });
+        });
         break;
       case "category":
-        console.log("nova categoria");
+        actionShowCategoryDialog(true);
+        setCategory({name: "", type: "Receita"});
         break;
       default:
         handleClose();
@@ -46,12 +55,15 @@ const SpeedDialAdd = () => {
 
   return (
     <>
-      <SpeedDial ariaLabel="botões" sx={styles.root} icon={<SpeedDialIcon />} onClose={handleClose} onOpen={handleOpen} open={open}>
+      <SpeedDial ariaLabel="botões" sx={styles.root} icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen}
+                 open={open}>
         {dialActions.map((action) => (
-          <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipOpen onClick={() => handleClick(action.handler)} />
+          <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipOpen
+                           onClick={() => handleClick(action.handler)}/>
         ))}
       </SpeedDial>
-      {showTransactionDialog && <TransactionFormDialog />}
+      {showTransactionDialog && <TransactionFormDialog/>}
+      {showCategoryDialog && <CategoryFormDialog />}
     </>
   );
 };
