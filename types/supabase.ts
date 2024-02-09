@@ -9,20 +9,50 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      accounts: {
+        Row: {
+          balance: number
+          bank: string
+          color: string | null
+          created_at: string
+          id: number
+        }
+        Insert: {
+          balance?: number
+          bank: string
+          color?: string | null
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          balance?: number
+          bank?: string
+          color?: string | null
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
+          color: string | null
+          icon: string | null
           id: number
           name: string
           parent: number | null
           type: Database["public"]["Enums"]["category_type"]
         }
         Insert: {
+          color?: string | null
+          icon?: string | null
           id?: number
           name: string
           parent?: number | null
           type?: Database["public"]["Enums"]["category_type"]
         }
         Update: {
+          color?: string | null
+          icon?: string | null
           id?: number
           name?: string
           parent?: number | null
@@ -30,23 +60,35 @@ export type Database = {
         }
         Relationships: []
       }
-      events: {
+      credit_cards: {
         Row: {
-          final_day: string
+          close_day: number
+          color: string | null
+          created_at: string
+          current_balance: number
+          due_day: number
           id: number
-          initial_day: string
+          limit: number
           name: string
         }
         Insert: {
-          final_day: string
+          close_day: number
+          color?: string | null
+          created_at?: string
+          current_balance: number
+          due_day: number
           id?: number
-          initial_day: string
-          name: string
+          limit: number
+          name?: string
         }
         Update: {
-          final_day?: string
+          close_day?: number
+          color?: string | null
+          created_at?: string
+          current_balance?: number
+          due_day?: number
           id?: number
-          initial_day?: string
+          limit?: number
           name?: string
         }
         Relationships: []
@@ -99,27 +141,24 @@ export type Database = {
           }
         ]
       }
-      payment_options: {
+      payment_method: {
         Row: {
           created_at: string
-          due_date: number | null
           id: number
-          name: string
-          next_best_day: number | null
+          method: number
+          type: Database["public"]["Enums"]["payment_type"]
         }
         Insert: {
           created_at?: string
-          due_date?: number | null
           id?: number
-          name: string
-          next_best_day?: number | null
+          method: number
+          type: Database["public"]["Enums"]["payment_type"]
         }
         Update: {
           created_at?: string
-          due_date?: number | null
           id?: number
-          name?: string
-          next_best_day?: number | null
+          method?: number
+          type?: Database["public"]["Enums"]["payment_type"]
         }
         Relationships: []
       }
@@ -217,7 +256,7 @@ export type Database = {
           id: number
           payed_amount: number | null
           payment_date: string | null
-          payment_option_id: number
+          payment_method: number
         }
         Insert: {
           amount: number
@@ -229,7 +268,7 @@ export type Database = {
           id?: number
           payed_amount?: number | null
           payment_date?: string | null
-          payment_option_id?: number
+          payment_method?: number
         }
         Update: {
           amount?: number
@@ -241,7 +280,7 @@ export type Database = {
           id?: number
           payed_amount?: number | null
           payment_date?: string | null
-          payment_option_id?: number
+          payment_method?: number
         }
         Relationships: [
           {
@@ -252,10 +291,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "transactions_payment_option_id_fkey"
-            columns: ["payment_option_id"]
+            foreignKeyName: "transactions_payment_method_fkey"
+            columns: ["payment_method"]
             isOneToOne: false
-            referencedRelation: "payment_options"
+            referencedRelation: "payment_method"
             referencedColumns: ["id"]
           }
         ]
@@ -269,7 +308,7 @@ export type Database = {
     }
     Enums: {
       category_type: "Receita" | "Despesa"
-      recurring_type: "Daily" | "Weekly" | "Monthly" | "Yearly"
+      payment_type: "C" | "D"
     }
     CompositeTypes: {
       [_ in never]: never

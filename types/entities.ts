@@ -12,13 +12,6 @@ type CategoryFormData = {
     type: "Receita" | "Despesa";
 }
 
-type PaymentOptionType = {
-    id: number;
-    name: string;
-    due_date: Dayjs | null;
-    next_best_day: Dayjs | null;
-}
-
 type TransactionType = {
     id: number;
     due_date: string;
@@ -28,7 +21,7 @@ type TransactionType = {
     cashed: boolean;
     payment_date: string | null;
     payed_amount: number | null;
-    payment_options: PaymentOptionType | null;
+    payment_method: number;
 }
 
 type TransactionFormData = {
@@ -40,7 +33,7 @@ type TransactionFormData = {
     category_id: number,
     payment_date: Dayjs | null,
     payed_amount: number | null,
-    payment_option_id: number,
+    payment_method: number;
     times: number,
     recurring: boolean,
 }
@@ -68,5 +61,4 @@ export type {
     TransactionFormData,
     TransactionRow,
     TransactionUpdateStatusProps,
-    PaymentOptionType
 }

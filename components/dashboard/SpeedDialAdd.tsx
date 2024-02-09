@@ -40,7 +40,7 @@ const SpeedDialAdd = () => {
           recurring: false,
           payment_date: dayjs(Date.now()),
           payed_amount: 0,
-          payment_option_id: 3,
+          payment_method: 1
         });
         break;
       case "category":
@@ -59,7 +59,7 @@ const SpeedDialAdd = () => {
                  open={open}>
         {dialActions.map((action) => (
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipOpen
-                           onClick={() => handleClick(action.handler)}/>
+                           onClick={() => handleClick(action.handler)} FabProps={{size: "large"}}/>
         ))}
       </SpeedDial>
       {showTransactionDialog && <TransactionFormDialog/>}
@@ -77,6 +77,16 @@ const styles = {
     right: 32,
     "& .MuiSpeedDial-fab": {
       lineHeight: 0.75,
+    },
+    "& .MuiSpeedDialAction-fab": {
+      fontSize: "1.125rem",
+      backgroundColor: (theme: any) => theme.palette.primary.main,
+      color: (theme: any) => theme.palette.primary.contrastText,
+    },
+    "& .MuiSpeedDialAction-staticTooltipLabel": {
+      fontSize: "1.125rem",
+      backgroundColor: (theme: any) => theme.palette.primary.main,
+      color: (theme: any) => theme.palette.primary.contrastText,
     },
   },
 };

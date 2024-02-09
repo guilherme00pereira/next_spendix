@@ -2,7 +2,7 @@
 import {supabase} from "@/lib/supabase/supabase-client";
 import { TransactionFormData, TransactionUpdateStatusProps } from "@/types/entities";
 
-const getQuery = 'id, amount, due_date, description, cashed, payment_date, payed_amount, categories(id, name, type), payment_options(id, name, due_date, next_best_day)';
+const getQuery = 'id, amount, due_date, description, cashed, payment_date, payed_amount, categories(id, name, type), payment_method';
 
 const getTransactions = async (di: string, df: string) => {
     const {
@@ -27,7 +27,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 }
 
 const addTransaction = async (
-    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, payment_option_id, times, recurring}: TransactionFormData
+    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, payment_method, times, recurring}: TransactionFormData
 ) => {
     if (recurring) {
         const rows = [];
@@ -39,7 +39,7 @@ const addTransaction = async (
                 description: desctext,
                 cashed,
                 category_id,
-                payment_option_id,
+                payment_method,
                 payment_date: cashed && payment_date ? payment_date.add(i, 'month').format('YYYY-MM-DD') : null,
                 payed_amount: cashed && payed_amount ? payed_amount : null,
             })
@@ -56,7 +56,7 @@ const addTransaction = async (
             description,
             cashed,
             category_id,
-            payment_option_id,
+            payment_method,
             payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
             payed_amount: cashed && payed_amount ? payed_amount : null,
         }).select(getQuery)
@@ -67,13 +67,13 @@ const addTransaction = async (
     }
 }
 
-const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount, payment_option_id}: TransactionFormData) => {
+const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount, payment_method}: TransactionFormData) => {
     const {data, error} = await supabase.from('transactions').update({
         amount,
         due_date: due_date.format('YYYY-MM-DD'),
         description,
         category_id,
-        payment_option_id,
+        payment_method,
         payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
         payed_amount: cashed && payed_amount ? payed_amount : null,
         cashed

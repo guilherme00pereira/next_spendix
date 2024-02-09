@@ -22,6 +22,7 @@ const TransactionDefaultData = {
     payment_date: dayjs(Date.now()),
     payed_amount: 0,
     payment_option_id: 3,
+    payment_method: 1
 }
 
 export {

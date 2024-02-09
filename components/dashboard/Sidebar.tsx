@@ -123,7 +123,7 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
             <ListItemIcon>
                 <CreditCardRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="Meios de pagamento" />
+            <ListItemText primary="Cartões de Crédito" />
         </ListItemButton>
       </List>
     </Drawer>
