@@ -2,7 +2,7 @@
 import {supabase} from "@/lib/supabase/supabase-client";
 import { TransactionFormData, TransactionUpdateStatusProps } from "@/types/entities";
 
-const getQuery = 'id, amount, due_date, description, cashed, payment_date, payed_amount, categories(id, name, type), payment_method';
+const getQuery = 'id, amount, due_date, description, cashed, categories(*), payments(*)'
 
 const getTransactions = async (di: string, df: string) => {
     const {

@@ -3,12 +3,25 @@ import { Dayjs } from "dayjs";
 type CategoryType = {
     id: number;
     name: string;
+    parent?: number;
     type: "Receita" | "Despesa";
+    color: string | null;
+    icon: string | null;
+}
+
+type PaymentType = {
+    id: number;
+    created_at: Dayjs;
+    amount: number;
+    method: string;
 }
 
 type CategoryFormData = {
     id?: number;
     name: string;
+    parent?: number;
+    color: string | null;
+    icon: string | null;
     type: "Receita" | "Despesa";
 }
 

@@ -25,11 +25,11 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     useEffect(() => {
         const run = async () => {
         const income: number = transactions
-            .filter((transaction: TransactionType) => transaction.categories.type === "Receita")
+            .filter((transaction: TransactionType) => transaction.categories?.type === "Receita")
             .map((transaction: TransactionType) => transaction.payed_amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         const expense = transactions
-            .filter((transaction: TransactionType) => transaction.categories.type !== "Receita")
+            .filter((transaction: TransactionType) => transaction.categories?.type !== "Receita")
             .map((transaction: TransactionType) => transaction.payed_amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         setRow({
@@ -50,7 +50,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
         <>
             {row && (
                 <>
-                    <TableRow sx={styles.rowline}>
+                    <TableRow>
                         <TableCell>
                             <IconButton
                                 aria-label="expand row"
@@ -95,8 +95,5 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
 export default TransactionRow;
 
 const styles = {
-    rowline: {
-        backgroundColor: (theme: any) => theme.palette.neutral[25],
-    },
     '& > *': {borderBottom: 'unset'}
 }

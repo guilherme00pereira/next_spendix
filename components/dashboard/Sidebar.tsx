@@ -15,6 +15,7 @@ import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomiz
 import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
 import PointOfSaleRoundedIcon from '@mui/icons-material/PointOfSaleRounded';
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import { Typography } from "@mui/material";
 import { DashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -84,13 +85,6 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
           <ListItemText primary="Dashboard" />
         </ListItemButton>
 
-        <ListItemButton LinkComponent="a" href="/dashboard/cash-flow">
-          <ListItemIcon>
-            <PointOfSaleRoundedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Fluxo de Caixa" />
-        </ListItemButton>
-
         <ListItemButton LinkComponent="a" href="/dashboard/transactions">
           <ListItemIcon>
             <ReceiptLongRoundedIcon />
@@ -105,13 +99,6 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
           <ListItemText primary="Categorias" />
         </ListItemButton>
 
-        <ListItemButton LinkComponent="a" href="/dashboard/groups">
-          <ListItemIcon>
-            <DashboardCustomizeRoundedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Grupos" />
-        </ListItemButton>
-
         <ListItemButton LinkComponent="a" href="/dashboard/tags">
             <ListItemIcon>
                 <LocalOfferRoundedIcon />
@@ -119,7 +106,14 @@ export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
             <ListItemText primary="Tags" />
         </ListItemButton>
 
-        <ListItemButton LinkComponent="a" href="/dashboard/payment-options">
+        <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts">
+          <ListItemIcon>
+            <AccountBalanceRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contas" />
+        </ListItemButton>
+
+        <ListItemButton LinkComponent="a" href="/dashboard/credit-cards">
             <ListItemIcon>
                 <CreditCardRoundedIcon />
             </ListItemIcon>

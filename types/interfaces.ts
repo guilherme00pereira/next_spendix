@@ -1,8 +1,13 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {CategoryFormData, TransactionType} from "@/types/entities";
+import {CategoryFormData, CategoryType, TransactionType} from "@/types/entities";
 import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 import { Dayjs } from 'dayjs';
+
+interface SelectOption {
+    value: string;
+    label: string;
+}
 
 interface DashboardLayoutProps extends MuiAppBarProps {
     open?: boolean;
@@ -62,11 +67,18 @@ interface SpeedDialStoreData {
     setTransaction: (t: TransactionFormData) => void;
     showCategoryDialog: boolean;
     actionShowCategoryDialog: (action: boolean) => void;
-    category: CategoryFormData
+    category: CategoryFormData;
     setCategory: (c: CategoryFormData) => void;
 }
 
+interface ChildrenCategoriesProps {
+    subcategories: CategoryType[];
+    handleEdit: (id: number) => void;
+    handleConfirmDelete: (id: number, name: string) => void;
+}
+
 export type {
+    SelectOption,
     DeleteConfirmDialogProps,
     RemovableEntity,
     SinglePageParams,
@@ -76,6 +88,7 @@ export type {
     PageContextData,
     TransactionContextData,
     AppStoreData,
-    SpeedDialStoreData
+    SpeedDialStoreData,
+    ChildrenCategoriesProps
 }
 

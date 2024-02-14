@@ -11,19 +11,20 @@ import { useQuery } from "@tanstack/react-query";
 import { getTransactionsByCategory } from '@/lib/supabase/methods/transactions';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import {
-    getFisrtDayOfMonth,
-    getLasDayOfMonth,
     amountFormatter,
   } from "@/lib/functions";
 import { SinglePageTableProps } from '@/types/interfaces';
 import { TransactionType } from '@/types/entities';
+import {useAppStore} from "@/lib/hooks";
+import dayjs from "dayjs";
 
 const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePageTableProps) => {
     const [total, setTotal] = React.useState<number>(0);
+    const { date } = useAppStore();
 
     const { data: transactions, isLoading } = useQuery({
         queryKey: ["category-transactions"],
-        queryFn: () => getTransactionsByCategory(getFisrtDayOfMonth(), getLasDayOfMonth(), id),
+        queryFn: () => getTransactionsByCategory(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD"), id),
       });
 
       useEffect(() => {

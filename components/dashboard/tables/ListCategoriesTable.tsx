@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useState} from "react";
+import {useState} from "react";
 import Link from "next/link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,10 +14,10 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
-import {categoryTypeColor} from "@/lib/functions";
-import {usePageContext, useSpeedDialStore} from "@/lib/hooks";
-import {CategoryFormData} from "@/types/entities";
+import {useSpeedDialStore} from "@/lib/hooks";
 import { RemovableEntity } from "@/types/interfaces";
+import ListChildrenCategories from "./ListChildrenCategories";
+import {CategoryType} from "@/types/entities";
 
 const ListCategoriesTable = () => {
     const queryClient = useQueryClient();
@@ -30,6 +30,7 @@ const ListCategoriesTable = () => {
         queryFn: () => getCategories(),
     });
 
+
     const deleteMutation = useMutation({
         mutationFn: (id: number) => removeCategory(id),
         onSuccess: () => {
@@ -39,10 +40,14 @@ const ListCategoriesTable = () => {
 
     const handleEdit = (id: number) => {
         actionShowCategoryDialog(true);
+        const c = categories?.filter(category => category.id === id)[0] ?? {} as CategoryType;
         setCategory({
             id,
-            name: categories?.filter(category => category.id === id)[0].name ?? "",
-            type: categories?.filter(category => category.id === id)[0].type ?? "Receita"
+            name: c.name ?? "",
+            type: c.type ?? "Receita",
+            parent: c.parent ?? 0,
+            color: c.color ?? null,
+            icon: c.icon ?? null
         })
     }
 
@@ -58,6 +63,21 @@ const ListCategoriesTable = () => {
         }
     }
 
+    const getSubCategories = (id: number) => {
+        const subs = categories?.filter((c) => {
+            if (c.parent === id) {
+                return {
+                    id: c.id,
+                    name: c.name,
+                    type: c.type,
+                    parent: c.parent ?? null,
+                    color: c.color ?? null,
+                    icon: c.icon ?? null
+                }
+            }
+        });
+        return subs as CategoryType[];
+    }
 
     return (
         <>
@@ -65,19 +85,20 @@ const ListCategoriesTable = () => {
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Nome</TableCell>
+                            <TableCell colSpan={2}>Nome</TableCell>
                             <TableCell align="right">Tipo</TableCell>
                             <TableCell align="right">Ação</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {isLoading ||
-                            categories?.map((category) => (
+                            categories?.filter((c) => c.parent === null).map((category) => (
+                              <>
                                 <TableRow
                                     key={category.id}
                                     sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                 >
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" colSpan={2}>
                                         <Link href={`/dashboard/categories/${category.id}`}>
                                             {category.name}
                                         </Link>
@@ -103,6 +124,12 @@ const ListCategoriesTable = () => {
                                         </Button>
                                     </TableCell>
                                 </TableRow>
+                                <ListChildrenCategories
+                                  subcategories={getSubCategories(category.id)}
+                                  handleEdit={handleEdit}
+                                  handleConfirmDelete={handleConfirmDelete}
+                                />
+                              </>
                             ))}
                         {isLoading && (
                             <TableRow>

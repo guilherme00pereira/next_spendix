@@ -12,7 +12,7 @@ import { amountFormatter } from "@/lib/functions";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase/methods/transactions";
-import {usePageContext, useTransactionContext} from "@/lib/hooks";
+import {usePageContext, useSpeedDialStore} from "@/lib/hooks";
 import { RemovableEntity, TransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
@@ -22,8 +22,7 @@ import {TransactionType, TransactionUpdateStatusProps} from "@/types/entities";
 
 const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps) => {
   const queryClient = useQueryClient();
-  const { actionShowModal } = usePageContext();
-  const { setTransaction } = useTransactionContext();
+  const { setTransaction, actionShowTransactionDialog } = useSpeedDialStore();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [removableTransaction, setRemovableTransaction] = useState<RemovableEntity>({ id: 0, name: "", type: "transação" });
 
@@ -41,11 +40,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
     },
   });
 
-  const handleUpdateStatus = (id: number) => {
-
-  }
-
-  const handleConfirmDelete = (id: number, amount: number, category: string) => {
+  const handleConfirmDelete = (id: number, amount: number, category?: string) => {
     setRemovableTransaction({ ...removableTransaction, id, name: category + " no valor de R$ " + amountFormatter(amount) });
     setOpenConfirm(true);
   };
@@ -64,14 +59,14 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
       due_date: dayjs(t.due_date),
       description: t.description,
       cashed: t.cashed,
-      category_id: t.categories.id,
+      category_id: t.categories?.id ?? 0,
       payment_date: t.payment_date ? dayjs(t.payment_date) : null,
       payed_amount: t.payed_amount ?? null,
-      payment_option_id: t.payment_options.id,
+      payment_method: t.payment_method,
       times: 2,
       recurring: false,
     });
-    actionShowModal(true);
+    actionShowTransactionDialog(true);
   }
 
   return (
@@ -92,7 +87,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
             </TableHead>
             <TableBody>
               {transactions.map((transaction) => (
-                <TableRow key={transaction.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow key={transaction.id} sx={styles.rowline}>
                   <TableCell/>
                   <TableCell component="th" scope="row" align="center">
                     <Stack direction="row" justifyContent="space-around">
@@ -102,12 +97,12 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                     </Stack>
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {transaction.categories.name}
+                    {transaction.categories?.name ?? ""}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    <Typography color={transaction.categories.type === "Receita" ? "success.main" : "secondary.main"}
+                    <Typography color={transaction.categories?.type === "Receita" ? "success.main" : "secondary.main"}
                                 variant="body2" fontWeight="bold">
-                      {transaction.categories.type}
+                      {transaction.categories?.type}
                     </Typography>
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
@@ -117,21 +112,14 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     <Typography variant="body2" color="text.secondary">
-                      {transaction.payment_options.name}
+                      {transaction.payment_method}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {/*{transaction.cashed || (*/}
-                    {/*  <Tooltip title="Marcar como pago" arrow>*/}
-                    {/*    <Button size="small" variant="text" color="success" onClick={() => handleUpdateStatus(transaction.id)}>*/}
-                    {/*      <CheckRoundedIcon fontSize="small" />*/}
-                    {/*    </Button>*/}
-                    {/*  </Tooltip>*/}
-                    {/*)}*/}
                     <Button size="small" variant="text" color="info" onClick={() => handleEdit(transaction)}>
                       <EditRoundedIcon fontSize="small" />
                     </Button>
-                    <Button size="small" variant="text" color="error" onClick={() => handleConfirmDelete(transaction.id, transaction.amount, transaction.categories.name)}>
+                    <Button size="small" variant="text" color="error" onClick={() => handleConfirmDelete(transaction.id, transaction.amount, transaction.categories?.name)}>
                       <DeleteRoundedIcon fontSize="small" />
                     </Button>
                   </TableCell>
@@ -149,6 +137,10 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
 export default TransactionRowData;
 
 const styles = {
+  rowline: {
+    backgroundColor: (theme: any) => theme.palette.neutral[25],
+    "&:last-child td, &:last-child th": { border: 0 }
+  },
   headrow: {
     '& > *': {
       backgroundColor: "#FFF !important",

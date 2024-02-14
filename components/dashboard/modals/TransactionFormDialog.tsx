@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField} from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
@@ -15,8 +15,8 @@ import {getCategories} from "@/lib/supabase/methods/categories";
 import {useSpeedDialStore, useTransactionContext} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
-import {getPaymentOptions} from "@/lib/supabase/methods/payment-options";
-import {transactionConverterResponseToType} from "@/lib/functions";
+import {convertPaymentMethodsToSelect, transactionConverterResponseToType} from "@/lib/functions";
+import {getAllPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -26,7 +26,7 @@ const validate = yup.object({
   due_date: yup.date().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
-  payment_option_id: yup.string().nullable(),
+  payment_method: yup.string().nullable(),
   times: yup.number().min(2, "Insira apenas valores maiores que 2"),
   recurring: yup.boolean(),
 });
@@ -43,10 +43,15 @@ const TransactionFormDialog = () => {
     queryFn: () => getCategories(),
   });
 
-  const {data: payment_options} = useQuery({
-    queryKey: ["payment_options"],
-    queryFn: () => getPaymentOptions(),
+  const {data: paymentMethods} = useQuery({
+    queryKey: ["payment_methods"],
+    queryFn: () => buildSelectPaymentMethods(),
   });
+
+  const buildSelectPaymentMethods = async () => {
+    const res = await getAllPaymentMethods();
+    return convertPaymentMethodsToSelect(res);
+  }
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("amount", e.target.value);
@@ -86,7 +91,7 @@ const TransactionFormDialog = () => {
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_option_id: values["payment_option_id"]
+          payment_method: values["payment_method"]
         }).then(res => {
           if(res !== null) {
             actionShowTransactionDialog(false);
@@ -106,7 +111,7 @@ const TransactionFormDialog = () => {
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_option_id: values["payment_option_id"]
+          payment_method: values["payment_method"]
         }).then(res => {
           if (res !== null) {
             actionShowTransactionDialog(false);
@@ -224,21 +229,21 @@ const TransactionFormDialog = () => {
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <TextField
-                      helperText={formik.touched.payment_option_id && formik.errors.payment_option_id}
-                      error={formik.touched.payment_option_id && Boolean(formik.errors.payment_option_id)}
+                      helperText={formik.touched.payment_method && formik.errors.payment_method}
+                      error={formik.touched.payment_method && Boolean(formik.errors.payment_method)}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.payment_option_id}
+                      value={formik.values.payment_method}
                       select
                       fullWidth
-                      name="payment_option_id"
+                      name="payment_method"
                       label="Meio de Pagamento"
                     >
-                      {payment_options?.map((payment_option) => (
-                        <MenuItem key={payment_option.id} value={payment_option.id}>
-                          {payment_option.name}
-                        </MenuItem>
-                      ))}
+                          {paymentMethods && paymentMethods.map((payment_method: any) => (
+                              <MenuItem key={payment_method.value} value={payment_method.value}>
+                                {payment_method.label}
+                              </MenuItem>
+                        ))}
                     </TextField>
                   </Grid>
                 </>

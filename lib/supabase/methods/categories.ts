@@ -20,8 +20,8 @@ const addCategory = async ({name, type}: CategoryFormData) => {
     return data
 }
 
-const editCategory = async ({id, name, type}: CategoryFormData) => {
-    const {data, error} = await supabase.from('categories').update({name, type}).match({id})
+const editCategory = async ({id, name, parent, type}: CategoryFormData) => {
+    const {data, error} = await supabase.from('categories').update({name, parent, type}).match({id})
     if (error) {
         throw error
     }

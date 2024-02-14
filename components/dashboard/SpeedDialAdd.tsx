@@ -45,7 +45,7 @@ const SpeedDialAdd = () => {
         break;
       case "category":
         actionShowCategoryDialog(true);
-        setCategory({name: "", type: "Receita"});
+        setCategory({name: "", parent: 0, type: "Receita"});
         break;
       default:
         handleClose();

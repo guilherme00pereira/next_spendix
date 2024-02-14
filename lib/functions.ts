@@ -1,4 +1,4 @@
-import {TransactionType, PaymentOptionType} from "@/types/entities";
+import {CategoryType, TransactionType} from "@/types/entities";
 
 const amountFormatter = (v: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -6,36 +6,6 @@ const amountFormatter = (v: number) => {
     currency: 'BRL',
     minimumFractionDigits: 2,
     }).format(v);
-}
-
-const getFisrtDayOfMonth = (m: number, y: number) => {
-    if(m === 0 && y === 0) {
-        const d = new Date();
-        return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().substring(0, 10);
-        
-    } else {
-        return new Date(y, m, 1).toISOString().substring(0, 10);
-    }
-}
-
-const getLasDayOfMonth = (m: number, y: number) => {
-    if(m === 0 && y === 0) {
-        const d = new Date();
-        return new Date(d.getFullYear(), d.getMonth()+1, 0).toISOString().substring(0, 10);
-        
-    } else {
-        return new Date(y, m+1, 0).toISOString().substring(0, 10);
-    }
-    
-}
-
-const categoryTypeColor = (type: "Receita" | "Despesa") => {
-    switch (type) {
-        case "Receita":
-            return "success.main";
-        default:
-            return "secondary.main";
-    }
 }
 
 const groupTransactionsByDate = (transactions: TransactionType[]) => {
@@ -53,7 +23,7 @@ const groupTransactionsByDate = (transactions: TransactionType[]) => {
 }
 
 const transactionConverterResponseToType = (
-  {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payment_options} :
+  {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payment_method} :
   {
       id: number,
       amount: number,
@@ -62,16 +32,10 @@ const transactionConverterResponseToType = (
       cashed: boolean,
       payment_date: string | null,
       payed_amount: number | null,
-      categories: {id: number, name: string, type: "Receita" | "Despesa"} | null,
-      payment_options: {id: number, name: string, due_date: number | null, next_best_day: number | null} | null
+      categories: CategoryType | null,
+      payment_method: number,
   }
 ): TransactionType => {
-    let po: PaymentOptionType = {
-        id: payment_options ? payment_options.id : 0,
-        name: "",
-        due_date: null,
-        next_best_day: null
-    };
 
     return {
         id,
@@ -82,15 +46,30 @@ const transactionConverterResponseToType = (
         payment_date: payment_date || null,
         payed_amount: payed_amount || null,
         categories,
-        payment_options: po
+        payment_method
     }
+}
+
+const convertPaymentMethodsToSelect = (payment_methods: any) => {
+    return payment_methods.map((pm: any) => {
+        if (pm.credit_cards) {
+            return {
+                value: pm.id,
+                label: pm.credit_cards.name + " | Credit Card"
+            }
+        }
+        if (pm.accounts) {
+            return {
+                value: pm.id,
+                label: pm.accounts.bank
+            }
+        }
+    })
 }
 
 export {
     amountFormatter,
-    getFisrtDayOfMonth,
-    getLasDayOfMonth,
     groupTransactionsByDate,
-    categoryTypeColor,
-    transactionConverterResponseToType
+    transactionConverterResponseToType,
+  convertPaymentMethodsToSelect
 }

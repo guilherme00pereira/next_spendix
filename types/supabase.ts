@@ -141,26 +141,70 @@ export type Database = {
           }
         ]
       }
-      payment_method: {
+      payment_methods: {
         Row: {
-          created_at: string
+          account_id: number | null
+          credit_card_id: number | null
           id: number
-          method: number
-          type: Database["public"]["Enums"]["payment_type"]
         }
         Insert: {
-          created_at?: string
+          account_id?: number | null
+          credit_card_id?: number | null
           id?: number
-          method: number
-          type: Database["public"]["Enums"]["payment_type"]
         }
         Update: {
+          account_id?: number | null
+          credit_card_id?: number | null
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_method_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_method_credit_card_id_fkey"
+            columns: ["credit_card_id"]
+            isOneToOne: false
+            referencedRelation: "credit_cards"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: number
+          payment_method_id: number
+          times: number
+        }
+        Insert: {
+          amount: number
           created_at?: string
           id?: number
-          method?: number
-          type?: Database["public"]["Enums"]["payment_type"]
+          payment_method_id: number
+          times?: number
         }
-        Relationships: []
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: number
+          payment_method_id?: number
+          times?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_payments_payment_method_id_fkey"
+            columns: ["payment_method_id"]
+            isOneToOne: false
+            referencedRelation: "payment_methods"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       profiles: {
         Row: {
@@ -256,7 +300,7 @@ export type Database = {
           id: number
           payed_amount: number | null
           payment_date: string | null
-          payment_method: number
+          payment_id: number | null
         }
         Insert: {
           amount: number
@@ -268,7 +312,7 @@ export type Database = {
           id?: number
           payed_amount?: number | null
           payment_date?: string | null
-          payment_method?: number
+          payment_id?: number | null
         }
         Update: {
           amount?: number
@@ -280,21 +324,21 @@ export type Database = {
           id?: number
           payed_amount?: number | null
           payment_date?: string | null
-          payment_method?: number
+          payment_id?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "public_transactions_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "transactions_category_id_fkey"
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "transactions_payment_method_fkey"
-            columns: ["payment_method"]
-            isOneToOne: false
-            referencedRelation: "payment_method"
             referencedColumns: ["id"]
           }
         ]
