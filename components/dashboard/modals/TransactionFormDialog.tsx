@@ -26,7 +26,7 @@ const validate = yup.object({
   due_date: yup.date().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
-  payment_method: yup.string().nullable(),
+  payment_id: yup.string().nullable(),
   times: yup.number().min(2, "Insira apenas valores maiores que 2"),
   recurring: yup.boolean(),
 });
@@ -91,7 +91,7 @@ const TransactionFormDialog = () => {
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_method: values["payment_method"]
+          payment_id: values["payment_id"]
         }).then(res => {
           if(res !== null) {
             actionShowTransactionDialog(false);
@@ -111,7 +111,7 @@ const TransactionFormDialog = () => {
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_method: values["payment_method"]
+          payment_id: values["payment_id"]
         }).then(res => {
           if (res !== null) {
             actionShowTransactionDialog(false);

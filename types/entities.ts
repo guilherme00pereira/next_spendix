@@ -3,7 +3,7 @@ import { Dayjs } from "dayjs";
 type CategoryType = {
     id: number;
     name: string;
-    parent?: number;
+    parent: number | null;
     type: "Receita" | "Despesa";
     color: string | null;
     icon: string | null;
@@ -11,15 +11,16 @@ type CategoryType = {
 
 type PaymentType = {
     id: number;
-    created_at: Dayjs;
+    date: Dayjs;
     amount: number;
     method: string;
+    times: number;
 }
 
 type CategoryFormData = {
     id?: number;
     name: string;
-    parent?: number;
+    parent: number | null;
     color: string | null;
     icon: string | null;
     type: "Receita" | "Despesa";
@@ -34,7 +35,7 @@ type TransactionType = {
     cashed: boolean;
     payment_date: string | null;
     payed_amount: number | null;
-    payment_method: number;
+    payments: PaymentType | null;
 }
 
 type TransactionFormData = {
@@ -46,7 +47,7 @@ type TransactionFormData = {
     category_id: number,
     payment_date: Dayjs | null,
     payed_amount: number | null,
-    payment_method: number;
+    payment_id: number | null,
     times: number,
     recurring: boolean,
 }
@@ -69,6 +70,7 @@ type TransactionUpdateStatusProps = {
 
 export type {
     CategoryType,
+    PaymentType,
     CategoryFormData,
     TransactionType,
     TransactionFormData,

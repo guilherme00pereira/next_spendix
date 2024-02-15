@@ -177,21 +177,21 @@ export type Database = {
       payments: {
         Row: {
           amount: number
-          created_at: string
+          date: string
           id: number
           payment_method_id: number
           times: number
         }
         Insert: {
           amount: number
-          created_at?: string
+          date?: string
           id?: number
           payment_method_id: number
           times?: number
         }
         Update: {
           amount?: number
-          created_at?: string
+          date?: string
           id?: number
           payment_method_id?: number
           times?: number

@@ -1,4 +1,4 @@
-import {CategoryType, TransactionType} from "@/types/entities";
+import {CategoryType, PaymentType, TransactionType} from "@/types/entities";
 
 const amountFormatter = (v: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -23,7 +23,7 @@ const groupTransactionsByDate = (transactions: TransactionType[]) => {
 }
 
 const transactionConverterResponseToType = (
-  {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payment_method} :
+  {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payments} :
   {
       id: number,
       amount: number,
@@ -33,7 +33,7 @@ const transactionConverterResponseToType = (
       payment_date: string | null,
       payed_amount: number | null,
       categories: CategoryType | null,
-      payment_method: number,
+      payments: PaymentType | null,
   }
 ): TransactionType => {
 
@@ -46,7 +46,7 @@ const transactionConverterResponseToType = (
         payment_date: payment_date || null,
         payed_amount: payed_amount || null,
         categories,
-        payment_method
+        payments
     }
 }
 

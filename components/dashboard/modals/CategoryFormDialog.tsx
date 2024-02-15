@@ -1,17 +1,17 @@
-import {useEffect, useState} from "react";
-import {Grid, Stack, MenuItem, TextField, Input} from "@mui/material";
+import { useEffect, useState } from "react";
+import { Grid, Stack, MenuItem, TextField, Input } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as yup from "yup";
-import {useFormik} from "formik";
-import {CategoryFormData, CategoryType} from "@/types/entities";
-import {CategoryTypeDict} from "@/lib/data";
-import {addCategory, editCategory, getCategories} from "@/lib/supabase/methods/categories";
+import { useFormik } from "formik";
+import { CategoryFormData, CategoryType } from "@/types/entities";
+import { CategoryTypeDict } from "@/lib/data";
+import { addCategory, editCategory, getCategories } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";
-import {useSpeedDialStore} from "@/lib/hooks";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import { useSpeedDialStore } from "@/lib/hooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
-import {SelectOption} from "@/types/interfaces";
+import { SelectOption } from "@/types/interfaces";
 
 const validate = yup.object({
   name: yup.string().required("Campo obrigatório"),
@@ -21,14 +21,14 @@ const validate = yup.object({
 
 const CategoryFormDialog = () => {
   const queryClient = useQueryClient();
-  const {showCategoryDialog, actionShowCategoryDialog, category} = useSpeedDialStore();
+  const { showCategoryDialog, actionShowCategoryDialog, category } = useSpeedDialStore();
   const [parents, setParents] = useState<SelectOption[]>([]);
 
   const addMutation = useMutation({
     mutationFn: (values: CategoryFormData) => addCategory(values),
     onSuccess: () => {
       actionShowCategoryDialog(!showCategoryDialog);
-      queryClient.invalidateQueries({queryKey: ["categories"]});
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
 
@@ -36,53 +36,68 @@ const CategoryFormDialog = () => {
     mutationFn: (values: CategoryFormData) => editCategory(values),
     onSuccess: () => {
       actionShowCategoryDialog(!showCategoryDialog);
-      queryClient.invalidateQueries({queryKey: ["categories"]});
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
 
   useEffect(() => {
-    console.log(category)
-    let options: SelectOption[] = []
-    queryClient.ensureQueryData({
-      queryKey: ["categories"],
-      queryFn: () => getCategories(),
-    }).then((data) => {
+    console.log(category);
+    let options: SelectOption[] = [];
+    queryClient
+      .ensureQueryData({
+        queryKey: ["categories"],
+        queryFn: () => getCategories(),
+      })
+      .then((data) => {
         const filtered = data?.filter((category: any) => {
           if (category.parent === null) return category;
         });
         filtered?.map((category: any) => {
-          options.push({value: category.id, label: category.name});
+          options.push({ value: category.id, label: category.name });
         });
         setParents([...options]);
-      }
-    );
+      });
   }, []);
-
 
   const formik = useFormik({
     initialValues: category,
     validationSchema: validate,
     onSubmit: (values) => {
-      if (values.id) editMutation.mutate({id: values.id, name: values.name, parent: values.parent, type: values.type, color: null, icon: null});
-      else addMutation.mutate({name: values.name, parent: values.parent, type: values.type, color: null, icon: null});
+      if (values.id) {
+        editMutation.mutate({ 
+          id: values.id, 
+          name: values.name, 
+          parent: values.parent === 0 ? null : values.parent, 
+          type: values.type, 
+          color: null, 
+          icon: null 
+        });
+      } else {
+        addMutation.mutate({ 
+          name: values.name, 
+          parent: values.parent === 0 ? null : values.parent, 
+          type: values.type, 
+          color: null, 
+          icon: null 
+        });
+      }
     },
   });
 
   return (
-    <Dialog open={showCategoryDialog} fullWidth maxWidth="md"
-            onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
+    <Dialog open={showCategoryDialog} fullWidth maxWidth="md" onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <ModalTopBar title="Nova categoria"/>
+        <ModalTopBar title="Nova categoria" />
         <DialogContent>
           {addMutation.isPending && (
-            <Stack sx={{width: "100%", pb: 3}} spacing={2}>
-              <LinearProgress/>
+            <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
+              <LinearProgress />
             </Stack>
           )}
           <Stack direction="row">
             <Grid container spacing={3}>
               <Grid xs={12} md={4} item>
-                <Input type="hidden" name="id" value={formik.values.id}/>
+                <Input type="hidden" name="id" value={formik.values.id} />
                 <TextField
                   helperText={formik.touched.name && formik.errors.name}
                   error={formik.touched.name && Boolean(formik.errors.name)}
@@ -107,11 +122,12 @@ const CategoryFormDialog = () => {
                   select
                 >
                   <MenuItem value={0}>Nenhuma</MenuItem>
-                  {parents && parents.map((option: SelectOption) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  {parents &&
+                    parents.map((option: SelectOption) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
                 </TextField>
               </Grid>
               <Grid xs={12} md={4} item>

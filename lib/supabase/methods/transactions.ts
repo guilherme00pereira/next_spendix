@@ -27,53 +27,66 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 }
 
 const addTransaction = async (
-    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, payment_method, times, recurring}: TransactionFormData
+    {amount, due_date, description, cashed, category_id, payment_date, payed_amount, payment_id, times}: TransactionFormData
 ) => {
-    if (recurring) {
-        const rows = [];
-        for (let i = 0; i < times; i++) {
-            let desctext = `${description} (${i+1}/${times})`
-            rows.push({
-                amount,
-                due_date: due_date.add(i, 'month').format('YYYY-MM-DD'),
-                description: desctext,
-                cashed,
-                category_id,
-                payment_method,
-                payment_date: cashed && payment_date ? payment_date.add(i, 'month').format('YYYY-MM-DD') : null,
-                payed_amount: cashed && payed_amount ? payed_amount : null,
-            })
-        }
-        const {data, error} = await supabase.from('transactions').insert(rows).select(getQuery)
+    // if (recurring) {
+    //     const rows = [];
+    //     for (let i = 0; i < times; i++) {
+    //         let desctext = `${description} (${i+1}/${times})`
+    //         rows.push({
+    //             amount,
+    //             due_date: due_date.add(i, 'month').format('YYYY-MM-DD'),
+    //             description: desctext,
+    //             cashed,
+    //             category_id,
+    //             payment_id,
+    //             payment_date: cashed && payment_date ? payment_date.add(i, 'month').format('YYYY-MM-DD') : null,
+    //             payed_amount: cashed && payed_amount ? payed_amount : null,
+    //         })
+    //     }
+    //     const {data, error} = await supabase.from('transactions').insert(rows).select(getQuery)
+    //     if (error) {
+    //         throw error
+    //     }
+    //     return data
+    // } else {
+        let pay_id = null;
+        if(cashed) {
+            const {data, error} = await supabase.from('payments').insert({
+                date: payment_date.format('YYYY-MM-DD'),
+                amount: payed_amount,
+                method: payment_id,
+                times: times
+            }).select('id')
+            
         if (error) {
             throw error
         }
-        return data
-    } else {
+            pay_id = data[0].id
+        }
         const {data, error} = await supabase.from('transactions').insert({
             amount,
             due_date: due_date.format('YYYY-MM-DD'),
             description,
             cashed,
             category_id,
-            payment_method,
-            payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
-            payed_amount: cashed && payed_amount ? payed_amount : null,
+            payment_id: pay_id
         }).select(getQuery)
+        
         if (error) {
             throw error
         }
         return data
-    }
+    //}
 }
 
-const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount, payment_method}: TransactionFormData) => {
+const editTransaction = async ({id, amount, cashed, due_date, description, category_id, payment_date, payed_amount, payment_id}: TransactionFormData) => {
     const {data, error} = await supabase.from('transactions').update({
         amount,
         due_date: due_date.format('YYYY-MM-DD'),
         description,
         category_id,
-        payment_method,
+        payment_id,
         payment_date: cashed && payment_date ? payment_date.format('YYYY-MM-DD') : null,
         payed_amount: cashed && payed_amount ? payed_amount : null,
         cashed
@@ -85,7 +98,7 @@ const editTransaction = async ({id, amount, cashed, due_date, description, categ
 }
 
 const updateTransactionCashedStatus = async (
-  {id, cashed, payment_date, payed_amount} : TransactionUpdateStatusProps
+  {id, cashed, payed_amount} : TransactionUpdateStatusProps
 ) => {
     const {data, error} = await supabase.from('transactions').update({
         cashed: cashed,
