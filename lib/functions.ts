@@ -11,11 +11,11 @@ const amountFormatter = (v: number) => {
 const groupTransactionsByDate = (transactions: TransactionType[]) => {
     const groups = new Map<string, TransactionType[]>();
     transactions.forEach((t) => {
-        if(t.payments?.date) {
-            if (groups.has(t.payments.date)) {
-                groups.get(t.payments.date)?.push(t);
+        if(t.due_date) {
+            if (groups.has(t.due_date)) {
+                groups.get(t.due_date)?.push(t);
             } else {
-                groups.set(t.payments.date, [t]);
+                groups.set(t.due_date, [t]);
             }
         }
     });
@@ -23,15 +23,13 @@ const groupTransactionsByDate = (transactions: TransactionType[]) => {
 }
 
 const transactionConverterResponseToType = (
-  {id, amount, due_date, description, cashed, payment_date, payed_amount, categories, payments} :
+  {id, amount, due_date, description, cashed, categories, payments} :
   {
       id: number,
       amount: number,
       due_date: string,
       description: string | null,
       cashed: boolean,
-      payment_date: string | null,
-      payed_amount: number | null,
       categories: CategoryType | null,
       payments: PaymentType | null,
   }

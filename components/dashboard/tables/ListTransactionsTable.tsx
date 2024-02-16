@@ -23,7 +23,7 @@ const ListTransactionsTable = () => {
   useEffect(() => {
       setIsLoading(true);
       const d = dayjs(date);
-      getTransactions(d.startOf("M").format("YYYY-MM-DD"), d.endOf("M").format("YYYY-MM-DD")).then((data) => {
+      getTransactions(d.startOf("M").format("YYYY-MM-DD"), d.format("YYYY-MM-DD")).then((data) => {
         setList(data as TransactionType[]);
         setIsLoading(false);
         setMappedTransactions(groupTransactionsByDate(data as TransactionType[]));
@@ -31,21 +31,19 @@ const ListTransactionsTable = () => {
   }, [date]);
 
   const getIncomeTotal = () => {
-    // @ts-ignore
     return (
       list
         ?.filter((transaction: any) => transaction.categories.type === "Receita")
-        .map((transaction: any) => transaction.payments?.amount ?? transaction.amount)
+        .map((transaction: any) => transaction.amount)
         .reduce((acc: number, curr: number) => acc + curr, 0) ?? 0
     );
   };
 
   const getExpenseTotal = () => {
-    // @ts-ignore
     return (
       list
         ?.filter((transaction: any) => transaction.categories.type !== "Receita")
-        .map((transaction: any) => transaction.payments?.amount ?? transaction.amount)
+        .map((transaction: any) => transaction.amount)
         .reduce((acc: number, curr: number) => acc + curr, 0) ?? 0
     );
   };

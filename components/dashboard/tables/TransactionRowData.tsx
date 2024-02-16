@@ -60,8 +60,8 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
       description: t.description,
       cashed: t.cashed,
       category_id: t.categories?.id ?? 0,
-      payment_date: t.payment_date ? dayjs(t.payment_date) : null,
-      payed_amount: t.payed_amount ?? null,
+      payment_date: t.payments?.date ? dayjs(t.payments.date) : null,
+      payed_amount: t.payments?.amount ?? null,
       payment_method_id: t.payments?.id ?? 0,
       times: 2,
       recurring: false,
@@ -92,7 +92,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                   <TableCell component="th" scope="row" align="center">
                     <Stack direction="row" justifyContent="space-around">
                       <Typography variant="body2" fontWeight="bold">
-                        {amountFormatter(transaction.payed_amount ?? transaction.amount)}
+                        {amountFormatter(transaction.amount)}
                       </Typography>
                     </Stack>
                   </TableCell>
