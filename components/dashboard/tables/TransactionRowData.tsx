@@ -62,7 +62,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
       category_id: t.categories?.id ?? 0,
       payment_date: t.payment_date ? dayjs(t.payment_date) : null,
       payed_amount: t.payed_amount ?? null,
-      payment_method: t.payment_method,
+      payment_method_id: t.payments?.id ?? 0,
       times: 2,
       recurring: false,
     });
@@ -112,7 +112,7 @@ const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     <Typography variant="body2" color="text.secondary">
-                      {transaction.payment_method}
+                      {transaction.payments?.method ?? "Não informado"}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

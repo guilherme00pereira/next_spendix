@@ -11,7 +11,7 @@ type CategoryType = {
 
 type PaymentType = {
     id: number;
-    date: Dayjs;
+    date: string;
     amount: number;
     method: string;
     times: number;
@@ -33,8 +33,6 @@ type TransactionType = {
     amount: number;
     categories: CategoryType | null;
     cashed: boolean;
-    payment_date: string | null;
-    payed_amount: number | null;
     payments: PaymentType | null;
 }
 
@@ -47,7 +45,7 @@ type TransactionFormData = {
     category_id: number,
     payment_date: Dayjs | null,
     payed_amount: number | null,
-    payment_id: number | null,
+    payment_method_id: number | null,
     times: number,
     recurring: boolean,
 }

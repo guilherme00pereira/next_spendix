@@ -26,7 +26,7 @@ const validate = yup.object({
   due_date: yup.date().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
-  payment_id: yup.string().nullable(),
+  payment_method: yup.string().nullable(),
   times: yup.number().min(2, "Insira apenas valores maiores que 2"),
   recurring: yup.boolean(),
 });
@@ -91,13 +91,12 @@ const TransactionFormDialog = () => {
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_id: values["payment_id"]
+          payment_method_id: values["payment_method_id"]
         }).then(res => {
           if(res !== null) {
             actionShowTransactionDialog(false);
             setIsPending(false);
-            const t: TransactionType = transactionConverterResponseToType(res[0]);
-            setList([...list, t]);
+
           }
         });
       } else {
@@ -111,16 +110,12 @@ const TransactionFormDialog = () => {
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_id: values["payment_id"]
+          payment_method_id: values["payment_method_id"]
         }).then(res => {
           if (res !== null) {
             actionShowTransactionDialog(false);
             setIsPending(false);
-            let ta: TransactionType[] = [];
-            for (let i = 0; i < res?.length; i++) {
-              ta.push(transactionConverterResponseToType(res[i]))
-            }
-            setList([...list, ...ta]);
+
           }
         });
       }
@@ -229,14 +224,14 @@ const TransactionFormDialog = () => {
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <TextField
-                      helperText={formik.touched.payment_method && formik.errors.payment_method}
-                      error={formik.touched.payment_method && Boolean(formik.errors.payment_method)}
+                      helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
+                      error={formik.touched.payment_method_id && Boolean(formik.errors.payment_method_id)}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.payment_method}
+                      value={formik.values.payment_method_id}
                       select
                       fullWidth
-                      name="payment_method"
+                      name="payment_method_id"
                       label="Meio de Pagamento"
                     >
                           {paymentMethods && paymentMethods.map((payment_method: any) => (

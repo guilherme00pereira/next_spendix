@@ -35,7 +35,7 @@ const ListTransactionsTable = () => {
     return (
       list
         ?.filter((transaction: any) => transaction.categories.type === "Receita")
-        .map((transaction: any) => transaction.payed_amount)
+        .map((transaction: any) => transaction.payments?.amount ?? transaction.amount)
         .reduce((acc: number, curr: number) => acc + curr, 0) ?? 0
     );
   };
@@ -45,7 +45,7 @@ const ListTransactionsTable = () => {
     return (
       list
         ?.filter((transaction: any) => transaction.categories.type !== "Receita")
-        .map((transaction: any) => transaction.payed_amount)
+        .map((transaction: any) => transaction.payments?.amount ?? transaction.amount)
         .reduce((acc: number, curr: number) => acc + curr, 0) ?? 0
     );
   };

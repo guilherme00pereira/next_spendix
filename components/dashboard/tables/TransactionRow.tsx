@@ -26,14 +26,14 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
         const run = async () => {
         const income: number = transactions
             .filter((transaction: TransactionType) => transaction.categories?.type === "Receita")
-            .map((transaction: TransactionType) => transaction.payed_amount ?? transaction.amount)
+            .map((transaction: TransactionType) => transaction.payments?.amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         const expense = transactions
             .filter((transaction: TransactionType) => transaction.categories?.type !== "Receita")
-            .map((transaction: TransactionType) => transaction.payed_amount ?? transaction.amount)
+            .map((transaction: TransactionType) => transaction.payments?.amount ?? transaction.amount)
             .reduce((acc: number, curr: number) => acc + curr, 0);
         setRow({
-            day: transactions[0].payment_date?.substring(8) ?? "0",
+            day: transactions[0].payments?.date?.substring(8) ?? "0",
             income: income,
             expense: expense,
             balance: parseFloat(String((income - expense))),

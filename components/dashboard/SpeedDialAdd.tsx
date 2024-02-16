@@ -40,12 +40,12 @@ const SpeedDialAdd = () => {
           recurring: false,
           payment_date: dayjs(Date.now()),
           payed_amount: 0,
-          payment_method: 1
+          payment_method_id: 1
         });
         break;
       case "category":
         actionShowCategoryDialog(true);
-        setCategory({name: "", parent: 0, type: "Receita"});
+        setCategory({color: null, icon: null, name: "", parent: 0, type: "Receita"});
         break;
       default:
         handleClose();
