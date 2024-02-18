@@ -22,8 +22,7 @@ const ListTransactionsTable = () => {
 
   useEffect(() => {
       setIsLoading(true);
-      const d = dayjs(date);
-      getTransactions(d.startOf("M").format("YYYY-MM-DD"), d.format("YYYY-MM-DD")).then((data) => {
+      getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")).then((data) => {
         setList(data as TransactionType[]);
         setIsLoading(false);
         setMappedTransactions(groupTransactionsByDate(data as TransactionType[]));

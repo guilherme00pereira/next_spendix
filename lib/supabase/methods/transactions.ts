@@ -4,11 +4,11 @@ import dayjs from "dayjs";
 
 const getQuery = 'id, amount, due_date, description, cashed, categories(*), payments(*)'
 
-const getTransactions = async (di: string, df: string) => {
+const getTransactions = async (initial_date: string, final_date: string) => {
   const {
     data,
     error
-  } = await supabase.from('transactions').select(getQuery).gte('due_date', di).lte('due_date', df).order("due_date", {ascending: true})
+  } = await supabase.from('transactions').select(getQuery).gte('due_date', initial_date).lte('due_date', final_date).order("due_date", {ascending: true})
   if (error) {
     throw error
   }
