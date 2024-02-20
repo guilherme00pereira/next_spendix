@@ -40,27 +40,6 @@ const addTransaction = async (
     times
   }: TransactionFormData
 ) => {
-  // if (recurring) {
-  //     const rows = [];
-  //     for (let i = 0; i < times; i++) {
-  //         let desctext = `${description} (${i+1}/${times})`
-  //         rows.push({
-  //             amount,
-  //             due_date: due_date.add(i, 'month').format('YYYY-MM-DD'),
-  //             description: desctext,
-  //             cashed,
-  //             category_id,
-  //             payment_id,
-  //             payment_date: cashed && payment_date ? payment_date.add(i, 'month').format('YYYY-MM-DD') : null,
-  //             payed_amount: cashed && payed_amount ? payed_amount : null,
-  //         })
-  //     }
-  //     const {data, error} = await supabase.from('transactions').insert(rows).select(getQuery)
-  //     if (error) {
-  //         throw error
-  //     }
-  //     return data
-  // } else {
   let pay_id = await managePaymentRecord(cashed, payment_date, payed_amount, payment_method_id, recurring, times);
   const {data, error} = await supabase.from('transactions').insert({
     amount,

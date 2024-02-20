@@ -63,7 +63,6 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                         <TableCell align="center">
                             <Chip label={row.day} color="primary" />
                         </TableCell>
-
                         <TableCell align="center">
                             <Typography color={getBalanceColor(row.balance)}>
                                 {amountFormatter(row.balance)}
@@ -79,10 +78,9 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                                 {amountFormatter(row.expense)}
                             </Typography>
                         </TableCell>
-                        <TableCell align="center">{transactions.length}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={7}>
+                        <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                             <TransactionRowData day={row.day} transactions={transactions} open={open}/>
                         </TableCell>
                     </TableRow>

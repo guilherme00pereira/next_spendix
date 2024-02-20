@@ -23,9 +23,10 @@ const ListTransactionsTable = () => {
   useEffect(() => {
       setIsLoading(true);
       getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")).then((data) => {
-        setList(data as TransactionType[]);
+        const lista = data.filter((transaction: any) => transaction.categories.id != 43);
+        setList(lista as TransactionType[]);
         setIsLoading(false);
-        setMappedTransactions(groupTransactionsByDate(data as TransactionType[]));
+        setMappedTransactions(groupTransactionsByDate(lista as TransactionType[]));
       });
   }, [date]);
 
@@ -63,7 +64,6 @@ const ListTransactionsTable = () => {
                 {amountFormatter(getExpenseTotal())}
               </Typography>
             </TableCell>
-            <TableCell colSpan={2} sx={styles.emptyTableCell} />
           </TableRow>
           <TableRow>
             <TableCell />
@@ -71,14 +71,13 @@ const ListTransactionsTable = () => {
             <TableCell align="center">Saldo</TableCell>
             <TableCell align="center">Receitas</TableCell>
             <TableCell align="center">Despesas</TableCell>
-            <TableCell align="center">N° de Lançamentos</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {isLoading || Array.from(mappedTransactions.values()).map((transaction, key) => <TransactionRow key={key} transactions={transaction} />)}
           {isLoading && (
             <TableRow>
-              <TableCell colSpan={7} align="center">
+              <TableCell colSpan={6} align="center">
                 <CircularProgress />
               </TableCell>
             </TableRow>
