@@ -29,7 +29,7 @@ const ListChildrenCategories = ({subcategories, handleEdit, handleConfirmDelete}
           <TableCell align="right">
             <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
                         variant="body2" fontWeight="bold">
-              {category.type}
+              {category.type === "Receita" ? "R" : "D"}
             </Typography>
           </TableCell>
           <TableCell align="right">

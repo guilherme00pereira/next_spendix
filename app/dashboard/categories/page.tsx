@@ -1,18 +1,21 @@
 'use client'
-import { Stack, Container, Typography } from "@mui/material";
-import ListCategoriesTable from "@/components/dashboard/tables/ListCategoriesTable";
+import { Box, Container, Typography } from "@mui/material";
+import TableCategories from "@/components/dashboard/tables/TableCategories";
+import Stack from "@mui/material/Stack";
+import CategoryRightPanel from "@/components/dashboard/panels/CategoryRightPanel";
 
 const CategoriesPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Stack>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-          <Typography variant="h5">
+      <Box sx={{mb: 2}}>
+          <Typography variant="h5" textAlign="center">
               Categorias
           </Typography>
-        </Stack>
-            <ListCategoriesTable />
+      </Box>
+      <Stack spacing={2} direction={{xs: "column", md: "row"}} justifyContent="space-between">
+        <TableCategories />
+        <CategoryRightPanel />
       </Stack>
     </Container>
   );

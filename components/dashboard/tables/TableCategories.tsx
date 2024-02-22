@@ -18,8 +18,11 @@ import {useSpeedDialStore} from "@/lib/hooks";
 import { RemovableEntity } from "@/types/interfaces";
 import ListChildrenCategories from "./ListChildrenCategories";
 import {CategoryType} from "@/types/entities";
+import {useTheme} from "@mui/material/styles";
 
-const ListCategoriesTable = () => {
+
+const TableCategories = () => {
+    const theme = useTheme();
     const queryClient = useQueryClient();
     const {actionShowCategoryDialog, setCategory} = useSpeedDialStore();
     const [openConfirm, setOpenConfirm] = useState(false);
@@ -81,8 +84,8 @@ const ListCategoriesTable = () => {
 
     return (
         <>
-            <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
+            <TableContainer component={Paper} sx={styles(theme).container}>
+                <Table stickyHeader sx={{minWidth: 450}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell colSpan={2}>Nome</TableCell>
@@ -106,7 +109,7 @@ const ListCategoriesTable = () => {
                                     <TableCell align="right">
                                         <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
                                                     variant="body2" fontWeight="bold">
-                                            {category.type}
+                                            {category.type === "Receita" ? "R" : "D"}
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
@@ -146,4 +149,14 @@ const ListCategoriesTable = () => {
     );
 };
 
-export default ListCategoriesTable;
+export default TableCategories;
+
+const styles = (theme: any) => ({
+    container: {
+        width: "100%",
+        [theme.breakpoints.up("md")]: {
+            width: "50%",
+        },
+        maxHeight: "70vh",
+    }
+})
