@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import Link from "next/link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -21,7 +21,7 @@ import {CategoryType} from "@/types/entities";
 import {useTheme} from "@mui/material/styles";
 
 
-const TableCategories = () => {
+const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>}) => {
     const theme = useTheme();
     const queryClient = useQueryClient();
     const {actionShowCategoryDialog, setCategory} = useSpeedDialStore();
@@ -85,7 +85,7 @@ const TableCategories = () => {
     return (
         <>
             <TableContainer component={Paper} sx={styles(theme).container}>
-                <Table stickyHeader sx={{minWidth: 450}} aria-label="simple table">
+                <Table stickyHeader sx={styles(theme).table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell colSpan={2}>Nome</TableCell>
@@ -113,11 +113,9 @@ const TableCategories = () => {
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Link href={`/dashboard/categories/${category.id}`}>
-                                            <Button size="small" variant="text" color="info">
-                                                <VisibilityRoundedIcon fontSize="small"/>
-                                            </Button>
-                                        </Link>
+                                        <Button size="small" variant="text" color="info" onClick={() => handler(category.id)}>
+                                            <VisibilityRoundedIcon fontSize="small"/>
+                                        </Button>
                                         <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
                                             <EditRoundedIcon fontSize="small"/>
                                         </Button>
@@ -131,6 +129,7 @@ const TableCategories = () => {
                                   subcategories={getSubCategories(category.id)}
                                   handleEdit={handleEdit}
                                   handleConfirmDelete={handleConfirmDelete}
+                                  handleView={handler}
                                 />
                               </>
                             ))}
@@ -155,8 +154,10 @@ const styles = (theme: any) => ({
     container: {
         width: "100%",
         [theme.breakpoints.up("md")]: {
-            width: "50%",
+            width: "60%",
         },
         maxHeight: "70vh",
+    },
+    table: {
     }
 })

@@ -10,7 +10,7 @@ import SubdirectoryArrowRightRoundedIcon from '@mui/icons-material/SubdirectoryA
 import TableRow from "@mui/material/TableRow";
 import {ChildrenCategoriesProps} from "@/types/interfaces";
 
-const ListChildrenCategories = ({subcategories, handleEdit, handleConfirmDelete}: ChildrenCategoriesProps ) => {
+const ListChildrenCategories = ({subcategories, handleEdit, handleConfirmDelete, handleView}: ChildrenCategoriesProps ) => {
   return (
     <>
       {subcategories.length > 0 && subcategories.map((category: any) => (
@@ -33,11 +33,9 @@ const ListChildrenCategories = ({subcategories, handleEdit, handleConfirmDelete}
             </Typography>
           </TableCell>
           <TableCell align="right">
-            <Link href={`/dashboard/categories/${category.id}`}>
-              <Button size="small" variant="text" color="info">
+            <Button size="small" variant="text" color="info" onClick={() => handleView(category.id)}>
                 <VisibilityRoundedIcon fontSize="small"/>
-              </Button>
-            </Link>
+            </Button>
             <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
               <EditRoundedIcon fontSize="small"/>
             </Button>

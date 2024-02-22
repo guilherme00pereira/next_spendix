@@ -2,7 +2,6 @@ import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {CategoryFormData, CategoryType, TransactionType} from "@/types/entities";
 import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
-import { Dayjs } from 'dayjs';
 
 interface SelectOption {
     value: string;
@@ -12,16 +11,6 @@ interface SelectOption {
 interface DashboardLayoutProps extends MuiAppBarProps {
     open?: boolean;
     toggleDrawer?: () => void;
-}
-
-interface SinglePageParams {
-    params: {id: number};
-}
-
-interface SinglePageTableProps {
-    id: number;
-    handleName: Dispatch<SetStateAction<string>>;
-    handleType: Dispatch<SetStateAction<string>>;
 }
 
 interface DeleteConfirmDialogProps {
@@ -75,14 +64,13 @@ interface ChildrenCategoriesProps {
     subcategories: CategoryType[];
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
+    handleView: (id: number) => void;
 }
 
 export type {
     SelectOption,
     DeleteConfirmDialogProps,
     RemovableEntity,
-    SinglePageParams,
-    SinglePageTableProps,
     DashboardLayoutProps,
     TransactionRowDataProps,
     PageContextData,

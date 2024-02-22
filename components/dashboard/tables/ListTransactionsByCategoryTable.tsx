@@ -13,12 +13,10 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import {
     amountFormatter,
   } from "@/lib/functions";
-import { SinglePageTableProps } from '@/types/interfaces';
-import { TransactionType } from '@/types/entities';
 import {useAppStore} from "@/lib/hooks";
 import dayjs from "dayjs";
 
-const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePageTableProps) => {
+const ListTransactionsByCategoryTable = ({id}: {id: number}) => {
     const [total, setTotal] = React.useState<number>(0);
     const { date } = useAppStore();
 
@@ -28,9 +26,6 @@ const ListTransactionsByCategoryTable = ({id, handleName, handleType}: SinglePag
       });
 
       useEffect(() => {
-        const firstTransaction: TransactionType = transactions?.[0] as TransactionType ?? {}
-        handleName(firstTransaction.categories?.name ?? "")
-        handleType(firstTransaction.categories?.type ?? "")
         setTotal(transactions?.reduce((acc, curr) => acc + curr.amount, 0) ?? 0)
       }, [transactions])
 
