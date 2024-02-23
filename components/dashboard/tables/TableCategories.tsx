@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -83,9 +84,10 @@ const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>})
     }
 
     return (
-        <>
-            <TableContainer component={Paper} sx={styles(theme).container}>
-                <Table stickyHeader sx={styles(theme).table} aria-label="simple table">
+      <Paper sx={styles(theme).paper}>
+          <Box p={2}>
+            <TableContainer component={Paper} sx={{maxHeight: "70vh"}}>
+                <Table stickyHeader aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell colSpan={2}>Nome</TableCell>
@@ -102,9 +104,7 @@ const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>})
                                     sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                 >
                                     <TableCell component="th" scope="row" colSpan={2}>
-                                        <Link href={`/dashboard/categories/${category.id}`}>
-                                            {category.name}
-                                        </Link>
+                                        {category.name}
                                     </TableCell>
                                     <TableCell align="right">
                                         <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
@@ -144,20 +144,18 @@ const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>})
                 </Table>
             </TableContainer>
             <ConfirmDeleteDialog entity={removableCategory} open={openConfirm} handleClose={setOpenConfirm} handleDelete={processDelete}/>
-        </>
+          </Box>
+        </Paper>
     );
 };
 
 export default TableCategories;
 
 const styles = (theme: any) => ({
-    container: {
+    paper: {
         width: "100%",
         [theme.breakpoints.up("md")]: {
-            width: "60%",
+            width: "50%",
         },
-        maxHeight: "70vh",
     },
-    table: {
-    }
 })

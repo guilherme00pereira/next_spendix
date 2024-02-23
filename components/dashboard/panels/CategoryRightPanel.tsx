@@ -30,10 +30,10 @@ const CategoryRightPanel = ({ id }: { id: number }) => {
   }, [transactions, id]);
 
   return (
-    <Paper>
+    <Paper sx={{ width: "45%" }}>
       <Box p={2}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} sx={{maxHeight: "70vh"}}>
+          <Table stickyHeader aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="center">Dia</TableCell>
