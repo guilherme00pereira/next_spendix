@@ -1,19 +1,31 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { DashboardLayoutProps } from "@/types/interfaces";
-import { Typography } from "@mui/material";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
+import { neutral } from "@/theme/colors";
+import Typography from "@mui/material/Typography";
 
 const drawerWidth: number = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<DashboardLayoutProps>(({ theme, open }) => ({
+  left: 0,
+  [theme.breakpoints.up("md")]: {
+    backgroundColor: theme.palette.grey[100],
+    color: theme.palette.text.primary,
+    "& .MuiSvgIcon-root": {
+      color: theme.palette.primary.main,
+    },
+    left: "56px",
+    width: `calc(100% - 56px)`,
+  },
   boxShadow: "none",
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
@@ -30,30 +42,47 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const IconBox = styled(Box)(({ theme }) => ({
+  display: "block",
+  [theme.breakpoints.up("md")]: {
+    backgroundColor: neutral[800],
+    display: "none",
+    "& .MuiSvgIcon-root": {
+      color: neutral[500],
+    },
+  },
+  padding: 0,
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.up("md")]: {
+    marginLeft: "24px",
+    display: "block",
+  },
+  display: "none",
+}));
+
 const Topbar = ({ props }: { props: DashboardLayoutProps }) => {
   return (
     <AppBar position="absolute" open={props.open}>
-      <Toolbar
-        sx={{
-          pr: "24px", // keep right padding when drawer closed
-        }}
-      >
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          onClick={props.toggleDrawer}
-          sx={{
-            marginRight: "36px",
-            ...(props.open && { display: "none" }),
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-        {!props.open && (
-          <Typography variant="h5" color="inherit" component="div">
+      <Toolbar>
+        <IconBox>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={props.toggleDrawer}
+            sx={{
+              ...(props.open && { display: "none" }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </IconBox>
+        {props.open || (
+          <Title variant="h4" color="primary">
             Spendix
-          </Typography>
+          </Title>
         )}
         <SelectMonthYear />
         <AccountCircle />

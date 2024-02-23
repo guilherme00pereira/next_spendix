@@ -15,7 +15,7 @@ const CategoriesPage = () => {
               Categorias
           </Typography>
       </Box>
-      <Stack spacing={2} direction={{xs: "column", md: "row"}} justifyContent="space-between">
+      <Stack spacing={2} direction={{xs: "column", lg: "row"}} justifyContent="space-between">
         <TableCategories handler={setChosenCategory} />
         {chosenCategory > 0 && (
           <CategoryRightPanel id={chosenCategory} />
