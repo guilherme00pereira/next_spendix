@@ -60,6 +60,12 @@ interface ISpeedDialStoreData {
     setCategory: (c: CategoryFormData) => void;
 }
 
+interface ICategoryTableProps {
+    handleCategory: Dispatch<SetStateAction<number>>;
+    categories: CategoryType[];
+    isLoading: boolean;
+}
+
 interface IChildrenCategoriesProps {
     subcategories: CategoryType[];
     handleEdit: (id: number) => void;
@@ -68,8 +74,8 @@ interface IChildrenCategoriesProps {
 }
 
 interface ICategoryTransactionsPanelProps {
-    id: number,
-    action: Dispatch<SetStateAction<number>>
+    id: number;
+    action: Dispatch<SetStateAction<number>>;
 }
 
 export type {
@@ -82,6 +88,7 @@ export type {
     ITransactionContextData,
     IAppStoreData,
     ISpeedDialStoreData,
+    ICategoryTableProps,
     IChildrenCategoriesProps,
     ICategoryTransactionsPanelProps
 }

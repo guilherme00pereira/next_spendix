@@ -1,5 +1,4 @@
 import {Dispatch, SetStateAction, useState} from "react";
-import Link from "next/link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,27 +11,22 @@ import {Button, CircularProgress, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
-import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {removeCategory} from "@/lib/supabase/methods/categories";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import {useSpeedDialStore} from "@/lib/hooks";
-import { IRemovableEntity } from "@/types/interfaces";
+import { ICategoryTableProps, IRemovableEntity } from "@/types/interfaces";
 import ChildrenCategoriesTable from "./ChildrenCategoriesTable";
 import {CategoryType} from "@/types/entities";
 import {useTheme} from "@mui/material/styles";
 
 
-const CategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<number>>}) => {
+const CategoriesTable = ({handleCategory, categories, isLoading}: ICategoryTableProps) => {
     const theme = useTheme();
     const queryClient = useQueryClient();
     const {actionShowCategoryDialog, setCategory} = useSpeedDialStore();
     const [openConfirm, setOpenConfirm] = useState(false);
     const [removableCategory, setRemovableCategory] = useState<IRemovableEntity>({id: 0, name: '', type: 'categoria'});
-
-    const {data: categories, isLoading} = useQuery({
-        queryKey: ["categories"],
-        queryFn: () => getCategories(),
-    });
 
 
     const deleteMutation = useMutation({
@@ -113,7 +107,7 @@ const CategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<number>>})
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Button size="small" variant="text" color="info" onClick={() => handler(category.id)}>
+                                        <Button size="small" variant="text" color="info" onClick={() => handleCategory(category.id)}>
                                             <VisibilityRoundedIcon fontSize="small"/>
                                         </Button>
                                         <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
@@ -129,7 +123,7 @@ const CategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<number>>})
                                   subcategories={getSubCategories(category.id)}
                                   handleEdit={handleEdit}
                                   handleConfirmDelete={handleConfirmDelete}
-                                  handleView={handler}
+                                  handleView={handleCategory}
                                 />
                               </>
                             ))}

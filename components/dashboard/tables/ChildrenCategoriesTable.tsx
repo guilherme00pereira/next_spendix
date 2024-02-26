@@ -22,9 +22,7 @@ const ChildrenCategoriesTable = ({subcategories, handleEdit, handleConfirmDelete
             <SubdirectoryArrowRightRoundedIcon fontSize="small"/>
           </TableCell>
           <TableCell component="th" scope="row">
-            <Link href={`/dashboard/categories/${category.id}`}>
               {category.name}
-            </Link>
           </TableCell>
           <TableCell align="right">
             <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}

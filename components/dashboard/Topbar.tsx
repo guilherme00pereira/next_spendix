@@ -26,7 +26,6 @@ const AppBar = styled(MuiAppBar, {
     left: "56px",
     width: `calc(100% - 56px)`,
   },
-  boxShadow: "none",
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -80,8 +79,8 @@ const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
           </IconButton>
         </IconBox>
         {props.open || (
-          <Title variant="h4" color="primary">
-            Spendix
+          <Title variant="h5" color="primary">
+            ORC
           </Title>
         )}
         <SelectMonthYear />

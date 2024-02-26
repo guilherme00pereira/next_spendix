@@ -1,6 +1,5 @@
+import { CategoryType } from '@/types/entities';
 import React from 'react';
-import Paper from '@mui/material/Paper';
-import Box from "@mui/material/Box";
 import {Pie, PieChart, Cell, ResponsiveContainer} from 'recharts';
 
 const data = [
@@ -26,10 +25,11 @@ const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, perc
   );
 };
 
-const ParentCategoriesPieChart = () => {
+const ParentCategoriesPieChart = ({categories}: {categories: CategoryType[]}) => {
+
+  
+
   return (
-    <Paper sx={{width: "45%"}}>
-      <Box p={2}>
         <ResponsiveContainer width="100%" height={400}>
           <PieChart width={400} height={400}>
             <Pie
@@ -48,8 +48,6 @@ const ParentCategoriesPieChart = () => {
             </Pie>
           </PieChart>
         </ResponsiveContainer>
-      </Box>
-    </Paper>
   );
 };
 

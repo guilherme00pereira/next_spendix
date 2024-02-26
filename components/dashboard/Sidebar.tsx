@@ -13,10 +13,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
-import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
-import PointOfSaleRoundedIcon from "@mui/icons-material/PointOfSaleRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import { Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
@@ -63,6 +61,7 @@ const Drawer = styled(MuiDrawer, {
 const IconBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
     backgroundColor: neutral[800],
+    boxShadow: "0 0 10px 0 rgba(79,102,194,0.5)",
     "& .MuiSvgIcon-root": {
       color: theme.palette.primary.light,
     },
@@ -90,7 +89,7 @@ export default function Sidebar({ props }: { props: IDashboardLayoutProps }) {
         {props.open && (
           <>
             <Typography variant="h5" noWrap component="div">
-              Spendix
+              ORC
             </Typography>
             <IconButton onClick={props.toggleDrawer}>
               <ChevronLeftIcon />
