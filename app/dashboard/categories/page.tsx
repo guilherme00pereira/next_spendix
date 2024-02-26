@@ -1,9 +1,10 @@
 'use client'
 import { useState } from "react";
 import { Box, Container, Typography } from "@mui/material";
-import TableCategories from "@/components/dashboard/tables/TableCategories";
+import CategoriesTable from "@/components/dashboard/tables/CategoriesTable";
 import Stack from "@mui/material/Stack";
-import CategoryRightPanel from "@/components/dashboard/panels/CategoryRightPanel";
+import CategoryTransactionsPanel from "@/components/dashboard/panels/CategoryTransactionsPanel";
+import ParentCategoriesPieChart from "@/components/dashboard/charts/ParentCategoriesPieChart";
 
 const CategoriesPage = () => {
   const [chosenCategory, setChosenCategory] = useState<number>(0);
@@ -16,9 +17,12 @@ const CategoriesPage = () => {
           </Typography>
       </Box>
       <Stack spacing={2} direction={{xs: "column", lg: "row"}} justifyContent="space-between">
-        <TableCategories handler={setChosenCategory} />
+        <CategoriesTable handler={setChosenCategory} />
         {chosenCategory > 0 && (
-          <CategoryRightPanel id={chosenCategory} />
+          <CategoryTransactionsPanel id={chosenCategory} action={setChosenCategory} />
+        )}
+        {chosenCategory === 0 && (
+            <ParentCategoriesPieChart />
         )}
       </Stack>
     </Container>

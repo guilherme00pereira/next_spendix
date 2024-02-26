@@ -19,7 +19,7 @@ import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import PointOfSaleRoundedIcon from "@mui/icons-material/PointOfSaleRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import { Typography } from "@mui/material";
-import { DashboardLayoutProps } from "@/types/interfaces";
+import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
 
 const drawerWidth: number = 240;
@@ -70,7 +70,7 @@ const IconBox = styled(Box)(({ theme }) => ({
   padding: 0,
 }));
 
-export default function Sidebar({ props }: { props: DashboardLayoutProps }) {
+export default function Sidebar({ props }: { props: IDashboardLayoutProps }) {
   return (
     <Drawer variant="permanent" open={props.open}>
       <Toolbar

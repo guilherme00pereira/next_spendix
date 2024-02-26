@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
@@ -14,8 +14,11 @@ import { amountFormatter } from "@/lib/functions";
 import { useAppStore } from "@/lib/hooks";
 import dayjs from "dayjs";
 import { TransactionType } from "@/types/entities";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import {ICategoryTransactionsPanelProps} from "@/types/interfaces";
 
-const CategoryRightPanel = ({ id }: { id: number }) => {
+const CategoryTransactionsPanel = ( { id, action }: ICategoryTransactionsPanelProps ) => {
   const [total, setTotal] = useState<number>(0);
   const { date } = useAppStore();
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -40,6 +43,15 @@ const CategoryRightPanel = ({ id }: { id: number }) => {
                 <TableCell align="center">Valor</TableCell>
                 <TableCell align="center">Pago?</TableCell>
                 <TableCell align="center">Descrição</TableCell>
+                <TableCell>
+                  <IconButton
+                  edge="end"
+                  onClick={() => action(0)}
+                  aria-label="close"
+                  sx={{p: 0}}
+                >
+                  <CloseIcon />
+                </IconButton></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -58,7 +70,7 @@ const CategoryRightPanel = ({ id }: { id: number }) => {
                       {transaction.cashed && <CheckCircleOutlineRoundedIcon />}
                     </Typography>
                   </TableCell>
-                  <TableCell align="center" scope="row">
+                  <TableCell colSpan={2} align="center" scope="row">
                     <Typography variant="body2" color="text.secondary">
                       {transaction.description}
                     </Typography>
@@ -89,4 +101,4 @@ const CategoryRightPanel = ({ id }: { id: number }) => {
   );
 };
 
-export default CategoryRightPanel;
+export default CategoryTransactionsPanel;

@@ -3,9 +3,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Dialog from '@mui/material/Dialog';
 import {Button, Typography} from "@mui/material";
-import {DeleteConfirmDialogProps} from "@/types/interfaces";
+import {IDeleteConfirmDialogProps} from "@/types/interfaces";
 
-const ConfirmDeleteDialog = ({entity, open, handleClose, handleDelete}: DeleteConfirmDialogProps) => {
+const ConfirmDeleteDialog = ({entity, open, handleClose, handleDelete}: IDeleteConfirmDialogProps) => {
 
     return (
         <Dialog maxWidth="xs" open={open}>

@@ -14,7 +14,7 @@ import TransactionRow from "@/components/dashboard/tables/TransactionRow";
 import { useTransactionContext, useAppStore } from "@/lib/hooks";
 import dayjs from "dayjs";
 
-const ListTransactionsTable = () => {
+const TransactionsTable = () => {
   const { list, setList } = useTransactionContext();
   const { date } = useAppStore();
   const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());
@@ -88,7 +88,7 @@ const ListTransactionsTable = () => {
   );
 };
 
-export default ListTransactionsTable;
+export default TransactionsTable;
 
 const styles = {
   emptyTableCell: {

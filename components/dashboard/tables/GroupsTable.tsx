@@ -9,21 +9,21 @@ import Paper from '@mui/material/Paper';
 import { Button, CircularProgress } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import {getTags, removeTag} from "@/lib/supabase/methods/tags";
+import {getGroups, removeGroup} from "@/lib/supabase/methods/groups";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
-const ListTagsTable = () => {
+const GroupsTable = () => {
     const queryClient = useQueryClient();
 
-    const { data: tags, isLoading } = useQuery({
-        queryKey: ["tags"],
-        queryFn: () => getTags(),
+    const { data: groups, isLoading } = useQuery({
+        queryKey: ["groups"],
+        queryFn: () => getGroups(),
     });
 
     const deleteMutation = useMutation({
-        mutationFn: (id: number) => removeTag(id),
+        mutationFn: (id: number) => removeGroup(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['tags']});
+            queryClient.invalidateQueries({queryKey: ['groups']});
         },
     })
 
@@ -37,27 +37,19 @@ const ListTagsTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {isLoading || (
-                        tags?.length === 0 ? 
-                        <TableRow>
-                            <TableCell colSpan={2} align="center">
-                                Nenhuma tag cadastrada.
-                            </TableCell>
-                        </TableRow>
-                        :
-                        tags?.map((tag) => (
+                    {isLoading || (groups?.map((group) => (
                         <TableRow
-                            key={tag.id}
+                            key={group.id}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {tag.name}
+                                {group.name}
                             </TableCell>
                             <TableCell align="right">
                                 <Button size="small" variant="text" color="info">
                                     <EditRoundedIcon fontSize="small" />
                                 </Button>
-                                <Button size="small" variant="text" color="error" onClick={() => deleteMutation.mutate(tag.id)}>
+                                <Button size="small" variant="text" color="error" onClick={() => deleteMutation.mutate(group.id)}>
                                     <DeleteRoundedIcon fontSize="small" />
                                 </Button>
                             </TableCell>
@@ -79,4 +71,4 @@ const ListTagsTable = () => {
     );
 };
 
-export default ListTagsTable;
+export default GroupsTable;

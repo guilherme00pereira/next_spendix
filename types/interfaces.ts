@@ -3,53 +3,53 @@ import {CategoryFormData, CategoryType, TransactionType} from "@/types/entities"
 import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 
-interface SelectOption {
+interface ISelectOption {
     value: string;
     label: string;
 }
 
-interface DashboardLayoutProps extends MuiAppBarProps {
+interface IDashboardLayoutProps extends MuiAppBarProps {
     open?: boolean;
     toggleDrawer?: () => void;
 }
 
-interface DeleteConfirmDialogProps {
-    entity: RemovableEntity;
+interface IDeleteConfirmDialogProps {
+    entity: IRemovableEntity;
     open: boolean;
     handleClose: Dispatch<SetStateAction<boolean>>;
     handleDelete: () => void;
 }
 
-interface RemovableEntity {
+interface IRemovableEntity {
     id: number, 
     name: string, 
     type: string
 }
 
-interface TransactionRowDataProps {
+interface ITransactionRowDataProps {
     day: string,
     transactions: TransactionType[],
     open: boolean,
 }
 
-interface PageContextData {
+interface IPageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
     mediaQuery: string;
 }
 
-interface TransactionContextData {
+interface ITransactionContextData {
     balanceTotal: number[];
     list: TransactionType[];
     setList: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
-interface AppStoreData {
+interface IAppStoreData {
     date: string;
     setDate: (d: string) => void;
 }
 
-interface SpeedDialStoreData {
+interface ISpeedDialStoreData {
     showTransactionDialog: boolean;
     actionShowTransactionDialog: (action: boolean) => void;
     transaction: TransactionFormData;
@@ -60,23 +60,29 @@ interface SpeedDialStoreData {
     setCategory: (c: CategoryFormData) => void;
 }
 
-interface ChildrenCategoriesProps {
+interface IChildrenCategoriesProps {
     subcategories: CategoryType[];
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
     handleView: (id: number) => void;
 }
 
+interface ICategoryTransactionsPanelProps {
+    id: number,
+    action: Dispatch<SetStateAction<number>>
+}
+
 export type {
-    SelectOption,
-    DeleteConfirmDialogProps,
-    RemovableEntity,
-    DashboardLayoutProps,
-    TransactionRowDataProps,
-    PageContextData,
-    TransactionContextData,
-    AppStoreData,
-    SpeedDialStoreData,
-    ChildrenCategoriesProps
+    ISelectOption,
+    IDeleteConfirmDialogProps,
+    IRemovableEntity,
+    IDashboardLayoutProps,
+    ITransactionRowDataProps,
+    IPageContextData,
+    ITransactionContextData,
+    IAppStoreData,
+    ISpeedDialStoreData,
+    IChildrenCategoriesProps,
+    ICategoryTransactionsPanelProps
 }
 

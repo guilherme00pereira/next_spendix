@@ -13,7 +13,7 @@ import TableContainer from "@mui/material/TableContainer";
 import {getTransactions} from "@/lib/supabase/methods/transactions";
 import TransactionRow from "@/components/dashboard/tables/TransactionRow";
 
-const ListCashFlowTable = () => {
+const CashFlowTable = () => {
   const {date, list, setList} = useTransactionContext();
   const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
@@ -92,7 +92,7 @@ const ListCashFlowTable = () => {
   );
 };
 
-export default ListCashFlowTable;
+export default CashFlowTable;
 
 const styles = {
   emptyTableCell: {

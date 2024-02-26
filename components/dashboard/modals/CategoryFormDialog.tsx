@@ -11,7 +11,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { useSpeedDialStore } from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
-import { SelectOption } from "@/types/interfaces";
+import { ISelectOption } from "@/types/interfaces";
 
 const validate = yup.object({
   name: yup.string().required("Campo obrigatório"),
@@ -22,7 +22,7 @@ const validate = yup.object({
 const CategoryFormDialog = () => {
   const queryClient = useQueryClient();
   const { showCategoryDialog, actionShowCategoryDialog, category } = useSpeedDialStore();
-  const [parents, setParents] = useState<SelectOption[]>([]);
+  const [parents, setParents] = useState<ISelectOption[]>([]);
 
   const addMutation = useMutation({
     mutationFn: (values: CategoryFormData) => addCategory(values),
@@ -42,7 +42,7 @@ const CategoryFormDialog = () => {
 
   useEffect(() => {
     console.log(category);
-    let options: SelectOption[] = [];
+    let options: ISelectOption[] = [];
     queryClient
       .ensureQueryData({
         queryKey: ["categories"],
@@ -123,7 +123,7 @@ const CategoryFormDialog = () => {
                 >
                   <MenuItem value={0}>Nenhuma</MenuItem>
                   {parents &&
-                    parents.map((option: SelectOption) => (
+                    parents.map((option: ISelectOption) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -142,7 +142,7 @@ const CategoryFormDialog = () => {
                   label="Tipo"
                   select
                 >
-                  {CategoryTypeDict.map((option: SelectOption) => (
+                  {CategoryTypeDict.map((option: ISelectOption) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>

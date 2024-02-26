@@ -3,7 +3,7 @@ import {Stack, Container, Typography, Button, SvgIcon} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import {usePageContext} from "@/lib/hooks";
 import TagFormDialog from "@/components/dashboard/modals/TagFormDialog";
-import ListTagsTable from "@/components/dashboard/tables/ListTagsTable";
+import TagsTable from "@/components/dashboard/tables/TagsTable";
 
 const TagsPage = () => {
     const {showModal, actionShowModal} = usePageContext();
@@ -31,7 +31,7 @@ const TagsPage = () => {
         {showModal && (
             <TagFormDialog />
         )}
-        <ListTagsTable />
+        <TagsTable />
       </Stack>
     </Container>
     );

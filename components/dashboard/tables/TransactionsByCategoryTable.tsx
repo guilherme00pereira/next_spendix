@@ -16,7 +16,7 @@ import {
 import {useAppStore} from "@/lib/hooks";
 import dayjs from "dayjs";
 
-const ListTransactionsByCategoryTable = ({id}: {id: number}) => {
+const TransactionsByCategoryTable = ({id}: {id: number}) => {
     const [total, setTotal] = React.useState<number>(0);
     const { date } = useAppStore();
 
@@ -95,4 +95,4 @@ const ListTransactionsByCategoryTable = ({id}: {id: number}) => {
     );
 };
 
-export default ListTransactionsByCategoryTable;
+export default TransactionsByCategoryTable;

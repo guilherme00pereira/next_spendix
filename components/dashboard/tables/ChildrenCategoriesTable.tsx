@@ -8,9 +8,9 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import SubdirectoryArrowRightRoundedIcon from '@mui/icons-material/SubdirectoryArrowRightRounded';
 import TableRow from "@mui/material/TableRow";
-import {ChildrenCategoriesProps} from "@/types/interfaces";
+import {IChildrenCategoriesProps} from "@/types/interfaces";
 
-const ListChildrenCategories = ({subcategories, handleEdit, handleConfirmDelete, handleView}: ChildrenCategoriesProps ) => {
+const ChildrenCategoriesTable = ({subcategories, handleEdit, handleConfirmDelete, handleView}: IChildrenCategoriesProps ) => {
   return (
     <>
       {subcategories.length > 0 && subcategories.map((category: any) => (
@@ -50,4 +50,4 @@ const ListChildrenCategories = ({subcategories, handleEdit, handleConfirmDelete,
   );
 };
 
-export default ListChildrenCategories;
+export default ChildrenCategoriesTable;

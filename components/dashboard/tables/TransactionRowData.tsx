@@ -13,18 +13,18 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase/methods/transactions";
 import {usePageContext, useSpeedDialStore} from "@/lib/hooks";
-import { RemovableEntity, TransactionRowDataProps } from "@/types/interfaces";
+import { IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import dayjs from "dayjs";
 import {TransactionType, TransactionUpdateStatusProps} from "@/types/entities";
 
 
-const TransactionRowData = ({ day, transactions, open }: TransactionRowDataProps) => {
+const TransactionRowData = ({ day, transactions, open }: ITransactionRowDataProps) => {
   const queryClient = useQueryClient();
   const { setTransaction, actionShowTransactionDialog } = useSpeedDialStore();
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [removableTransaction, setRemovableTransaction] = useState<RemovableEntity>({ id: 0, name: "", type: "transação" });
+  const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({ id: 0, name: "", type: "transação" });
 
   const cashedMutation = useMutation({
     mutationFn: (value: TransactionUpdateStatusProps) => updateTransactionCashedStatus(value),

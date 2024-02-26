@@ -6,7 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { DashboardLayoutProps } from "@/types/interfaces";
+import { IDashboardLayoutProps } from "@/types/interfaces";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 import { neutral } from "@/theme/colors";
 import Typography from "@mui/material/Typography";
@@ -15,7 +15,7 @@ const drawerWidth: number = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})<DashboardLayoutProps>(({ theme, open }) => ({
+})<IDashboardLayoutProps>(({ theme, open }) => ({
   left: 0,
   [theme.breakpoints.up("md")]: {
     backgroundColor: theme.palette.grey[100],
@@ -62,7 +62,7 @@ const Title = styled(Typography)(({ theme }) => ({
   display: "none",
 }));
 
-const Topbar = ({ props }: { props: DashboardLayoutProps }) => {
+const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
   return (
     <AppBar position="absolute" open={props.open}>
       <Toolbar>
@@ -85,7 +85,7 @@ const Topbar = ({ props }: { props: DashboardLayoutProps }) => {
           </Title>
         )}
         <SelectMonthYear />
-        <AccountCircle />
+          <AccountCircle />
       </Toolbar>
     </AppBar>
   );

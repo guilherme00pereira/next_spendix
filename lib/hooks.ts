@@ -1,12 +1,12 @@
 import { createContext, useContext } from "react";
-import { PageContextData, TransactionContextData, AppStoreData, SpeedDialStoreData } from "@/types/interfaces";
+import { IPageContextData, ITransactionContextData, IAppStoreData, ISpeedDialStoreData } from "@/types/interfaces";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import dayjs from "dayjs";
 import { CategoryFormData, TransactionFormData } from "@/types/entities";
 
-export const PageContext = createContext<PageContextData>({} as PageContextData);
-export const TransactionContext = createContext<TransactionContextData>({} as TransactionContextData);
+export const PageContext = createContext<IPageContextData>({} as IPageContextData);
+export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
 
 export const usePageContext = () => {
   const context = useContext(PageContext);
@@ -24,7 +24,7 @@ export const useTransactionContext = () => {
   return context;
 };
 
-export const useAppStore = create<AppStoreData>()(
+export const useAppStore = create<IAppStoreData>()(
   persist((set) => (
     {
       date: dayjs().format("YYYYMM"),
@@ -37,7 +37,7 @@ export const useAppStore = create<AppStoreData>()(
   )
 );
 
-export const useSpeedDialStore = create<SpeedDialStoreData>((set) => (
+export const useSpeedDialStore = create<ISpeedDialStoreData>((set) => (
   {
     showTransactionDialog: false,
     actionShowTransactionDialog: (action) => set((state) => ({ ...state, showTransactionDialog: action })),

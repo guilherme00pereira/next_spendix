@@ -16,18 +16,18 @@ import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
 import {useSpeedDialStore} from "@/lib/hooks";
-import { RemovableEntity } from "@/types/interfaces";
-import ListChildrenCategories from "./ListChildrenCategories";
+import { IRemovableEntity } from "@/types/interfaces";
+import ChildrenCategoriesTable from "./ChildrenCategoriesTable";
 import {CategoryType} from "@/types/entities";
 import {useTheme} from "@mui/material/styles";
 
 
-const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>}) => {
+const CategoriesTable = ({handler}: {handler: Dispatch<SetStateAction<number>>}) => {
     const theme = useTheme();
     const queryClient = useQueryClient();
     const {actionShowCategoryDialog, setCategory} = useSpeedDialStore();
     const [openConfirm, setOpenConfirm] = useState(false);
-    const [removableCategory, setRemovableCategory] = useState<RemovableEntity>({id: 0, name: '', type: 'categoria'});
+    const [removableCategory, setRemovableCategory] = useState<IRemovableEntity>({id: 0, name: '', type: 'categoria'});
 
     const {data: categories, isLoading} = useQuery({
         queryKey: ["categories"],
@@ -125,7 +125,7 @@ const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>})
                                         </Button>
                                     </TableCell>
                                 </TableRow>
-                                <ListChildrenCategories
+                                <ChildrenCategoriesTable
                                   subcategories={getSubCategories(category.id)}
                                   handleEdit={handleEdit}
                                   handleConfirmDelete={handleConfirmDelete}
@@ -149,7 +149,7 @@ const TableCategories = ({handler}: {handler: Dispatch<SetStateAction<number>>})
     );
 };
 
-export default TableCategories;
+export default CategoriesTable;
 
 const styles = (theme: any) => ({
     paper: {

@@ -7,7 +7,7 @@ import {TransactionFormData, TransactionType} from "@/types/entities";
 import {TransactionDefaultData} from "@/lib/data";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import ListCashFlowTable from "@/components/dashboard/tables/ListCashFlowTable";
+import CashFlowTable from "@/components/dashboard/tables/CashFlowTable";
 
 const CashFlowPage = () => {
   const { showModal, actionShowModal } = usePageContext();
@@ -52,7 +52,7 @@ const CashFlowPage = () => {
             Add
           </Button>
         </Stack>
-        <ListCashFlowTable />
+        <CashFlowTable />
       </Container>
     </TransactionContext.Provider>
   );
