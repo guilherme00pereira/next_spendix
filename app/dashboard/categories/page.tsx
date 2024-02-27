@@ -22,7 +22,7 @@ const CategoriesPage = () => {
       </Box>
       <Stack spacing={2} direction={{ xs: "column", lg: "row" }} justifyContent="space-between">
         {categories && <CategoriesTable handleCategory={setChosenCategory} categories={categories} isLoading={isLoading} />}
-        <CategoriesPanel id={chosenCategory} action={setChosenCategory} />
+        {categories && <CategoriesPanel id={chosenCategory} action={setChosenCategory} />}
       </Stack>
     </Container>
   );

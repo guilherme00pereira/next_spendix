@@ -80,7 +80,7 @@ const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
         </IconBox>
         {props.open || (
           <Title variant="h5" color="primary">
-            ORC
+            HB
           </Title>
         )}
         <SelectMonthYear />

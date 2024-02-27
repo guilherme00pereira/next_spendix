@@ -86,7 +86,7 @@ const CategoriesTable = ({handleCategory, categories, isLoading}: ICategoryTable
                         <TableRow>
                             <TableCell colSpan={2}>Nome</TableCell>
                             <TableCell align="right">Tipo</TableCell>
-                            <TableCell align="right">Ação</TableCell>
+                            <TableCell align="center">Ação</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

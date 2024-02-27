@@ -89,7 +89,7 @@ export default function Sidebar({ props }: { props: IDashboardLayoutProps }) {
         {props.open && (
           <>
             <Typography variant="h5" noWrap component="div">
-              ORC
+              HB
             </Typography>
             <IconButton onClick={props.toggleDrawer}>
               <ChevronLeftIcon />

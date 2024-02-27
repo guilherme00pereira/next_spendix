@@ -73,7 +73,7 @@ interface IChildrenCategoriesProps {
     handleView: (id: number) => void;
 }
 
-interface ICategoryTransactionsPanelProps {
+interface ICategoriesPanelProps {
     id: number;
     action: Dispatch<SetStateAction<number>>;
 }
@@ -90,6 +90,6 @@ export type {
     ISpeedDialStoreData,
     ICategoryTableProps,
     IChildrenCategoriesProps,
-    ICategoryTransactionsPanelProps
+    ICategoriesPanelProps
 }
 
