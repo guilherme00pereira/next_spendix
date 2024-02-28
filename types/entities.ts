@@ -62,7 +62,12 @@ type TransactionUpdateStatusProps = {
     cashed: boolean;
     payment_date: Dayjs;
     payed_amount: number;
+}
 
+type ChartBarType = {
+    name: string;
+    value: number;
+    label: string;
 }
 
 
@@ -74,4 +79,5 @@ export type {
     TransactionFormData,
     TransactionRow,
     TransactionUpdateStatusProps,
+    ChartBarType
 }
