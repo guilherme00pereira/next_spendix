@@ -16,6 +16,7 @@ import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
+import DisplaySettingsRoundedIcon from '@mui/icons-material/DisplaySettingsRounded';
 import { Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -139,6 +140,13 @@ export default function Sidebar({ props }: { props: IDashboardLayoutProps }) {
             <CreditCardRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Cartões de Crédito" />
+        </ListItemButton>
+
+        <ListItemButton LinkComponent="a" href="/dashboard/settings">
+          <ListItemIcon>
+            <DisplaySettingsRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Configurações" />
         </ListItemButton>
       </List>
     </Drawer>
