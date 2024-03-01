@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { ChartBarType } from "@/types/entities";
 
 const ParentCategoriesBarChart = () => {
-  const { date } = useAppStore();
+  const date = useAppStore((state) => state.date);
   const [data, setData] = useState<ChartBarType[]>([]);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const ParentCategoriesBarChart = () => {
       });
       setData(data);
     });
-  }, []);
+  }, [date]);
 
   return (
     <>

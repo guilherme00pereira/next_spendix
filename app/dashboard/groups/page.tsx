@@ -28,9 +28,7 @@ const GroupsPage = () => {
             </Button>
         </Stack>
 
-        {showModal && (
-            <GroupFormDialog />
-        )}
+        {showModal && <GroupFormDialog />}
         <GroupsTable />
 
       </Stack>

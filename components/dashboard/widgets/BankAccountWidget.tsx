@@ -1,9 +1,11 @@
 import { Card, Stack, Typography, styled } from "@mui/material";
 import React, { useEffect } from "react";
 
-const ColoredCard = styled(Card)(({ theme }) => ({
+const ColoredCard = styled(Card, {
+  shouldForwardProp: (prop) => prop !== "bgcolor",
+})<{bgcolor?: string}>(({ theme, bgcolor }) => ({
   color: "white",
-  backgroundColor: "#3f51b5",
+  backgroundColor: "#" + bgcolor || theme.palette.primary.main,
   padding: "10px",
   width: "300px",
   height: "150px",
@@ -16,7 +18,7 @@ const BankAccountWidget = ({ account }: { account: any }) => {
     console.log(account);
   }, [account]);
   return (
-    <ColoredCard>
+    <ColoredCard bgcolor={account.color}>
       <Stack>
         <Typography key={account.id} variant="h6">
           {account.bank}

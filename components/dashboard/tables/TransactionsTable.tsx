@@ -16,13 +16,13 @@ import dayjs from "dayjs";
 
 const TransactionsTable = () => {
   const { list, setList } = useTransactionContext();
-  const { date } = useAppStore();
+  const date = useAppStore((state) => state.date);
   const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
       setIsLoading(true);
-      getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")).then((data) => {
+      getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD")).then((data) => {
         const lista = data.filter((transaction: any) => transaction.categories.id != 43);
         setList(lista as TransactionType[]);
         setIsLoading(false);

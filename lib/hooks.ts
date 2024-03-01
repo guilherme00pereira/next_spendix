@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IPageContextData, ITransactionContextData, IAppStoreData, ISpeedDialStoreData } from "@/types/interfaces";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";

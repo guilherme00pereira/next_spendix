@@ -3,6 +3,7 @@ import { Stack, Container, Typography, Paper } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getAccountPaymentMethods } from "@/lib/supabase/methods/payment-methods";
 import BankAccountWidget from "@/components/dashboard/widgets/BankAccountWidget";
+import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaymentMethodWidget";
 
 const BankAccountsPage = () => {
   const { data: payment_methods, isLoading } = useQuery({
@@ -19,8 +20,13 @@ const BankAccountsPage = () => {
         <Paper>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 2 }}>
             {isLoading && <Typography variant="h6">Carregando...</Typography>}
-            {isLoading ||
-              (payment_methods && payment_methods.map((payment_method: any) => <BankAccountWidget key={payment_method.id} account={payment_method.accounts} />))}
+            {isLoading || (
+              <>
+                {payment_methods &&
+                  payment_methods.map((payment_method: any) => <BankAccountWidget key={payment_method.id} account={payment_method.accounts} />)}
+                <AddNewPaymentMethodWidget />
+              </>
+            )}
           </Stack>
         </Paper>
       </Stack>

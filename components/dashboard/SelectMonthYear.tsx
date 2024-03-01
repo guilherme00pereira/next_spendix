@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect} from 'react';
 import dayjs from 'dayjs';
 import {useAppStore} from '@/lib/hooks';
 import {IconButton, Stack} from '@mui/material';
@@ -16,17 +16,15 @@ const DateSelector = styled(Stack)(({theme}) => ({
 }));
 
 const SelectMonthYear = () => {
-  const {date, setDate} = useAppStore();
-  const [monthAndYear, setMonthAndYear] = useState<string>(dayjs(date).format('MMMM [de] YYYY'));
+  const date = useAppStore((state) => state.date);
+  const setDate = useAppStore((state) => state.setDate);
 
   const handleClick = (action: string) => {
     if (action === 'add') {
       const d = dayjs(date).add(1, 'month')
-      setMonthAndYear(d.format('MMMM [de] YYYY'));
       setDate(d.format('YYYYMM'));
     } else {
       const d = dayjs(date).subtract(1, 'month')
-      setMonthAndYear(d.format('MMMM [de] YYYY'));
       setDate(d.format('YYYYMM'));
     }
   }
@@ -37,7 +35,7 @@ const SelectMonthYear = () => {
         <IconButton onClick={() => handleClick("del")}>
           <ArrowCircleLeftRoundedIcon sx={{color: "white"}}/>
         </IconButton>
-        {monthAndYear}
+        {dayjs(date).format('MMMM [de] YYYY')}
         <IconButton onClick={() => handleClick("add")}>
           <ArrowCircleRightRoundedIcon sx={{color: "white"}}/>
         </IconButton>
