@@ -2,7 +2,7 @@
 import {Stack, Container, Typography, Button, SvgIcon} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import {usePageContext} from "@/lib/hooks";
-import TagFormDialog from "@/components/dashboard/modals/TagFormDialog";
+import TagFormDialog from "@/components/dashboard/dialogs/TagFormDialog";
 import TagsTable from "@/components/dashboard/tables/TagsTable";
 
 const TagsPage = () => {

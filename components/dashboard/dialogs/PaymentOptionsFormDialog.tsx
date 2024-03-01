@@ -8,26 +8,26 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {addGroup} from "@/lib/supabase/methods/groups";
+import {addPaymentOptions} from "@/lib/supabase/methods/payment-options";
 import LinearProgress from "@mui/material/LinearProgress";
 import {usePageContext} from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
+import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 
 const validate = yup.object({
     name: yup.string().required("Campo obrigatório"),
 });
 
 
-const GroupFormDialog = () => {
+const PaymentOptionsFormDialog = () => {
     const queryClient = useQueryClient();
     const {showModal, actionShowModal} = usePageContext();
 
     const addMutation = useMutation({
-        mutationFn: (value: string) => addGroup(value),
+        mutationFn: (value: string) => addPaymentOptions(value),
         onSuccess: () => {
             actionShowModal(!showModal);
-            queryClient.invalidateQueries({queryKey: ['groups']});
+            queryClient.invalidateQueries({queryKey: ['payment-options']});
         },
     });
 
@@ -45,7 +45,7 @@ const GroupFormDialog = () => {
     return (
         <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
         <form onSubmit={formik.handleSubmit} autoComplete="off">
-            <ModalTopBar title="Novo grupo" />
+            <TopBarDialog title="Novo meio de pagamento" />
             <DialogContent>
                     {addMutation.isPending && (
                         <Stack sx={{width: "100%", pb: 3}} spacing={2}>
@@ -74,4 +74,4 @@ const GroupFormDialog = () => {
     );
 };
 
-export default GroupFormDialog;
+export default PaymentOptionsFormDialog;

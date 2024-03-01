@@ -14,7 +14,7 @@ import {addTransaction, editTransaction} from "@/lib/supabase/methods/transactio
 import {getCategories} from "@/lib/supabase/methods/categories";
 import {useSpeedDialStore, useTransactionContext} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
-import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
+import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 import {convertPaymentMethodsToSelect, transactionConverterResponseToType} from "@/lib/functions";
 import {getAllPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 
@@ -125,7 +125,7 @@ const TransactionFormDialog = () => {
   return (
     <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <ModalTopBar title="Novo lançamento"/>
+        <TopBarDialog title="Novo lançamento"/>
         <DialogContent>
           {isPending && (
             <Stack sx={{width: "100%", pb: 3}} spacing={2}>

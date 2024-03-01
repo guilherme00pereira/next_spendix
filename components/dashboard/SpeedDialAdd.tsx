@@ -2,10 +2,10 @@ import {useState} from "react";
 import {SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
-import TransactionFormDialog from "./modals/TransactionFormDialog";
+import TransactionFormDialog from "@/components/dashboard/dialogs/TransactionFormDialog";
 import {useSpeedDialStore} from "@/lib/hooks";
 import dayjs from "dayjs";
-import CategoryFormDialog from "@/components/dashboard/modals/CategoryFormDialog";
+import CategoryFormDialog from "@/components/dashboard/dialogs/CategoryFormDialog";
 
 const dialActions = [
   {icon: <MonetizationOnOutlinedIcon/>, name: "Transação", handler: "transaction"},

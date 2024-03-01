@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 const ColoredCard = styled(Card)(({ theme }) => ({
   color: "white",
-  backgroundColor: "#3f51b5",
+  backgroundColor: "#333",
   padding: "10px",
   width: "300px",
   height: "150px",
@@ -11,7 +11,7 @@ const ColoredCard = styled(Card)(({ theme }) => ({
   margin: "10px",
 }));
 
-const AccountBox = ({ account }: { account: any }) => {
+const CreditCardWidget = ({ account }: { account: any }) => {
   useEffect(() => {
     console.log(account);
   }, [account]);
@@ -19,14 +19,14 @@ const AccountBox = ({ account }: { account: any }) => {
     <ColoredCard>
       <Stack>
         <Typography key={account.id} variant="h6">
-          {account.bank}
+          {account.name}
         </Typography>
         <Typography key={account.id} variant="h3" >
-          R$ {account.balance}
+          R$ {account.current_balance}
         </Typography>
       </Stack>
     </ColoredCard>
   );
 };
 
-export default AccountBox;
+export default CreditCardWidget;

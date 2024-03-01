@@ -10,7 +10,7 @@ import { addCategory, editCategory, getCategories } from "@/lib/supabase/methods
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSpeedDialStore } from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
+import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 import { ISelectOption } from "@/types/interfaces";
 
 const validate = yup.object({
@@ -87,7 +87,7 @@ const CategoryFormDialog = () => {
   return (
     <Dialog open={showCategoryDialog} fullWidth maxWidth="md" onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <ModalTopBar title="Nova categoria" />
+        <TopBarDialog title="Nova categoria" />
         <DialogContent>
           {addMutation.isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>

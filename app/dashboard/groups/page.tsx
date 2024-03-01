@@ -1,7 +1,7 @@
 'use client'
 import {Stack, Container, Typography, Button, SvgIcon} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import GroupFormDialog from "@/components/dashboard/modals/GroupFormDialog";
+import GroupFormDialog from "@/components/dashboard/dialogs/GroupFormDialog";
 import GroupsTable from "@/components/dashboard/tables/GroupsTable";
 import {usePageContext} from "@/lib/hooks";
 

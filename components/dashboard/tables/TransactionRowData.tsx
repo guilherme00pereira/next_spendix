@@ -15,7 +15,7 @@ import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase
 import {usePageContext, useSpeedDialStore} from "@/lib/hooks";
 import { IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
+import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import dayjs from "dayjs";
 import {TransactionType, TransactionUpdateStatusProps} from "@/types/entities";
 

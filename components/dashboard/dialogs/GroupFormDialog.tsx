@@ -12,14 +12,14 @@ import {addGroup} from "@/lib/supabase/methods/groups";
 import LinearProgress from "@mui/material/LinearProgress";
 import {usePageContext} from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ModalTopBar from "@/components/dashboard/modals/ModalTopBar";
+import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 
 const validate = yup.object({
     name: yup.string().required("Campo obrigatório"),
 });
 
 
-const TagFormDialog = () => {
+const GroupFormDialog = () => {
     const queryClient = useQueryClient();
     const {showModal, actionShowModal} = usePageContext();
 
@@ -27,7 +27,7 @@ const TagFormDialog = () => {
         mutationFn: (value: string) => addGroup(value),
         onSuccess: () => {
             actionShowModal(!showModal);
-            queryClient.invalidateQueries({queryKey: ['tags']});
+            queryClient.invalidateQueries({queryKey: ['groups']});
         },
     });
 
@@ -45,7 +45,7 @@ const TagFormDialog = () => {
     return (
         <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
         <form onSubmit={formik.handleSubmit} autoComplete="off">
-            <ModalTopBar title="Nova tag" />
+            <TopBarDialog title="Novo grupo" />
             <DialogContent>
                     {addMutation.isPending && (
                         <Stack sx={{width: "100%", pb: 3}} spacing={2}>
@@ -74,4 +74,4 @@ const TagFormDialog = () => {
     );
 };
 
-export default TagFormDialog;
+export default GroupFormDialog;

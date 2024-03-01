@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import {usePageContext} from "@/lib/hooks";
 
-const ModalTopBar = ({title}: {title: string}) => {
+const TopBarDialog = ({title}: {title: string}) => {
     const {showModal, actionShowModal} = usePageContext();
 
     return (
@@ -30,4 +30,4 @@ const ModalTopBar = ({title}: {title: string}) => {
     );
 };
 
-export default ModalTopBar;
+export default TopBarDialog;

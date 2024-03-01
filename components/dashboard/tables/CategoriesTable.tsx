@@ -13,7 +13,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import {removeCategory} from "@/lib/supabase/methods/categories";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import ConfirmDeleteDialog from "@/components/dashboard/modals/ConfirmDeleteDialog";
+import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import {useSpeedDialStore} from "@/lib/hooks";
 import { ICategoryTableProps, IRemovableEntity } from "@/types/interfaces";
 import ChildrenCategoriesTable from "./ChildrenCategoriesTable";
