@@ -44,7 +44,7 @@ export const success = withAlphas({
 });
 
 export const info = withAlphas({
-  lightest: '#C8DEDF',
+  lightest: '#D8E7E8',
   light: '#6EA7AA',
   main: '#4A9195',
   dark: '#3B7477',

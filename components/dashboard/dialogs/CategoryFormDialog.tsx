@@ -41,7 +41,6 @@ const CategoryFormDialog = () => {
   });
 
   useEffect(() => {
-    console.log(category);
     let options: ISelectOption[] = [];
     queryClient
       .ensureQueryData({

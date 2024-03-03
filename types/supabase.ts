@@ -179,22 +179,22 @@ export type Database = {
           amount: number
           date: string
           id: number
+          installments: number
           payment_method_id: number
-          times: number
         }
         Insert: {
           amount: number
           date?: string
           id?: number
+          installments?: number
           payment_method_id: number
-          times?: number
         }
         Update: {
           amount?: number
           date?: string
           id?: number
+          installments?: number
           payment_method_id?: number
-          times?: number
         }
         Relationships: [
           {
@@ -298,8 +298,8 @@ export type Database = {
           description: string | null
           due_date: string
           id: number
+          installments: number
           payed_amount: number | null
-          payment_date: string | null
           payment_id: number | null
         }
         Insert: {
@@ -310,8 +310,8 @@ export type Database = {
           description?: string | null
           due_date: string
           id?: number
+          installments?: number
           payed_amount?: number | null
-          payment_date?: string | null
           payment_id?: number | null
         }
         Update: {
@@ -322,8 +322,8 @@ export type Database = {
           description?: string | null
           due_date?: string
           id?: number
+          installments?: number
           payed_amount?: number | null
-          payment_date?: string | null
           payment_id?: number | null
         }
         Relationships: [

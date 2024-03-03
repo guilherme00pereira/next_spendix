@@ -46,7 +46,7 @@ type TransactionFormData = {
     payment_date: Dayjs | null,
     payed_amount: number | null,
     payment_method_id: number | null,
-    times: number,
+    installments: number,
     recurring: boolean,
 }
 

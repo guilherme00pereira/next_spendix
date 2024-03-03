@@ -27,7 +27,7 @@ const validate = yup.object({
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
   payment_method: yup.string().nullable(),
-  times: yup.number().min(2, "Insira apenas valores maiores que 2"),
+  installments: yup.number().min(2, "Insira apenas valores maiores que 2"),
   recurring: yup.boolean(),
 });
 
@@ -35,7 +35,7 @@ const TransactionFormDialog = () => {
   const {list, setList} = useTransactionContext();
   const {showTransactionDialog, actionShowTransactionDialog, transaction} = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);
-  const [isRecurring, setIsRecurring] = useState<boolean>(false);
+  const [hasInstallments, setHasInstallments] = useState<boolean>(false);
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const {data: categories} = useQuery({
@@ -64,7 +64,7 @@ const TransactionFormDialog = () => {
   }
 
   const handleRecurringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsRecurring(e.target.checked);
+    setHasInstallments(e.target.checked);
     formik.setFieldValue("recurring", e.target.checked);
   };
 
@@ -87,7 +87,7 @@ const TransactionFormDialog = () => {
           description: values["description"],
           cashed: values["cashed"],
           category_id: values["category_id"],
-          times: values["times"],
+          installments: values["installments"],
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
@@ -106,7 +106,7 @@ const TransactionFormDialog = () => {
           description: values["description"],
           cashed: values["cashed"],
           category_id: values["category_id"],
-          times: values["times"],
+          installments: values["installments"],
           recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
@@ -246,34 +246,34 @@ const TransactionFormDialog = () => {
             </Grid>
           </Stack>
 
-          {transaction.id || (
+
             <Stack direction="row" sx={{py: 2}}>
               <Grid container spacing={2}>
                 <Grid item xs={6} md={2}>
                   <FormControlLabel
                     control={<Checkbox name="recurring" value={formik.values.recurring}
                                        onChange={handleRecurringChange} onBlur={formik.handleBlur}/>}
-                    label="Recorrente?"
+                    label="É Parcelado?"
                   />
                 </Grid>
 
-                {isRecurring && (
+                {hasInstallments && (
                   <Grid item xs={12} md={2}>
                     <TextField
-                      helperText={formik.touched.times && formik.errors.times}
-                      error={formik.touched.times && Boolean(formik.errors.times)}
+                      helperText={formik.touched.installments && formik.errors.installments}
+                      error={formik.touched.installments && Boolean(formik.errors.installments)}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.times}
+                      value={formik.values.installments}
                       fullWidth
-                      name="times"
+                      name="installments"
                       label="Nº de parcelas"
                     />
                   </Grid>
                 )}
               </Grid>
             </Stack>
-          )}
+
 
           <Stack direction="row">
             <Grid container spacing={2}>

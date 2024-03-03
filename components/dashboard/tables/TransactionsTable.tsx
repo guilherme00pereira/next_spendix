@@ -20,6 +20,8 @@ const TransactionsTable = () => {
   const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
 
+
+
   useEffect(() => {
       setIsLoading(true);
       getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD")).then((data) => {
@@ -53,7 +55,7 @@ const TransactionsTable = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell colSpan={3} sx={styles.emptyTableCell} />
+            <TableCell colSpan={2} sx={styles.emptyTableCell} />
             <TableCell align="center" sx={styles.emptyTableCell}>
               <Typography fontWeight="bold" color="info.main">
                 {amountFormatter(getIncomeTotal())}
@@ -64,6 +66,7 @@ const TransactionsTable = () => {
                 {amountFormatter(getExpenseTotal())}
               </Typography>
             </TableCell>
+            <TableCell sx={styles.emptyTableCell} />
           </TableRow>
           <TableRow>
             <TableCell />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import {TransactionType, TransactionUpdateStatusProps} from "@/types/entities";
 
 
-const TransactionRowData = ({ day, transactions, open }: ITransactionRowDataProps) => {
+const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) => {
   const queryClient = useQueryClient();
   const { setTransaction, actionShowTransactionDialog } = useSpeedDialStore();
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -63,17 +63,21 @@ const TransactionRowData = ({ day, transactions, open }: ITransactionRowDataProp
       payment_date: t.payments?.date ? dayjs(t.payments.date) : null,
       payed_amount: t.payments?.amount ?? null,
       payment_method_id: t.payments?.id ?? 0,
-      times: 2,
+      installments: 2,
       recurring: false,
     });
     actionShowTransactionDialog(true);
   }
 
+  useEffect(() => {
+    console.log(transactions)
+  }, []);
+
   return (
     <Collapse in={open} timeout="auto" unmountOnExit>
       <Box sx={{ margin: 1 }}>
         <TableContainer>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} size="small">
             <TableHead>
               <TableRow sx={styles.headrow}>
                 <TableCell />
@@ -138,12 +142,12 @@ export default TransactionRowData;
 
 const styles = {
   rowline: {
-    backgroundColor: (theme: any) => theme.palette.neutral[25],
+    backgroundColor: (theme: any) => theme.palette.info.lightest,
     "&:last-child td, &:last-child th": { border: 0 }
   },
   headrow: {
     '& > *': {
-      backgroundColor: "#FFF !important",
+      backgroundColor: (theme: any) => theme.palette.info.lightest + " !important",
     }
   },
 }

@@ -1,10 +1,12 @@
-import React from "react";
+import {useState} from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
@@ -23,7 +25,7 @@ const AppBar = styled(MuiAppBar, {
     "& .MuiSvgIcon-root": {
       color: theme.palette.primary.main,
     },
-    left: "56px",
+    left: open ? "0px" : "56px",
     width: `calc(100% - 56px)`,
   },
   zIndex: theme.zIndex.drawer + 1,
@@ -62,6 +64,16 @@ const Title = styled(Typography)(({ theme }) => ({
 }));
 
 const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position="absolute" open={props.open}>
       <Toolbar>
@@ -84,7 +96,27 @@ const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
           </Title>
         )}
         <SelectMonthYear />
+        <IconButton size="large" onClick={handleMenu}>
           <AccountCircle />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+        </Menu>
       </Toolbar>
     </AppBar>
   );

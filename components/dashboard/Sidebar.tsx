@@ -20,6 +20,7 @@ import DisplaySettingsRoundedIcon from '@mui/icons-material/DisplaySettingsRound
 import { Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
+import Stack from "@mui/material/Stack";
 
 const drawerWidth: number = 240;
 
@@ -61,8 +62,7 @@ const Drawer = styled(MuiDrawer, {
 
 const IconBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
-    backgroundColor: neutral[800],
-    boxShadow: "0 0 10px 0 rgba(79,102,194,0.5)",
+    backgroundColor: "none",
     "& .MuiSvgIcon-root": {
       color: theme.palette.primary.light,
     },
@@ -81,21 +81,21 @@ export default function Sidebar({ props }: { props: IDashboardLayoutProps }) {
         }}
       >
         {props.open || (
-          <IconBox>
-            <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={props.toggleDrawer}>
+          <IconBox sx={{width: "100%"}}>
+            <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={props.toggleDrawer} sx={{marginLeft: "-16px"}}>
               <MenuIcon />
             </IconButton>
           </IconBox>
         )}
         {props.open && (
-          <>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width: "100%"}}>
             <Typography variant="h5" noWrap component="div">
               HB
             </Typography>
             <IconButton onClick={props.toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
-          </>
+          </Stack>
         )}
       </Toolbar>
 

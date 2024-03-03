@@ -37,10 +37,10 @@ const addTransaction = async (
     payed_amount,
     payment_method_id,
     recurring,
-    times
+    installments
   }: TransactionFormData
 ) => {
-  let pay_id = await managePaymentRecord(cashed, payment_date, payed_amount, payment_method_id, recurring, times);
+  let pay_id = await managePaymentRecord(cashed, payment_date, payed_amount, payment_method_id, recurring, installments);
   const {data, error} = await supabase.from('transactions').insert({
     amount,
     due_date: due_date.format('YYYY-MM-DD'),
@@ -69,9 +69,9 @@ const editTransaction = async (
     payed_amount,
     payment_method_id,
     recurring,
-    times
+    installments
   }: TransactionFormData) => {
-  let pay_id = await managePaymentRecord(cashed, payment_date, payed_amount, payment_method_id, recurring, times);
+  let pay_id = await managePaymentRecord(cashed, payment_date, payed_amount, payment_method_id, recurring, installments);
   const {data, error} = await supabase.from('transactions').update({
     amount,
     due_date: due_date.format('YYYY-MM-DD'),
@@ -125,14 +125,14 @@ const managePaymentRecord = async (
   payed_amount: number | null,
   payment_method_id: number | null,
   recurring: boolean,
-  times: number) => {
+  installments: number) => {
   let pay_id = null;
   if (cashed) {
     const {data, error} = await supabase.from('payments').insert({
       date: payment_date ? payment_date.format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
       amount: payed_amount ?? 0,
       payment_method_id: payment_method_id ? payment_method_id : 1,
-      times: recurring ? times : 1
+      installments: recurring ? installments : 1
     }).select('id')
 
     if (error) {

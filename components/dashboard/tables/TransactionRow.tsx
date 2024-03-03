@@ -18,7 +18,7 @@ const getBalanceColor = (balance: number) => {
 
 const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     let {balanceTotal} = useTransactionContext();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [row, setRow] = useState<TransactionRow>();
     const wasAlreadyRequested = useRef(false);
 
@@ -50,18 +50,9 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
         <>
             {row && (
                 <>
-                    <TableRow>
-                        <TableCell>
-                            <IconButton
-                                aria-label="expand row"
-                                size="small"
-                                onClick={() => setOpen(!open)}
-                            >
-                                {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
-                            </IconButton>
-                        </TableCell>
+                    <TableRow key={row.day}>
                         <TableCell align="center">
-                            <Chip label={row.day} color="primary" />
+                            <Chip label={row.day} sx={{backgroundColor: (theme: any) => theme.palette.primary.lightest}} />
                         </TableCell>
                         <TableCell align="center">
                             <Typography color={getBalanceColor(row.balance)}>
@@ -78,8 +69,18 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                                 {amountFormatter(row.expense)}
                             </Typography>
                         </TableCell>
+                        <TableCell align="center">
+                            <IconButton
+                              aria-label="expand row"
+                              size="small"
+                              color="primary"
+                              onClick={() => setOpen(!open)}
+                            >
+                                {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                            </IconButton>
+                        </TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow sx={{backgroundColor: (theme: any) => theme.palette.info.lightest}}>
                         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                             <TransactionRowData day={row.day} transactions={transactions} open={open}/>
                         </TableCell>
@@ -91,7 +92,3 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
 };
 
 export default TransactionRow;
-
-const styles = {
-    '& > *': {borderBottom: 'unset'}
-}

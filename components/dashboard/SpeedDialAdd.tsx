@@ -6,11 +6,26 @@ import TransactionFormDialog from "@/components/dashboard/dialogs/TransactionFor
 import {useSpeedDialStore} from "@/lib/hooks";
 import dayjs from "dayjs";
 import CategoryFormDialog from "@/components/dashboard/dialogs/CategoryFormDialog";
+import {styled} from "@mui/material/styles";
 
 const dialActions = [
   {icon: <MonetizationOnOutlinedIcon/>, name: "Transação", handler: "transaction"},
   {icon: <CategoryOutlinedIcon/>, name: "Categoria", handler: "category"}
 ];
+
+const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
+  position: "fixed",
+  bottom: 32,
+  right: 32,
+  "& .MuiSpeedDial-fab": {
+    lineHeight: 0.75,
+  },
+  "& .MuiSpeedDialAction-fab, .MuiSpeedDialAction-staticTooltipLabel": {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+}));
+
 
 const SpeedDialAdd = () => {
   const {
@@ -36,7 +51,7 @@ const SpeedDialAdd = () => {
           cashed: true,
           description: "",
           due_date: dayjs(Date.now()),
-          times: 2,
+          installments: 2,
           recurring: false,
           payment_date: dayjs(Date.now()),
           payed_amount: 0,
@@ -45,7 +60,7 @@ const SpeedDialAdd = () => {
         break;
       case "category":
         actionShowCategoryDialog(true);
-        setCategory({color: null, icon: null, name: "", parent: 0, type: "Receita"});
+        setCategory({color: null, icon: null, name: "", parent: 0, type: "Despesa"});
         break;
       default:
         handleClose();
@@ -55,13 +70,13 @@ const SpeedDialAdd = () => {
 
   return (
     <>
-      <SpeedDial ariaLabel="botões" sx={styles.root} icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen}
+      <SpeedDialButton ariaLabel="botões" icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen}
                  open={open}>
         {dialActions.map((action) => (
           <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipOpen
                            onClick={() => handleClick(action.handler)} FabProps={{size: "large"}}/>
         ))}
-      </SpeedDial>
+      </SpeedDialButton>
       {showTransactionDialog && <TransactionFormDialog/>}
       {showCategoryDialog && <CategoryFormDialog />}
     </>
@@ -69,24 +84,3 @@ const SpeedDialAdd = () => {
 };
 
 export default SpeedDialAdd;
-
-const styles = {
-  root: {
-    position: "fixed",
-    bottom: 32,
-    right: 32,
-    "& .MuiSpeedDial-fab": {
-      lineHeight: 0.75,
-    },
-    "& .MuiSpeedDialAction-fab": {
-      fontSize: "1.125rem",
-      backgroundColor: (theme: any) => theme.palette.primary.main,
-      color: (theme: any) => theme.palette.primary.contrastText,
-    },
-    "& .MuiSpeedDialAction-staticTooltipLabel": {
-      fontSize: "1.125rem",
-      backgroundColor: (theme: any) => theme.palette.primary.main,
-      color: (theme: any) => theme.palette.primary.contrastText,
-    },
-  },
-};

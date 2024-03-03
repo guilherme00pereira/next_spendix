@@ -3,12 +3,12 @@ import dayjs from "dayjs";
 
 const CategoryTypeDict = [
     {
-        value: 'Receita',
-        label: "Receita"
-    },
-    {
         value: 'Despesa',
         label: "Despesa"
+    },
+    {
+        value: 'Receita',
+        label: "Receita"
     }
 ];
 const TransactionDefaultData = {
