@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase/supabase-client";
 import { TransactionFormData, TransactionUpdateStatusProps, RecurringFormData } from "@/types/entities";
 import dayjs from "dayjs";
 
-const getQuery = "id, amount, due_date, description, cashed, categories(*), payments(*)";
+const getQuery = "id, amount, due_date, description, categories(*), payments(*)";
 
 const getTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
@@ -50,7 +50,6 @@ const addTransaction = async ({
         amount,
         due_date: due_date.format("YYYY-MM-DD"),
         description,
-        cashed,
         category_id,
         installments: in_installments ? installments : 1,
         payment_id: pay_id,

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
@@ -12,6 +12,7 @@ import { IDashboardLayoutProps } from "@/types/interfaces";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
 import { neutral } from "@/theme/colors";
 import Typography from "@mui/material/Typography";
+import {useRouter} from "next/navigation";
 
 const drawerWidth: number = 240;
 
@@ -64,14 +65,11 @@ const Title = styled(Typography)(({ theme }) => ({
 }));
 
 const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   return (
@@ -97,25 +95,17 @@ const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
         )}
         <SelectMonthYear />
         <IconButton size="large" onClick={handleMenu}>
-          <AccountCircle />
+          <AccountCircle sx={{fontSize: "2rem"}} />
         </IconButton>
         <Menu
-          id="menu-appbar"
+          id="menu-profile"
           anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
           keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={() => setAnchorEl(null)}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={() => router.push("/dashboard/profile")}>Profile</MenuItem>
+          <MenuItem onClick={() => router.push("/")}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>
