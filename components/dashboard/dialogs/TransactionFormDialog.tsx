@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField} from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
@@ -9,13 +9,12 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {TransactionType} from "@/types/entities";
 import {addTransaction, editTransaction} from "@/lib/supabase/methods/transactions";
 import {getCategories} from "@/lib/supabase/methods/categories";
-import {useSpeedDialStore, useTransactionContext} from "@/lib/hooks";
+import {useSpeedDialStore} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
-import {convertPaymentMethodsToSelect, transactionConverterResponseToType} from "@/lib/functions";
+import {convertPaymentMethodsToSelect} from "@/lib/functions";
 import {getAllPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 
 const validate = yup.object({
@@ -27,12 +26,11 @@ const validate = yup.object({
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
   payment_method: yup.string().nullable(),
+  in_installments: yup.boolean(),
   installments: yup.number().min(2, "Insira apenas valores maiores que 2"),
-  recurring: yup.boolean(),
 });
 
 const TransactionFormDialog = () => {
-  const {list, setList} = useTransactionContext();
   const {showTransactionDialog, actionShowTransactionDialog, transaction} = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);
   const [hasInstallments, setHasInstallments] = useState<boolean>(false);
@@ -87,11 +85,11 @@ const TransactionFormDialog = () => {
           description: values["description"],
           cashed: values["cashed"],
           category_id: values["category_id"],
+          in_installments: values["in_installments"],
           installments: values["installments"],
-          recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_method_id: values["payment_method_id"]
+          payment_method_id: values["payment_method_id"],
         }).then(res => {
           if(res !== null) {
             actionShowTransactionDialog(false);
@@ -106,11 +104,11 @@ const TransactionFormDialog = () => {
           description: values["description"],
           cashed: values["cashed"],
           category_id: values["category_id"],
+          in_installments: values["in_installments"],
           installments: values["installments"],
-          recurring: values["recurring"],
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
-          payment_method_id: values["payment_method_id"]
+          payment_method_id: values["payment_method_id"],
         }).then(res => {
           if (res !== null) {
             actionShowTransactionDialog(false);
@@ -251,7 +249,7 @@ const TransactionFormDialog = () => {
               <Grid container spacing={2}>
                 <Grid item xs={6} md={2}>
                   <FormControlLabel
-                    control={<Checkbox name="recurring" value={formik.values.recurring}
+                    control={<Checkbox name="in_installments" value={formik.values.in_installments}
                                        onChange={handleRecurringChange} onBlur={formik.handleBlur}/>}
                     label="É Parcelado?"
                   />

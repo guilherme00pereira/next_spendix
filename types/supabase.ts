@@ -292,7 +292,6 @@ export type Database = {
       transactions: {
         Row: {
           amount: number
-          cashed: boolean
           category_id: number | null
           created_at: string
           description: string | null
@@ -304,7 +303,6 @@ export type Database = {
         }
         Insert: {
           amount: number
-          cashed?: boolean
           category_id?: number | null
           created_at?: string
           description?: string | null
@@ -316,7 +314,6 @@ export type Database = {
         }
         Update: {
           amount?: number
-          cashed?: boolean
           category_id?: number | null
           created_at?: string
           description?: string | null

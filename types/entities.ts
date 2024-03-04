@@ -46,8 +46,18 @@ type TransactionFormData = {
     payment_date: Dayjs | null,
     payed_amount: number | null,
     payment_method_id: number | null,
+    in_installments: boolean,
     installments: number,
+}
+
+type RecurringFormData = {
+    id?: number,
+    amount: number,
+    due_date: Dayjs,
+    description: string,
+    category_id: number,
     recurring: boolean,
+    recurring_times: number,
 }
 
 type TransactionRow = {
@@ -77,6 +87,7 @@ export type {
     CategoryFormData,
     TransactionType,
     TransactionFormData,
+    RecurringFormData,
     TransactionRow,
     TransactionUpdateStatusProps,
     ChartBarType

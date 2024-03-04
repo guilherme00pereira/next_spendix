@@ -9,12 +9,19 @@ import {amountFormatter} from "@/lib/functions";
 import TransactionRowData from "@/components/dashboard/tables/TransactionRowData";
 import {Chip, Typography} from "@mui/material";
 import {useTransactionContext} from "@/lib/hooks";
+import { styled } from '@mui/system';
 
 const getBalanceColor = (balance: number) => {
     if (balance < 0) return "error.main";
     if (balance === 0) return "text.primary";
     return "success.main";
 }
+
+const DayChip = styled(Chip)(({ theme }) => ({
+    backgroundColor: theme.palette.info.lightest,
+    fontWeight: "bold",
+    border: "1px solid",
+}));
 
 const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     let {balanceTotal} = useTransactionContext();
@@ -52,7 +59,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                 <>
                     <TableRow key={row.day}>
                         <TableCell align="center">
-                            <Chip label={row.day} sx={{backgroundColor: (theme: any) => theme.palette.primary.lightest}} />
+                            <DayChip label={row.day} />
                         </TableCell>
                         <TableCell align="center">
                             <Typography color={getBalanceColor(row.balance)}>

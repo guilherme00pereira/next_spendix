@@ -1,5 +1,5 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {CategoryFormData, CategoryType, TransactionType} from "@/types/entities";
+import {CategoryFormData, CategoryType, RecurringFormData, TransactionType} from "@/types/entities";
 import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 
@@ -58,6 +58,10 @@ interface ISpeedDialStoreData {
     actionShowCategoryDialog: (action: boolean) => void;
     category: CategoryFormData;
     setCategory: (c: CategoryFormData) => void;
+    showRecurringDialog: boolean;
+    actionShowRecurringDialog: (action: boolean) => void;
+    recurring: RecurringFormData;
+    setRecurring: (r: RecurringFormData) => void;
 }
 
 interface ICategoryTableProps {

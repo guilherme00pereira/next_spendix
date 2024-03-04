@@ -148,6 +148,8 @@ const styles = {
   headrow: {
     '& > *': {
       backgroundColor: (theme: any) => theme.palette.info.lightest + " !important",
+      color: (theme: any) => theme.palette.info.darkest + " !important",
+      fontWeight: "bold",
     }
   },
 }

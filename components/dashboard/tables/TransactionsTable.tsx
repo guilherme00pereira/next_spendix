@@ -69,11 +69,11 @@ const TransactionsTable = () => {
             <TableCell sx={styles.emptyTableCell} />
           </TableRow>
           <TableRow>
-            <TableCell />
             <TableCell align="center">Dia</TableCell>
             <TableCell align="center">Saldo</TableCell>
             <TableCell align="center">Receitas</TableCell>
             <TableCell align="center">Despesas</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>

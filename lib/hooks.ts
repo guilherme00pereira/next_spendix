@@ -3,7 +3,7 @@ import { IPageContextData, ITransactionContextData, IAppStoreData, ISpeedDialSto
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import dayjs from "dayjs";
-import { CategoryFormData, TransactionFormData } from "@/types/entities";
+import { CategoryFormData, RecurringFormData, TransactionFormData } from "@/types/entities";
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
@@ -47,5 +47,9 @@ export const useSpeedDialStore = create<ISpeedDialStoreData>((set) => (
     actionShowCategoryDialog: (action) => set((state) => ({ ...state, showCategoryDialog: action })),
     category: {} as CategoryFormData,
     setCategory: (c: CategoryFormData) => set((state) => ({ ...state, category: c })),
+    showRecurringDialog: false,
+    actionShowRecurringDialog: (action) => set((state) => ({ ...state, showRecurringDialog: action })),
+    recurring: {} as RecurringFormData,
+    setRecurring: (r: RecurringFormData) => set((state) => ({ ...state, recurring: r })),
   }
 ));

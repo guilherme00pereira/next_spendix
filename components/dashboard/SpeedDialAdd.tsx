@@ -1,16 +1,19 @@
-import {useState} from "react";
-import {SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
+import { useState } from "react";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
 import TransactionFormDialog from "@/components/dashboard/dialogs/TransactionFormDialog";
-import {useSpeedDialStore} from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/hooks";
 import dayjs from "dayjs";
 import CategoryFormDialog from "@/components/dashboard/dialogs/CategoryFormDialog";
-import {styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import RecurringFormDialog from "./dialogs/RecurringFormDialog";
 
 const dialActions = [
-  {icon: <MonetizationOnOutlinedIcon/>, name: "Transação", handler: "transaction"},
-  {icon: <CategoryOutlinedIcon/>, name: "Categoria", handler: "category"}
+  { icon: <MonetizationOnOutlinedIcon />, name: "Transação", handler: "transaction" },
+  { icon: <EventRepeatOutlinedIcon />, name: "Recorrente", handler: "recurring" },
+  { icon: <CategoryOutlinedIcon />, name: "Categoria", handler: "category" },
 ];
 
 const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
@@ -26,7 +29,6 @@ const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
   },
 }));
 
-
 const SpeedDialAdd = () => {
   const {
     setTransaction,
@@ -34,7 +36,10 @@ const SpeedDialAdd = () => {
     actionShowTransactionDialog,
     setCategory,
     showCategoryDialog,
-    actionShowCategoryDialog
+    actionShowCategoryDialog,
+    setRecurring,
+    showRecurringDialog,
+    actionShowRecurringDialog,
   } = useSpeedDialStore();
   const [open, setOpen] = useState(false);
 
@@ -51,16 +56,20 @@ const SpeedDialAdd = () => {
           cashed: true,
           description: "",
           due_date: dayjs(Date.now()),
+          in_installments: false,
           installments: 2,
-          recurring: false,
           payment_date: dayjs(Date.now()),
           payed_amount: 0,
-          payment_method_id: 1
+          payment_method_id: 1,
         });
         break;
       case "category":
         actionShowCategoryDialog(true);
-        setCategory({color: null, icon: null, name: "", parent: 0, type: "Despesa"});
+        setCategory({ color: null, icon: null, name: "", parent: 0, type: "Despesa" });
+        break;
+      case "recurring":
+        actionShowRecurringDialog(true);
+        setRecurring({ amount: 0, category_id: 3, description: "", due_date: dayjs(Date.now()), recurring: false, recurring_times: 2 });
         break;
       default:
         handleClose();
@@ -70,14 +79,20 @@ const SpeedDialAdd = () => {
 
   return (
     <>
-      <SpeedDialButton ariaLabel="botões" icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen}
-                 open={open}>
+      <SpeedDialButton ariaLabel="botões" icon={<SpeedDialIcon />} onClose={handleClose} onOpen={handleOpen} open={open}>
         {dialActions.map((action) => (
-          <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipOpen
-                           onClick={() => handleClick(action.handler)} FabProps={{size: "large"}}/>
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            onClick={() => handleClick(action.handler)}
+            FabProps={{ size: "large" }}
+          />
         ))}
       </SpeedDialButton>
-      {showTransactionDialog && <TransactionFormDialog/>}
+      {showTransactionDialog && <TransactionFormDialog />}
+      {showRecurringDialog && <RecurringFormDialog />}
       {showCategoryDialog && <CategoryFormDialog />}
     </>
   );
