@@ -33,6 +33,7 @@ type TransactionType = {
     amount: number;
     categories: CategoryType | null;
     cashed: boolean;
+    installments: number;
     payments: PaymentType | null;
 }
 

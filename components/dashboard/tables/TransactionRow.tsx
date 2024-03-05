@@ -2,8 +2,8 @@ import {useState, useEffect, useRef} from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import IconButton from "@mui/material/IconButton";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import {TransactionType, TransactionRow} from "@/types/entities";
 import {amountFormatter} from "@/lib/functions";
 import TransactionRowData from "@/components/dashboard/tables/TransactionRowData";
@@ -83,7 +83,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                               color="primary"
                               onClick={() => setOpen(!open)}
                             >
-                                {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                                {open ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
                             </IconButton>
                         </TableCell>
                     </TableRow>

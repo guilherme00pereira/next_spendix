@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [showAdd, setShowAdd] = useState<boolean>(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -28,7 +28,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <Box sx={{ display: "flex" }}>
           <Topbar props={{ open: open, toggleDrawer: toggleDrawer }} />
-          <Sidebar props={{ open: open, toggleDrawer: toggleDrawer }} />
+          <Sidebar open={open} toggleDrawer={toggleDrawer} />
           <Box
             component="main"
             sx={{

@@ -12,7 +12,7 @@ import { amountFormatter } from "@/lib/functions";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase/methods/transactions";
-import {usePageContext, useSpeedDialStore} from "@/lib/hooks";
+import {useSpeedDialStore} from "@/lib/hooks";
 import { IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
@@ -63,15 +63,11 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       payment_date: t.payments?.date ? dayjs(t.payments.date) : null,
       payed_amount: t.payments?.amount ?? null,
       payment_method_id: t.payments?.id ?? 0,
+      in_installments: t.installments > 1,
       installments: 2,
-      recurring: false,
     });
     actionShowTransactionDialog(true);
   }
-
-  useEffect(() => {
-    console.log(transactions)
-  }, []);
 
   return (
     <Collapse in={open} timeout="auto" unmountOnExit>

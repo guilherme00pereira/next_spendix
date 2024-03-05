@@ -1,4 +1,5 @@
-import {Dispatch, SetStateAction, useState} from "react";
+import {useState} from "react";
+import Link from "next/link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -81,7 +82,7 @@ const CategoriesTable = ({handleCategory, categories, isLoading}: ICategoryTable
       <Paper sx={styles(theme).paper}>
           <Box p={2}>
             <TableContainer component={Paper} sx={{maxHeight: "70vh"}}>
-                <Table stickyHeader aria-label="simple table">
+                <Table stickyHeader size="small" aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell colSpan={2}>Nome</TableCell>
@@ -98,7 +99,9 @@ const CategoriesTable = ({handleCategory, categories, isLoading}: ICategoryTable
                                     sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                 >
                                     <TableCell component="th" scope="row" colSpan={2}>
-                                        {category.name}
+                                        <Link href={`/dashboard/categories/${category.id}`}>
+                                            {category.name}
+                                        </Link>
                                     </TableCell>
                                     <TableCell align="right">
                                         <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}

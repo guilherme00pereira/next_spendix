@@ -1,5 +1,4 @@
 import React from 'react';
-
 import TableCell from "@mui/material/TableCell";
 import Link from "next/link";
 import {Button, Typography} from "@mui/material";
@@ -22,7 +21,9 @@ const ChildrenCategoriesTable = ({subcategories, handleEdit, handleConfirmDelete
             <SubdirectoryArrowRightRoundedIcon fontSize="small"/>
           </TableCell>
           <TableCell component="th" scope="row">
+            <Link href={`/dashboard/categories/${category.id}`}>
               {category.name}
+              </Link>
           </TableCell>
           <TableCell align="right">
             <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
