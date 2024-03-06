@@ -31,6 +31,19 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
   return data;
 };
 
+const getOverdueTransactions = async () => {
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(getQuery)
+    .lte("due_date", dayjs().format("YYYY-MM-DD"))
+    .eq("payment_id", false)
+    .order("due_date", { ascending: false });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
 const addTransaction = async ({
   amount,
   due_date,
@@ -191,6 +204,7 @@ const managePaymentRecord = async (
 export {
   getTransactions,
   getTransactionsByCategory,
+  getOverdueTransactions,
   addTransaction,
   addReccuringTransaction,
   editTransaction,

@@ -9,8 +9,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
@@ -18,8 +18,8 @@ import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
-import DisplaySettingsRoundedIcon from '@mui/icons-material/DisplaySettingsRounded';
-import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
+import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
+import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import { Collapse, Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -78,6 +78,7 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
 
   const handleFinanceMenuClick = () => {
     setExpandFinanceMenu(!expandFinanceMenu);
+    toggleDrawer && toggleDrawer();
   };
 
   return (
@@ -90,14 +91,14 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
         }}
       >
         {open || (
-          <IconBox sx={{width: "100%"}}>
-            <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawer} sx={{marginLeft: "-16px"}}>
+          <IconBox sx={{ width: "100%" }}>
+            <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawer} sx={{ marginLeft: "-16px" }}>
               <MenuIcon />
             </IconButton>
           </IconBox>
         )}
         {open && (
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width: "100%"}}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
             <Typography variant="h5" noWrap component="div">
               HB
             </Typography>
@@ -123,22 +124,24 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
           <ListItemText primary="Financeiro" />
           {expandFinanceMenu ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
         </ListItemButton>
-        <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding sx={{ml: 4}}>
-            <ListItemButton LinkComponent="a" href="/dashboard/transactions">
-              <ListItemIcon>
-                <ReceiptLongRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Transações por dia" />
-            </ListItemButton>
-            <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue">
-              <ListItemIcon>
-                <ReceiptLongRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Contas vencidas" />
-            </ListItemButton>
-          </List>
-        </Collapse>
+        {open && (
+          <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding sx={{ ml: 4 }}>
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions">
+                <ListItemIcon>
+                  <ReceiptLongRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Transações por dia" />
+              </ListItemButton>
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue">
+                <ListItemIcon>
+                  <ReceiptLongRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Contas vencidas" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        )}
 
         <ListItemButton LinkComponent="a" href="/dashboard/categories">
           <ListItemIcon>

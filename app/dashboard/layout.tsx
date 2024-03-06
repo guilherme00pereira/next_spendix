@@ -27,7 +27,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     >
       <QueryClientProvider client={queryClient}>
         <Box sx={{ display: "flex" }}>
-          <Topbar props={{ open: open, toggleDrawer: toggleDrawer }} />
+          <Topbar open={open} toggleDrawer={toggleDrawer} />
           <Sidebar open={open} toggleDrawer={toggleDrawer} />
           <Box
             component="main"

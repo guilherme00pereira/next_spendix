@@ -21,13 +21,13 @@ const AppBar = styled(MuiAppBar, {
 })<IDashboardLayoutProps>(({ theme, open }) => ({
   left: 0,
   [theme.breakpoints.up("md")]: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: 'white',
     color: theme.palette.text.primary,
     "& .MuiSvgIcon-root": {
       color: theme.palette.primary.main,
     },
     left: open ? "0px" : "56px",
-    width: `calc(100% - 56px)`,
+    width: open? `calc(100% - 240px)` : `calc(100% - 56px)`,
   },
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
@@ -64,7 +64,7 @@ const Title = styled(Typography)(({ theme }) => ({
   display: "none",
 }));
 
-const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
+const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -73,22 +73,22 @@ const Topbar = ({ props }: { props: IDashboardLayoutProps }) => {
   };
 
   return (
-    <AppBar position="absolute" open={props.open}>
+    <AppBar position="absolute" open={open}>
       <Toolbar>
         <IconBox>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={props.toggleDrawer}
+            onClick={toggleDrawer}
             sx={{
-              ...(props.open && { display: "none" }),
+              ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
         </IconBox>
-        {props.open || (
+        {open || (
           <Title variant="h5" color="primary">
             HB
           </Title>

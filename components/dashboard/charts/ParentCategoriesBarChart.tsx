@@ -41,7 +41,7 @@ const ParentCategoriesBarChart = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
           <YAxis dataKey="name" type="category" width={200} interval={0} tickMargin={5} />
-          <Bar dataKey="value" fill="#8884d8" radius={4}>
+          <Bar dataKey="value" fill="#8884d8" radius={4} maxBarSize={20}>
             <LabelList dataKey="label" position="right" fill="#000" fontSize={12} />
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={'#8884d8'} />
