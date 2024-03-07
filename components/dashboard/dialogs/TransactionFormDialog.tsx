@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField, Input} from "@mui/material";
+import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField} from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -124,7 +124,7 @@ const TransactionFormDialog = () => {
   });
 
   return (
-    <Dialog open={showTransactionDialog} fullWidth maxWidth="xl" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+    <Dialog open={showTransactionDialog} fullScreen maxWidth="xl" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TopBarDialog title="Novo lançamento"/>
         <DialogContent>
@@ -224,7 +224,6 @@ const TransactionFormDialog = () => {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <Input type="hidden" name="payment_id" value={formik.values.payment_id}/>
                     <TextField
                       helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
                       error={formik.touched.payment_method_id && Boolean(formik.errors.payment_method_id)}

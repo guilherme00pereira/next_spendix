@@ -125,14 +125,14 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
         </ListItemButton>
         {open && (
           <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding sx={{ ml: 4 }}>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions">
+            <List component="div" disablePadding sx={{ backgroundColor: "#252D38" }}>
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions" sx={{ml: 2}}>
                 <ListItemIcon>
                   <ReceiptLongRoundedIcon />
                 </ListItemIcon>
                 <ListItemText primary="Transações por dia" />
               </ListItemButton>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue">
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue" sx={{ml: 2}}>
                 <ListItemIcon>
                   <ReceiptLongRoundedIcon />
                 </ListItemIcon>

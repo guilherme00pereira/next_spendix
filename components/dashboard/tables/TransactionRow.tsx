@@ -25,7 +25,7 @@ const DayChip = styled(Chip)(({ theme }) => ({
 
 const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     let {balanceTotal} = useTransactionContext();
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [row, setRow] = useState<TransactionRow>();
     const wasAlreadyRequested = useRef(false);
 

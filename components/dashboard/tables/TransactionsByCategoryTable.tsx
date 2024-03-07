@@ -29,7 +29,7 @@ const CategoryTransactionsPanel = ({ id, action }: ICategoriesPanelProps) => {
       setIsLoading(false);
       setTotal(transactions?.reduce((acc, curr) => acc + curr.amount, 0) ?? 0);
     });
-  }, [transactions, id]);
+  }, [id]);
 
   return (
     <>

@@ -22,7 +22,7 @@ const CreditCardsPage = () => {
           <Typography variant="h5">Cartões de Crédito</Typography>
         </Stack>
         <Paper>
-          <Stack direction="row" flexWrap="wrap" sx={{ p: 2 }}>
+          <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{ p: 2 }}>
             {isLoading && <Typography variant="h6">Carregando...</Typography>}
             {isLoading || (
               <>

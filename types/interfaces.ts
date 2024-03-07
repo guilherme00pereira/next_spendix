@@ -1,5 +1,11 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {CategoryFormData, CategoryType, RecurringFormData, TransactionType} from "@/types/entities";
+import {
+    BankAccountFormData,
+    CategoryFormData,
+    CategoryType,
+    RecurringFormData,
+    TransactionType
+} from "@/types/entities";
 import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 
@@ -82,6 +88,11 @@ interface ICategoriesPanelProps {
     action: Dispatch<SetStateAction<number>>;
 }
 
+interface IBankAccountContextData {
+    editableAccount: BankAccountFormData;
+    setEditableAccount: Dispatch<SetStateAction<BankAccountFormData>>;
+}
+
 export type {
     ISelectOption,
     IDeleteConfirmDialogProps,
@@ -94,6 +105,7 @@ export type {
     ISpeedDialStoreData,
     ICategoryTableProps,
     IChildrenCategoriesProps,
-    ICategoriesPanelProps
+    ICategoriesPanelProps,
+    IBankAccountContextData
 }
 

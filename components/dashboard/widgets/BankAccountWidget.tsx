@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Button, Card, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { usePageContext } from "@/lib/hooks";
+import {useBankAccountContext, usePageContext} from "@/lib/hooks";
 import { BankAccountFormData } from "@/types/entities";
 
 const ColoredCard = styled(Card, {
@@ -17,12 +17,13 @@ const ColoredCard = styled(Card, {
   margin: "10px",
 }));
 
-const BankAccountWidget = ({ account, action }: { account: BankAccountFormData, action: Dispatch<SetStateAction<BankAccountFormData>> }) => {
+const BankAccountWidget = ({account}: {account: BankAccountFormData}) => {
   const {showModal, actionShowModal} = usePageContext();
+  const {setEditableAccount} = useBankAccountContext();
 
   const handleEdit = () => {
     actionShowModal(!showModal);
-    action(account);
+    setEditableAccount(account);
   };
   
   return (

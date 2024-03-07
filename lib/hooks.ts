@@ -1,5 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { IPageContextData, ITransactionContextData, IAppStoreData, ISpeedDialStoreData } from "@/types/interfaces";
+import {
+  IPageContextData,
+  ITransactionContextData,
+  IAppStoreData,
+  ISpeedDialStoreData,
+  IBankAccountContextData
+} from "@/types/interfaces";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import dayjs from "dayjs";
@@ -7,6 +13,8 @@ import { CategoryFormData, RecurringFormData, TransactionFormData } from "@/type
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
+
+export const BankAccountContext = createContext<IBankAccountContextData>({} as IBankAccountContextData);
 
 export const usePageContext = () => {
   const context = useContext(PageContext);
@@ -20,6 +28,14 @@ export const useTransactionContext = () => {
   const context = useContext(TransactionContext);
   if (!context) {
     throw new Error("useTransactionContext must be used within a TransactionContextProvider");
+  }
+  return context;
+};
+
+export const useBankAccountContext = () => {
+  const context = useContext(BankAccountContext);
+  if (!context) {
+    throw new Error("useBankAccountContext must be used within a BankAccountContextProvider");
   }
   return context;
 };

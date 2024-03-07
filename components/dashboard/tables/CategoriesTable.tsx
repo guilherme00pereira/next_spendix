@@ -78,6 +78,10 @@ const CategoriesTable = ({handleCategory, categories, isLoading}: ICategoryTable
         return subs as CategoryType[];
     }
 
+    const hasSubCategories = (id: number) => {
+        return categories?.filter((c) => c.parent === id).length > 0;
+    }
+
     return (
       <Paper sx={styles(theme).paper}>
           <Box p={2}>
@@ -110,9 +114,11 @@ const CategoriesTable = ({handleCategory, categories, isLoading}: ICategoryTable
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Button size="small" variant="text" color="info" onClick={() => handleCategory(category.id)}>
-                                            <VisibilityRoundedIcon fontSize="small"/>
-                                        </Button>
+                                        {hasSubCategories(category.id) || (
+                                            <Button size="small" variant="text" color="info" onClick={() => handleCategory(category.id)}>
+                                                <VisibilityRoundedIcon fontSize="small"/>
+                                            </Button>
+                                          )}
                                         <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
                                             <EditRoundedIcon fontSize="small"/>
                                         </Button>

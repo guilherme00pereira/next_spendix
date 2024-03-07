@@ -59,7 +59,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       amount: t.amount,
       due_date: dayjs(t.due_date),
       description: t.description,
-      cashed: t.payments?.id ? true : false,
+      cashed: !!t.payments?.id,
       category_id: t.categories?.id ?? 0,
       payment_date: t.payments?.date ? dayjs(t.payments.date) : null,
       payed_amount: t.payments?.amount ?? null,

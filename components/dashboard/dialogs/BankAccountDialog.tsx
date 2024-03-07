@@ -1,5 +1,5 @@
 import React from "react";
-import { usePageContext } from "@/lib/hooks";
+import {useBankAccountContext, usePageContext} from "@/lib/hooks";
 import { Dialog, DialogContent, Grid, Input, TextField } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -16,9 +16,10 @@ const validate = yup.object({
   color: yup.string(),
 });
 
-const BankAccountDialog = ({account}: {account: BankAccountFormData}) => {
+const BankAccountDialog = () => {
   const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
+  const { editableAccount } = useBankAccountContext();
 
   const addMutation = useMutation({
     mutationFn: (values: BankAccountFormData) => addBankAccount(values),
@@ -37,7 +38,7 @@ const BankAccountDialog = ({account}: {account: BankAccountFormData}) => {
   });
 
   const formik = useFormik({
-    initialValues: account,
+    initialValues: editableAccount,
     validationSchema: validate,
     onSubmit: (values) => {
       addMutation.mutate({
