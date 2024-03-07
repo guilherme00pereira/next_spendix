@@ -46,7 +46,8 @@ type TransactionFormData = {
     category_id: number,
     payment_date: Dayjs | null,
     payed_amount: number | null,
-    payment_method_id: number | null,
+    payment_method_id: number,
+    payment_id: number | null,
     in_installments: boolean,
     installments: number,
 }
@@ -81,6 +82,13 @@ type ChartBarType = {
     label: string;
 }
 
+type BankAccountFormData = {
+    id?: number;
+    bank: string;
+    balance: number;
+    color: string | "#000"; 
+}
+
 
 export type {
     CategoryType,
@@ -91,5 +99,6 @@ export type {
     RecurringFormData,
     TransactionRow,
     TransactionUpdateStatusProps,
-    ChartBarType
+    ChartBarType,
+    BankAccountFormData
 }

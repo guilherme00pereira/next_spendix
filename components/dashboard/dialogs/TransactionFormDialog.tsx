@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField} from "@mui/material";
+import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField, Input} from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,7 +25,8 @@ const validate = yup.object({
   due_date: yup.date().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
-  payment_method: yup.string().nullable(),
+  payment_method_id: yup.string(),
+  payment_id: yup.string().nullable(),
   in_installments: yup.boolean(),
   installments: yup.number().min(2, "Insira apenas valores maiores que 2"),
 });
@@ -90,6 +91,7 @@ const TransactionFormDialog = () => {
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
           payment_method_id: values["payment_method_id"],
+          payment_id: values["payment_id"],
         }).then(res => {
           if(res !== null) {
             actionShowTransactionDialog(false);
@@ -109,6 +111,7 @@ const TransactionFormDialog = () => {
           payment_date: values["payment_date"],
           payed_amount: values["payed_amount"],
           payment_method_id: values["payment_method_id"],
+          payment_id: null,
         }).then(res => {
           if (res !== null) {
             actionShowTransactionDialog(false);
@@ -121,7 +124,7 @@ const TransactionFormDialog = () => {
   });
 
   return (
-    <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+    <Dialog open={showTransactionDialog} fullWidth maxWidth="xl" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TopBarDialog title="Novo lançamento"/>
         <DialogContent>
@@ -221,6 +224,7 @@ const TransactionFormDialog = () => {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={12} md={4}>
+                    <Input type="hidden" name="payment_id" value={formik.values.payment_id}/>
                     <TextField
                       helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
                       error={formik.touched.payment_method_id && Boolean(formik.errors.payment_method_id)}

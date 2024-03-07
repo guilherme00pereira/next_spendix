@@ -74,11 +74,10 @@ const IconBox = styled(Box)(({ theme }) => ({
 }));
 
 export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
-  const [expandFinanceMenu, setExpandFinanceMenu] = React.useState(false);
+  const [expandFinanceMenu, setExpandFinanceMenu] = React.useState(true);
 
   const handleFinanceMenuClick = () => {
     setExpandFinanceMenu(!expandFinanceMenu);
-    toggleDrawer && toggleDrawer();
   };
 
   return (

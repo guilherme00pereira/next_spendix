@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Box from "@mui/material/Box";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -53,16 +53,18 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
   };
 
   const handleEdit = (t: TransactionType) => {
+    console.log(t)
     setTransaction({
       id: t.id,
       amount: t.amount,
       due_date: dayjs(t.due_date),
       description: t.description,
-      cashed: t.cashed,
+      cashed: t.payments?.id ? true : false,
       category_id: t.categories?.id ?? 0,
       payment_date: t.payments?.date ? dayjs(t.payments.date) : null,
       payed_amount: t.payments?.amount ?? null,
-      payment_method_id: t.payments?.id ?? 0,
+      payment_method_id: 1,
+      payment_id: t.payments?.id ?? 0,
       in_installments: t.installments > 1,
       installments: 2,
     });

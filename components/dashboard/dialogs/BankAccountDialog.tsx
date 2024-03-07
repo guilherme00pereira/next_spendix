@@ -1,11 +1,104 @@
-import React from 'react';
+import React from "react";
+import { usePageContext } from "@/lib/hooks";
+import { Dialog, DialogContent, Grid, Input, TextField } from "@mui/material";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addBankAccount, editBankAccount } from "@/lib/supabase/methods/bank-accounts";
+import TopBarDialog from "./TopBarDialog";
+import { Stack } from "@mui/system";
+import { BankAccountFormData } from "@/types/entities";
 
-const BankAccountDialog = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const validate = yup.object({
+  id: yup.number(),
+  bank: yup.string().required("Campo obrigatório"),
+  balance: yup.number().required("Campo obrigatório"),
+  color: yup.string(),
+});
+
+const BankAccountDialog = ({account}: {account: BankAccountFormData}) => {
+  const queryClient = useQueryClient();
+  const { showModal, actionShowModal } = usePageContext();
+
+  const addMutation = useMutation({
+    mutationFn: (values: BankAccountFormData) => addBankAccount(values),
+    onSuccess: () => {
+      actionShowModal(!showModal);
+      queryClient.invalidateQueries({ queryKey: ["bank_accounts"] });
+    },
+  });
+
+  const editMutation = useMutation({
+    mutationFn: (values: BankAccountFormData) => editBankAccount(values),
+    onSuccess: () => {
+      actionShowModal(!showModal);
+      queryClient.invalidateQueries({ queryKey: ["bank_accounts"] });
+    },
+  });
+
+  const formik = useFormik({
+    initialValues: account,
+    validationSchema: validate,
+    onSubmit: (values) => {
+      addMutation.mutate({
+        id: values.id,
+        bank: values.bank,
+        balance: values.balance,
+        color: values.color,
+      });
+    },
+  });
+
+  return (
+    <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
+      <form onSubmit={formik.handleSubmit} autoComplete="off">
+        <TopBarDialog title="Nova conta" />
+        <DialogContent>
+          <Stack direction="row">
+            <Grid container spacing={3}>
+              <Grid xs={12} md={4} item>
+                <Input type="hidden" name="id" value={formik.values.id} />
+                <TextField
+                  helperText={formik.touched.bank && formik.errors.bank}
+                  error={formik.touched.bank && Boolean(formik.errors.bank)}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank}
+                  fullWidth
+                  name="bank"
+                  label="Banco"
+                />
+              </Grid>
+              <Grid xs={12} md={4} item>
+                <TextField
+                  helperText={formik.touched.balance && formik.errors.balance}
+                  error={formik.touched.balance && Boolean(formik.errors.balance)}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.balance}
+                  fullWidth
+                  name="balance"
+                  label="Saldo"
+                  type="number"
+                />
+              </Grid>
+              <Grid xs={12} md={4} item>
+                <TextField
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.color}
+                  fullWidth
+                  name="color"
+                  label="Cor"
+                  type="color"
+                />
+              </Grid>
+            </Grid>
+          </Stack>
+        </DialogContent>
+      </form>
+    </Dialog>
+  );
 };
 
 export default BankAccountDialog;
