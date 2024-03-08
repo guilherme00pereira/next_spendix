@@ -13,6 +13,7 @@ const DateSelector = styled(Stack)(({theme}) => ({
     width: "fit-content",
     borderColor: theme.palette.primary.main,
     padding: "0.25em",
+    height: "44px",
 }));
 
 const SelectMonthYear = () => {

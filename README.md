@@ -11,6 +11,8 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.7
+- 0.7.9: Fix edit transactions, accounts and credit cards pages skeletons widget.
+- 0.7.[4-8]: Layout adjustements.
 - 0.7.3: Added recurring methods and dialog.
 - 0.7.2: Changed transactions table layout.
 - 0.7.1: Installments moved to transactions table.

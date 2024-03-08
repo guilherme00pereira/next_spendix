@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {useBankAccountContext, usePageContext} from "@/lib/hooks";
 import { Dialog, DialogContent, Grid, Input, TextField } from "@mui/material";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import { addBankAccount, editBankAccount } from "@/lib/supabase/methods/bank-acc
 import TopBarDialog from "./TopBarDialog";
 import { Stack } from "@mui/system";
 import { BankAccountFormData } from "@/types/entities";
+import { ColorPicker } from "material-ui-color";
 
 const validate = yup.object({
   id: yup.number(),
@@ -20,6 +21,10 @@ const BankAccountDialog = () => {
   const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
   const { editableAccount } = useBankAccountContext();
+
+  useEffect(() => {
+    formik.setValues(editableAccount);
+  }, [editableAccount]);
 
   const addMutation = useMutation({
     mutationFn: (values: BankAccountFormData) => addBankAccount(values),
@@ -84,15 +89,12 @@ const BankAccountDialog = () => {
                 />
               </Grid>
               <Grid xs={12} md={4} item>
-                <TextField
+                <ColorPicker 
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.color}
-                  fullWidth
-                  name="color"
-                  label="Cor"
-                  type="color"
-                />
+                  value={"#" + formik.values.color}
+                  defaultValue={formik.values.color}
+                  />
+                
               </Grid>
             </Grid>
           </Stack>

@@ -9,11 +9,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
+import AlarmRoundedIcon from '@mui/icons-material/AlarmRounded';
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
@@ -118,29 +118,26 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
 
         <ListItemButton LinkComponent="nav" onClick={handleFinanceMenuClick}>
           <ListItemIcon>
-            <PaidRoundedIcon />
+          {expandFinanceMenu ? <ExpandLessRoundedIcon /> : <PaidRoundedIcon />}
           </ListItemIcon>
           <ListItemText primary="Financeiro" />
-          {expandFinanceMenu ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
         </ListItemButton>
-        {open && (
           <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
             <List component="div" disablePadding sx={{ backgroundColor: "#252D38" }}>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions" sx={{ml: 2}}>
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions" sx={{ml: open ? 2 : 0}}>
                 <ListItemIcon>
                   <ReceiptLongRoundedIcon />
                 </ListItemIcon>
                 <ListItemText primary="Transações por dia" />
               </ListItemButton>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue" sx={{ml: 2}}>
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue" sx={{ml: open ? 2 : 0}}>
                 <ListItemIcon>
-                  <ReceiptLongRoundedIcon />
+                  <AlarmRoundedIcon />
                 </ListItemIcon>
                 <ListItemText primary="Contas vencidas" />
               </ListItemButton>
             </List>
           </Collapse>
-        )}
 
         <ListItemButton LinkComponent="a" href="/dashboard/categories">
           <ListItemIcon>

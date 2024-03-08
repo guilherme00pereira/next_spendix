@@ -74,7 +74,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
 
   return (
     <AppBar position="absolute" open={open}>
-      <Toolbar>
+      <Toolbar sx={{minHeight:"48px !important"}}>
         <IconBox>
           <IconButton
             edge="start"
