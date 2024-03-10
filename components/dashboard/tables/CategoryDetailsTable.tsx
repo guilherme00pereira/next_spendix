@@ -6,8 +6,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { amountFormatter } from '@/lib/functions';
+import {TransactionType} from "@/types/entities";
 
-const CategoryDetailsTable = ({transactions}: {transactions: any[]}) => {
+const CategoryDetailsTable = ({transactions}: {transactions: TransactionType[]}) => {
     return (
         <TableContainer sx={{maxHeight: "70vh"}}>
             <Table stickyHeader size="small" aria-label="simple table">

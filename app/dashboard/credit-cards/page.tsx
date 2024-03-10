@@ -1,5 +1,5 @@
 "use client";
-import { Stack, Container, Skeleton, Paper } from "@mui/material";
+import { Stack, Container, Paper } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getCreditCardPaymentMethods } from "@/lib/supabase/methods/payment-methods";
 import CreditCardWidget from "@/components/dashboard/widgets/CreditCardWidget";
@@ -7,6 +7,7 @@ import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaym
 import CreditCardDialog from "@/components/dashboard/dialogs/CreditCardDialog";
 import { usePageContext } from "@/lib/hooks";
 import PageTitle from "@/components/dashboard/PageTitle";
+import WalletItemsLoader from "@/components/dashboard/loaders/WalletItemsLoader";
 
 const CreditCardsPage = () => {
   const {showModal} = usePageContext();
@@ -22,13 +23,7 @@ const CreditCardsPage = () => {
         <PageTitle title="Cartões de Crédito" />
         <Paper>
           <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{ p: 2 }}>
-          {isLoading && (
-                <>
-                  <Skeleton variant="rectangular" width={300} height={150} sx={{margin: "10px"}} animation="wave" />
-                  <Skeleton variant="rectangular" width={300} height={150} sx={{margin: "10px"}} animation="wave" />
-                  <Skeleton variant="rectangular" width={300} height={150} sx={{margin: "10px"}} animation="wave" />
-                </>
-              )}
+          {isLoading && <WalletItemsLoader />}
             {isLoading || (
               <>
                 {payment_methods &&

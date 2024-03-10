@@ -19,6 +19,7 @@ import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
+import WalletIcon from '@mui/icons-material/Wallet';
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import { Collapse, Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
@@ -75,10 +76,8 @@ const IconBox = styled(Box)(({ theme }) => ({
 
 export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
   const [expandFinanceMenu, setExpandFinanceMenu] = React.useState(true);
+  const [expandPaymentMethods, setExpandPaymentMethods] = React.useState(false);
 
-  const handleFinanceMenuClick = () => {
-    setExpandFinanceMenu(!expandFinanceMenu);
-  };
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -116,7 +115,7 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
           <ListItemText primary="Dashboard" />
         </ListItemButton>
 
-        <ListItemButton LinkComponent="nav" onClick={handleFinanceMenuClick}>
+        <ListItemButton LinkComponent="nav" onClick={() => setExpandFinanceMenu(!expandFinanceMenu)}>
           <ListItemIcon>
           {expandFinanceMenu ? <ExpandLessRoundedIcon /> : <PaidRoundedIcon />}
           </ListItemIcon>
@@ -153,19 +152,28 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
           <ListItemText primary="Tags" />
         </ListItemButton>
 
-        <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts">
+        <ListItemButton LinkComponent="nav" onClick={() => setExpandPaymentMethods(!expandPaymentMethods)}>
           <ListItemIcon>
-            <AccountBalanceRoundedIcon />
+            {expandPaymentMethods ? <ExpandLessRoundedIcon /> : <WalletIcon />}
           </ListItemIcon>
-          <ListItemText primary="Contas" />
+          <ListItemText primary="Carteira" />
         </ListItemButton>
-
-        <ListItemButton LinkComponent="a" href="/dashboard/credit-cards">
-          <ListItemIcon>
-            <CreditCardRoundedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Cartões de Crédito" />
-        </ListItemButton>
+        <Collapse in={expandPaymentMethods} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding sx={{ backgroundColor: "#252D38" }}>
+            <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts" sx={{ml: open ? 2 : 0}}>
+              <ListItemIcon>
+                <AccountBalanceRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Contas" />
+            </ListItemButton>
+            <ListItemButton LinkComponent="a" href="/dashboard/credit-cards" sx={{ml: open ? 2 : 0}}>
+              <ListItemIcon>
+                <CreditCardRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Cartões de Crédito" />
+            </ListItemButton>
+          </List>
+        </Collapse>
 
         <ListItemButton LinkComponent="a" href="/dashboard/settings">
           <ListItemIcon>

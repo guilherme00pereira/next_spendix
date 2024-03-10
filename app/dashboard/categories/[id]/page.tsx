@@ -1,30 +1,63 @@
 'use client'
-import React from "react";
+import {useEffect, useState} from "react";
+import { styled } from "@mui/material/styles";
 import { Stack, Container, Typography, Paper, Box } from "@mui/material";
-import { getCategoryLastSixMonthsTransactions } from "@/lib/supabase/methods/categories";
-import { useQuery } from "@tanstack/react-query";
 import CategoryDetailsTable from "@/components/dashboard/tables/CategoryDetailsTable";
+import {getTransactionsByCategoriesLastSixMonths} from "@/lib/supabase/methods/transactions";
+import {TransactionType} from "@/types/entities";
+import {useQuery} from "@tanstack/react-query";
+import {getCategories} from "@/lib/supabase/methods/categories";
+import CategoryTransactionsSixMonthsLineChart
+  from "@/components/dashboard/charts/CategoryTransactionsSixMonthsLineChart";
+
+const Subtitle = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.light,
+  marginTop: "8px",
+}));
 
 const CategoryPage = ({params}: {params: {id:number}}) => {
-    
-    const {data: category_transactions, isLoading} = useQuery({
-        queryKey: ["category_transactions_six", params.id],
-        queryFn: () => getCategoryLastSixMonthsTransactions(params.id),
-    });
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [childrenNames, setChildrenNames] = useState<string[]>([])
+  const [title, setTitle] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  useEffect(() => {
+      setIsLoading(true)
+      getCategories().then((categories) => {
+        const ids = categories.filter(c => c.parent === 50).map(c => c.id);
+        setChildrenNames(categories.filter(c => c.parent === 50).map(c => c.name));
+        const title = categories.filter(c => c.id === params.id).map(c => c.name);
+        setTitle(title[0]);
+        ids.push(params.id);
+        getTransactionsByCategoriesLastSixMonths(ids).then((data) => {
+          setTransactions(data as TransactionType[]);
+        });
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Stack>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-          <Typography variant="h5">
-            Categoria: {category_transactions && category_transactions[0]?.categories?.name}  
+        <Stack justifyContent="space-between" alignItems="start" sx={{ mb: 2 }}>
+          <Typography variant="h5" color="primary">
+            Categoria: {title && title}
           </Typography>
+          {childrenNames.length > 0 && (
+            <Subtitle variant="h6">
+              Subcategorias: {childrenNames.join(', ')}
+            </Subtitle>
+          )}
+        </Stack>
+        <Stack direction="row" justifyContent="center" alignItems="center">
+          {transactions && <CategoryTransactionsSixMonthsLineChart transactions={transactions} />}
         </Stack>
         <Paper>
           <Box flexWrap="wrap" sx={{ p: 2 }}>
             {isLoading || (
               <>
-                {category_transactions && CategoryDetailsTable({transactions: category_transactions})}
+                {transactions && CategoryDetailsTable({transactions: transactions})}
               </>
             )}
           </Box>

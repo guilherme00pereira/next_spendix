@@ -124,7 +124,7 @@ const TransactionFormDialog = () => {
   });
 
   return (
-    <Dialog open={showTransactionDialog} fullScreen maxWidth="xl" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+    <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TopBarDialog title="Novo lançamento"/>
         <DialogContent>

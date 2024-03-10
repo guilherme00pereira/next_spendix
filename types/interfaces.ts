@@ -73,7 +73,8 @@ interface ISpeedDialStoreData {
 interface ICategoryTableProps {
     handleCategory: Dispatch<SetStateAction<number>>;
     categories: CategoryType[];
-    isLoading: boolean;
+    handleEdit: (id: number) => void;
+    handleConfirmDelete: (id: number, name: string) => void;
 }
 
 interface IChildrenCategoriesProps {

@@ -162,6 +162,20 @@ const getSumIncomeTransactions = async (di: string, df: string) => {
   return data;
 };
 
+const getTransactionsByCategoriesLastSixMonths = async (category_ids: number[]) => {
+  const {
+    data,
+    error
+  } = await supabase.from('transactions').select(getQuery)
+    .in('category_id', category_ids)
+    .gte('due_date', dayjs().subtract(6, 'month').format('YYYY-MM-DD'))
+    .order('due_date', {ascending: false})
+  if (error) {
+    throw error
+  }
+  return data
+}
+
 const managePaymentRecord = async (
   payment_date: dayjs.Dayjs | null,
   payed_amount: number | null,
@@ -210,4 +224,5 @@ export {
   updateTransactionCashedStatus,
   removeTransaction,
   getSumIncomeTransactions,
+  getTransactionsByCategoriesLastSixMonths,
 };
