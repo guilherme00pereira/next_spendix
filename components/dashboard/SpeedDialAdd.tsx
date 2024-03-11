@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
 import TransactionFormDialog from "@/components/dashboard/dialogs/TransactionFormDialog";
@@ -9,9 +10,12 @@ import dayjs from "dayjs";
 import CategoryFormDialog from "@/components/dashboard/dialogs/CategoryFormDialog";
 import { styled } from "@mui/material/styles";
 import RecurringFormDialog from "./dialogs/RecurringFormDialog";
+import { TransactionDefaultData } from "@/lib/data";
+import IncomeFormDialog from "./dialogs/IncomeFormDialog";
 
 const dialActions = [
-  { icon: <MonetizationOnOutlinedIcon />, name: "Transação", handler: "transaction" },
+  { icon: <ShoppingCartCheckoutOutlinedIcon />, name: "Despesa", handler: "transaction" },
+  { icon: <MonetizationOnOutlinedIcon />, name: "Receita", handler: "income" },
   { icon: <EventRepeatOutlinedIcon />, name: "Recorrente", handler: "recurring" },
   { icon: <CategoryOutlinedIcon />, name: "Categoria", handler: "category" },
 ];
@@ -22,6 +26,8 @@ const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
   right: 32,
   "& .MuiSpeedDial-fab": {
     lineHeight: 0.75,
+    width: "48px",
+    height: "48px",
   },
   "& .MuiSpeedDialAction-fab, .MuiSpeedDialAction-staticTooltipLabel": {
     backgroundColor: theme.palette.primary.main,
@@ -34,6 +40,9 @@ const SpeedDialAdd = () => {
     setTransaction,
     showTransactionDialog,
     actionShowTransactionDialog,
+    setIncome,
+    showIncomeDialog,
+    actionShowIncomeDialog,
     setCategory,
     showCategoryDialog,
     actionShowCategoryDialog,
@@ -50,18 +59,11 @@ const SpeedDialAdd = () => {
     switch (entity) {
       case "transaction":
         actionShowTransactionDialog(true);
-        setTransaction({
-          amount: 0,
-          category_id: 3,
-          cashed: true,
-          description: "",
-          due_date: dayjs(Date.now()),
-          in_installments: false,
-          installments: 2,
-          payment_date: dayjs(Date.now()),
-          payed_amount: 0,
-          payment_method_id: 1,
-        });
+        setTransaction(TransactionDefaultData);
+        break;
+      case "income":
+        actionShowIncomeDialog(true);
+        setIncome(TransactionDefaultData);
         break;
       case "category":
         actionShowCategoryDialog(true);
@@ -87,13 +89,14 @@ const SpeedDialAdd = () => {
             tooltipTitle={action.name}
             tooltipOpen
             onClick={() => handleClick(action.handler)}
-            FabProps={{ size: "large" }}
+            FabProps={{ size: "medium" }}
           />
         ))}
       </SpeedDialButton>
       {showTransactionDialog && <TransactionFormDialog />}
       {showRecurringDialog && <RecurringFormDialog />}
       {showCategoryDialog && <CategoryFormDialog />}
+      {showIncomeDialog && <IncomeFormDialog />}
     </>
   );
 };

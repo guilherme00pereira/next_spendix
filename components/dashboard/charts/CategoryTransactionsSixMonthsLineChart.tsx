@@ -5,18 +5,18 @@ import dayjs from "dayjs";
 import {ChartBarType, TransactionType} from "@/types/entities";
 
 const CategoryTransactionsSixMonthsLineChart = ({transactions}: {transactions: TransactionType[]}) => {
-  const date = useAppStore((state) => state.date);
   const [data, setData] = useState<ChartBarType[]>([]);
 
   useEffect(() => {
-    const sixMonthsAgo = dayjs(date).subtract(6, "month").format("YYYY-MM-DD");
+    const sixMonthsAgo = dayjs().subtract(6, "month");
     const data = transactions.filter((t) => dayjs(t.due_date).isAfter(sixMonthsAgo)).reduce((acc, transaction) => {
       const month = dayjs(transaction.due_date).format("MMM");
       const index = acc.findIndex((item) => item.name === month);
       if (index === -1) {
-        acc.push({name: month, value: transaction.amount, label: 'R$' + transaction.amount.toFixed(2)});
+        acc.push({name: month, value: transaction.amount, label: 'R$' + transaction.amount});
       } else {
         acc[index].value += transaction.amount;
+        acc[index].label = 'R$' + acc[index].value;
       }
       return acc;
     }, [] as ChartBarType[]);

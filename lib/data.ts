@@ -17,12 +17,12 @@ const TransactionDefaultData = {
     cashed: true,
     description: "",
     due_date: dayjs(Date.now()),
-    times: 2,
-    recurring: false,
+    in_installments: false,
+    installments: 2,
     payment_date: dayjs(Date.now()),
     payed_amount: 0,
-    payment_option_id: 3,
-    payment_method: 1
+    payment_method_id: 1,
+    payment_id: null,
 }
 
 export {

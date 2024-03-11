@@ -60,6 +60,10 @@ interface ISpeedDialStoreData {
     actionShowTransactionDialog: (action: boolean) => void;
     transaction: TransactionFormData;
     setTransaction: (t: TransactionFormData) => void;
+    showIncomeDialog: boolean;
+    actionShowIncomeDialog: (action: boolean) => void;
+    income: TransactionFormData;
+    setIncome: (i: TransactionFormData) => void;
     showCategoryDialog: boolean;
     actionShowCategoryDialog: (action: boolean) => void;
     category: CategoryFormData;
