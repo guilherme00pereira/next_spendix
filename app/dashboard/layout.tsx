@@ -7,6 +7,7 @@ import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,9 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
               overflow: "auto",
             }}
           >
-            <Toolbar />
+            <Toolbar sx={{margin: "48px 0"}}>
+              <Breadcrumb />
+            </Toolbar>
             {children}
           </Box>
         </Box>

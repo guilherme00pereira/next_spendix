@@ -49,7 +49,8 @@ const CategoriesPage = () => {
       type: c.type ?? "Receita",
       parent: c.parent ?? 0,
       color: c.color ?? null,
-      icon: c.icon ?? null
+      icon: c.icon ?? null,
+      slug: c.slug ?? "",
     })
   }
 

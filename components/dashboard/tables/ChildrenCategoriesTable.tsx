@@ -1,7 +1,7 @@
 import React from 'react';
 import TableCell from "@mui/material/TableCell";
 import Link from "next/link";
-import {Button, Typography} from "@mui/material";
+import {Button, Chip, Typography} from "@mui/material";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -21,15 +21,12 @@ const ChildrenCategoriesTable = ({subcategories, handleEdit, handleConfirmDelete
             <SubdirectoryArrowRightRoundedIcon fontSize="small"/>
           </TableCell>
           <TableCell component="th" scope="row">
-            <Link href={`/dashboard/categories/${category.id}`}>
+            <Link href={`/dashboard/categories/${category.slug}`}>
               {category.name}
               </Link>
           </TableCell>
-          <TableCell align="right">
-            <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
-                        variant="body2" fontWeight="bold">
-              {category.type === "Receita" ? "R" : "D"}
-            </Typography>
+          <TableCell align="center">
+            <Chip label={category.type} size="small" variant="outlined" color={category.type === "Receita" ? "success" : "secondary"}/>
           </TableCell>
           <TableCell align="right">
             <Button size="small" variant="text" color="info" onClick={() => handleView(category.id)}>

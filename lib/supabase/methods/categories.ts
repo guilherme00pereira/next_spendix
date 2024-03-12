@@ -1,6 +1,5 @@
 import {CategoryFormData} from "@/types/entities";
 import {supabase} from "@/lib/supabase/supabase-client";
-import dayjs from "dayjs";
 
 const getCategories = async () => {
     const {

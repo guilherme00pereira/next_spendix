@@ -4,6 +4,8 @@ import { useAppStore } from "@/lib/hooks";
 import dayjs from "dayjs";
 import {ChartBarType, TransactionType} from "@/types/entities";
 
+const barColor = "#9c27b0";
+
 const CategoryTransactionsSixMonthsLineChart = ({transactions}: {transactions: TransactionType[]}) => {
   const [data, setData] = useState<ChartBarType[]>([]);
 
@@ -36,11 +38,11 @@ const CategoryTransactionsSixMonthsLineChart = ({transactions}: {transactions: T
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <Bar dataKey="value" fill="#237B33" radius={4} maxBarSize={20}>
+        <Bar dataKey="value" fill={barColor} maxBarSize={20}>
           <XAxis dataKey="name" type="category" width={200} interval={0} tickMargin={5} />
           <LabelList dataKey="label" position="top" fill="#333" fontSize={12} />
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={'#237B33'} />
+            <Cell key={`cell-${index}`} fill={barColor} />
           ))}
         </Bar>
       </BarChart>

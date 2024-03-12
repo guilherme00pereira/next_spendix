@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {Button, Typography} from "@mui/material";
+import {Button, Chip, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
@@ -43,7 +43,7 @@ const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmD
         <TableHead>
           <TableRow>
             <TableCell colSpan={2}>Nome</TableCell>
-            <TableCell align="right">Tipo</TableCell>
+            <TableCell align="center">Tipo</TableCell>
             <TableCell align="center">Ação</TableCell>
           </TableRow>
         </TableHead>
@@ -56,15 +56,12 @@ const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmD
                   sx={{"&:last-child td, &:last-child th": {border: 0}}}
                 >
                   <TableCell component="th" scope="row" colSpan={2}>
-                    <Link href={`/dashboard/categories/${category.id}`}>
+                    <Link href={`/dashboard/categories/${category.slug}`}>
                       {category.name}
                     </Link>
                   </TableCell>
-                  <TableCell align="right">
-                    <Typography color={category.type === "Receita" ? "success.main" : "secondary.main"}
-                                variant="body2" fontWeight="bold">
-                      {category.type === "Receita" ? "R" : "D"}
-                    </Typography>
+                  <TableCell align="center">
+                    <Chip label={category.type} size="small" variant="outlined" color={category.type === "Receita" ? "success" : "secondary"}/>
                   </TableCell>
                   <TableCell align="right">
                     {hasSubCategories(category.id) || (
