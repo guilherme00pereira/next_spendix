@@ -4,6 +4,7 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
+import MoveDownOutlinedIcon from '@mui/icons-material/MoveDownOutlined';
 import TransactionFormDialog from "@/components/dashboard/dialogs/TransactionFormDialog";
 import { useSpeedDialStore } from "@/lib/hooks";
 import dayjs from "dayjs";
@@ -17,6 +18,7 @@ const dialActions = [
   { icon: <ShoppingCartCheckoutOutlinedIcon />, name: "Despesa", handler: "transaction" },
   { icon: <MonetizationOnOutlinedIcon />, name: "Receita", handler: "income" },
   { icon: <EventRepeatOutlinedIcon />, name: "Recorrente", handler: "recurring" },
+  { icon: <MoveDownOutlinedIcon />, name: "Transferência", handler: "transfer" },
   { icon: <CategoryOutlinedIcon />, name: "Categoria", handler: "category" },
 ];
 

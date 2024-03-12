@@ -3,6 +3,7 @@ import { Dayjs } from "dayjs";
 type CategoryType = {
     id: number;
     name: string;
+    slug: string;
     parent: number | null;
     type: "Receita" | "Despesa";
     color: string | null;
@@ -20,6 +21,7 @@ type PaymentType = {
 type CategoryFormData = {
     id?: number;
     name: string;
+    slug: string;
     parent: number | null;
     color: string | null;
     icon: string | null;

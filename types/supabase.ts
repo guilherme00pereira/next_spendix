@@ -40,6 +40,7 @@ export type Database = {
           id: number
           name: string
           parent: number | null
+          slug: string
           type: Database["public"]["Enums"]["category_type"]
         }
         Insert: {
@@ -48,6 +49,7 @@ export type Database = {
           id?: number
           name: string
           parent?: number | null
+          slug?: string
           type?: Database["public"]["Enums"]["category_type"]
         }
         Update: {
@@ -56,6 +58,7 @@ export type Database = {
           id?: number
           name?: string
           parent?: number | null
+          slug?: string
           type?: Database["public"]["Enums"]["category_type"]
         }
         Relationships: []

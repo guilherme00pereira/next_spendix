@@ -25,8 +25,8 @@ const CategoryPage = ({params}: {params: {id:number}}) => {
   useEffect(() => {
       setIsLoading(true)
       getCategories().then((categories) => {
-        const ids = categories.filter(c => c.parent === 50).map(c => c.id);
-        setChildrenNames(categories.filter(c => c.parent === 50).map(c => c.name));
+        const ids = categories.filter(c => c.parent === params.id).map(c => c.id);
+        setChildrenNames(categories.filter(c => c.parent === params.id).map(c => c.name));
         const title = categories.filter(c => c.id === params.id).map(c => c.name);
         setTitle(title[0]);
         ids.push(params.id);
@@ -50,18 +50,16 @@ const CategoryPage = ({params}: {params: {id:number}}) => {
             </Subtitle>
           )}
         </Stack>
-        <Stack direction="row" justifyContent="center" alignItems="center">
-          {transactions && <CategoryTransactionsSixMonthsLineChart transactions={transactions} />}
-        </Stack>
-        <Paper>
+        <Stack direction="row" justifyContent="space-between" >
+          <Paper sx={{width: "50%"}}>
           <Box flexWrap="wrap" sx={{ p: 2 }}>
-            {isLoading || (
-              <>
-                {transactions && CategoryDetailsTable({transactions: transactions})}
-              </>
-            )}
+            { isLoading || (transactions && CategoryDetailsTable({transactions: transactions})) }
           </Box>
         </Paper>
+          <Paper sx={{width: "45%"}}>
+            {transactions.length > 0 && <CategoryTransactionsSixMonthsLineChart transactions={transactions} />}
+          </Paper>
+        </Stack>
       </Stack>
     </Container>
   );
