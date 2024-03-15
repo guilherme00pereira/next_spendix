@@ -12,6 +12,7 @@ import { useSpeedDialStore } from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 import { ISelectOption } from "@/types/interfaces";
+import { convertNameToSlug } from "@/lib/functions";
 
 const validate = yup.object({
   name: yup.string().required("Campo obrigatório"),
@@ -66,6 +67,7 @@ const CategoryFormDialog = () => {
         editMutation.mutate({ 
           id: values.id, 
           name: values.name, 
+          slug: convertNameToSlug(values.name), 
           parent: values.parent === 0 ? null : values.parent, 
           type: values.type, 
           color: null, 
@@ -73,7 +75,8 @@ const CategoryFormDialog = () => {
         });
       } else {
         addMutation.mutate({ 
-          name: values.name, 
+          name: values.name,
+          slug: convertNameToSlug(values.name), 
           parent: values.parent === 0 ? null : values.parent, 
           type: values.type, 
           color: null, 

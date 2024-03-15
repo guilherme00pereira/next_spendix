@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.8
+- 0.8.3: Fix add/edit category slug and parent id.
 - 0.8.2: Added breadcrumbs component.
 - 0.8.1: Added select component and changed url to slug param on category details page.
 - 0.8.0: Added slug column to categories database. 
