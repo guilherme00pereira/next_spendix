@@ -1,66 +1,157 @@
-import { usePageContext } from '@/lib/hooks';
-import {
-    Grid,
-    Stack,
-    TextField,
-} from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
+import { useCreditCardContext, usePageContext } from "@/lib/hooks";
+import { Grid, Stack, TextField } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 import * as yup from "yup";
-import {useFormik} from "formik";
+import { useFormik } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCreditCard } from '@/lib/supabase/methods/credit-cards';
+import { addCreditCard, editCreditCard } from "@/lib/supabase/methods/credit-cards";
+import { ColorPicker } from "material-ui-color";
+import { useEffect } from "react";
+import { CreditCardFormData } from "@/types/entities";
 
 const validate = yup.object({
-    name: yup.string().required("Campo obrigatório"),
+  id: yup.number(),
+  name: yup.string().required("Campo obrigatório"),
+  limit: yup.number().required("Campo obrigatório"),
+  close_day: yup.number().required("Campo obrigatório"),
+  due_day: yup.number().required("Campo obrigatório"),
+  current_balance: yup.number(),
+  current_bill: yup.number(),
+  color: yup.string(),
 });
 
 const CreditCardDialog = () => {
-    const queryClient = useQueryClient();
-    const {showModal, actionShowModal} = usePageContext();
+  const queryClient = useQueryClient();
+  const { showModal, actionShowModal } = usePageContext();
+  const { editableCard } = useCreditCardContext();
 
-    const addMutation = useMutation({
-        mutationFn: (value: string) => addCreditCard(value),
-        onSuccess: () => {
-            actionShowModal(!showModal);
-            queryClient.invalidateQueries({queryKey: ['credit_cards']});
-        },
-    });
+  useEffect(() => {
+    formik.setValues(editableCard);
+  }, [editableCard]);
 
-    const formik = useFormik({
-        initialValues: {
-            name: "",
-        },
-        validationSchema: validate,
-        onSubmit: (values) => {
-            addMutation.mutate(values.name);
-        },
-    });
-    
-    return (
-        <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
-            <TopBarDialog title="Novo grupo" />
-            <DialogContent>
-            <Stack direction="row">
-                        <Grid container spacing={3}>
-                            <Grid xs={12} md={6} item>
-                                <TextField
-                                    helperText={formik.touched.name && formik.errors.name}
-                                    error={formik.touched.name && Boolean(formik.errors.name)}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.name}
-                                    fullWidth
-                                    name="name"
-                                    label="Nome"
-                                />
-                            </Grid>
-                        </Grid>
-                    </Stack>
-            </DialogContent>
-        </Dialog>
-    );
+  const addMutation = useMutation({
+    mutationFn: (values: CreditCardFormData) => addCreditCard(values),
+    onSuccess: () => {
+      actionShowModal(!showModal);
+      queryClient.invalidateQueries({ queryKey: ["credit_cards"] });
+    },
+  });
+
+  const editMutation = useMutation({
+    mutationFn: (values: CreditCardFormData) => editCreditCard(values),
+    onSuccess: () => {
+      actionShowModal(!showModal);
+      queryClient.invalidateQueries({ queryKey: ["credit_cards"] });
+    },
+  });
+
+  const formik = useFormik({
+    initialValues: editableCard,
+    validationSchema: validate,
+    onSubmit: (values) => {
+      if (values.id !== 0) {
+        editMutation.mutate(values);
+        return;
+      } else {
+        addMutation.mutate(values);
+      }
+    },
+  });
+
+  return (
+    <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
+      <TopBarDialog title="Novo grupo" />
+      <DialogContent>
+        <Stack direction="row">
+          <Grid container spacing={3}>
+            <Grid xs={12} md={4} item>
+              <input type="hidden" name="id" value={formik.values.id} />
+              <TextField
+                helperText={formik.touched.name && formik.errors.name}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
+                fullWidth
+                name="name"
+                label="Nome"
+              />
+            </Grid>
+            <Grid xs={12} md={2} item>
+              <TextField
+                helperText={formik.touched.due_day && formik.errors.due_day}
+                error={formik.touched.due_day && Boolean(formik.errors.due_day)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.due_day}
+                fullWidth
+                name="due_day"
+                label="Dt. vencimento"
+              />
+            </Grid>
+            <Grid xs={12} md={2} item>
+              <TextField
+                helperText={formik.touched.close_day && formik.errors.close_day}
+                error={formik.touched.close_day && Boolean(formik.errors.close_day)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.close_day}
+                fullWidth
+                name="close_day"
+                label="Dt. fechamento"
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                helperText={formik.touched.limit && formik.errors.limit}
+                error={formik.touched.limit && Boolean(formik.errors.limit)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.limit}
+                fullWidth
+                name="limit"
+                label="Limite"
+              />
+            </Grid>
+          </Grid>
+        </Stack>
+
+        <Stack direction="row" sx={{ py: 2 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <TextField
+                helperText={formik.touched.current_balance && formik.errors.current_balance}
+                error={formik.touched.current_balance && Boolean(formik.errors.current_balance)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.current_balance}
+                fullWidth
+                name="current_balance"
+                label="Saldo atual"
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                helperText={formik.touched.current_bill && formik.errors.current_bill}
+                error={formik.touched.current_bill && Boolean(formik.errors.current_bill)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.current_bill}
+                fullWidth
+                name="current_bill"
+                label="Fatura atual"
+              />
+            </Grid>
+            <Grid xs={12} md={4} item>
+                <ColorPicker onChange={formik.handleChange} value={"#" + formik.values.color} defaultValue={formik.values.color} />
+              </Grid>
+          </Grid>
+        </Stack>
+      </DialogContent>
+    </Dialog>
+  );
 };
 
 export default CreditCardDialog;

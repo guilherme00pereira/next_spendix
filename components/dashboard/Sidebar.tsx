@@ -13,6 +13,7 @@ import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
+import PriceChangeRoundedIcon from '@mui/icons-material/PriceChangeRounded';
 import AlarmRoundedIcon from '@mui/icons-material/AlarmRounded';
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
@@ -128,6 +129,12 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
                   <ReceiptLongRoundedIcon />
                 </ListItemIcon>
                 <ListItemText primary="Transações por dia" />
+              </ListItemButton>
+              <ListItemButton LinkComponent="a" href="/dashboard/transactions/cashflow" sx={{ml: open ? 2 : 0}}>
+                <ListItemIcon>
+                  <PriceChangeRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Fluxo de Caixa" />
               </ListItemButton>
               <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue" sx={{ml: open ? 2 : 0}}>
                 <ListItemIcon>

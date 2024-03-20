@@ -4,7 +4,8 @@ import {
   ITransactionContextData,
   IAppStoreData,
   ISpeedDialStoreData,
-  IBankAccountContextData
+  IBankAccountContextData,
+  ICreditCardContextData
 } from "@/types/interfaces";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -15,6 +16,8 @@ export const PageContext = createContext<IPageContextData>({} as IPageContextDat
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
 
 export const BankAccountContext = createContext<IBankAccountContextData>({} as IBankAccountContextData);
+
+export const CreditCardContext = createContext<ICreditCardContextData>({} as ICreditCardContextData);
 
 export const usePageContext = () => {
   const context = useContext(PageContext);
@@ -39,6 +42,14 @@ export const useBankAccountContext = () => {
   }
   return context;
 };
+
+export const useCreditCardContext = () => {
+  const context = useContext(CreditCardContext);
+  if (!context) {
+    throw new Error("useCreditCardContext must be used within a CreditCardContextProvider");
+  }
+  return context;
+}
 
 export const useAppStore = create<IAppStoreData>()(
   persist((set) => (

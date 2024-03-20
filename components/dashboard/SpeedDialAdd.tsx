@@ -69,7 +69,7 @@ const SpeedDialAdd = () => {
         break;
       case "category":
         actionShowCategoryDialog(true);
-        setCategory({ color: null, icon: null, name: "", parent: 0, type: "Despesa" });
+        setCategory({ color: null, icon: null, name: "", slug: "", parent: 0, type: "Despesa" });
         break;
       case "recurring":
         actionShowRecurringDialog(true);

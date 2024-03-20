@@ -3,12 +3,12 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const OverduePage = () => {
+const CashFlowPage = () => {
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Box sx={{mb: 4}}>
             <Typography variant="h5" textAlign="center">
-              Contas vencidas
+              Fluxo de Caixa
             </Typography>
         </Box>
             
@@ -16,4 +16,4 @@ const OverduePage = () => {
     );
 };
 
-export default OverduePage;
+export default CashFlowPage;

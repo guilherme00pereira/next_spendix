@@ -3,6 +3,7 @@ import {
     BankAccountFormData,
     CategoryFormData,
     CategoryType,
+    CreditCardFormData,
     RecurringFormData,
     TransactionType
 } from "@/types/entities";
@@ -98,6 +99,11 @@ interface IBankAccountContextData {
     setEditableAccount: Dispatch<SetStateAction<BankAccountFormData>>;
 }
 
+interface ICreditCardContextData {
+    editableCard: CreditCardFormData;
+    setEditableCard: Dispatch<SetStateAction<CreditCardFormData>>;
+}
+
 export type {
     ISelectOption,
     IDeleteConfirmDialogProps,
@@ -111,6 +117,7 @@ export type {
     ICategoryTableProps,
     IChildrenCategoriesProps,
     ICategoriesPanelProps,
-    IBankAccountContextData
+    IBankAccountContextData,
+    ICreditCardContextData
 }
 

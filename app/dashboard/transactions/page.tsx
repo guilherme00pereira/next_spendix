@@ -20,7 +20,7 @@ const TransactionsPage = () => {
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Box sx={{mb: 4}}>
             <Typography variant="h5" textAlign="center">
-              Visão: despesas e receitas por dia
+              Visão: despesas e receitas por dia de entrada
             </Typography>
         </Box>
           <TransactionsTable />

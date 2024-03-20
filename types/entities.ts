@@ -88,7 +88,18 @@ type BankAccountFormData = {
     id?: number;
     bank: string;
     balance: number;
-    color: string | "#000"; 
+    color: string | "000"; 
+}
+
+type CreditCardFormData = {
+    id?: number;
+    name: string;
+    limit: number;
+    close_day: number;
+    due_day: number;
+    current_balance: number;
+    current_bill: number;
+    color: string | "000";
 }
 
 
@@ -102,5 +113,6 @@ export type {
     TransactionRow,
     TransactionUpdateStatusProps,
     ChartBarType,
-    BankAccountFormData
+    BankAccountFormData,
+    CreditCardFormData
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {useBankAccountContext, usePageContext} from "@/lib/hooks";
+import { useBankAccountContext, usePageContext } from "@/lib/hooks";
 import { Dialog, DialogContent, Grid, Input, TextField } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -46,12 +46,12 @@ const BankAccountDialog = () => {
     initialValues: editableAccount,
     validationSchema: validate,
     onSubmit: (values) => {
-      addMutation.mutate({
-        id: values.id,
-        bank: values.bank,
-        balance: values.balance,
-        color: values.color,
-      });
+      if (values.id) {
+        editMutation.mutate(values);
+        return;
+      } else {
+        addMutation.mutate(values);
+      }
     },
   });
 
@@ -89,12 +89,7 @@ const BankAccountDialog = () => {
                 />
               </Grid>
               <Grid xs={12} md={4} item>
-                <ColorPicker 
-                  onChange={formik.handleChange}
-                  value={"#" + formik.values.color}
-                  defaultValue={formik.values.color}
-                  />
-                
+                <ColorPicker onChange={formik.handleChange} value={"#" + formik.values.color} defaultValue={formik.values.color} />
               </Grid>
             </Grid>
           </Stack>

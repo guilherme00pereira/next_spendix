@@ -126,7 +126,7 @@ const TransactionFormDialog = () => {
   return (
     <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Novo lançamento"/>
+        <TopBarDialog title="Nova Despesa"/>
         <DialogContent>
           {isPending && (
             <Stack sx={{width: "100%", pb: 3}} spacing={2}>
@@ -160,9 +160,9 @@ const TransactionFormDialog = () => {
                   name="category_id"
                   label="Categoria"
                 >
-                  {categories?.map((category) => (
+                  {categories?.filter((c: any) => c.type === "Despesa").map((category) => (
                     <MenuItem key={category.id} value={category.id}>
-                      {category.type} - {category.name}
+                      {category.name}
                     </MenuItem>
                   ))}
                 </TextField>

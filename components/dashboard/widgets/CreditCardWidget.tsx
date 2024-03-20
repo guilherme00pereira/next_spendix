@@ -1,5 +1,7 @@
-import { Card, Stack, Typography, styled } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
+import { Button, Card, Stack, Typography, styled } from "@mui/material";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import { useCreditCardContext, usePageContext } from "@/lib/hooks";
 
 const ColoredCard = styled(Card, {
   shouldForwardProp: (prop) => prop !== "bgcolor",
@@ -14,15 +16,26 @@ const ColoredCard = styled(Card, {
 }));
 
 const CreditCardWidget = ({ cc }: { cc: any }) => {
-  useEffect(() => {
-    console.log(cc);
-  }, [cc]);
+  const {showModal, actionShowModal} = usePageContext();
+  const {setEditableCard} = useCreditCardContext();
+
+  const handleEdit = () => {
+    actionShowModal(!showModal);
+    setEditableCard(cc);
+  };
+
+  
   return (
     <ColoredCard bgcolor={cc.color}>
-      <Stack>
+      <Stack justifyContent="space-between" sx={{height: "100%"}}>
+      <Stack direction="row" justifyContent="space-between">
         <Typography key={cc.id} variant="h6">
           {cc.name}
         </Typography>
+        <Button size="small" variant="text" color="inherit" onClick={handleEdit}>
+            <EditRoundedIcon fontSize="small" />
+          </Button>
+        </Stack>
         <Typography key={cc.id} variant="h3" >
           R$ {cc.current_balance}
         </Typography>
