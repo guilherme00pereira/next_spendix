@@ -13,6 +13,7 @@ import { styled } from "@mui/material/styles";
 import RecurringFormDialog from "./dialogs/RecurringFormDialog";
 import { TransactionDefaultData } from "@/lib/data";
 import IncomeFormDialog from "./dialogs/IncomeFormDialog";
+import TransferFormDialog from "./dialogs/TransferFormDialog";
 
 const dialActions = [
   { icon: <ShoppingCartCheckoutOutlinedIcon />, name: "Despesa", handler: "transaction" },
@@ -51,6 +52,9 @@ const SpeedDialAdd = () => {
     setRecurring,
     showRecurringDialog,
     actionShowRecurringDialog,
+    setTransfer,
+    showTransferDialog,
+    actionShowTransferDialog,
   } = useSpeedDialStore();
   const [open, setOpen] = useState(false);
 
@@ -74,6 +78,10 @@ const SpeedDialAdd = () => {
       case "recurring":
         actionShowRecurringDialog(true);
         setRecurring({ amount: 0, category_id: 3, description: "", due_date: dayjs(Date.now()), recurring: false, recurring_times: 2 });
+        break;
+      case "transfer":
+        actionShowTransferDialog(true);
+        setTransfer({ outcomeId: 1, outcomeType: "accounts", incomeId: 1, incomeType: "accounts", amount: 0 });
         break;
       default:
         handleClose();
@@ -99,6 +107,7 @@ const SpeedDialAdd = () => {
       {showRecurringDialog && <RecurringFormDialog />}
       {showCategoryDialog && <CategoryFormDialog />}
       {showIncomeDialog && <IncomeFormDialog />}
+      {showTransferDialog && <TransferFormDialog />}
     </>
   );
 };

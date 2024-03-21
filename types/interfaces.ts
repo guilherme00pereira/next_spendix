@@ -5,9 +5,10 @@ import {
     CategoryType,
     CreditCardFormData,
     RecurringFormData,
-    TransactionType
+    TransactionType,
+    TransferMoneyFormData,
+    TransactionFormData
 } from "@/types/entities";
-import {TransactionFormData} from "@/types/entities";
 import {Dispatch, SetStateAction} from "react";
 
 interface ISelectOption {
@@ -73,6 +74,10 @@ interface ISpeedDialStoreData {
     actionShowRecurringDialog: (action: boolean) => void;
     recurring: RecurringFormData;
     setRecurring: (r: RecurringFormData) => void;
+    showTransferDialog: boolean;
+    actionShowTransferDialog: (action: boolean) => void;
+    transfer: TransferMoneyFormData;
+    setTransfer: (t: TransferMoneyFormData) => void;
 }
 
 interface ICategoryTableProps {

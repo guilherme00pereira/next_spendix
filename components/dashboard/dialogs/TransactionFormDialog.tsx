@@ -14,7 +14,7 @@ import {getCategories} from "@/lib/supabase/methods/categories";
 import {useSpeedDialStore} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
-import {convertPaymentMethodsToSelect} from "@/lib/functions";
+import {buildSelectPaymentMethods, convertPaymentMethodsToSelect} from "@/lib/functions";
 import {getAllPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 
 const validate = yup.object({
@@ -46,11 +46,6 @@ const TransactionFormDialog = () => {
     queryKey: ["payment_methods"],
     queryFn: () => buildSelectPaymentMethods(),
   });
-
-  const buildSelectPaymentMethods = async () => {
-    const res = await getAllPaymentMethods();
-    return convertPaymentMethodsToSelect(res);
-  }
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("amount", e.target.value);

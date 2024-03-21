@@ -37,7 +37,6 @@ const Breadcrumb = () => {
         icon: index == 0 ? (<HomeIcon fontSize="small" />) : undefined,
       };
     });
-    console.log(breadcrumbs);
     setCrumbs(breadcrumbs);
   }, [pathname]);
 

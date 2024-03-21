@@ -1,5 +1,6 @@
 import { CategoryType, PaymentType, TransactionType } from "@/types/entities";
 import { latinCharacters } from "./data";
+import { getAllPaymentMethods } from "./supabase/methods/payment-methods";
 
 const amountFormatter = (v: number) => {
   return new Intl.NumberFormat("pt-BR", {
@@ -65,6 +66,11 @@ const transactionConverterResponseToType = ({
   };
 };
 
+const buildSelectPaymentMethods = async () => {
+  const res = await getAllPaymentMethods();
+  return convertPaymentMethodsToSelect(res);
+}
+
 const convertPaymentMethodsToSelect = (payment_methods: any) => {
   return payment_methods.map((pm: any) => {
     if (pm.credit_cards) {
@@ -82,4 +88,11 @@ const convertPaymentMethodsToSelect = (payment_methods: any) => {
   });
 };
 
-export { amountFormatter, groupTransactionsByDate, transactionConverterResponseToType, convertPaymentMethodsToSelect, convertNameToSlug };
+export { 
+  amountFormatter, 
+  groupTransactionsByDate, 
+  transactionConverterResponseToType, 
+  convertPaymentMethodsToSelect, 
+  convertNameToSlug,
+  buildSelectPaymentMethods
+};

@@ -95,11 +95,19 @@ type CreditCardFormData = {
     id?: number;
     name: string;
     limit: number;
-    close_day: number;
+    closing_day: number;
     due_day: number;
     current_balance: number;
     current_bill: number;
     color: string | "000";
+}
+
+type TransferMoneyFormData = {
+    outcomeId: number;
+    outcomeType: string;
+    incomeId: number;
+    incomeType: string;
+    amount: number;
 }
 
 
@@ -114,5 +122,6 @@ export type {
     TransactionUpdateStatusProps,
     ChartBarType,
     BankAccountFormData,
-    CreditCardFormData
+    CreditCardFormData,
+    TransferMoneyFormData
 }

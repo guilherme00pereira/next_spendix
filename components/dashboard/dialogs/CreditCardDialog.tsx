@@ -15,7 +15,7 @@ const validate = yup.object({
   id: yup.number(),
   name: yup.string().required("Campo obrigatório"),
   limit: yup.number().required("Campo obrigatório"),
-  close_day: yup.number().required("Campo obrigatório"),
+  closing_day: yup.number().required("Campo obrigatório"),
   due_day: yup.number().required("Campo obrigatório"),
   current_balance: yup.number(),
   current_bill: yup.number(),
@@ -55,6 +55,7 @@ const CreditCardDialog = () => {
         editMutation.mutate(values);
         return;
       } else {
+        console.log(values)
         addMutation.mutate(values);
       }
     },
@@ -62,7 +63,8 @@ const CreditCardDialog = () => {
 
   return (
     <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
-      <TopBarDialog title="Novo grupo" />
+      <form onSubmit={formik.handleSubmit} autoComplete="off">
+      <TopBarDialog title="Novo cartão de crédito" />
       <DialogContent>
         <Stack direction="row">
           <Grid container spacing={3}>
@@ -93,11 +95,11 @@ const CreditCardDialog = () => {
             </Grid>
             <Grid xs={12} md={2} item>
               <TextField
-                helperText={formik.touched.close_day && formik.errors.close_day}
-                error={formik.touched.close_day && Boolean(formik.errors.close_day)}
+                helperText={formik.touched.closing_day && formik.errors.closing_day}
+                error={formik.touched.closing_day && Boolean(formik.errors.closing_day)}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.close_day}
+                value={formik.values.closing_day}
                 fullWidth
                 name="close_day"
                 label="Dt. fechamento"
@@ -150,6 +152,7 @@ const CreditCardDialog = () => {
           </Grid>
         </Stack>
       </DialogContent>
+      </form>
     </Dialog>
   );
 };

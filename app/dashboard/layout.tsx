@@ -7,7 +7,7 @@ import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
-import Breadcrumb from "@/components/Breadcrumb";
+import Breadcrumb from "@/components/dashboard/Breadcrumb";
 
 const queryClient = new QueryClient();
 

@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { CategoryFormData, CategoryType } from "@/types/entities";
+import { CategoryFormData } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
 import { addCategory, editCategory, getCategories } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";

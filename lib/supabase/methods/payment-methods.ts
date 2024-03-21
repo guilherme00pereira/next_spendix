@@ -1,4 +1,5 @@
 import {supabase} from "@/lib/supabase/supabase-client";
+import { TransferMoneyFormData } from "@/types/entities";
 
 const getAllPaymentMethods = async () => {
     const {data, error} = await supabase.from('payment_methods').select('*, credit_cards(*), accounts(*)')
@@ -24,8 +25,24 @@ const getAccountPaymentMethods = async () => {
     return data
 }
 
+const transferMoney = async ({outcomeId, outcomeType, incomeId, incomeType, amount }: TransferMoneyFormData) => {
+    
+    const {data, error} = await supabase.rpc('transfer_money', {
+        outid: outcomeId, 
+        outtype: outcomeType, 
+        inid: incomeId, 
+        intype: incomeType, 
+        amount
+    })
+    if (error) {
+        throw error
+    }
+    return data
+}
+
 export {
     getAllPaymentMethods,
     getCreditCardPaymentMethods,
-    getAccountPaymentMethods
+    getAccountPaymentMethods,
+    transferMoney
 }

@@ -65,30 +65,33 @@ export type Database = {
       }
       credit_cards: {
         Row: {
-          close_day: number
+          closing_day: number
           color: string | null
           created_at: string
           current_balance: number
+          current_bill: number
           due_day: number
           id: number
           limit: number
           name: string
         }
         Insert: {
-          close_day: number
+          closing_day: number
           color?: string | null
           created_at?: string
           current_balance: number
+          current_bill?: number
           due_day: number
           id?: number
           limit: number
           name?: string
         }
         Update: {
-          close_day?: number
+          closing_day?: number
           color?: string | null
           created_at?: string
           current_balance?: number
+          current_bill?: number
           due_day?: number
           id?: number
           limit?: number
@@ -141,7 +144,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "groups"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       payment_methods: {
@@ -174,7 +177,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "credit_cards"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       payments: {
@@ -206,7 +209,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "payment_methods"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       profiles: {
@@ -241,7 +244,7 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       tags: {
@@ -289,7 +292,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "transactions"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       transactions: {
@@ -340,7 +343,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "categories"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
@@ -348,7 +351,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      transfer_money: {
+        Args: {
+          outid: number
+          outtype: string
+          inid: number
+          intype: string
+          amount: number
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       category_type: "Receita" | "Despesa"
@@ -360,14 +372,16 @@ export type Database = {
   }
 }
 
+type PublicSchema = Database[Extract<keyof Database, "public">]
+
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -375,67 +389,67 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
