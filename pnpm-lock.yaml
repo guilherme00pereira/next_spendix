@@ -32,6 +32,9 @@ dependencies:
   '@supabase/auth-helpers-nextjs':
     specifier: ^0.8.7
     version: 0.8.7(@supabase/supabase-js@2.38.5)
+  '@supabase/postgrest-js':
+    specifier: ^1.13.0
+    version: 1.13.0
   '@supabase/supabase-js':
     specifier: ^2.38.5
     version: 2.38.5
@@ -960,8 +963,8 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /@supabase/postgrest-js@1.8.6:
-    resolution: {integrity: sha512-iiEgF6o/pBumdFe/A2HSG/xx3L6ap7OO3IpTB2hsamNiH/gWb8ru4Z8bdwZjN4sQQttxgsIgZVMsNLkTOCOQhw==}
+  /@supabase/postgrest-js@1.13.0:
+    resolution: {integrity: sha512-fGSQHMczQRfpfLaiQaHS8cTeyRKv7nt6MXiHHzzC3/Bg9OKfO5lA5BxdNk0W5KI0wZwpzGoeTJhsNopX99i+5w==}
     dependencies:
       '@supabase/node-fetch': 2.6.15
     dev: false
@@ -989,7 +992,7 @@ packages:
       '@supabase/functions-js': 2.1.5
       '@supabase/gotrue-js': 2.57.0
       '@supabase/node-fetch': 2.6.15
-      '@supabase/postgrest-js': 1.8.6
+      '@supabase/postgrest-js': 1.13.0
       '@supabase/realtime-js': 2.8.4
       '@supabase/storage-js': 2.5.4
     transitivePeerDependencies:

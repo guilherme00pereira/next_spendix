@@ -12,6 +12,7 @@ Spendix is a web application that allows users to track their spending habits. U
 
 
 ##### 0.9
+- 0.9.1: Home widget 'available money'
 - 0.9.0: Add supabase function transfer_money() and Transfer Dialog.
 
 ##### 0.8

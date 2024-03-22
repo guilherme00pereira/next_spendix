@@ -40,9 +40,19 @@ const transferMoney = async ({outcomeId, outcomeType, incomeId, incomeType, amou
     return data
 }
 
+const getTotalAmountAvailable = async () => {
+    const {data, error} = await supabase.rpc('total_available_amount')
+    if (error) {
+        throw error
+    }
+    console.log(data)
+    return data
+}
+
 export {
     getAllPaymentMethods,
     getCreditCardPaymentMethods,
     getAccountPaymentMethods,
-    transferMoney
+    transferMoney,
+    getTotalAmountAvailable
 }

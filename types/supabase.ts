@@ -351,6 +351,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      total_available_amount: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total: number
+        }[]
+      }
       transfer_money: {
         Args: {
           outid: number
