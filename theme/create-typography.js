@@ -22,12 +22,12 @@ export const createTypography = () => {
     subtitle1: {
       fontSize: '1rem',
       fontWeight: 500,
-      lineHeight: 1.57
+      lineHeight: 1.47
     },
     subtitle2: {
       fontSize: '0.875rem',
       fontWeight: 500,
-      lineHeight: 1.57
+      lineHeight: 1.47
     },
     overline: {
       fontSize: '0.75rem',
@@ -57,13 +57,13 @@ export const createTypography = () => {
     h4: {
       fontFamily: '\'Plus Jakarta Sans\', sans-serif',
       fontWeight: 700,
-      fontSize: '2rem',
+      fontSize: '1.75rem',
       lineHeight: 1.2
     },
     h5: {
       fontFamily: '\'Plus Jakarta Sans\', sans-serif',
       fontWeight: 700,
-      fontSize: '1.5rem',
+      fontSize: '1.25rem',
       lineHeight: 1.2
     },
     h6: {

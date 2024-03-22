@@ -10,9 +10,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions }: { transactions
   const [data, setData] = useState<ChartBarType[]>([]);
 
   useEffect(() => {
-    const sixMonthsAgo = dayjs().subtract(6, "month");
     const data = transactions
-      .filter((t) => dayjs(t.due_date).isAfter(sixMonthsAgo))
       .reduce((acc, transaction) => {
         const month = dayjs(transaction.due_date).format("MMM");
         const index = acc.findIndex((item) => item.name === month);
@@ -25,6 +23,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions }: { transactions
         return acc;
       }, [] as ChartBarType[]);
     setData(data.reverse());
+    //TODO: set projection for actual month
   }, []);
 
   return (

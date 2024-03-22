@@ -169,6 +169,7 @@ const getTransactionsByCategoriesLastSixMonths = async (category_ids: number[]) 
   } = await supabase.from('transactions').select(getQuery)
     .in('category_id', category_ids)
     .gte('due_date', dayjs().subtract(6, 'month').format('YYYY-MM-DD'))
+    .lte('due_date', dayjs().format('YYYY-MM-DD'))
     .order('due_date', {ascending: false})
   if (error) {
     throw error

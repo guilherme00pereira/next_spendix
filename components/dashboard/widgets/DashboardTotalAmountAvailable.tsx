@@ -1,51 +1,34 @@
-import {useState} from 'react';
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import {useQuery} from '@tanstack/react-query';
+import {useEffect, useState} from 'react';
 import {getTotalAmountAvailable} from "@/lib/supabase/methods/payment-methods";
 import {Stack} from "@mui/system";
 import {amountFormatter} from "@/lib/functions";
+import DashboardTopCard from '../panels-and-cards/DashboardTopCard';
+import { DashboardTopCardContentInfo } from '@/components/common-styled';
 
 const DashboardTotalAmountAvailable = () => {
   const [bankAmount, setBankAmount] = useState(0)
   const [creditCardAmount, setCreditCardAmount] = useState(0)
 
-  const {data: totalAmountAvailable} = useQuery({
-    queryKey: ["total_amount_available"],
-    queryFn: () => getAvailableValues(),
-  });
-
-  const getAvailableValues = () => {
+  useEffect(() => {
     getTotalAmountAvailable().then((data) => {
       setBankAmount(data[0].total)
       setCreditCardAmount(data[1].total)
     })
-  }
+  }, [])
 
   return (
-    <Card>
-      <CardHeader
-        title="Dinheiro Disponível"
-        color="primary"
-      />
-      <CardContent sx={{display: "flex", justifyContent: "end"}}>
-        <Stack direction="column" justifyContent="flex-end">
+    <DashboardTopCard title="Total disponível" bottomValue={amountFormatter(bankAmount + creditCardAmount)}>
+        
           <Stack direction="row" justifyContent="space-between">
-            <span>Cartões:</span>
-            <span>{amountFormatter(bankAmount)}</span>
+            <DashboardTopCardContentInfo variant='subtitle2'>Cartões:</DashboardTopCardContentInfo>
+            <DashboardTopCardContentInfo variant='subtitle2'>{amountFormatter(bankAmount)}</DashboardTopCardContentInfo>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
-            <span>C/C:</span>
-            <span>{amountFormatter(creditCardAmount)}</span>
+            <DashboardTopCardContentInfo variant='subtitle2'>C/C:</DashboardTopCardContentInfo>
+            <DashboardTopCardContentInfo variant='subtitle2'>{amountFormatter(creditCardAmount)}</DashboardTopCardContentInfo>
           </Stack>
-          <Typography variant="h4" color="secondary">
-            {amountFormatter(bankAmount + creditCardAmount)}
-          </Typography>
-        </Stack>
-      </CardContent>
-    </Card>
+        
+      </DashboardTopCard>
   );
 };
 

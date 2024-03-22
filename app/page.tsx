@@ -18,6 +18,7 @@ export default function SignIn() {
     setLoading(true);
     let code = (document.querySelector("input[name=code]") as HTMLInputElement).value;
     if (code === "1861") {//"f9d1152547c0bde01830b7e8bd60024c"
+      //TODO: implement supabase auth and middleware
       router.push("/dashboard");
     } else {
       setError(true);

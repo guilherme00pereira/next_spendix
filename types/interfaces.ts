@@ -109,6 +109,12 @@ interface ICreditCardContextData {
     setEditableCard: Dispatch<SetStateAction<CreditCardFormData>>;
 }
 
+interface IDashboardTopCardProps {
+    children: React.ReactNode;
+    title: string;
+    bottomValue: string;
+}
+
 export type {
     ISelectOption,
     IDeleteConfirmDialogProps,
@@ -123,6 +129,7 @@ export type {
     IChildrenCategoriesProps,
     ICategoriesPanelProps,
     IBankAccountContextData,
-    ICreditCardContextData
+    ICreditCardContextData,
+    IDashboardTopCardProps
 }
 
