@@ -5,7 +5,7 @@ type CategoryType = {
     name: string;
     slug: string;
     parent: number | null;
-    type: "Receita" | "Despesa";
+    type: "Receita" | "Despesa" | "Transacao";
     color: string | null;
     icon: string | null;
 }
@@ -25,7 +25,7 @@ type CategoryFormData = {
     parent: number | null;
     color: string | null;
     icon: string | null;
-    type: "Receita" | "Despesa";
+    type: "Receita" | "Despesa" | "Transacao";
 }
 
 type TransactionType = {
@@ -37,6 +37,7 @@ type TransactionType = {
     cashed: boolean;
     installments: number;
     payments: PaymentType | null;
+    draft: boolean;
 }
 
 type TransactionFormData = {
@@ -52,6 +53,7 @@ type TransactionFormData = {
     payment_id: number | null,
     in_installments: boolean,
     installments: number,
+    draft: boolean;
 }
 
 type RecurringFormData = {

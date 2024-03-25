@@ -74,10 +74,6 @@ interface ISpeedDialStoreData {
     actionShowRecurringDialog: (action: boolean) => void;
     recurring: RecurringFormData;
     setRecurring: (r: RecurringFormData) => void;
-    showTransferDialog: boolean;
-    actionShowTransferDialog: (action: boolean) => void;
-    transfer: TransferMoneyFormData;
-    setTransfer: (t: TransferMoneyFormData) => void;
 }
 
 interface ICategoryTableProps {

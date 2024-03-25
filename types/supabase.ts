@@ -315,6 +315,35 @@ export type Database = {
           },
         ]
       }
+      transaction_installments: {
+        Row: {
+          created_at: string
+          id: number
+          installments: number
+          transaction_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          installments: number
+          transaction_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          installments?: number
+          transaction_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_transaction_installments_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       transactions: {
         Row: {
           amount: number
@@ -324,7 +353,6 @@ export type Database = {
           draft: boolean
           due_date: string
           id: number
-          installments: number
           payment_id: number | null
         }
         Insert: {
@@ -335,7 +363,6 @@ export type Database = {
           draft?: boolean
           due_date: string
           id?: number
-          installments?: number
           payment_id?: number | null
         }
         Update: {
@@ -346,7 +373,6 @@ export type Database = {
           draft?: boolean
           due_date?: string
           id?: number
-          installments?: number
           payment_id?: number | null
         }
         Relationships: [

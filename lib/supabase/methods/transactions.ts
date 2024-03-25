@@ -1,8 +1,8 @@
 import { supabase } from "@/lib/supabase/supabase-client";
-import { TransactionFormData, TransactionUpdateStatusProps, RecurringFormData } from "@/types/entities";
+import { TransactionFormData, RecurringFormData } from "@/types/entities";
 import dayjs from "dayjs";
 
-const getQuery = "id, amount, due_date, description, categories(*), payments(*)";
+const getQuery = "id, amount, due_date, description, draft, categories(*), payments(*)";
 
 const getTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
@@ -55,8 +55,13 @@ const addTransaction = async ({
   payment_id,
   in_installments,
   installments,
+  draft,
+  cashed,
 }: TransactionFormData) => {
-  let pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
+  let pay_id = null;
+  if (cashed) {
+    pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
+  }
   const { data, error } = await supabase
     .from("transactions")
     .insert({
@@ -64,14 +69,21 @@ const addTransaction = async ({
       due_date: due_date.format("YYYY-MM-DD"),
       description,
       category_id,
-      installments: in_installments ? installments : 1,
       payment_id: pay_id,
+      draft,
     })
     .select(getQuery);
 
   if (error) {
     throw error;
   }
+  if (in_installments) {
+    const { error } = await supabase.from("transaction_installments").insert({ transaction_id: data[0].id, installments });
+    if (error) {
+      //throw error;
+    }
+  }
+
   return data;
 };
 
@@ -84,7 +96,6 @@ const addReccuringTransaction = async ({ amount, due_date, description, category
       due_date: due_date.add(i, "month").format("YYYY-MM-DD"),
       description: desctext,
       category_id,
-      installments: 1,
       payment_id: null,
     });
   }
@@ -105,8 +116,13 @@ const editTransaction = async ({
   payed_amount,
   payment_method_id,
   payment_id,
+  draft,
+  cashed,
 }: TransactionFormData) => {
-  let pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
+  let pay_id = null;
+  if (cashed) {
+    pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
+  }
   const { data, error } = await supabase
     .from("transactions")
     .update({
@@ -115,6 +131,7 @@ const editTransaction = async ({
       description,
       category_id,
       payment_id: pay_id,
+      draft,
     })
     .match({ id })
     .select(getQuery);
@@ -148,57 +165,61 @@ const getSumIncomeTransactions = async (di: string, df: string) => {
 };
 
 const getTransactionsByCategoriesLastSixMonths = async (category_ids: number[]) => {
-  const {
-    data,
-    error
-  } = await supabase.from('transactions').select(getQuery)
-    .in('category_id', category_ids)
-    .gte('due_date', dayjs().subtract(6, 'month').format('YYYY-MM-DD'))
-    .lte('due_date', dayjs().format('YYYY-MM-DD'))
-    .order('due_date', {ascending: false})
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(getQuery)
+    .in("category_id", category_ids)
+    .gte("due_date", dayjs().subtract(6, "month").format("YYYY-MM-DD"))
+    .lte("due_date", dayjs().format("YYYY-MM-DD"))
+    .order("due_date", { ascending: false });
   if (error) {
-    throw error
+    throw error;
   }
-  return data
-}
+  return data;
+};
 
-const managePaymentRecord = async (
-  payment_date: dayjs.Dayjs | null,
-  payed_amount: number | null,
-  payment_id: number | null,
-  payment_method_id: number
-) => {
+const managePaymentRecord = async (payment_date: dayjs.Dayjs | null, payed_amount: number | null, payment_id: number | null, payment_method_id: number) => {
   let pay_id = null;
-    if (payment_id) {
-      const { data, error } = await supabase
-        .from("payments")
-        .update({
-          date: payment_date ? payment_date.format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
-          amount: payed_amount ?? 0,
-          payment_method_id: payment_method_id ? payment_method_id : 1,
-        })
-        .eq("id", payment_id)
-        .select("id");
-      if (error) {
-        throw error;
-      }
-      pay_id = data[0].id;
-    } else {
-      const { data, error } = await supabase
-        .from("payments")
-        .insert({
-          date: payment_date ? payment_date.format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
-          amount: payed_amount ?? 0,
-          payment_method_id: payment_method_id ? payment_method_id : 1,
-        })
-        .select("id");
-      if (error) {
-        throw error;
-      }
-      pay_id = data[0].id;
+  if (payment_id) {
+    const { data, error } = await supabase
+      .from("payments")
+      .update({
+        date: payment_date ? payment_date.format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
+        amount: payed_amount ?? 0,
+        payment_method_id: payment_method_id ? payment_method_id : 1,
+      })
+      .eq("id", payment_id)
+      .select("id");
+    if (error) {
+      throw error;
     }
+    pay_id = data[0].id;
+  } else {
+    const { data, error } = await supabase
+      .from("payments")
+      .insert({
+        date: payment_date ? payment_date.format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
+        amount: payed_amount ?? 0,
+        payment_method_id: payment_method_id ? payment_method_id : 1,
+      })
+      .select("id");
+    if (error) {
+      throw error;
+    }
+    pay_id = data[0].id;
+  }
   return pay_id;
 };
+
+const managePaymentMethodUpdateBalance = async (payment_method_id: number, amount: number, type: string) => {
+  if (type === "Receita") {
+    //await incrementPaymentMethodBalance(payment_method_id, amount);
+  } else {
+    //await decrementPaymentMethodBalance(payment_method_id, amount);
+  }
+ 
+};
+
 
 export {
   getTransactions,

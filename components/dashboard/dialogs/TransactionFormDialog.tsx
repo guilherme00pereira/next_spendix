@@ -14,8 +14,8 @@ import {getCategories} from "@/lib/supabase/methods/categories";
 import {useSpeedDialStore} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
-import {buildSelectPaymentMethods, convertPaymentMethodsToSelect} from "@/lib/functions";
-import {getAllPaymentMethods} from "@/lib/supabase/methods/payment-methods";
+import {buildSelectPaymentMethods} from "@/lib/functions";
+import { CategoryType } from "@/types/entities";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -29,6 +29,7 @@ const validate = yup.object({
   payment_id: yup.string().nullable(),
   in_installments: yup.boolean(),
   installments: yup.number().min(2, "Insira apenas valores maiores que 2"),
+  draft: yup.boolean(),
 });
 
 //TODO: Adjust credit card or bank account balance when adding or updating a transaction
@@ -89,6 +90,7 @@ const TransactionFormDialog = () => {
           payed_amount: values["payed_amount"],
           payment_method_id: values["payment_method_id"],
           payment_id: values["payment_id"],
+          draft: values["draft"],
         }).then(res => {
           if(res !== null) {
             actionShowTransactionDialog(false);
@@ -109,6 +111,7 @@ const TransactionFormDialog = () => {
           payed_amount: values["payed_amount"],
           payment_method_id: values["payment_method_id"],
           payment_id: null,
+          draft: values["draft"],
         }).then(res => {
           if (res !== null) {
             actionShowTransactionDialog(false);
@@ -121,7 +124,7 @@ const TransactionFormDialog = () => {
   });
 
   return (
-    <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+    <Dialog open={showTransactionDialog} fullWidth maxWidth="lg" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TopBarDialog title="Nova Despesa"/>
         <DialogContent>
@@ -157,7 +160,7 @@ const TransactionFormDialog = () => {
                   name="category_id"
                   label="Categoria"
                 >
-                  {categories?.filter((c: any) => c.type === "Despesa").map((category) => (
+                  {categories?.filter((c: any) => c.type === "Despesa").map((category: CategoryType) => (
                     <MenuItem key={category.id} value={category.id}>
                       {category.name}
                     </MenuItem>
@@ -183,11 +186,34 @@ const TransactionFormDialog = () => {
 
           <Stack direction="row" sx={{pt: 2}}>
             <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  helperText={formik.touched.description && formik.errors.description}
+                  error={formik.touched.description && Boolean(formik.errors.description)}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.description}
+                  fullWidth
+                  name="description"
+                  label="Descrição"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <FormControlLabel
+                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
+                  label="Rascunho"
+                />
+                </Grid>
+            </Grid>
+          </Stack>
+
+          <Stack direction="row" sx={{pt: 2}}>
+            <Grid container spacing={2}>
               <Grid item xs={6} md={2}>
                 <FormControlLabel
                   control={
                     <Checkbox name="cashed" onChange={handleCashedChange} onBlur={formik.handleBlur}
-                              value={formik.values.cashed} defaultChecked={true}/>
+                              value={formik.values.cashed} checked={formik.values.cashed} />
                   }
                   label="Pago?"
                 />
@@ -207,19 +233,7 @@ const TransactionFormDialog = () => {
                       label="Valor"
                     />
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={["DatePicker"]} sx={{pt: "0"}}>
-                        <DatePicker
-                          format="DD/MM/YYYY"
-                          onChange={(value) => formik.setFieldValue("payment_date", value)}
-                          value={formik.values.payment_date}
-                          name="payment_date"
-                          label="Data de pagamento"
-                        />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Grid>
+                  
                   <Grid item xs={12} md={4}>
                     <TextField
                       helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
@@ -238,6 +252,19 @@ const TransactionFormDialog = () => {
                               </MenuItem>
                         ))}
                     </TextField>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={["DatePicker"]} sx={{pt: "0"}}>
+                        <DatePicker
+                          format="DD/MM/YYYY"
+                          onChange={(value) => formik.setFieldValue("payment_date", value)}
+                          value={formik.values.payment_date}
+                          name="payment_date"
+                          label="Data de pagamento"
+                        />
+                      </DemoContainer>
+                    </LocalizationProvider>
                   </Grid>
                 </>
               )}
@@ -273,22 +300,7 @@ const TransactionFormDialog = () => {
             </Stack>
 
 
-          <Stack direction="row">
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  helperText={formik.touched.description && formik.errors.description}
-                  error={formik.touched.description && Boolean(formik.errors.description)}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.description}
-                  fullWidth
-                  name="description"
-                  label="Descrição"
-                />
-              </Grid>
-            </Grid>
-          </Stack>
+          
         </DialogContent>
       </form>
     </Dialog>

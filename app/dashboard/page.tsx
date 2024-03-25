@@ -5,6 +5,7 @@ import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/Dashbo
 import DashboardTopCard from "@/components/dashboard/widgets/DashboardTopCard";
 import DashboardOverdueInvoices from "@/components/dashboard/widgets/DashboardOverdueInvoices";
 import DashboardCardInvoices from "@/components/dashboard/widgets/DashboardCardInvoices";
+import ParentCategoriesBarChart from "@/components/dashboard/charts/ParentCategoriesBarChart";
 
 //TODO: Add a chart for categories % variation
 
@@ -28,8 +29,8 @@ const DashboardPage = () => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-        <Paper>
-            <h2>Teste</h2>
+        <Paper sx={{p: 2}}>
+            <ParentCategoriesBarChart />
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>

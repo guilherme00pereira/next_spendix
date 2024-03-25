@@ -26,7 +26,7 @@ const ParentCategoriesBarChart = () => {
     <>
       <Stack direction="row" justifyContent="space-between" spacing={2} sx={{ pb: 2 }}>
         <Typography variant="h6" textAlign="center">
-          Despesas
+          Despesas por categoria
         </Typography>
       </Stack>
       <ResponsiveContainer width="100%" height={700}>

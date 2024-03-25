@@ -12,7 +12,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { amountFormatter } from "@/lib/functions";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { removeTransaction, updateTransactionCashedStatus } from "@/lib/supabase/methods/transactions";
+import { removeTransaction } from "@/lib/supabase/methods/transactions";
 import {useSpeedDialStore} from "@/lib/hooks";
 import { IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
@@ -27,13 +27,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
   const [openConfirm, setOpenConfirm] = useState(false);
   const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({ id: 0, name: "", type: "transação" });
 
-  const cashedMutation = useMutation({
-    mutationFn: (value: TransactionUpdateStatusProps) => updateTransactionCashedStatus(value),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-    },
-  });
-
+  
   const deleteMutation = useMutation({
     mutationFn: (id: number) => removeTransaction(id),
     onSuccess: () => {
@@ -68,6 +62,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       payment_id: t.payments?.id ?? 0,
       in_installments: t.installments > 1,
       installments: 2,
+      draft: t.draft,
     });
     actionShowTransactionDialog(true);
   }

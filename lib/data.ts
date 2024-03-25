@@ -27,6 +27,7 @@ const TransactionDefaultData = {
     payed_amount: 0,
     payment_method_id: 1,
     payment_id: null,
+    draft: false,
 }
 
 const latinCharacters: { [key: string]: string } = {
@@ -75,5 +76,5 @@ const latinCharacters: { [key: string]: string } = {
 export {
     CategoryTypeDict,
     TransactionDefaultData,
-    latinCharacters
+    latinCharacters,
 }

@@ -21,6 +21,7 @@ const getExpenseCategoriesTransactionsSum = async (initial_date: string, final_d
     } = await supabase.from('categories').select('id, name, type, transactions: transactions(amount, due_date)')
                     .eq('type', 'Despesa')
                     .neq('id', 43)
+                    .neq('id', 63)
                     .gte('transactions.due_date', initial_date)
                     .lte('transactions.due_date', final_date)
     if (error) {

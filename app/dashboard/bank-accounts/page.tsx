@@ -25,7 +25,6 @@ const BankAccountsPage = () => {
         <Stack>
           <PageTitle title="Contas Bancárias"/>
           <Paper>
-
             <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{p: 2}}>
               {isLoading && <WalletItemsLoader />}
               {isLoading || (

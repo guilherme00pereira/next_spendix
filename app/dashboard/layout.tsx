@@ -5,11 +5,23 @@ import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
 import Breadcrumb from "@/components/dashboard/Breadcrumb";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 60,
+    },
+  },
+});
+
+const persister = createSyncStoragePersister({
+  storage: typeof window !== "undefined" ? window.localStorage : undefined,
+})
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [showAdd, setShowAdd] = useState<boolean>(false);
@@ -26,7 +38,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
         mediaQuery: "md"
       }}
     >
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}>
         <Box sx={{ display: "flex" }}>
           <Topbar open={open} toggleDrawer={toggleDrawer} />
           <Sidebar open={open} toggleDrawer={toggleDrawer} />
@@ -49,7 +61,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
           </Box>
         </Box>
         <SpeedDialAdd />
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </PageContext.Provider>
   );
 }
