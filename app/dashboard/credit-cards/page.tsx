@@ -8,11 +8,11 @@ import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaym
 import CreditCardDialog from "@/components/dashboard/dialogs/CreditCardDialog";
 import PageTitle from "@/components/dashboard/PageTitle";
 import WalletItemsLoader from "@/components/dashboard/loaders/WalletItemsLoader";
-import { CreditCardFormData } from "@/types/entities";
+import { CreditCardType } from "@/types/entities";
 import { CreditCardContext } from "@/lib/hooks";
 
 const CreditCardsPage = () => {
-  const [editableCard, setEditableCard] = useState({} as CreditCardFormData);
+  const [editableCard, setEditableCard] = useState({} as CreditCardType);
 
   const { data: payment_methods, isLoading } = useQuery({
     queryKey: ["credit_cards"],
@@ -31,7 +31,7 @@ const CreditCardsPage = () => {
                 <>
                   {payment_methods &&
                     payment_methods.map((payment_method: any) => <CreditCardWidget key={payment_method.id} cc={payment_method.credit_cards} />)}
-                  <AddNewPaymentMethodWidget />
+                  <AddNewPaymentMethodWidget height="180px" />
                   <CreditCardDialog />
                 </>
               )}

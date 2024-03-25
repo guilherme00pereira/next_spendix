@@ -8,11 +8,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {addGroup} from "@/lib/supabase/methods/groups";
 import LinearProgress from "@mui/material/LinearProgress";
 import {usePageContext} from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
+import {addTag} from "@/lib/supabase/methods/tags";
 
 const validate = yup.object({
     name: yup.string().required("Campo obrigatório"),
@@ -24,7 +24,7 @@ const TagFormDialog = () => {
     const {showModal, actionShowModal} = usePageContext();
 
     const addMutation = useMutation({
-        mutationFn: (value: string) => addGroup(value),
+        mutationFn: (value: string) => addTag(value),
         onSuccess: () => {
             actionShowModal(!showModal);
             queryClient.invalidateQueries({queryKey: ['tags']});

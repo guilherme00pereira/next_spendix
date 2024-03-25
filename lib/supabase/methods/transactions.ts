@@ -124,21 +124,6 @@ const editTransaction = async ({
   return data;
 };
 
-const updateTransactionCashedStatus = async ({ id, cashed, payed_amount }: TransactionUpdateStatusProps) => {
-  const { data, error } = await supabase
-    .from("transactions")
-    .update({
-      cashed: cashed,
-      payed_amount: payed_amount,
-      payment_date: new Date().toISOString(),
-    })
-    .eq("id", id);
-  if (error) {
-    throw error;
-  }
-  return data;
-};
-
 const removeTransaction = async (id: number) => {
   const { data, error } = await supabase.from("transactions").delete().eq("id", id);
   if (error) {
@@ -222,7 +207,6 @@ export {
   addTransaction,
   addReccuringTransaction,
   editTransaction,
-  updateTransactionCashedStatus,
   removeTransaction,
   getSumIncomeTransactions,
   getTransactionsByCategoriesLastSixMonths,

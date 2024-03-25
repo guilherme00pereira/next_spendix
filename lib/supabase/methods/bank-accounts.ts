@@ -1,5 +1,5 @@
 import {supabase} from "@/lib/supabase/supabase-client";
-import { BankAccountFormData } from "@/types/entities";
+import { BankAccountType } from "@/types/entities";
 
 const getBankAccounts = async () => {
     const {data, error} = await supabase.from('accounts').select('*')
@@ -9,7 +9,7 @@ const getBankAccounts = async () => {
     return data
 }
 
-const addBankAccount = async ({bank, balance, color}: BankAccountFormData) => {
+const addBankAccount = async ({bank, balance, color}: BankAccountType) => {
     const {data, error} = await supabase.from('accounts').insert({bank, balance, color})
     if (error) {
         throw error
@@ -17,7 +17,7 @@ const addBankAccount = async ({bank, balance, color}: BankAccountFormData) => {
     return data
 }
 
-const editBankAccount = async ({id, bank, balance, color}: BankAccountFormData) => {
+const editBankAccount = async ({id, bank, balance, color}: BankAccountType) => {
     const {data, error} = await supabase.from('accounts').update({bank, balance, color}).match({id})
     if (error) {
         throw error

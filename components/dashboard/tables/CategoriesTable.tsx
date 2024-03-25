@@ -14,6 +14,17 @@ import {ICategoryTableProps} from "@/types/interfaces";
 import ChildrenCategoriesTable from "./ChildrenCategoriesTable";
 import {CategoryType} from "@/types/entities";
 
+const getTypeColor = (type: string) => {
+  switch (type) {
+    case "Receita":
+      return "success";
+    case "Despesa":
+      return "secondary";
+    default:
+      return "primary";
+  }
+}
+
 
 const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmDelete}: ICategoryTableProps) => {
 
@@ -61,7 +72,7 @@ const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmD
                     </Link>
                   </TableCell>
                   <TableCell align="center">
-                    <Chip label={category.type} size="small" variant="outlined" color={category.type === "Receita" ? "success" : "secondary"}/>
+                    <Chip label={category.type} size="small" variant="outlined" color={getTypeColor(category.type)}/>
                   </TableCell>
                   <TableCell align="right">
                     {hasSubCategories(category.id) || (

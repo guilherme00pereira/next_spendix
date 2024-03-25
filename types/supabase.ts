@@ -33,6 +33,38 @@ export type Database = {
         }
         Relationships: []
       }
+      card_invoices: {
+        Row: {
+          amount: number
+          created_at: string
+          credit_card_id: number
+          date: string
+          id: number
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          credit_card_id: number
+          date: string
+          id?: number
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          credit_card_id?: number
+          date?: string
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_card_invoices_credit_card_id_fkey"
+            columns: ["credit_card_id"]
+            isOneToOne: false
+            referencedRelation: "credit_cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       categories: {
         Row: {
           color: string | null
@@ -69,7 +101,7 @@ export type Database = {
           color: string | null
           created_at: string
           current_balance: number
-          current_bill: number
+          current_invoice: number
           due_day: number
           id: number
           limit: number
@@ -80,7 +112,7 @@ export type Database = {
           color?: string | null
           created_at?: string
           current_balance: number
-          current_bill?: number
+          current_invoice?: number
           due_day: number
           id?: number
           limit: number
@@ -91,7 +123,7 @@ export type Database = {
           color?: string | null
           created_at?: string
           current_balance?: number
-          current_bill?: number
+          current_invoice?: number
           due_day?: number
           id?: number
           limit?: number
@@ -99,50 +131,38 @@ export type Database = {
         }
         Relationships: []
       }
-      groups: {
+      invoices_transactions: {
         Row: {
+          created_at: string
           id: number
-          name: string
+          invoice_id: number
+          transaction_id: number
         }
         Insert: {
+          created_at?: string
           id?: number
-          name: string
+          invoice_id: number
+          transaction_id: number
         }
         Update: {
+          created_at?: string
           id?: number
-          name?: string
-        }
-        Relationships: []
-      }
-      groups_categories: {
-        Row: {
-          category_id: number
-          group_id: number
-          id: number
-        }
-        Insert: {
-          category_id: number
-          group_id: number
-          id?: number
-        }
-        Update: {
-          category_id?: number
-          group_id?: number
-          id?: number
+          invoice_id?: number
+          transaction_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "groups_categories_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
+            foreignKeyName: "public_invoices_transactions_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: true
+            referencedRelation: "card_invoices"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "groups_categories_group_id_fkey"
-            columns: ["group_id"]
+            foreignKeyName: "public_invoices_transactions_transaction_id_fkey"
+            columns: ["transaction_id"]
             isOneToOne: false
-            referencedRelation: "groups"
+            referencedRelation: "transactions"
             referencedColumns: ["id"]
           },
         ]
@@ -301,10 +321,10 @@ export type Database = {
           category_id: number | null
           created_at: string
           description: string | null
+          draft: boolean
           due_date: string
           id: number
           installments: number
-          payed_amount: number | null
           payment_id: number | null
         }
         Insert: {
@@ -312,10 +332,10 @@ export type Database = {
           category_id?: number | null
           created_at?: string
           description?: string | null
+          draft?: boolean
           due_date: string
           id?: number
           installments?: number
-          payed_amount?: number | null
           payment_id?: number | null
         }
         Update: {
@@ -323,10 +343,10 @@ export type Database = {
           category_id?: number | null
           created_at?: string
           description?: string | null
+          draft?: boolean
           due_date?: string
           id?: number
           installments?: number
-          payed_amount?: number | null
           payment_id?: number | null
         }
         Relationships: [
@@ -369,8 +389,8 @@ export type Database = {
       }
     }
     Enums: {
-      category_type: "Receita" | "Despesa"
-      payment_type: "C" | "D"
+      category_type: "Receita" | "Despesa" | "Transacao"
+      payment_type: "C" | "D" | "T"
     }
     CompositeTypes: {
       [_ in never]: never

@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCreditCard, editCreditCard } from "@/lib/supabase/methods/credit-cards";
 import { ColorPicker } from "material-ui-color";
 import { useEffect } from "react";
-import { CreditCardFormData } from "@/types/entities";
+import { CreditCardType } from "@/types/entities";
 
 const validate = yup.object({
   id: yup.number(),
@@ -18,7 +18,7 @@ const validate = yup.object({
   closing_day: yup.number().required("Campo obrigatório"),
   due_day: yup.number().required("Campo obrigatório"),
   current_balance: yup.number(),
-  current_bill: yup.number(),
+  current_invoice: yup.number(),
   color: yup.string(),
 });
 
@@ -32,7 +32,7 @@ const CreditCardDialog = () => {
   }, [editableCard]);
 
   const addMutation = useMutation({
-    mutationFn: (values: CreditCardFormData) => addCreditCard(values),
+    mutationFn: (values: CreditCardType) => addCreditCard(values),
     onSuccess: () => {
       actionShowModal(!showModal);
       queryClient.invalidateQueries({ queryKey: ["credit_cards"] });
@@ -40,7 +40,7 @@ const CreditCardDialog = () => {
   });
 
   const editMutation = useMutation({
-    mutationFn: (values: CreditCardFormData) => editCreditCard(values),
+    mutationFn: (values: CreditCardType) => editCreditCard(values),
     onSuccess: () => {
       actionShowModal(!showModal);
       queryClient.invalidateQueries({ queryKey: ["credit_cards"] });
@@ -136,13 +136,13 @@ const CreditCardDialog = () => {
             </Grid>
             <Grid item xs={12} md={4}>
               <TextField
-                helperText={formik.touched.current_bill && formik.errors.current_bill}
-                error={formik.touched.current_bill && Boolean(formik.errors.current_bill)}
+                helperText={formik.touched.current_invoice && formik.errors.current_invoice}
+                error={formik.touched.current_invoice && Boolean(formik.errors.current_invoice)}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.current_bill}
+                value={formik.values.current_invoice}
                 fullWidth
-                name="current_bill"
+                name="current_invoice"
                 label="Fatura atual"
               />
             </Grid>

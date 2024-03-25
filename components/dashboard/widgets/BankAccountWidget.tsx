@@ -3,7 +3,7 @@ import { Button, Card, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import {useBankAccountContext, usePageContext} from "@/lib/hooks";
-import { BankAccountFormData } from "@/types/entities";
+import { BankAccountType } from "@/types/entities";
 
 const ColoredCard = styled(Card, {
   shouldForwardProp: (prop) => prop !== "bgcolor",
@@ -12,12 +12,12 @@ const ColoredCard = styled(Card, {
   backgroundColor: "#" + bgcolor || theme.palette.primary.main,
   padding: "10px",
   width: "300px",
-  height: "150px",
-  borderRadius: "5px",
+  height: "130px",
+  borderRadius: "8px",
   margin: "10px",
 }));
 
-const BankAccountWidget = ({account}: {account: BankAccountFormData}) => {
+const BankAccountWidget = ({account}: {account: BankAccountType}) => {
   const {showModal, actionShowModal} = usePageContext();
   const {setEditableAccount} = useBankAccountContext();
 

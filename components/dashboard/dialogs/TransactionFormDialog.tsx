@@ -31,6 +31,8 @@ const validate = yup.object({
   installments: yup.number().min(2, "Insira apenas valores maiores que 2"),
 });
 
+//TODO: Adjust credit card or bank account balance when adding or updating a transaction
+
 const TransactionFormDialog = () => {
   const {showTransactionDialog, actionShowTransactionDialog, transaction} = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);

@@ -6,13 +6,13 @@ import {getAccountPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 import BankAccountWidget from "@/components/dashboard/widgets/BankAccountWidget";
 import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaymentMethodWidget";
 import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog";
-import {BankAccountFormData} from "@/types/entities";
+import {BankAccountType} from "@/types/entities";
 import {BankAccountContext} from "@/lib/hooks";
 import PageTitle from "@/components/dashboard/PageTitle";
 import WalletItemsLoader from "@/components/dashboard/loaders/WalletItemsLoader";
 
 const BankAccountsPage = () => {
-  const [editableAccount, setEditableAccount] = useState({} as BankAccountFormData);
+  const [editableAccount, setEditableAccount] = useState({} as BankAccountType);
 
   const {data: payment_methods, isLoading} = useQuery({
     queryKey: ["bank_accounts"],
@@ -34,7 +34,7 @@ const BankAccountsPage = () => {
                     payment_methods.map((payment_method: any) => (
                       <BankAccountWidget key={payment_method.id} account={payment_method.accounts}/>
                     ))}
-                  <AddNewPaymentMethodWidget/>
+                  <AddNewPaymentMethodWidget height="130px"/>
                   <BankAccountDialog/>
                 </>
               )}

@@ -4,14 +4,16 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import { styled } from '@mui/material/styles';
 import { usePageContext } from '@/lib/hooks';
 
-const AddCard = styled(Card)(({ theme }) => ({
+const AddCard = styled(Card, {
+  shouldForwardProp: (prop) => prop !== "height",
+})<{ height?: string }>(({ theme, height }) => ({
   padding: theme.spacing(3),
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
   width: "300px",
-  height: "150px",
+  height: height || "180px",
   margin: "10px",
   "&:hover": {
     backgroundColor: theme.palette.primary.light,
@@ -19,7 +21,7 @@ const AddCard = styled(Card)(({ theme }) => ({
   },
   cursor: "pointer",
   border: "2px dashed",
-  borderRadius: "5px",
+  borderRadius: "8px",
   borderColor: theme.palette.primary.light,
   color: theme.palette.primary.light,
   transition: "all 0.3s ease",
@@ -28,11 +30,11 @@ const AddCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const AddNewPaymentMethodWidget = () => {
+const AddNewPaymentMethodWidget = ({height}: {height: string}) => {
   const {actionShowModal} = usePageContext();
 
   return (
-    <AddCard onClick={() => actionShowModal(true)}>
+    <AddCard onClick={() => actionShowModal(true)} height={height}>
       <AddCircleOutlineRoundedIcon />
     </AddCard>
   );

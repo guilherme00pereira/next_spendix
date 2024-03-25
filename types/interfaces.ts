@@ -1,9 +1,9 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {
-    BankAccountFormData,
+    BankAccountType,
     CategoryFormData,
     CategoryType,
-    CreditCardFormData,
+    CreditCardType,
     RecurringFormData,
     TransactionType,
     TransferMoneyFormData,
@@ -100,19 +100,20 @@ interface ICategoriesPanelProps {
 }
 
 interface IBankAccountContextData {
-    editableAccount: BankAccountFormData;
-    setEditableAccount: Dispatch<SetStateAction<BankAccountFormData>>;
+    editableAccount: BankAccountType;
+    setEditableAccount: Dispatch<SetStateAction<BankAccountType>>;
 }
 
 interface ICreditCardContextData {
-    editableCard: CreditCardFormData;
-    setEditableCard: Dispatch<SetStateAction<CreditCardFormData>>;
+    editableCard: CreditCardType;
+    setEditableCard: Dispatch<SetStateAction<CreditCardType>>;
 }
 
 interface IDashboardTopCardProps {
     children: React.ReactNode;
     title: string;
     bottomValue: string;
+    loading: boolean;
 }
 
 export type {

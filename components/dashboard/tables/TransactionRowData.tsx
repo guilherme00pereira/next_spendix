@@ -1,4 +1,5 @@
 import {useState} from "react";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -99,7 +100,9 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
                     </Stack>
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
+                  <Link href={`/dashboard/categories/${transaction.categories?.slug}`}>
                     {transaction.categories?.name ?? ""}
+                  </Link>
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     <Typography color={transaction.categories?.type === "Receita" ? "success.main" : "secondary.main"}

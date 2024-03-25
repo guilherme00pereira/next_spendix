@@ -9,6 +9,10 @@ const CategoryTypeDict = [
     {
         value: 'Receita',
         label: "Receita"
+    },
+    {
+        value: 'Transacao',
+        label: "Transação"
     }
 ];
 const TransactionDefaultData = {

@@ -2,12 +2,14 @@
 import { Container, Grid, Paper } from "@mui/material";
 import React from "react";
 import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/DashboardTotalAmountAvailable";
-import DashboardTopCard from "@/components/dashboard/panels-and-cards/DashboardTopCard";
-import DashboardOverdueBills from "@/components/dashboard/widgets/DashboardOverdueBills";
+import DashboardTopCard from "@/components/dashboard/widgets/DashboardTopCard";
+import DashboardOverdueInvoices from "@/components/dashboard/widgets/DashboardOverdueInvoices";
+import DashboardCardInvoices from "@/components/dashboard/widgets/DashboardCardInvoices";
 
 //TODO: Add a chart for categories % variation
 
-const page = () => {
+const DashboardPage = () => {
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3} sx={{mb: 4}}>
@@ -15,13 +17,13 @@ const page = () => {
           <DashboardTotalAmountAvailable />
         </Grid>
         <Grid item xs={12} md={3}>
-          <DashboardOverdueBills />
+          <DashboardOverdueInvoices />
         </Grid>
         <Grid item xs={12} md={3}>
-          <DashboardTopCard title="New Card" bottomValue="0">Add text</DashboardTopCard>
+          <DashboardCardInvoices />
         </Grid>
         <Grid item xs={12} md={3}>
-          <DashboardTopCard title="New Card" bottomValue="0">Add text</DashboardTopCard>
+          <DashboardTopCard title="New Card" bottomValue="0" loading={false}>Add text</DashboardTopCard>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -40,4 +42,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default DashboardPage;

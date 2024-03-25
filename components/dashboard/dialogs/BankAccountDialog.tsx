@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addBankAccount, editBankAccount } from "@/lib/supabase/methods/bank-accounts";
 import TopBarDialog from "./TopBarDialog";
 import { Stack } from "@mui/system";
-import { BankAccountFormData } from "@/types/entities";
+import { BankAccountType } from "@/types/entities";
 import { ColorPicker } from "material-ui-color";
 
 const validate = yup.object({
@@ -27,7 +27,7 @@ const BankAccountDialog = () => {
   }, [editableAccount]);
 
   const addMutation = useMutation({
-    mutationFn: (values: BankAccountFormData) => addBankAccount(values),
+    mutationFn: (values: BankAccountType) => addBankAccount(values),
     onSuccess: () => {
       actionShowModal(!showModal);
       queryClient.invalidateQueries({ queryKey: ["bank_accounts"] });
@@ -35,7 +35,7 @@ const BankAccountDialog = () => {
   });
 
   const editMutation = useMutation({
-    mutationFn: (values: BankAccountFormData) => editBankAccount(values),
+    mutationFn: (values: BankAccountType) => editBankAccount(values),
     onSuccess: () => {
       actionShowModal(!showModal);
       queryClient.invalidateQueries({ queryKey: ["bank_accounts"] });

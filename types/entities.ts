@@ -84,21 +84,21 @@ type ChartBarType = {
     label: string;
 }
 
-type BankAccountFormData = {
+type BankAccountType = {
     id?: number;
     bank: string;
     balance: number;
     color: string | "000"; 
 }
 
-type CreditCardFormData = {
+type CreditCardType = {
     id?: number;
     name: string;
     limit: number;
     closing_day: number;
     due_day: number;
     current_balance: number;
-    current_bill: number;
+    current_invoice: number;
     color: string | "000";
 }
 
@@ -121,7 +121,7 @@ export type {
     TransactionRow,
     TransactionUpdateStatusProps,
     ChartBarType,
-    BankAccountFormData,
-    CreditCardFormData,
+    BankAccountType,
+    CreditCardType,
     TransferMoneyFormData
 }
