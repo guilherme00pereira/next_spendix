@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, MenuItem, Stack, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -13,7 +13,7 @@ import { addTransaction, editTransaction } from "@/lib/supabase/methods/transact
 import { getCategories } from "@/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/lib/hooks";
 import { useQuery } from "@tanstack/react-query";
-import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
+import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import { convertPaymentMethodsToSelect } from "@/lib/functions";
 import { getAllPaymentMethods } from "@/lib/supabase/methods/payment-methods";
 
@@ -24,6 +24,7 @@ const validate = yup.object({
   payed_amount: yup.number().nullable(),
   payment_method_id: yup.string(),
   payment_id: yup.string().nullable(),
+  draft: yup.boolean(),
 });
 
 const IncomeFormDialog = () => {
@@ -64,6 +65,7 @@ const IncomeFormDialog = () => {
           payed_amount: values["payed_amount"],
           payment_method_id: values["payment_method_id"],
           payment_id: values["payment_id"],
+          draft: values["draft"],
         }).then((res) => {
           if (res !== null) {
             actionShowIncomeDialog(false);
@@ -83,6 +85,7 @@ const IncomeFormDialog = () => {
           payed_amount: values["payed_amount"],
           payment_method_id: values["payment_method_id"],
           payment_id: null,
+          draft: values["draft"],
         }).then((res) => {
           if (res !== null) {
             actionShowIncomeDialog(false);
@@ -96,7 +99,7 @@ const IncomeFormDialog = () => {
   return (
     <Dialog open={showIncomeDialog} fullWidth maxWidth="md" onClose={() => actionShowIncomeDialog(!showIncomeDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Nova Receita" />
+        <TopBarSpeedDialog title="Nova Receita" showDialog={showIncomeDialog} closeAction={actionShowIncomeDialog} />
         <DialogContent>
           {isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
@@ -152,7 +155,7 @@ const IncomeFormDialog = () => {
 
           <Stack direction="row" sx={{ py: 2 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <TextField
                   helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
                   error={formik.touched.payment_method_id && Boolean(formik.errors.payment_method_id)}
@@ -172,7 +175,7 @@ const IncomeFormDialog = () => {
                     ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <TextField
                   helperText={formik.touched.description && formik.errors.description}
                   error={formik.touched.description && Boolean(formik.errors.description)}
@@ -184,6 +187,12 @@ const IncomeFormDialog = () => {
                   label="Descrição"
                 />
               </Grid>
+              <Grid item xs={12} md={4}>
+                <FormControlLabel
+                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
+                  label="Marcar como previsto"
+                />
+                </Grid>
             </Grid>
           </Stack>
         </DialogContent>

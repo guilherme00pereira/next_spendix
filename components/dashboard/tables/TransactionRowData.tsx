@@ -18,7 +18,7 @@ import { IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import dayjs from "dayjs";
-import {TransactionType, TransactionUpdateStatusProps} from "@/types/entities";
+import {TransactionType} from "@/types/entities";
 
 
 const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) => {
@@ -60,7 +60,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       payed_amount: t.payments?.amount ?? null,
       payment_method_id: 1,
       payment_id: t.payments?.id ?? 0,
-      in_installments: t.installments?.id ? true : false,
+      in_installments: t.installments ? true : false,
       installments: 2,
       draft: t.draft,
     });

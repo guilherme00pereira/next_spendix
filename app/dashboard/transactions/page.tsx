@@ -4,7 +4,8 @@ import { Stack, Container, Typography } from "@mui/material";
 import TransactionsTable from "@/components/dashboard/tables/TransactionsTable";
 import Box from "@mui/material/Box";
 import { TransactionContext } from "@/lib/hooks";
-import {TransactionType} from "@/types/entities";
+import { TransactionType } from "@/types/entities";
+import PageTitle from "@/components/dashboard/PageTitle";
 
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -18,12 +19,10 @@ const TransactionsPage = () => {
       }}
     >
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{mb: 4}}>
-            <Typography variant="h5" textAlign="center">
-              Visão: despesas e receitas por dia de entrada
-            </Typography>
-        </Box>
+        <Stack>
+          <PageTitle title="Visão: despesas e receitas por dia de entrada" />
           <TransactionsTable />
+        </Stack>
       </Container>
     </TransactionContext.Provider>
   );

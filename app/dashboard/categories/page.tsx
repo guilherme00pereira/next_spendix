@@ -11,6 +11,7 @@ import CategoryTableLoader from "@/components/dashboard/loaders/CategoryTableLoa
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import {useSpeedDialStore} from "@/lib/hooks";
 import {IRemovableEntity} from "@/types/interfaces";
+import PageTitle from "@/components/dashboard/PageTitle";
 
 const TableWrapper = styled(Paper)(({theme}) => ({
   width: "100%",
@@ -67,11 +68,10 @@ const CategoriesPage = () => {
   }
 
   return (
-    <Container maxWidth="xl" sx={{mt: 4, mb: 4}}>
-      <Box sx={{mb: 2}}>
-        <Typography variant="h5">Categorias</Typography>
-      </Box>
-      <Stack spacing={2} direction="row" justifyContent="center">
+    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+      <Stack>
+      <PageTitle title="Categorias" />
+      <Stack spacing={2} direction="row" justifyContent="start">
         <TableWrapper>
           <Box p={2}>
             {isLoading && <CategoryTableLoader/>}
@@ -85,6 +85,7 @@ const CategoriesPage = () => {
                                  handleDelete={processDelete}/>
         </Box>
       </TableWrapper>
+    </Stack>
     </Stack>
 </Container>
 )

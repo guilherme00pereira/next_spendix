@@ -98,8 +98,8 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
         )}
         {open && (
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
-            <Typography variant="h5" noWrap component="div">
-              HB
+            <Typography variant="h6" noWrap component="div">
+                SMALL WALLET
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />

@@ -90,7 +90,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
         </IconBox>
         {open || (
           <Title variant="h5" color="primary">
-            HB
+            SMALL WALLET
           </Title>
         )}
         <SelectMonthYear />

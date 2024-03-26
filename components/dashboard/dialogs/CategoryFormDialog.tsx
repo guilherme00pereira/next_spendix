@@ -10,9 +10,9 @@ import { addCategory, editCategory, getCategories } from "@/lib/supabase/methods
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSpeedDialStore } from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 import { ISelectOption } from "@/types/interfaces";
 import { convertNameToSlug } from "@/lib/functions";
+import TopBarSpeedDialog from "./TopBarSpeedDialog";
 
 const validate = yup.object({
   name: yup.string().required("Campo obrigatório"),
@@ -89,7 +89,7 @@ const CategoryFormDialog = () => {
   return (
     <Dialog open={showCategoryDialog} fullWidth maxWidth="md" onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Nova categoria" />
+        <TopBarSpeedDialog title="Nova categoria" showDialog={showCategoryDialog} closeAction={actionShowCategoryDialog} />
         <DialogContent>
           {addMutation.isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>

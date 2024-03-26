@@ -77,8 +77,7 @@ const addTransaction = async ({
   if (error) {
     throw error;
   }
-
-  //TODO: not working
+  
   if (in_installments) {
     const { error } = await supabase.from("transaction_installments").insert({ transaction_id: data[0].id, installments });
     if (error) {

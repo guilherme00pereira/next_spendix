@@ -13,7 +13,7 @@ import {addTransaction, editTransaction} from "@/lib/supabase/methods/transactio
 import {getCategories} from "@/lib/supabase/methods/categories";
 import {useSpeedDialStore} from "@/lib/hooks";
 import {useQuery} from "@tanstack/react-query";
-import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
+import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import {buildSelectPaymentMethods} from "@/lib/functions";
 import { CategoryType } from "@/types/entities";
 
@@ -60,15 +60,16 @@ const TransactionFormDialog = () => {
     formik.setFieldValue("payment_date", value);
   }
 
-  const handleRecurringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasInstallments(e.target.checked);
-    formik.setFieldValue("recurring", e.target.checked);
-  };
-
   const handleCashedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsCashed(e.target.checked);
     formik.setFieldValue("cashed", e.target.checked);
   }
+
+  const handleInstallmentsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formik.setFieldValue("in_installments", e.target.checked);
+    setHasInstallments(e.target.checked);
+  }
+
 
 
   const formik = useFormik({
@@ -126,7 +127,7 @@ const TransactionFormDialog = () => {
   return (
     <Dialog open={showTransactionDialog} fullWidth maxWidth="lg" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Nova Despesa"/>
+        <TopBarSpeedDialog title="Nova Despesa" showDialog={showTransactionDialog} closeAction={actionShowTransactionDialog}/>
         <DialogContent>
           {isPending && (
             <Stack sx={{width: "100%", pb: 3}} spacing={2}>
@@ -201,7 +202,7 @@ const TransactionFormDialog = () => {
               <Grid item xs={12} md={4}>
                 <FormControlLabel
                   control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
-                  label="Rascunho"
+                  label="Marcar como previsto"
                 />
                 </Grid>
             </Grid>
@@ -277,7 +278,7 @@ const TransactionFormDialog = () => {
                 <Grid item xs={6} md={2}>
                   <FormControlLabel
                     control={<Checkbox name="in_installments" value={formik.values.in_installments}
-                                       onChange={handleRecurringChange} onBlur={formik.handleBlur} checked={formik.values.in_installments}/>}
+                                       onChange={handleInstallmentsChange} onBlur={formik.handleBlur} checked={formik.values.in_installments}/>}
                     label="É Parcelado?"
                   />
                 </Grid>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField } from "@mui/material";
+import { Grid, MenuItem, Stack, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,11 +9,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { addReccuringTransaction, editTransaction } from "@/lib/supabase/methods/transactions";
+import { addReccuringTransaction } from "@/lib/supabase/methods/transactions";
 import { getCategories } from "@/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/lib/hooks";
 import { useQuery } from "@tanstack/react-query";
-import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
+import TopBarSpeedDialog from "./TopBarSpeedDialog";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -71,7 +71,7 @@ const RecurringFormDialog = () => {
   return (
     <Dialog open={showRecurringDialog} fullWidth maxWidth="md" onClose={() => actionShowRecurringDialog(!showRecurringDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Novo lançamento recorrente" />
+        <TopBarSpeedDialog title="Novo lançamento recorrente" showDialog={showRecurringDialog} closeAction={actionShowRecurringDialog} />
         <DialogContent>
           {isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
