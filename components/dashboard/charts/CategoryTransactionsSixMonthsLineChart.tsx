@@ -11,6 +11,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions }: { transactions
 
   useEffect(() => {
     const data = transactions
+      .filter((transaction) => transaction.payments !== null)
       .reduce((acc, transaction) => {
         const month = dayjs(transaction.due_date).format("MMM");
         const index = acc.findIndex((item) => item.name === month);
@@ -23,6 +24,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions }: { transactions
         return acc;
       }, [] as ChartBarType[]);
     setData(data.reverse());
+    //TODO: add empty months to chart
     //TODO: set projection for actual month
   }, []);
 

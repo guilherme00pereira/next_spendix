@@ -277,7 +277,7 @@ const TransactionFormDialog = () => {
                 <Grid item xs={6} md={2}>
                   <FormControlLabel
                     control={<Checkbox name="in_installments" value={formik.values.in_installments}
-                                       onChange={handleRecurringChange} onBlur={formik.handleBlur}/>}
+                                       onChange={handleRecurringChange} onBlur={formik.handleBlur} checked={formik.values.in_installments}/>}
                     label="É Parcelado?"
                   />
                 </Grid>

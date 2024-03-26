@@ -18,17 +18,16 @@ const getExpenseCategoriesTransactionsSum = async (initial_date: string, final_d
     const {
         data,
         error
-    } = await supabase.from('categories').select('id, name, type, transactions: transactions(amount, due_date)')
+    } = await supabase.from('categories').select('id, name, type, transactions: transactions(amount, due_date, payment_id)')
                     .eq('type', 'Despesa')
-                    .neq('id', 43)
-                    .neq('id', 63)
+                    .gte('transactions.payment_id', 0)
                     .gte('transactions.due_date', initial_date)
                     .lte('transactions.due_date', final_date)
     if (error) {
         throw error
     }
     return data.filter((category: any) => category.transactions.length > 0).reduce((acc: any, curr: any) => {
-        acc.push({name: curr.name, value: curr.transactions.reduce((acc: number, curr: any) => acc + curr.amount, 0) })
+        acc.push({id: curr.id, name: curr.name, value: curr.transactions.reduce((acc: number, curr: any) => acc + curr.amount, 0) })
         return acc
     }, [])
 }

@@ -45,7 +45,6 @@ const getTotalAmountAvailable = async () => {
     if (error) {
         throw error
     }
-    console.log(data)
     return data
 }
 

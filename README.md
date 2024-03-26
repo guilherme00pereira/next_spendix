@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.10
+- 0.10.1: transactions installment type
 - 0.10.0: Add @tansuqery/query persist module.
 
 ##### 0.9

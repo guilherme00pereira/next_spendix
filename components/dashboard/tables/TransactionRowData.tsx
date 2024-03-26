@@ -60,7 +60,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       payed_amount: t.payments?.amount ?? null,
       payment_method_id: 1,
       payment_id: t.payments?.id ?? 0,
-      in_installments: t.installments > 1,
+      in_installments: t.installments?.id ? true : false,
       installments: 2,
       draft: t.draft,
     });

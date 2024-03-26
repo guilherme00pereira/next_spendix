@@ -12,10 +12,14 @@ const barColor = "#9c27b0";
 const ParentCategoriesBarChart = () => {
   const date = useAppStore((state) => state.date);
   const [data, setData] = useState<ChartBarType[]>([]);
-
+  const excludedCategories = [43, 63]
+  
   useEffect(() => {
-    getExpenseCategoriesTransactionsSum(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")).then((response) => {
-      const data: ChartBarType[] = response.sort((a: ChartBarType, b: ChartBarType) => a.value - b.value).reverse().map((item: ChartBarType) => {
+    getExpenseCategoriesTransactionsSum(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"))
+      .then((response) => {
+        const items = response.filter((item: any) => !excludedCategories.includes(item.id));
+
+      const data: ChartBarType[] = items.sort((a: ChartBarType, b: ChartBarType) => a.value - b.value).reverse().map((item: ChartBarType) => {
         return { name: item.name, value: item.value, label: 'R$' + item.value.toFixed(2)};
       });
       setData(data);

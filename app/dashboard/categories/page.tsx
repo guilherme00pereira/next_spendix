@@ -76,6 +76,7 @@ const CategoriesPage = () => {
           <Box p={2}>
             {isLoading && <CategoryTableLoader/>}
             {isLoading || (
+              categories &&
               <CategoriesTable handleCategory={setChosenCategory} categories={categories as CategoryType[]}
                                handleConfirmDelete={handleConfirmDelete} handleEdit={handleEdit}/>
 

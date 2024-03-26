@@ -18,6 +18,12 @@ type PaymentType = {
     times: number;
 }
 
+type TransactionInstallmentsType = {
+    id: number;
+    transaction_id: number;
+    installments: number;
+}
+
 type CategoryFormData = {
     id?: number;
     name: string;
@@ -34,8 +40,7 @@ type TransactionType = {
     description: string;
     amount: number;
     categories: CategoryType | null;
-    cashed: boolean;
-    installments: number;
+    installments: TransactionInstallmentsType[] | null;
     payments: PaymentType | null;
     draft: boolean;
 }

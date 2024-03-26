@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase/supabase-client";
 import { TransactionFormData, RecurringFormData } from "@/types/entities";
 import dayjs from "dayjs";
 
-const getQuery = "id, amount, due_date, description, draft, categories(*), payments(*)";
+const getQuery = "id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)";
 
 const getTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
@@ -77,6 +77,8 @@ const addTransaction = async ({
   if (error) {
     throw error;
   }
+
+  //TODO: not working
   if (in_installments) {
     const { error } = await supabase.from("transaction_installments").insert({ transaction_id: data[0].id, installments });
     if (error) {
