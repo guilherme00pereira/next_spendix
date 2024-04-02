@@ -30,6 +30,7 @@ const TagList = () => {
     setEditableObject({id: 0, name: ""});
   }
 
+  //TODO: change Chip component to a custom component that allows to delete, edit and go to the tag page. Also show a badge with the number of transactions related to this tag
   return (
     <Paper sx={{p: 6}}>
       <Stack direction="row" justifyContent="flex-start">

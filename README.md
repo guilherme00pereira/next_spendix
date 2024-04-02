@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.10
+- 0.10.4: Created tag detail page and added tags field to transactions form dialog.
 - 0.10.3: Added tag list to tags page
 - 0.10.2: Speed-dial dialogs close button behavior
 - 0.10.1: transactions installment type

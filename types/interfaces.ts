@@ -28,7 +28,13 @@ interface IDeleteConfirmDialogProps {
 interface IRemovableEntity {
     id: number, 
     name: string, 
-    type: string
+    type: string,
+    payment_id: number | null
+}
+
+interface IDeleteTransactionData {
+    id: number;
+    payment_id: number | null;
 }
 
 interface ITransactionRowDataProps {
@@ -118,6 +124,7 @@ export type {
     IChildrenCategoriesProps,
     ICategoriesPanelProps,
     IEditableObjectContextData,
-    IDashboardTopCardProps
+    IDashboardTopCardProps,
+    IDeleteTransactionData
 }
 

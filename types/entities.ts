@@ -64,6 +64,7 @@ type TransactionFormData = {
     in_installments: boolean,
     installments: number,
     draft: boolean;
+    tags: TagType[];
 }
 
 type RecurringFormData = {

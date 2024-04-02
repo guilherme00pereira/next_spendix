@@ -1,21 +1,36 @@
-import React, {useState} from "react";
-import {Checkbox, FormControlLabel, Grid, MenuItem, Stack, TextField} from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  Checkbox,
+  Chip,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  TextField,
+} from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
-import {useFormik} from "formik";
-import {addTransaction, editTransaction} from "@/lib/supabase/methods/transactions";
-import {getCategories} from "@/lib/supabase/methods/categories";
-import {useSpeedDialStore} from "@/lib/hooks";
-import {useQuery} from "@tanstack/react-query";
+import { useFormik } from "formik";
+import { addTransaction, editTransaction } from "@/lib/supabase/methods/transactions";
+import { getCategories } from "@/lib/supabase/methods/categories";
+import { useSpeedDialStore } from "@/lib/hooks";
+import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
-import {buildSelectPaymentMethods} from "@/lib/functions";
-import { CategoryType } from "@/types/entities";
+import { buildSelectPaymentMethods } from "@/lib/functions";
+import { CategoryType, TagType } from "@/types/entities";
+import { getTags } from "@/lib/supabase/methods/tags";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -32,51 +47,73 @@ const validate = yup.object({
   draft: yup.boolean(),
 });
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const SelectTagMenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 //TODO: Adjust credit card or bank account balance when adding or updating a transaction
 
 const TransactionFormDialog = () => {
-  const {showTransactionDialog, actionShowTransactionDialog, transaction} = useSpeedDialStore();
+  const { showTransactionDialog, actionShowTransactionDialog, transaction } = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);
   const [hasInstallments, setHasInstallments] = useState<boolean>(false);
+  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
   const [isPending, setIsPending] = useState<boolean>(false);
 
-  const {data: categories} = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: () => getCategories(),
   });
 
-  const {data: paymentMethods} = useQuery({
+  const { data: paymentMethods } = useQuery({
     queryKey: ["payment_methods"],
     queryFn: () => buildSelectPaymentMethods(),
   });
 
+  const { data: tags } = useQuery({
+    queryKey: ["tags"],
+    queryFn: () => getTags(),
+  });
+
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("amount", e.target.value);
-    formik.setFieldValue("payed_amount", e.target.value)
-  }
+    formik.setFieldValue("payed_amount", e.target.value);
+  };
 
   const handleDueDateChange = (value: any) => {
     formik.setFieldValue("due_date", value);
     formik.setFieldValue("payment_date", value);
-  }
+  };
 
   const handleCashedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsCashed(e.target.checked);
     formik.setFieldValue("cashed", e.target.checked);
-  }
+  };
 
   const handleInstallmentsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("in_installments", e.target.checked);
     setHasInstallments(e.target.checked);
-  }
+  };
 
-
+  const handleTagSelect = (e: SelectChangeEvent<number[]>) => {
+    const values = e.target.value as number[];
+    setSelectedTagsIds(values);
+    formik.setFieldValue("tags", values);
+  };
 
   const formik = useFormik({
     initialValues: transaction,
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
+      console.log(values)
       if (values.id) {
         editTransaction({
           id: values.id,
@@ -92,11 +129,11 @@ const TransactionFormDialog = () => {
           payment_method_id: values["payment_method_id"],
           payment_id: values["payment_id"],
           draft: values["draft"],
-        }).then(res => {
-          if(res !== null) {
+          tags: values["tags"],
+        }).then((res) => {
+          if (res !== null) {
             actionShowTransactionDialog(false);
             setIsPending(false);
-
           }
         });
       } else {
@@ -113,11 +150,11 @@ const TransactionFormDialog = () => {
           payment_method_id: values["payment_method_id"],
           payment_id: null,
           draft: values["draft"],
-        }).then(res => {
+          tags: values["tags"],
+        }).then((res) => {
           if (res !== null) {
             actionShowTransactionDialog(false);
             setIsPending(false);
-
           }
         });
       }
@@ -127,16 +164,16 @@ const TransactionFormDialog = () => {
   return (
     <Dialog open={showTransactionDialog} fullWidth maxWidth="lg" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarSpeedDialog title="Nova Despesa" showDialog={showTransactionDialog} closeAction={actionShowTransactionDialog}/>
+        <TopBarSpeedDialog title="Nova Despesa" showDialog={showTransactionDialog} closeAction={actionShowTransactionDialog} />
         <DialogContent>
           {isPending && (
-            <Stack sx={{width: "100%", pb: 3}} spacing={2}>
-              <LinearProgress/>
+            <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
+              <LinearProgress />
             </Stack>
           )}
           <Stack direction="row">
             <Grid container spacing={2}>
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={2}>
                 <TextField
                   helperText={formik.touched.amount && formik.errors.amount}
                   error={formik.touched.amount && Boolean(formik.errors.amount)}
@@ -149,7 +186,7 @@ const TransactionFormDialog = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={5}>
+              <Grid item xs={12} md={4}>
                 <TextField
                   helperText={formik.touched.category_id && formik.errors.category_id}
                   error={formik.touched.category_id && Boolean(formik.errors.category_id)}
@@ -161,31 +198,33 @@ const TransactionFormDialog = () => {
                   name="category_id"
                   label="Categoria"
                 >
-                  {categories?.filter((c: any) => c.type === "Despesa").map((category: CategoryType) => (
-                    <MenuItem key={category.id} value={category.id}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
+                  {categories
+                    ?.filter((c: any) => c.type === "Despesa")
+                    .map((category: CategoryType) => (
+                      <MenuItem key={category.id} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
                 </TextField>
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={3}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DatePicker"]} sx={{pt: "0"}}>
-                    <DatePicker
-                      format="DD/MM/YYYY"
-                      onChange={handleDueDateChange}
-                      value={formik.values.due_date}
-                      name="due_date"
-                      label="Vencimento"
-                    />
+                  <DemoContainer components={["DatePicker"]} sx={{ pt: "0" }}>
+                    <DatePicker format="DD/MM/YYYY" onChange={handleDueDateChange} value={formik.values.due_date} name="due_date" label="Vencimento" />
                   </DemoContainer>
                 </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <FormControlLabel
+                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
+                  label="Marcar como previsto"
+                />
               </Grid>
             </Grid>
           </Stack>
 
-          <Stack direction="row" sx={{pt: 2}}>
+          <Stack direction="row" sx={{ pt: 2 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -200,21 +239,47 @@ const TransactionFormDialog = () => {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <FormControlLabel
-                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
-                  label="Marcar como previsto"
-                />
-                </Grid>
+                <FormControl sx={{ width: "100%" }}>
+                  <InputLabel id="select-tags-label">Tags</InputLabel>
+                  <Select
+                    labelId="select-tags-label"
+                    id="select-tags"
+                    multiple
+                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                    value={selectedTagsIds}
+                    onChange={(e) => handleTagSelect(e)}
+                    name="tags"
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={tags?.find(tag => tag.id === value)?.name} />
+                        ))}
+                      </Box>
+                    )}
+                  >
+                    {tags?.map((tag: TagType) => (
+                      <MenuItem key={tag.id} value={tag.id}>
+                        {tag.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
           </Stack>
 
-          <Stack direction="row" sx={{pt: 2}}>
+          <Stack direction="row" sx={{ pt: 2 }}>
             <Grid container spacing={2}>
               <Grid item xs={6} md={2}>
                 <FormControlLabel
                   control={
-                    <Checkbox name="cashed" onChange={handleCashedChange} onBlur={formik.handleBlur}
-                              value={formik.values.cashed} checked={formik.values.cashed} />
+                    <Checkbox
+                      name="cashed"
+                      onChange={handleCashedChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.cashed}
+                      checked={formik.values.cashed}
+                    />
                   }
                   label="Pago?"
                 />
@@ -234,7 +299,7 @@ const TransactionFormDialog = () => {
                       label="Valor"
                     />
                   </Grid>
-                  
+
                   <Grid item xs={12} md={4}>
                     <TextField
                       helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
@@ -247,16 +312,17 @@ const TransactionFormDialog = () => {
                       name="payment_method_id"
                       label="Meio de Pagamento"
                     >
-                          {paymentMethods && paymentMethods.map((payment_method: any) => (
-                              <MenuItem key={payment_method.value} value={payment_method.value}>
-                                {payment_method.label}
-                              </MenuItem>
+                      {paymentMethods &&
+                        paymentMethods.map((payment_method: any) => (
+                          <MenuItem key={payment_method.value} value={payment_method.value}>
+                            {payment_method.label}
+                          </MenuItem>
                         ))}
                     </TextField>
                   </Grid>
                   <Grid item xs={12} md={3}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={["DatePicker"]} sx={{pt: "0"}}>
+                      <DemoContainer components={["DatePicker"]} sx={{ pt: "0" }}>
                         <DatePicker
                           format="DD/MM/YYYY"
                           onChange={(value) => formik.setFieldValue("payment_date", value)}
@@ -272,36 +338,39 @@ const TransactionFormDialog = () => {
             </Grid>
           </Stack>
 
+          <Stack direction="row" sx={{ py: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={6} md={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="in_installments"
+                      value={formik.values.in_installments}
+                      onChange={handleInstallmentsChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.in_installments}
+                    />
+                  }
+                  label="É Parcelado?"
+                />
+              </Grid>
 
-            <Stack direction="row" sx={{py: 2}}>
-              <Grid container spacing={2}>
-                <Grid item xs={6} md={2}>
-                  <FormControlLabel
-                    control={<Checkbox name="in_installments" value={formik.values.in_installments}
-                                       onChange={handleInstallmentsChange} onBlur={formik.handleBlur} checked={formik.values.in_installments}/>}
-                    label="É Parcelado?"
+              {hasInstallments && (
+                <Grid item xs={12} md={2}>
+                  <TextField
+                    helperText={formik.touched.installments && formik.errors.installments}
+                    error={formik.touched.installments && Boolean(formik.errors.installments)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.installments}
+                    fullWidth
+                    name="installments"
+                    label="Nº de parcelas"
                   />
                 </Grid>
-
-                {hasInstallments && (
-                  <Grid item xs={12} md={2}>
-                    <TextField
-                      helperText={formik.touched.installments && formik.errors.installments}
-                      error={formik.touched.installments && Boolean(formik.errors.installments)}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.installments}
-                      fullWidth
-                      name="installments"
-                      label="Nº de parcelas"
-                    />
-                  </Grid>
-                )}
-              </Grid>
-            </Stack>
-
-
-          
+              )}
+            </Grid>
+          </Stack>
         </DialogContent>
       </form>
     </Dialog>

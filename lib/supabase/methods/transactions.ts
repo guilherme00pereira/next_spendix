@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase/supabase-client";
 import { TransactionFormData, RecurringFormData } from "@/types/entities";
+import { IDeleteTransactionData } from "@/types/interfaces";
 import dayjs from "dayjs";
 
 const getQuery = "id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)";
@@ -57,6 +58,7 @@ const addTransaction = async ({
   installments,
   draft,
   cashed,
+  tags,
 }: TransactionFormData) => {
   let pay_id = null;
   if (cashed) {
@@ -80,6 +82,14 @@ const addTransaction = async ({
   
   if (in_installments) {
     const { error } = await supabase.from("transaction_installments").insert({ transaction_id: data[0].id, installments });
+    if (error) {
+      //throw error;
+    }
+  }
+
+  //TODO: Test this
+  if(tags.length > 0) {
+    const { error } = await supabase.from("transaction_tags").insert(tags.map((tag) => ({ transaction_id: data[0].id, tag_id: tag.id })));
     if (error) {
       //throw error;
     }
@@ -142,10 +152,16 @@ const editTransaction = async ({
   return data;
 };
 
-const removeTransaction = async (id: number) => {
+const removeTransaction = async ({id, payment_id}: IDeleteTransactionData) => {
   const { data, error } = await supabase.from("transactions").delete().eq("id", id);
   if (error) {
     throw error;
+  }
+  if(payment_id) {
+    const { error } = await supabase.from("payments").delete().eq("id", payment_id);
+    if (error) {
+      throw error;
+    }
   }
   return data;
 };

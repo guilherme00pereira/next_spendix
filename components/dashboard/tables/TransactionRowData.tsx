@@ -14,7 +14,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction } from "@/lib/supabase/methods/transactions";
 import {useSpeedDialStore} from "@/lib/hooks";
-import { IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
+import { IDeleteTransactionData, IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import dayjs from "dayjs";
@@ -25,11 +25,11 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
   const queryClient = useQueryClient();
   const { setTransaction, actionShowTransactionDialog } = useSpeedDialStore();
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({ id: 0, name: "", type: "transação" });
+  const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({ id: 0, name: "", type: "transação", payment_id: null});
 
   
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => removeTransaction(id),
+    mutationFn: ({id, payment_id}: IDeleteTransactionData) => removeTransaction({id, payment_id}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
@@ -42,7 +42,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
 
   const processDelete = () => {
     if (typeof removableTransaction.id !== "undefined") {
-      deleteMutation.mutate(removableTransaction?.id);
+      deleteMutation.mutate({id: removableTransaction?.id, payment_id: removableTransaction?.payment_id});
       setOpenConfirm(false);
     }
   };
@@ -63,6 +63,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       in_installments: t.installments ? true : false,
       installments: 2,
       draft: t.draft,
+      tags: [],
     });
     actionShowTransactionDialog(true);
   }
