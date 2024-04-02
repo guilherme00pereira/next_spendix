@@ -25,11 +25,11 @@ const validate = yup.object({
 const CreditCardDialog = () => {
   const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
-  const { editableCard } = useCreditCardContext();
+  const { editableObject } = useCreditCardContext();
 
   useEffect(() => {
-    formik.setValues(editableCard);
-  }, [editableCard]);
+    formik.setValues(editableObject);
+  }, [editableObject]);
 
   const addMutation = useMutation({
     mutationFn: (values: CreditCardType) => addCreditCard(values),
@@ -48,14 +48,12 @@ const CreditCardDialog = () => {
   });
 
   const formik = useFormik({
-    initialValues: editableCard,
+    initialValues: editableObject,
     validationSchema: validate,
     onSubmit: (values) => {
       if (values.id !== 0) {
         editMutation.mutate(values);
-        return;
       } else {
-        console.log(values)
         addMutation.mutate(values);
       }
     },

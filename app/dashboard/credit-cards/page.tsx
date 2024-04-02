@@ -20,7 +20,7 @@ const CreditCardsPage = () => {
   });
 
   return (
-    <CreditCardContext.Provider value={{ editableCard: editableCard, setEditableCard: setEditableCard }}>
+    <CreditCardContext.Provider value={{ editableObject: editableCard, setEditableObject: setEditableCard }}>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Stack>
           <PageTitle title="Cartões de Crédito" />

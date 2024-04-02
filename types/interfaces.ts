@@ -1,15 +1,12 @@
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {
-    BankAccountType,
     CategoryFormData,
     CategoryType,
-    CreditCardType,
     RecurringFormData,
     TransactionType,
-    TransferMoneyFormData,
     TransactionFormData
 } from "@/types/entities";
-import {Dispatch, SetStateAction} from "react";
+import React, {Dispatch, SetStateAction} from "react";
 
 interface ISelectOption {
     value: string;
@@ -95,14 +92,9 @@ interface ICategoriesPanelProps {
     action: Dispatch<SetStateAction<number>>;
 }
 
-interface IBankAccountContextData {
-    editableAccount: BankAccountType;
-    setEditableAccount: Dispatch<SetStateAction<BankAccountType>>;
-}
-
-interface ICreditCardContextData {
-    editableCard: CreditCardType;
-    setEditableCard: Dispatch<SetStateAction<CreditCardType>>;
+interface IEditableObjectContextData<T> {
+    editableObject: T;
+    setEditableObject: Dispatch<SetStateAction<T>>;
 }
 
 interface IDashboardTopCardProps {
@@ -125,8 +117,7 @@ export type {
     ICategoryTableProps,
     IChildrenCategoriesProps,
     ICategoriesPanelProps,
-    IBankAccountContextData,
-    ICreditCardContextData,
+    IEditableObjectContextData,
     IDashboardTopCardProps
 }
 

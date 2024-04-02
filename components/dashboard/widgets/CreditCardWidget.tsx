@@ -18,11 +18,11 @@ const ColoredCard = styled(Card, {
 
 const CreditCardWidget = ({ cc }: { cc: any }) => {
   const { showModal, actionShowModal } = usePageContext();
-  const { setEditableCard } = useCreditCardContext();
+  const { setEditableObject } = useCreditCardContext();
 
   const handleEdit = () => {
     actionShowModal(!showModal);
-    setEditableCard(cc);
+    setEditableObject(cc);
   };
 
   return (

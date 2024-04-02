@@ -1,7 +1,7 @@
 import React from 'react';
 import List from "@mui/material/List";
 
-const ListCategories = () => {
+const CategoriesList = () => {
   return (
     <List>
       
@@ -9,4 +9,4 @@ const ListCategories = () => {
   );
 };
 
-export default ListCategories;
+export default CategoriesList;

@@ -20,7 +20,7 @@ const BankAccountsPage = () => {
   });
 
   return (
-    <BankAccountContext.Provider value={{editableAccount: editableAccount, setEditableAccount: setEditableAccount}}>
+    <BankAccountContext.Provider value={{editableObject: editableAccount, setEditableObject: setEditableAccount}}>
       <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
         <Stack>
           <PageTitle title="Contas Bancárias"/>

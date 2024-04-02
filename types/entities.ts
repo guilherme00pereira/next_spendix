@@ -18,6 +18,11 @@ type PaymentType = {
     times: number;
 }
 
+type TagType = {
+    id: number;
+    name: string;
+}
+
 type TransactionInstallmentsType = {
     id: number;
     transaction_id: number;
@@ -121,6 +126,7 @@ type TransferMoneyFormData = {
 export type {
     CategoryType,
     PaymentType,
+    TagType,
     CategoryFormData,
     TransactionType,
     TransactionFormData,

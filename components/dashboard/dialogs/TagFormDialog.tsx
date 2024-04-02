@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect} from "react";
 import {
     Grid,
     Stack,
@@ -9,12 +9,14 @@ import DialogContent from '@mui/material/DialogContent';
 import * as yup from "yup";
 import {useFormik} from "formik";
 import LinearProgress from "@mui/material/LinearProgress";
-import {usePageContext} from "@/lib/hooks";
+import {usePageContext, useTagContext} from "@/lib/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
-import {addTag} from "@/lib/supabase/methods/tags";
+import { addTag, editTag } from "@/lib/supabase/methods/tags";
+import {TagType} from "@/types/entities";
 
 const validate = yup.object({
+    id: yup.number(),
     name: yup.string().required("Campo obrigatório"),
 });
 
@@ -22,6 +24,11 @@ const validate = yup.object({
 const TagFormDialog = () => {
     const queryClient = useQueryClient();
     const {showModal, actionShowModal} = usePageContext();
+    const { editableObject } = useTagContext();
+
+    useEffect(() => {
+        formik.setValues(editableObject);
+    }, [editableObject]);
 
     const addMutation = useMutation({
         mutationFn: (value: string) => addTag(value),
@@ -31,13 +38,24 @@ const TagFormDialog = () => {
         },
     });
 
-    const formik = useFormik({
-        initialValues: {
-            name: "",
+    const editMutation = useMutation({
+        mutationFn: (values: TagType) => editTag(values),
+        onSuccess: () => {
+            actionShowModal(!showModal);
+            queryClient.invalidateQueries({queryKey: ['tags']});
         },
+    });
+
+
+    const formik = useFormik({
+        initialValues: editableObject,
         validationSchema: validate,
         onSubmit: (values) => {
-            addMutation.mutate(values.name);
+            if (values.id !== 0) {
+                editMutation.mutate(values);
+            } else {
+                addMutation.mutate(values.name);
+            }
         },
     });
 
