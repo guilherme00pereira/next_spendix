@@ -12,15 +12,15 @@ const amountFormatter = (v: number) => {
 
 const convertNameToSlug = (name: string) => {
   name = name
+    .split("")
+    .map((char) => latinCharacters[char] || char)
+    .join("");
+  return name
     .toLowerCase()
     .trim()
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
-  return name
-    .split("")
-    .map((char) => latinCharacters[char] || char)
-    .join("");
 };
 
 const groupTransactionsByDate = (transactions: TransactionType[]) => {
@@ -35,35 +35,6 @@ const groupTransactionsByDate = (transactions: TransactionType[]) => {
     }
   });
   return new Map([...groups].sort());
-};
-
-const transactionConverterResponseToType = ({
-  id,
-  amount,
-  due_date,
-  description,
-  cashed,
-  categories,
-  payments,
-}: {
-  id: number;
-  amount: number;
-  due_date: string;
-  description: string | null;
-  cashed: boolean;
-  categories: CategoryType | null;
-  payments: PaymentType | null;
-}): TransactionType => {
-  return {
-    id,
-    amount,
-    due_date,
-    description: description || "",
-    cashed,
-    categories,
-    payments,
-    installments: 1,
-  };
 };
 
 const buildSelectPaymentMethods = async () => {
@@ -90,8 +61,7 @@ const convertPaymentMethodsToSelect = (payment_methods: any) => {
 
 export { 
   amountFormatter, 
-  groupTransactionsByDate, 
-  transactionConverterResponseToType, 
+  groupTransactionsByDate,
   convertPaymentMethodsToSelect, 
   convertNameToSlug,
   buildSelectPaymentMethods

@@ -87,9 +87,8 @@ const addTransaction = async ({
     }
   }
 
-  //TODO: Test this
-  if(tags.length > 0) {
-    const { error } = await supabase.from("transaction_tags").insert(tags.map((tag) => ({ transaction_id: data[0].id, tag_id: tag.id })));
+  if(tags && tags.length > 0) {
+    const { error } = await supabase.from("tags_transactions").insert(tags.map((tag) => ({ transaction_id: data[0].id, tag_id: tag.id })));
     if (error) {
       //throw error;
     }
