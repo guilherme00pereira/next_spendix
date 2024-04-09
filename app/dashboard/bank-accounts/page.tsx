@@ -9,7 +9,7 @@ import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog"
 import {BankAccountType} from "@/types/entities";
 import {BankAccountContext} from "@/lib/hooks";
 import PageTitle from "@/components/dashboard/PageTitle";
-import WalletItemsLoader from "@/components/dashboard/loaders/WalletItemsLoader";
+import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
 
 const BankAccountsPage = () => {
   const [editableAccount, setEditableAccount] = useState({} as BankAccountType);
@@ -26,7 +26,9 @@ const BankAccountsPage = () => {
           <PageTitle title="Contas Bancárias"/>
           <Paper>
             <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{p: 2}}>
-              {isLoading && <WalletItemsLoader />}
+              {isLoading && 
+                <RepeatableLoader items={3} width={300} height={130} />
+              }
               {isLoading || (
                 <>
                   {payment_methods &&

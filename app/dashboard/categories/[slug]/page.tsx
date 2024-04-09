@@ -49,12 +49,12 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
           </Box>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
-          <Paper sx={{ width: "50%" }}>
+          <Paper sx={{ width: "58%" }}>
             <Box flexWrap="wrap" sx={{ p: 2 }}>
               {transactions && CategoryDetailsTable({ transactions: transactions })}
             </Box>
           </Paper>
-          <Paper sx={{ width: "45%" }}>{transactions.length > 0 && <CategoryTransactionsSixMonthsLineChart transactions={transactions} categories={spendingsCategories} />}</Paper>
+          <Paper sx={{ width: "40%" }}>{transactions.length > 0 && <CategoryTransactionsSixMonthsLineChart transactions={transactions} categories={spendingsCategories} />}</Paper>
         </Stack>
       </Stack>
     </Container>

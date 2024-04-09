@@ -29,6 +29,8 @@ const removeTag = async (id: number) => {
   const {data, error} = await supabase.from('tags').delete().match({id})
   if (error) {
     throw error
+  } else {
+    await supabase.from('transactions_tags').delete().match({tag_id: id})
   }
   return data
 }

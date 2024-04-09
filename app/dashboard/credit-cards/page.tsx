@@ -7,7 +7,7 @@ import CreditCardWidget from "@/components/dashboard/widgets/CreditCardWidget";
 import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaymentMethodWidget";
 import CreditCardDialog from "@/components/dashboard/dialogs/CreditCardDialog";
 import PageTitle from "@/components/dashboard/PageTitle";
-import WalletItemsLoader from "@/components/dashboard/loaders/WalletItemsLoader";
+import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
 import { CreditCardType } from "@/types/entities";
 import { CreditCardContext } from "@/lib/hooks";
 
@@ -20,17 +20,34 @@ const CreditCardsPage = () => {
   });
 
   return (
-    <CreditCardContext.Provider value={{ editableObject: editableCard, setEditableObject: setEditableCard }}>
+    <CreditCardContext.Provider
+      value={{
+        editableObject: editableCard,
+        setEditableObject: setEditableCard,
+      }}
+    >
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Stack>
           <PageTitle title="Cartões de Crédito" />
           <Paper>
-            <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{ p: 2 }}>
-              {isLoading && <WalletItemsLoader />}
+            <Stack
+              direction="row"
+              justifyContent="center"
+              flexWrap="wrap"
+              sx={{ p: 2 }}
+            >
+              {isLoading && 
+                <RepeatableLoader items={3} width={300} height={130} />
+              }
               {isLoading || (
                 <>
                   {payment_methods &&
-                    payment_methods.map((payment_method: any) => <CreditCardWidget key={payment_method.id} cc={payment_method.credit_cards} />)}
+                    payment_methods.map((payment_method: any) => (
+                      <CreditCardWidget
+                        key={payment_method.id}
+                        cc={payment_method.credit_cards}
+                      />
+                    ))}
                   <AddNewPaymentMethodWidget height="180px" />
                   <CreditCardDialog />
                 </>

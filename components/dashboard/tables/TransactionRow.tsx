@@ -68,7 +68,7 @@ const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
                         </TableCell>
                         <TableCell align="center">
                             <Typography color="info.main">
-                                {amountFormatter(row.income)}
+                                {row.income > 0 && amountFormatter(row.income)}
                             </Typography>
                         </TableCell>
                         <TableCell align="center">

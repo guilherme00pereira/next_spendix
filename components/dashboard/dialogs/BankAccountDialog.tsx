@@ -20,11 +20,11 @@ const validate = yup.object({
 const BankAccountDialog = () => {
   const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
-  const { editableAccount } = useBankAccountContext();
+  const { editableObject } = useBankAccountContext();
 
   useEffect(() => {
-    formik.setValues(editableAccount);
-  }, [editableAccount]);
+    formik.setValues(editableObject);
+  }, [editableObject]);
 
   const addMutation = useMutation({
     mutationFn: (values: BankAccountType) => addBankAccount(values),
@@ -43,7 +43,7 @@ const BankAccountDialog = () => {
   });
 
   const formik = useFormik({
-    initialValues: editableAccount,
+    initialValues: editableObject,
     validationSchema: validate,
     onSubmit: (values) => {
       if (values.id) {

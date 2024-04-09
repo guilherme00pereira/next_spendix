@@ -25,9 +25,10 @@ const CategoryDetailsTable = ({ transactions }: { transactions: TransactionType[
       payed_amount: t.payments?.amount ?? null,
       payment_method_id: 1,
       payment_id: t.payments?.id ?? 0,
-      in_installments: t.installments ? true : false,
+      in_installments: !!t.installments,
       installments: 2,
       draft: t.draft,
+      tags: t.tags,
     });
     actionShowTransactionDialog(true);
   }

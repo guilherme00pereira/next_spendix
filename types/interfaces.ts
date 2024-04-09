@@ -29,7 +29,6 @@ interface IRemovableEntity {
     id: number, 
     name: string, 
     type: string,
-    payment_id: number | null
 }
 
 interface IDeleteTransactionData {

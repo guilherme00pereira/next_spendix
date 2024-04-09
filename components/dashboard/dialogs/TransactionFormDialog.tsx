@@ -59,6 +59,7 @@ const SelectTagMenuProps = {
 };
 
 //TODO: Adjust credit card or bank account balance when adding or updating a transaction
+//TOD: hide installmennts when editing a transaction
 
 const TransactionFormDialog = () => {
   const { showTransactionDialog, actionShowTransactionDialog, transaction } = useSpeedDialStore();
@@ -113,7 +114,6 @@ const TransactionFormDialog = () => {
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
-      console.log(values)
       if (values.id) {
         editTransaction({
           id: values.id,
@@ -337,6 +337,7 @@ const TransactionFormDialog = () => {
               )}
             </Grid>
           </Stack>
+
 
           <Stack direction="row" sx={{ py: 2 }}>
             <Grid container spacing={2}>

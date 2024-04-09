@@ -19,11 +19,11 @@ const ColoredCard = styled(Card, {
 
 const BankAccountWidget = ({account}: {account: BankAccountType}) => {
   const {showModal, actionShowModal} = usePageContext();
-  const {setEditableAccount} = useBankAccountContext();
+  const {editableObject, setEditableObject} = useBankAccountContext();
 
   const handleEdit = () => {
     actionShowModal(!showModal);
-    setEditableAccount(account);
+    setEditableObject(account);
   };
   
   return (

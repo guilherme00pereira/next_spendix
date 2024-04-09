@@ -16,7 +16,7 @@ const ConfirmDeleteDialog = ({entity, open, handleClose, handleDelete}: IDeleteC
             </DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>
-                    Deseja realmente remover o(a) {entity.type} "{entity.name}"?
+                    Deseja realmente remover o(a) {entity.type} `&quot;`{entity.name}`&quot;`?
                 </Typography>
             </DialogContent>
             <DialogActions>
