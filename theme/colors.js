@@ -13,60 +13,69 @@ const withAlphas = (color) => {
 
 export const neutral = {
   25: '#F2F4F7',
-  50: '#D3D5D7',
-  100: '#BDC0C3',
-  200: '#A7ABAF',
-  300: '#92969B',
-  400: '#7C8187',
-  500: '#666C73',
-  600: '#50565F',
-  700: '#3A424B',
-  800: '#252D38',
-  900: '#212832'
+  50: '#8e89eb',
+  100: '#d1d4d8',
+  200: '#babfc5',
+  300: '#a4aab2',
+  400: '#8d959f',
+  500: '#76808b',
+  600: '#606b78',
+  700: '#495665',
+  800: '#324152',
+  900: '#1C2C3F',
 };
 
-export const indigo = withAlphas({
-  lightest: '#A7B2E0',
-  light: '#7284CE',
-  main: '#4F66C2',//'#6366F1',
-  dark: '#3F519B',
-  darkest: '#273361',
+export const primary = withAlphas({
+  lightest: '#DDCCF8',
+  light: '#B087F0',
+  main: '#8E54E9',
+  dark: '#5C19C5',
+  darkest: '#270B54',
+  contrastText: '#FFFFFF'
+});
+
+export const secondary = withAlphas({
+  lightest: '#FCD4C9',
+  light: '#F89A81',
+  main: '#F56F4B',
+  dark: '#D4360C',
+  darkest: '#5B1705',
   contrastText: '#FFFFFF'
 });
 
 export const success = withAlphas({
-  lightest: '#C1E7C8',
-  light: '#5AC06E',
-  main: '#32B14A',
-  dark: '#237B33',
-  darkest: '#14461D',
+  lightest: '#B9F1E1',
+  light: '#5BDEB9',
+  main: '#26BF94',
+  dark: '#1B8668',
+  darkest: '#0B392C',
   contrastText: '#FFFFFF'
 });
 
 export const info = withAlphas({
-  lightest: '#D8E7E8',
-  light: '#6EA7AA',
-  main: '#4A9195',
-  dark: '#3B7477',
-  darkest: '#25484A',
+  lightest: '#C8E9FC',
+  light: '#80CCF8',
+  main: '#49B6F5',
+  dark: '#0C8AD3',
+  darkest: '#053B5A',
   contrastText: '#FFFFFF'
 });
 
 export const warning = withAlphas({
-  lightest: '#FEEAB7',
-  light: '#FEC740',
-  main: '#FEB911',
-  dark: '#CB940D',
-  darkest: '#7F5C08',
+  lightest: '#FCEAC8',
+  light: '#F8CD80',
+  main: '#F5B849',
+  dark: '#D38C0C',
+  darkest: '#5A3C05',
   contrastText: '#FFFFFF'
 });
 
 export const error = withAlphas({
-  lightest: '#F9BCA9',
-  light: '#F58A69',
-  main: '#F1592A',
-  dark: '#C04721',
-  darkest: '#782C15',
+  lightest: '#F7CBC4',
+  light: '#ED8776',
+  main: '#E6533C',
+  dark: '#BE284B',
+  darkest: '#4D130A',
   contrastText: '#FFFFFF'
 });
 

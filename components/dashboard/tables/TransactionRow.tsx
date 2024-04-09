@@ -4,7 +4,7 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from "@mui/material/IconButton";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
-import {TransactionType, TransactionRow} from "@/types/entities";
+import {TransactionRowType, TransactionType} from "@/types/entities";
 import {amountFormatter} from "@/lib/functions";
 import TransactionRowData from "@/components/dashboard/tables/TransactionRowData";
 import {Chip, Typography} from "@mui/material";
@@ -26,7 +26,7 @@ const DayChip = styled(Chip)(({ theme }) => ({
 const TransactionRow = ({transactions}: { transactions: TransactionType[]}) => {
     let {balanceTotal} = useTransactionContext();
     const [open, setOpen] = useState(false);
-    const [row, setRow] = useState<TransactionRow>();
+    const [row, setRow] = useState<TransactionRowType>();
     const wasAlreadyRequested = useRef(false);
 
     useEffect(() => {

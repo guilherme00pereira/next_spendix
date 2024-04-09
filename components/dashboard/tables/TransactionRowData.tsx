@@ -25,7 +25,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
   const queryClient = useQueryClient();
   const { setTransaction, actionShowTransactionDialog } = useSpeedDialStore();
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({ id: 0, name: "", type: "transação", payment_id: null});
+  const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({ id: 0, name: "", type: "transação"});
 
   
   const deleteMutation = useMutation({
@@ -42,7 +42,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
 
   const processDelete = () => {
     if (typeof removableTransaction.id !== "undefined") {
-      deleteMutation.mutate({id: removableTransaction?.id, payment_id: removableTransaction?.payment_id});
+      deleteMutation.mutate({id: removableTransaction?.id, payment_id: null});
       setOpenConfirm(false);
     }
   };

@@ -78,7 +78,7 @@ type RecurringFormData = {
     recurring_times: number,
 }
 
-type TransactionRow = {
+type TransactionRowType = {
     day: string;
     income: number;
     expense: number;
@@ -133,7 +133,7 @@ export type {
     TransactionType,
     TransactionFormData,
     RecurringFormData,
-    TransactionRow,
+    TransactionRowType,
     TransactionUpdateStatusProps,
     ChartBarType,
     BankAccountType,
