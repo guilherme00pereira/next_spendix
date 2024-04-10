@@ -6,8 +6,9 @@ import { getExpenseCategoriesTransactionsSum } from "@/lib/supabase/methods/cate
 import { useAppStore } from "@/lib/hooks";
 import dayjs from "dayjs";
 import { ChartBarType } from "@/types/entities";
+import { primary } from "@/theme/colors";
 
-const barColor = "#9c27b0";
+const barColor = "#845ADF";
 
 const ParentCategoriesBarChart = () => {
   const date = useAppStore((state) => state.date);
@@ -33,7 +34,7 @@ const ParentCategoriesBarChart = () => {
           Despesas por categoria
         </Typography>
       </Stack>
-      <ResponsiveContainer width="100%" height={700}>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart
           layout="vertical"
           data={data}
@@ -46,8 +47,8 @@ const ParentCategoriesBarChart = () => {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
-          <YAxis dataKey="name" type="category" width={200} interval={0} tickMargin={5} />
-          <Bar dataKey="value" fill={barColor} radius={4} maxBarSize={20}>
+          <YAxis dataKey="name" type="category" width={200} interval={0} tickMargin={3} />
+          <Bar dataKey="value" fill={primary} maxBarSize={12}>
             <LabelList dataKey="label" position="right" fill="#333" fontSize={12} />
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={barColor} />

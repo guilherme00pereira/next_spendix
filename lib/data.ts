@@ -28,6 +28,7 @@ const TransactionDefaultData = {
     payment_method_id: 1,
     payment_id: null,
     draft: false,
+    tags: [],
 }
 
 const latinCharacters: { [key: string]: string } = {

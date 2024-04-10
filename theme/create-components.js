@@ -6,6 +6,7 @@ import {
     paperClasses,
     tableCellClasses
 } from '@mui/material';
+import { neutral } from './colors';
 
 // Used only to create transitions
 const muiTheme = createTheme();
@@ -277,8 +278,8 @@ export function createComponents(config) {
                     borderBottom: 'none',
                     [`& .${tableCellClasses.root}`]: {
                         borderBottom: 'none',
-                        backgroundColor: palette.primary.dark,
-                        color: 'white',
+                        backgroundColor: neutral[600],
+                        color: neutral[25],
                         fontSize: 12,
                         fontWeight: 600,
                         lineHeight: 1,

@@ -10,6 +10,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 const TopCard = styled(Card)(({ theme }) => ({
   minHeight: "180px",
+  borderRadius: "8px",
   "& .MuiCardContent-root:last-child": {
     paddingBottom: "0px",
   },
@@ -52,7 +53,7 @@ const DashboardTopCard = ({
             width="100%"
           >
             {children}
-            <Typography variant="h4" color="secondary" sx={{ mt: 1 }}>
+            <Typography variant="h5" color="secondary" sx={{ mt: 1 }}>
               {bottomValue}
             </Typography>
           </Stack>

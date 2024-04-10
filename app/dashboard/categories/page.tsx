@@ -13,13 +13,6 @@ import {useSpeedDialStore} from "@/lib/hooks";
 import {IRemovableEntity} from "@/types/interfaces";
 import PageTitle from "@/components/dashboard/PageTitle";
 
-const TableWrapper = styled(Paper)(({theme}) => ({
-  width: "100%",
-  [theme.breakpoints.up("md")]: {
-    width: "80%",
-  },
-}));
-
 const CategoriesPage = () => {
   const queryClient = useQueryClient();
   const {actionShowCategoryDialog, setCategory} = useSpeedDialStore();
@@ -72,7 +65,7 @@ const CategoriesPage = () => {
       <Stack>
       <PageTitle title="Categorias" />
       <Stack spacing={2} direction="row" justifyContent="start">
-        <TableWrapper>
+        <Paper sx={{width: "100%"}}>
           <Box p={2}>
             {isLoading && <CategoryTableLoader/>}
             {isLoading || (
@@ -84,7 +77,7 @@ const CategoriesPage = () => {
             <ConfirmDeleteDialog entity={removableCategory} open={openConfirm} handleClose={setOpenConfirm}
                                  handleDelete={processDelete}/>
         </Box>
-      </TableWrapper>
+      </Paper>
     </Stack>
     </Stack>
 </Container>

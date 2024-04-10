@@ -38,7 +38,7 @@ const Drawer = styled(MuiDrawer, {
     width: drawerWidth,
     backgroundColor: neutral[900],
     border: "none",
-    color: neutral[100],
+    color: neutral[50],
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -123,7 +123,7 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
           <ListItemText primary="Financeiro" />
         </ListItemButton>
           <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding sx={{ backgroundColor: "#324152" }}>
+            <List component="div" disablePadding sx={{ backgroundColor: "#111C43" }}>
               <ListItemButton LinkComponent="a" href="/dashboard/transactions" sx={{ml: open ? 2 : 0}}>
                 <ListItemIcon>
                   <ReceiptLongRoundedIcon />

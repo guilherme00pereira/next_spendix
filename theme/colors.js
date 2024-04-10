@@ -12,34 +12,34 @@ const withAlphas = (color) => {
 };
 
 export const neutral = {
-  25: '#F2F4F7',
-  50: '#8e89eb',
-  100: '#d1d4d8',
-  200: '#babfc5',
-  300: '#a4aab2',
-  400: '#8d959f',
-  500: '#76808b',
-  600: '#606b78',
-  700: '#495665',
-  800: '#324152',
-  900: '#1C2C3F',
+  25: '#E7E8EC',
+  50: '#CFD1D9',
+  100: '#B7BAC6',
+  200: '#9FA4B3',
+  300: '#888DA1',
+  400: '#70768E',
+  500: '#58607B',
+  600: '#404968',
+  700: '#283255',
+  800: '#111C43',
+  900: '#0F193C',
 };
 
 export const primary = withAlphas({
-  lightest: '#DDCCF8',
-  light: '#B087F0',
-  main: '#8E54E9',
-  dark: '#5C19C5',
-  darkest: '#270B54',
+  lightest: '#DACDF5',
+  light: '#A98BE9',
+  main: '#845ADF',
+  dark: '#5224B8',
+  darkest: '#230F4F',
   contrastText: '#FFFFFF'
 });
 
 export const secondary = withAlphas({
-  lightest: '#FCD4C9',
-  light: '#F89A81',
-  main: '#F56F4B',
-  dark: '#D4360C',
-  darkest: '#5B1705',
+  lightest: '#BDE9F7',
+  light: '#65CDED',
+  main: '#23B7E5',
+  dark: '#1483A5',
+  darkest: '#083847',
   contrastText: '#FFFFFF'
 });
 

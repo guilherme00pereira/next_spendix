@@ -26,11 +26,12 @@ const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
   right: 32,
   "& .MuiSpeedDial-fab": {
     lineHeight: 0.75,
-    width: "48px",
-    height: "48px",
+    width: "42px",
+    height: "42px",
+    backgroundColor: theme.palette.primary.dark,
   },
   "& .MuiSpeedDialAction-fab, .MuiSpeedDialAction-staticTooltipLabel": {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     color: theme.palette.primary.contrastText,
   },
 }));
@@ -89,7 +90,7 @@ const SpeedDialAdd = () => {
             tooltipTitle={action.name}
             tooltipOpen
             onClick={() => handleClick(action.handler)}
-            FabProps={{ size: "medium" }}
+            FabProps={{ size: "small" }}
           />
         ))}
       </SpeedDialButton>
