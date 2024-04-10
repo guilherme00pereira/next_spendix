@@ -2,16 +2,13 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
-import Box from "@mui/material/Box";
+import { Stack } from "@mui/system";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import PriceChangeRoundedIcon from '@mui/icons-material/PriceChangeRounded';
 import AlarmRoundedIcon from '@mui/icons-material/AlarmRounded';
@@ -20,12 +17,12 @@ import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import WalletIcon from '@mui/icons-material/Wallet';
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import { Collapse, Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
-import Stack from "@mui/material/Stack";
 
 const drawerWidth: number = 240;
 
@@ -65,17 +62,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const IconBox = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    backgroundColor: "none",
-    "& .MuiSvgIcon-root": {
-      color: theme.palette.primary.light,
-    },
-  },
-  padding: 0,
-}));
-
-export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
+export default function Sidebar({ open }: IDashboardLayoutProps) {
   const [expandFinanceMenu, setExpandFinanceMenu] = React.useState(true);
   const [expandPaymentMethods, setExpandPaymentMethods] = React.useState(false);
 
@@ -86,26 +73,21 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-around",
+          justifyContent: "flex-start",
+          paddingLeft: "16px !important",
         }}
       >
-        {open || (
-          <IconBox sx={{ width: "100%" }}>
-            <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawer} sx={{ marginLeft: "-16px" }}>
-              <MenuIcon />
-            </IconButton>
-          </IconBox>
-        )}
+        <Stack direction="row" spacing={1}>
         {open && (
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
-            <Typography variant="h6" noWrap component="div">
-                SMALL WALLET
+          <>
+            <WalletIcon color="primary" />
+            <Typography variant="h5" color="primary">
+              1WALLET
             </Typography>
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Stack>
+          </>
         )}
+        {open || <WalletIcon color="primary" />}
+        </Stack>
       </Toolbar>
 
       <List component="nav">
@@ -161,7 +143,7 @@ export default function Sidebar({ open, toggleDrawer }: IDashboardLayoutProps) {
 
         <ListItemButton LinkComponent="nav" onClick={() => setExpandPaymentMethods(!expandPaymentMethods)}>
           <ListItemIcon>
-            {expandPaymentMethods ? <ExpandLessRoundedIcon /> : <WalletIcon />}
+            {expandPaymentMethods ? <ExpandLessRoundedIcon /> : <AccountBalanceWalletIcon />}
           </ListItemIcon>
           <ListItemText primary="Carteira" />
         </ListItemButton>

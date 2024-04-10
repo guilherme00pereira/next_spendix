@@ -6,7 +6,7 @@ import CategoryDetailsTable from "@/components/dashboard/tables/CategoryDetailsT
 import { getTransactionsByCategoriesLastSixMonths } from "@/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories } from "@/lib/supabase/methods/categories";
-import CategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/CategoryTransactionsSixMonthsLineChart";
+import ApexCategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/ApexCategoryTransactionsSixMonthsLineChart";
 
 const Subtitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.light,
@@ -54,7 +54,7 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
               {transactions && CategoryDetailsTable({ transactions: transactions })}
             </Box>
           </Paper>
-          <Paper sx={{ width: "40%" }}>{transactions.length > 0 && <CategoryTransactionsSixMonthsLineChart transactions={transactions} categories={spendingsCategories} />}</Paper>
+          <Paper sx={{ width: "40%" }}>{transactions.length > 0 && <ApexCategoryTransactionsSixMonthsLineChart transactions={transactions} categories={spendingsCategories} />}</Paper>
         </Stack>
       </Stack>
     </Container>
