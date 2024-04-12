@@ -35,11 +35,11 @@ export const primary = withAlphas({
 });
 
 export const secondary = withAlphas({
-  lightest: '#BDE9F7',
-  light: '#65CDED',
-  main: '#23B7E5',
-  dark: '#1483A5',
-  darkest: '#083847',
+  lightest: '#FCD4C9',
+  light: '#F89081',
+  main: '#F56F4B',
+  dark: '#D4360C',
+  darkest: '#5B1705',
   contrastText: '#FFFFFF'
 });
 

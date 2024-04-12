@@ -16,8 +16,12 @@ import {
   RecurringFormData, TagType,
   TransactionFormData
 } from "@/types/entities";
+import {boolean} from "yup";
+
+export const ColorModeContext = createContext('light')
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
+
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
 
 export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>({} as IEditableObjectContextData<BankAccountType>);

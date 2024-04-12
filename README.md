@@ -11,7 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.10
-- 0.10.[5-9]: Layout changes and Apex charts.
+- 0.10.[5-11]: Layout changes and Apex charts.
 - 0.10.4: Created tag detail page and added tags field to transactions form dialog.
 - 0.10.3: Added tag list to tags page
 - 0.10.2: Speed-dial dialogs close button behavior
