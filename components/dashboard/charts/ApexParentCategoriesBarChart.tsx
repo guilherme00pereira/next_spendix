@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { getExpenseCategoriesTransactionsSum } from "@/lib/supabase/methods/categories";
-import { useAppStore } from "@/lib/hooks";
+import { useAppStore } from "@/lib/store";
 import dayjs from "dayjs";
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/entities";

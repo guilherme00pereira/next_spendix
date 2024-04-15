@@ -5,7 +5,7 @@ import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCh
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
 import TransactionFormDialog from "@/components/dashboard/dialogs/TransactionFormDialog";
-import { useSpeedDialStore } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/store";
 import dayjs from "dayjs";
 import CategoryFormDialog from "@/components/dashboard/dialogs/CategoryFormDialog";
 import { styled } from "@mui/material/styles";

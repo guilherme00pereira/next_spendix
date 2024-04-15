@@ -26,15 +26,33 @@ export const neutral = {
 };
 
 export const lightBase = {
-  pageBG: '#F0F1F7',
-  componentBG: '#FFFFFF',
+  background: {
+    default: '#F0F1F7',
+    paper: '#FFFFFF',
+    sidebar: '#111C43',
+  },
   divider: '#F2F4F7',
+  text: {
+    primary: '#333',
+    secondary: '#616163',
+    headers: '#536485',
+    disabled: alpha('#333333', 0.38)
+  },
 }
 
 export const darkBase = {
-  pageBG: '#252729',
-  componentBG: '#1A1C1E',
+  background: {
+    default: '#252729',
+    paper: '#1A1C1E',
+    sidebar: '#1A1C1E',
+  },
   divider: '#2E3034',
+  text: {
+    primary: '#BEBFBF',
+    secondary: '#A6A6A6',
+    headers: '#BEBFBF',
+    disabled: alpha('#BEBFBF', 0.38)
+  },
 };
 
 

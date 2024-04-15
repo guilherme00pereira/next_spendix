@@ -1,15 +1,15 @@
 "use client";
 import Stack from "@mui/material/Stack";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Paper from "@mui/material/Paper";
 import PageTitle from "@/components/dashboard/PageTitle";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 const Settings = () => {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <PageContainer>
       <Stack>
       <PageTitle title="Configurações" />
         <Paper>
@@ -22,7 +22,7 @@ const Settings = () => {
         </Box>
         </Paper>
       </Stack>
-    </Container>
+    </PageContainer>
   );
 };
 

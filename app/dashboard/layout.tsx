@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import {styled, getInitColorSchemeScript} from "@mui/material/styles";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
+import { useAppStore } from "@/lib/store";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
@@ -25,7 +27,7 @@ const persister = createSyncStoragePersister({
 })
 
 const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.vars.palette.background.default,
   flexGrow: 1,
   height: "100vh",
   overflow: "auto",
@@ -33,10 +35,8 @@ const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [showAdd, setShowAdd] = useState<boolean>(false);
-  const [open, setOpen] = useState(false);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+  const openSidebar = useAppStore((state) => state.openSidebar);
+  const setOpenSidebar = useAppStore((state) => state.setOpenSidebar);
 
   return (
     <PageContext.Provider
@@ -49,8 +49,8 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}>
         {getInitColorSchemeScript()}
         <Box sx={{ display: "flex" }}>
-          <Topbar open={open} toggleDrawer={toggleDrawer} />
-          <Sidebar open={open} toggleDrawer={toggleDrawer} />
+          <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
+          <Sidebar open={openSidebar} toggleDrawer={setOpenSidebar} />
           <LayoutBoxWrapper component="main">
             <Toolbar sx={{margin: "48px 0"}}>
               <Breadcrumb />

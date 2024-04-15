@@ -1,6 +1,6 @@
 "use client";
 import {useState} from "react";
-import {Stack, Container, Paper} from "@mui/material";
+import {Stack, Paper} from "@mui/material";
 import {useQuery} from "@tanstack/react-query";
 import {getAccountPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 import BankAccountWidget from "@/components/dashboard/widgets/BankAccountWidget";
@@ -10,6 +10,7 @@ import {BankAccountType} from "@/types/entities";
 import {BankAccountContext} from "@/lib/hooks";
 import PageTitle from "@/components/dashboard/PageTitle";
 import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 const BankAccountsPage = () => {
   const [editableAccount, setEditableAccount] = useState({} as BankAccountType);
@@ -21,7 +22,7 @@ const BankAccountsPage = () => {
 
   return (
     <BankAccountContext.Provider value={{editableObject: editableAccount, setEditableObject: setEditableAccount}}>
-      <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+      <PageContainer>
         <Stack>
           <PageTitle title="Contas Bancárias"/>
           <Paper>
@@ -42,7 +43,7 @@ const BankAccountsPage = () => {
             </Stack>
           </Paper>
         </Stack>
-      </Container>
+      </PageContainer>
     </BankAccountContext.Provider>
   );
 };

@@ -1,7 +1,6 @@
 "use client";
 import {useState} from "react";
-import {styled} from "@mui/material/styles";
-import {Box, Container, Typography, Paper} from "@mui/material";
+import {Box, Paper} from "@mui/material";
 import CategoriesTable from "@/components/dashboard/tables/CategoriesTable";
 import Stack from "@mui/material/Stack";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
@@ -9,9 +8,10 @@ import {getCategories, removeCategory} from "@/lib/supabase/methods/categories";
 import {CategoryType} from "@/types/entities";
 import CategoryTableLoader from "@/components/dashboard/loaders/CategoryTableLoader";
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
-import {useSpeedDialStore} from "@/lib/hooks";
+import {useSpeedDialStore} from "@/lib/store";
 import {IRemovableEntity} from "@/types/interfaces";
 import PageTitle from "@/components/dashboard/PageTitle";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 const CategoriesPage = () => {
   const queryClient = useQueryClient();
@@ -61,7 +61,7 @@ const CategoriesPage = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+    <PageContainer>
       <Stack>
       <PageTitle title="Categorias" />
       <Stack spacing={2} direction="row" justifyContent="start">
@@ -80,7 +80,7 @@ const CategoriesPage = () => {
       </Paper>
     </Stack>
     </Stack>
-</Container>
+</PageContainer>
 )
   ;
 };

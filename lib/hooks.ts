@@ -2,19 +2,12 @@ import {createContext, useContext} from "react";
 import {
   IPageContextData,
   ITransactionContextData,
-  IAppPersistData,
-  ISpeedDialStoreData,
   IEditableObjectContextData
 } from "@/types/interfaces";
-import {create} from "zustand";
-import {persist, createJSONStorage} from "zustand/middleware";
-import dayjs from "dayjs";
 import {
   BankAccountType,
-  CategoryFormData,
   CreditCardType,
-  RecurringFormData, TagType,
-  TransactionFormData
+  TagType,
 } from "@/types/entities";
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
@@ -66,37 +59,3 @@ export const useTagContext = () => {
   }
   return context;
 };
-
-export const useAppStore = create<IAppPersistData>()(
-  persist((set) => (
-      {
-        date: dayjs().format("YYYYMM"),
-        setDate: (d) => set((state) => ({...state, date: d})),
-      }),
-    {
-      name: "app-store",
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
-
-export const useSpeedDialStore = create<ISpeedDialStoreData>((set) => (
-  {
-    showTransactionDialog: false,
-    actionShowTransactionDialog: (action) => set((state) => ({...state, showTransactionDialog: action})),
-    transaction: {} as TransactionFormData,
-    setTransaction: (t: TransactionFormData) => set((state) => ({...state, transaction: t})),
-    showIncomeDialog: false,
-    actionShowIncomeDialog: (action) => set((state) => ({...state, showIncomeDialog: action})),
-    income: {} as TransactionFormData,
-    setIncome: (i: TransactionFormData) => set((state) => ({...state, income: i})),
-    showCategoryDialog: false,
-    actionShowCategoryDialog: (action) => set((state) => ({...state, showCategoryDialog: action})),
-    category: {} as CategoryFormData,
-    setCategory: (c: CategoryFormData) => set((state) => ({...state, category: c})),
-    showRecurringDialog: false,
-    actionShowRecurringDialog: (action) => set((state) => ({...state, showRecurringDialog: action})),
-    recurring: {} as RecurringFormData,
-    setRecurring: (r: RecurringFormData) => set((state) => ({...state, recurring: r})),
-  }
-));

@@ -13,10 +13,9 @@ interface ISelectOption {
     label: string;
 }
 
-interface IDashboardLayoutProps extends MuiAppBarProps {
-    open?: boolean;
-    toggleDrawer?: () => void;
-    colorMode?: string;
+interface IDashboardLayoutProps {
+    open: boolean;
+    toggleDrawer?: (action: boolean) => void;
 }
 
 interface IDeleteConfirmDialogProps {
@@ -58,6 +57,8 @@ interface ITransactionContextData {
 interface IAppPersistData {
     date: string;
     setDate: (d: string) => void;
+    openSidebar: boolean;
+    setOpenSidebar: (action: boolean) => void;
 }
 
 interface ISpeedDialStoreData {

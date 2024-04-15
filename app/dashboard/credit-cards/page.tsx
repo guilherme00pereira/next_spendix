@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Stack, Container, Paper } from "@mui/material";
+import { Stack, Paper } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getCreditCardPaymentMethods } from "@/lib/supabase/methods/payment-methods";
 import CreditCardWidget from "@/components/dashboard/widgets/CreditCardWidget";
@@ -10,6 +10,7 @@ import PageTitle from "@/components/dashboard/PageTitle";
 import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
 import { CreditCardType } from "@/types/entities";
 import { CreditCardContext } from "@/lib/hooks";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 const CreditCardsPage = () => {
   const [editableCard, setEditableCard] = useState({} as CreditCardType);
@@ -26,7 +27,7 @@ const CreditCardsPage = () => {
         setEditableObject: setEditableCard,
       }}
     >
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <PageContainer>
         <Stack>
           <PageTitle title="Cartões de Crédito" />
           <Paper>
@@ -55,7 +56,7 @@ const CreditCardsPage = () => {
             </Stack>
           </Paper>
         </Stack>
-      </Container>
+      </PageContainer>
     </CreditCardContext.Provider>
   );
 };

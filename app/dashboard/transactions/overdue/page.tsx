@@ -1,19 +1,18 @@
-import React from 'react';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 const OverduePage = () => {
-    return (
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{mb: 4}}>
-            <Typography variant="h5" textAlign="center">
-              Contas vencidas
-            </Typography>
-        </Box>
-            
-        </Container>
-    );
+  return (
+    <PageContainer>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h5" textAlign="center">
+          Contas vencidas
+        </Typography>
+      </Box>
+    </PageContainer>
+  );
 };
 
 export default OverduePage;

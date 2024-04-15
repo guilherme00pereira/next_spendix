@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.11
+- 0.11.1: Theme adjustements. Moved zustand stores to @lib/stores file.
 - 0.11.0: Set experimental mui material CSS theme variables for dark mode.
 
 ##### 0.10

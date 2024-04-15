@@ -12,10 +12,10 @@ export function createLightPalette() {
       selected: alpha(neutral[900], 0.12)
     },
     background: {
-      default: lightBase.pageBG,
-      paper: lightBase.componentBG,
+      default: lightBase.background.default,
+      paper: lightBase.background.paper,
     },
-    divider: '#F2F4F7',
+    divider: lightBase.divider,
     error,
     info,
     mode: 'light',
@@ -24,10 +24,9 @@ export function createLightPalette() {
     primary,
     success,
     text: {
-      primary: neutral[900],
-      secondary: neutral[500],
-      sidebar: neutral[100],
-      disabled: alpha(neutral[900], 0.38)
+      primary: lightBase.text.primary,
+      secondary: lightBase.text.secondary,
+      disabled: lightBase.text.disabled
     },
     warning,
   };
@@ -44,10 +43,10 @@ export function createDarkPalette() {
       selected: alpha(neutral[100], 0.12)
     },
     background: {
-      default: darkBase.pageBG,
-      paper: darkBase.componentBG,
+      default: darkBase.background.default,
+      paper: darkBase.background.paper,
     },
-    divider: '#F2F4F7',
+    divider: darkBase.divider,
     error,
     info,
     mode: 'dark',
@@ -56,10 +55,9 @@ export function createDarkPalette() {
     primary,
     success,
     text: {
-      primary: neutral[100],
-      secondary: neutral[500],
-      sidebar: neutral[500],
-      disabled: alpha(neutral[100], 0.38)
+      primary: darkBase.text.primary,
+      secondary: darkBase.text.secondary,
+      disabled: darkBase.text.disabled
     },
     warning,
   };

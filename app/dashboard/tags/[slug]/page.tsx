@@ -1,14 +1,14 @@
 import React from "react";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 //TODO: list transactions related to this tag
 const TagDetailsPage = ({ params }: { params: { slug: string } }) => {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <PageContainer>
       <Stack>
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
           <Stack sx={{ width: "75%" }}>
@@ -26,7 +26,7 @@ const TagDetailsPage = ({ params }: { params: { slug: string } }) => {
           
         </Stack>
       </Stack>
-    </Container>
+    </PageContainer>
   );
 };
 

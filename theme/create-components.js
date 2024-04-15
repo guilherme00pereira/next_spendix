@@ -6,7 +6,7 @@ import {
     paperClasses,
     tableCellClasses
 } from '@mui/material';
-import { neutral, lightBase, darkBase, primary, error } from './colors';
+import { neutral } from './colors';
 import {alpha} from "@mui/material/styles";
 
 // Used only to create transitions
@@ -54,10 +54,7 @@ export function createComponents() {
         MuiPaper: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    backgroundColor: lightBase.componentBG,
-                    [theme.getColorSchemeSelector('dark')]: {
-                        backgroundColor: darkBase.componentBG
-                    },
+                    backgroundColor: theme.vars.palette.background.paper,
                     backgroundImage: 'none',
                 })
             }
@@ -65,10 +62,7 @@ export function createComponents() {
         MuiCard: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    backgroundColor: lightBase.componentBG,
-                    [theme.getColorSchemeSelector('dark')]: {
-                        backgroundColor: darkBase.componentBG
-                    },
+                    backgroundColor: theme.vars.palette.background.paper,
                     backgroundImage: 'none',
                     borderRadius: 20,
                     [`&.${paperClasses.elevation1}`]: {
@@ -132,15 +126,15 @@ export function createComponents() {
                 '#nprogress': {
                     pointerEvents: 'none'
                 },
-                '#nprogress .bar': {
-                    backgroundColor: primary.main,
+                '#nprogress .bar': ({theme}) => ({
+                    backgroundColor: theme.vars.palette.primary.main,
                     height: 3,
                     left: 0,
                     position: 'fixed',
                     top: 0,
                     width: '100%',
                     zIndex: 2000
-                }
+                })
             }
         },
         MuiInputBase: {
@@ -158,9 +152,9 @@ export function createComponents() {
                     fontSize: 14,
                     fontWeight: 500,
                     lineHeight: '24px',
-                    '&::placeholder': {
-                        color: neutral[500]//palette.text.secondary
-                    }
+                    '&::placeholder': ({theme}) => ({
+                        color: theme.vars.palette.text.secondary
+                    })
                 }
             }
         },
@@ -189,15 +183,15 @@ export function createComponents() {
                     [`&.${filledInputClasses.disabled}`]: {
                         backgroundColor: 'transparent'
                     },
-                    [`&.${filledInputClasses.focused}`]: {
+                    [`&.${filledInputClasses.focused}`]: ({theme}) => ({
                         backgroundColor: 'transparent',
-                        borderColor: primary.main,
-                        boxShadow: `${primary.main} 0 0 0 2px`
-                    },
-                    [`&.${filledInputClasses.error}`]: {
-                        borderColor: error.main,
-                        boxShadow: `${error.main} 0 0 0 2px`
-                    }
+                        borderColor: theme.vars.primary.main,
+                        boxShadow: `${theme.vars.primary.main} 0 0 0 2px`
+                    }),
+                    [`&.${filledInputClasses.error}`]: ({theme}) => ({
+                        borderColor: theme.vars.error.main,
+                        boxShadow: `${theme.vars.error.main} 0 0 0 2px`
+                    })
                 },
                 input: {
                     fontSize: 14,
@@ -209,12 +203,12 @@ export function createComponents() {
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
-                    '&:hover': {
-                        backgroundColor: alpha(neutral[900], 0.04),//palette.action.hover,
+                    '&:hover': ({theme}) => ({
+                        backgroundColor: theme.vars.palette.action.hover,
                         [`& .${outlinedInputClasses.notchedOutline}`]: {
                             borderColor: neutral[200]
                         }
-                    },
+                    }),
                     // [`&.${outlinedInputClasses.focused}`]: {
                     //   backgroundColor: 'transparent',
                     //   [`& .${outlinedInputClasses.notchedOutline}`]: {
@@ -222,12 +216,12 @@ export function createComponents() {
                     //     boxShadow: `${palette.primary.main} 0 0 0 2px`
                     //   }
                     // },
-                    [`&.${filledInputClasses.error}`]: {
+                    [`&.${filledInputClasses.error}`]: ({theme}) => ({
                         [`& .${outlinedInputClasses.notchedOutline}`]: {
-                            borderColor: error.main,
-                            boxShadow: `${error.main} 0 0 0 2px`
+                            borderColor: theme.vars.error.main,
+                            boxShadow: `${theme.vars.error.main} 0 0 0 2px`
                         }
-                    }
+                    })
                 },
                 input: {
                     fontSize: 14,
@@ -284,10 +278,7 @@ export function createComponents() {
         MuiTableCell: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    borderBottomColor: lightBase.divider,
-                    [theme.getColorSchemeSelector('dark')]: {
-                        borderBottomColor: darkBase.divider
-                    },
+                    borderBottomColor: theme.vars.divider,
                     padding: '15px 16px'
                 }),
             }

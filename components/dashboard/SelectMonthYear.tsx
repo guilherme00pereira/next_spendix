@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import dayjs from 'dayjs';
-import {useAppStore} from '@/lib/hooks';
+import {useAppStore} from '@/lib/store';
 import {IconButton, Stack} from '@mui/material';
 import ArrowCircleLeftRoundedIcon from '@mui/icons-material/ArrowCircleLeftRounded';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';

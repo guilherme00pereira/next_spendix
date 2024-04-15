@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import MuiDrawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import { Stack } from "@mui/system";
@@ -33,7 +34,7 @@ const Drawer = styled(MuiDrawer, {
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.vars.palette.background.paper,
     border: "none",
     color: neutral[50],
     transition: theme.transitions.create("width", {
@@ -41,7 +42,7 @@ const Drawer = styled(MuiDrawer, {
       duration: theme.transitions.duration.enteringScreen,
     }),
     "& .MuiToolbar-root": {
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: theme.vars.palette.background.paper,
       color: "#FFF",
       "& .MuiIconButton-root": {
         color: "#FFF",
@@ -65,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
 const ParentListNode = styled(List, {
   shouldForwardProp: (prop) => prop !== "disablePadding",
 })(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.vars.palette.background.paper,
 }));
 
 export default function Sidebar({ open }: IDashboardLayoutProps) {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {styled, useColorScheme} from "@mui/material/styles";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -25,10 +26,10 @@ const AppBar = styled(MuiAppBar, {
 })<IDashboardLayoutProps>(({ theme, open }) => ({
   left: 0,
   [theme.breakpoints.up("md")]: {
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
+    backgroundColor: theme.vars.palette.background.paper,
+    color: theme.vars.palette.text.primary,
     "& .MuiSvgIcon-root": {
-      color: theme.palette.primary.main,
+      color: theme.vars.palette.primary.main,
     },
     left: open ? "0px" : "56px",
     width: open ? `calc(100% - 240px)` : `calc(100% - 56px)`,
@@ -48,13 +49,13 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const IconBox = styled(Box)(({ theme }) => ({
+const ToggleIconBox = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "48px",
   [theme.breakpoints.up("md")]: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.vars.palette.background.paper,
     "& .MuiSvgIcon-root": {
-      color: theme.palette.primary.main,
+      color: theme.vars.palette.text.primary,
     },
   },
   padding: 0,
@@ -77,22 +78,26 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
     }
   };
 
+  const handleToggleDrawer = () => {
+    toggleDrawer && toggleDrawer(!open);
+  }
+
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar sx={{ minHeight: "48px !important" }} variant="dense">
         <Box>
-          <IconBox>
+          <ToggleIconBox>
             {open || (
-              <IconButton edge="start" color="primary" aria-label="open drawer" onClick={toggleDrawer}>
+              <IconButton edge="start" aria-label="open drawer" onClick={handleToggleDrawer}>
                 <MenuIcon />
               </IconButton>
             )}
             {open && (
-              <IconButton edge="start" color="primary" aria-label="close drawer" onClick={toggleDrawer}>
+              <IconButton edge="start" aria-label="close drawer" onClick={handleToggleDrawer}>
                 <MenuOpenIcon />
               </IconButton>
             )}
-          </IconBox>
+          </ToggleIconBox>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <SelectMonthYear />

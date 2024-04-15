@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Stack, Container, Typography, Paper, Box } from "@mui/material";
+import { Stack, Typography, Paper, Box } from "@mui/material";
 import CategoryDetailsTable from "@/components/dashboard/tables/CategoryDetailsTable";
 import { getTransactionsByCategoriesLastSixMonths } from "@/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories } from "@/lib/supabase/methods/categories";
 import ApexCategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/ApexCategoryTransactionsSixMonthsLineChart";
+import PageContainer from "@/components/dashboard/PageContainer";
 
 const Subtitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.light,
@@ -35,7 +36,7 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <PageContainer>
       <Stack>
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
           <Stack sx={{ width: "75%" }}>
@@ -57,7 +58,7 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
           <Paper sx={{ width: "40%" }}>{transactions.length > 0 && <ApexCategoryTransactionsSixMonthsLineChart transactions={transactions} categories={spendingsCategories} />}</Paper>
         </Stack>
       </Stack>
-    </Container>
+    </PageContainer>
   );
 };
 
