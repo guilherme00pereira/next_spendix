@@ -10,8 +10,11 @@ Spendix is a web application that allows users to track their spending habits. U
 
 ### Version
 
+##### 0.11
+- 0.11.0: Set experimental mui material CSS theme variables for dark mode.
+
 ##### 0.10
-- 0.10.[5-11]: Layout changes and Apex charts.
+- 0.10.[ 5 to 11 ]: Layout changes and Apex charts.
 - 0.10.4: Created tag detail page and added tags field to transactions form dialog.
 - 0.10.3: Added tag list to tags page
 - 0.10.2: Speed-dial dialogs close button behavior
@@ -36,7 +39,7 @@ Spendix is a web application that allows users to track their spending habits. U
 - 0.7.11: Add chart to category details page.
 - 0.7.10: Categories page refactor.
 - 0.7.9: Fix edit transactions, accounts and credit cards pages skeletons widget.
-- 0.7.[4-8]: Layout adjustements.
+- 0.7.[ 4 to 8 ]: Layout adjustements.
 - 0.7.3: Add recurring methods and dialog.
 - 0.7.2: Changed transactions table layout.
 - 0.7.1: Installments moved to transactions table.

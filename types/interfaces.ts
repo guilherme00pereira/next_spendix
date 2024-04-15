@@ -16,6 +16,7 @@ interface ISelectOption {
 interface IDashboardLayoutProps extends MuiAppBarProps {
     open?: boolean;
     toggleDrawer?: () => void;
+    colorMode?: string;
 }
 
 interface IDeleteConfirmDialogProps {
@@ -54,7 +55,7 @@ interface ITransactionContextData {
     setList: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
-interface IAppStoreData {
+interface IAppPersistData {
     date: string;
     setDate: (d: string) => void;
 }
@@ -117,7 +118,7 @@ export type {
     ITransactionRowDataProps,
     IPageContextData,
     ITransactionContextData,
-    IAppStoreData,
+    IAppPersistData,
     ISpeedDialStoreData,
     ICategoryTableProps,
     IChildrenCategoriesProps,

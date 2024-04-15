@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from "@mui/material/styles";
+import {styled, useColorScheme} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,14 +12,11 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
-import { neutral } from "@/theme/colors";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { Badge } from "@mui/material";
-import Stack from "@mui/system/Stack";
 
 const drawerWidth: number = 240;
 
@@ -28,7 +25,7 @@ const AppBar = styled(MuiAppBar, {
 })<IDashboardLayoutProps>(({ theme, open }) => ({
   left: 0,
   [theme.breakpoints.up("md")]: {
-    backgroundColor: "white",
+    backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
     "& .MuiSvgIcon-root": {
       color: theme.palette.primary.main,
@@ -55,26 +52,18 @@ const IconBox = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "48px",
   [theme.breakpoints.up("md")]: {
-    backgroundColor: "white",
+    backgroundColor: theme.palette.background.paper,
     "& .MuiSvgIcon-root": {
-      color: neutral[500],
+      color: theme.palette.primary.main,
     },
   },
   padding: 0,
 }));
 
-const Title = styled(Typography)(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    marginLeft: "24px",
-    display: "block",
-  },
-  display: "none",
-}));
-
 const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const { mode, setMode } = useColorScheme();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -100,7 +89,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
             )}
             {open && (
               <IconButton edge="start" color="primary" aria-label="close drawer" onClick={toggleDrawer}>
-                <ChevronLeftIcon />
+                <MenuOpenIcon />
               </IconButton>
             )}
           </IconBox>
@@ -109,8 +98,8 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
           <SelectMonthYear />
         </Box>
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <IconButton>
-            {darkMode ? <LightModeOutlinedIcon onClick={() => setDarkMode(false)} /> : <DarkModeOutlinedIcon onClick={() => setDarkMode(true)} />}
+          <IconButton onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
+            {mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
           </IconButton>
           <IconButton>
             <Badge badgeContent={4} color="warning">

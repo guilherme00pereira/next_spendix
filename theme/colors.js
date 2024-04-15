@@ -25,6 +25,19 @@ export const neutral = {
   900: '#0F193C',
 };
 
+export const lightBase = {
+  pageBG: '#F0F1F7',
+  componentBG: '#FFFFFF',
+  divider: '#F2F4F7',
+}
+
+export const darkBase = {
+  pageBG: '#252729',
+  componentBG: '#1A1C1E',
+  divider: '#2E3034',
+};
+
+
 export const primary = withAlphas({
   lightest: '#DACDF5',
   light: '#A98BE9',

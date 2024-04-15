@@ -33,7 +33,7 @@ const Drawer = styled(MuiDrawer, {
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
-    backgroundColor: neutral[900],
+    backgroundColor: theme.palette.background.paper,
     border: "none",
     color: neutral[50],
     transition: theme.transitions.create("width", {
@@ -41,7 +41,7 @@ const Drawer = styled(MuiDrawer, {
       duration: theme.transitions.duration.enteringScreen,
     }),
     "& .MuiToolbar-root": {
-      backgroundColor: neutral[900],
+      backgroundColor: theme.palette.background.paper,
       color: "#FFF",
       "& .MuiIconButton-root": {
         color: "#FFF",
@@ -60,6 +60,12 @@ const Drawer = styled(MuiDrawer, {
       },
     }),
   },
+}));
+
+const ParentListNode = styled(List, {
+  shouldForwardProp: (prop) => prop !== "disablePadding",
+})(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
 }));
 
 export default function Sidebar({ open }: IDashboardLayoutProps) {
@@ -105,7 +111,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
           <ListItemText primary="Financeiro" />
         </ListItemButton>
           <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding sx={{ backgroundColor: "#111C43" }}>
+            <ParentListNode disablePadding>
               <ListItemButton LinkComponent="a" href="/dashboard/transactions" sx={{ml: open ? 2 : 0}}>
                 <ListItemIcon>
                   <ReceiptLongRoundedIcon />
@@ -124,7 +130,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
                 </ListItemIcon>
                 <ListItemText primary="Contas vencidas" />
               </ListItemButton>
-            </List>
+            </ParentListNode>
           </Collapse>
 
         <ListItemButton LinkComponent="a" href="/dashboard/categories">
@@ -148,7 +154,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
           <ListItemText primary="Carteira" />
         </ListItemButton>
         <Collapse in={expandPaymentMethods} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding sx={{ backgroundColor: "#252D38" }}>
+          <ParentListNode disablePadding>
             <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts" sx={{ml: open ? 2 : 0}}>
               <ListItemIcon>
                 <AccountBalanceRoundedIcon />
@@ -161,7 +167,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
               </ListItemIcon>
               <ListItemText primary="Cartões de Crédito" />
             </ListItemButton>
-          </List>
+          </ParentListNode>
         </Collapse>
 
         <ListItemButton LinkComponent="a" href="/dashboard/settings">

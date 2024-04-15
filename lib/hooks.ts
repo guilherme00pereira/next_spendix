@@ -2,7 +2,7 @@ import {createContext, useContext} from "react";
 import {
   IPageContextData,
   ITransactionContextData,
-  IAppStoreData,
+  IAppPersistData,
   ISpeedDialStoreData,
   IEditableObjectContextData
 } from "@/types/interfaces";
@@ -16,9 +16,6 @@ import {
   RecurringFormData, TagType,
   TransactionFormData
 } from "@/types/entities";
-import {boolean} from "yup";
-
-export const ColorModeContext = createContext('light')
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
 
@@ -70,7 +67,7 @@ export const useTagContext = () => {
   return context;
 };
 
-export const useAppStore = create<IAppStoreData>()(
+export const useAppStore = create<IAppPersistData>()(
   persist((set) => (
       {
         date: dayjs().format("YYYYMM"),
@@ -78,7 +75,7 @@ export const useAppStore = create<IAppStoreData>()(
       }),
     {
       name: "app-store",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

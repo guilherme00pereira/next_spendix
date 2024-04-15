@@ -6,13 +6,14 @@ import {
     paperClasses,
     tableCellClasses
 } from '@mui/material';
-import { neutral } from './colors';
+import { neutral, lightBase, darkBase, primary, error } from './colors';
+import {alpha} from "@mui/material/styles";
 
 // Used only to create transitions
 const muiTheme = createTheme();
 
-export function createComponents(config) {
-    const {palette} = config;
+export function createComponents() {
+
 
     return {
         MuiAvatar: {
@@ -50,14 +51,30 @@ export function createComponents(config) {
                 }
             }
         },
+        MuiPaper: {
+            styleOverrides: {
+                root: ({theme}) => ({
+                    backgroundColor: lightBase.componentBG,
+                    [theme.getColorSchemeSelector('dark')]: {
+                        backgroundColor: darkBase.componentBG
+                    },
+                    backgroundImage: 'none',
+                })
+            }
+        },
         MuiCard: {
             styleOverrides: {
-                root: {
+                root: ({theme}) => ({
+                    backgroundColor: lightBase.componentBG,
+                    [theme.getColorSchemeSelector('dark')]: {
+                        backgroundColor: darkBase.componentBG
+                    },
+                    backgroundImage: 'none',
                     borderRadius: 20,
                     [`&.${paperClasses.elevation1}`]: {
                         boxShadow: '0px 5px 22px rgba(0, 0, 0, 0.04), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.03)'
                     }
-                }
+                })
             }
         },
         MuiCardContent: {
@@ -116,7 +133,7 @@ export function createComponents(config) {
                     pointerEvents: 'none'
                 },
                 '#nprogress .bar': {
-                    backgroundColor: palette.primary.main,
+                    backgroundColor: primary.main,
                     height: 3,
                     left: 0,
                     position: 'fixed',
@@ -142,7 +159,7 @@ export function createComponents(config) {
                     fontWeight: 500,
                     lineHeight: '24px',
                     '&::placeholder': {
-                        color: palette.text.secondary
+                        color: neutral[500]//palette.text.secondary
                     }
                 }
             }
@@ -155,13 +172,13 @@ export function createComponents(config) {
                     borderStyle: 'solid',
                     borderWidth: 1,
                     overflow: 'hidden',
-                    borderColor: palette.neutral[200],
+                    borderColor: neutral[200],
                     transition: muiTheme.transitions.create([
                         'border-color',
                         'box-shadow'
                     ]),
                     '&:hover': {
-                        backgroundColor: palette.action.hover
+                        backgroundColor: alpha(neutral[900], 0.04),//palette.action.hover
                     },
                     '&:before': {
                         display: 'none'
@@ -174,12 +191,12 @@ export function createComponents(config) {
                     },
                     [`&.${filledInputClasses.focused}`]: {
                         backgroundColor: 'transparent',
-                        borderColor: palette.primary.main,
-                        boxShadow: `${palette.primary.main} 0 0 0 2px`
+                        borderColor: primary.main,
+                        boxShadow: `${primary.main} 0 0 0 2px`
                     },
                     [`&.${filledInputClasses.error}`]: {
-                        borderColor: palette.error.main,
-                        boxShadow: `${palette.error.main} 0 0 0 2px`
+                        borderColor: error.main,
+                        boxShadow: `${error.main} 0 0 0 2px`
                     }
                 },
                 input: {
@@ -193,9 +210,9 @@ export function createComponents(config) {
             styleOverrides: {
                 root: {
                     '&:hover': {
-                        backgroundColor: palette.action.hover,
+                        backgroundColor: alpha(neutral[900], 0.04),//palette.action.hover,
                         [`& .${outlinedInputClasses.notchedOutline}`]: {
-                            borderColor: palette.neutral[200]
+                            borderColor: neutral[200]
                         }
                     },
                     // [`&.${outlinedInputClasses.focused}`]: {
@@ -207,8 +224,8 @@ export function createComponents(config) {
                     // },
                     [`&.${filledInputClasses.error}`]: {
                         [`& .${outlinedInputClasses.notchedOutline}`]: {
-                            borderColor: palette.error.main,
-                            boxShadow: `${palette.error.main} 0 0 0 2px`
+                            borderColor: error.main,
+                            boxShadow: `${error.main} 0 0 0 2px`
                         }
                     }
                 },
@@ -218,7 +235,7 @@ export function createComponents(config) {
                     lineHeight: '24px',
                 },
                 notchedOutline: {
-                    borderColor: palette.neutral[200],
+                    borderColor: neutral[200],
                     transition: muiTheme.transitions.create([
                         'border-color',
                         'box-shadow'
@@ -266,10 +283,13 @@ export function createComponents(config) {
         },
         MuiTableCell: {
             styleOverrides: {
-                root: {
-                    borderBottomColor: palette.divider,
+                root: ({theme}) => ({
+                    borderBottomColor: lightBase.divider,
+                    [theme.getColorSchemeSelector('dark')]: {
+                        borderBottomColor: darkBase.divider
+                    },
                     padding: '15px 16px'
-                },
+                }),
             }
         },
         MuiTableHead: {

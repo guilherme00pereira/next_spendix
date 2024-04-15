@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import {styled, getInitColorSchemeScript} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -23,6 +24,13 @@ const persister = createSyncStoragePersister({
   storage: typeof window !== "undefined" ? window.localStorage : undefined,
 })
 
+const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
+  flexGrow: 1,
+  height: "100vh",
+  overflow: "auto",
+}));
+
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -39,26 +47,16 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       }}
     >
       <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}>
+        {getInitColorSchemeScript()}
         <Box sx={{ display: "flex" }}>
           <Topbar open={open} toggleDrawer={toggleDrawer} />
           <Sidebar open={open} toggleDrawer={toggleDrawer} />
-          <Box
-            component="main"
-            sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              flexGrow: 1,
-              height: "100vh",
-              overflow: "auto",
-            }}
-          >
+          <LayoutBoxWrapper component="main">
             <Toolbar sx={{margin: "48px 0"}}>
               <Breadcrumb />
             </Toolbar>
             {children}
-          </Box>
+          </LayoutBoxWrapper>
         </Box>
         <SpeedDialAdd />
       </PersistQueryClientProvider>
