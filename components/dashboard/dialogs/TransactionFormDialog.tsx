@@ -25,7 +25,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { addTransaction, editTransaction } from "@/lib/supabase/methods/transactions";
 import { getCategories } from "@/lib/supabase/methods/categories";
-import { useSpeedDialStore } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import { buildSelectPaymentMethods } from "@/lib/functions";

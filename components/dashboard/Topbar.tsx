@@ -31,8 +31,8 @@ const AppBar = styled(MuiAppBar, {
     "& .MuiSvgIcon-root": {
       color: theme.vars.palette.primary.main,
     },
-    left: open ? "0px" : "56px",
-    width: open ? `calc(100% - 240px)` : `calc(100% - 56px)`,
+    left: open ? "0px" : "52px",
+    width: open ? `calc(100% - 240px)` : `calc(100% - 52px)`,
   },
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
@@ -84,7 +84,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
 
   return (
     <AppBar position="absolute" open={open}>
-      <Toolbar sx={{ minHeight: "48px !important" }} variant="dense">
+      <Toolbar sx={{ minHeight: "52px !important" }} variant="dense">
         <Box>
           <ToggleIconBox>
             {open || (
@@ -116,7 +116,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
           </IconButton>
         </Box>
         <IconButton size="large" onClick={handleMenu}>
-          <AccountCircle sx={{ fontSize: "2rem" }} />
+          <AccountCircle sx={{ fontSize: "1.5rem" }} />
         </IconButton>
         <Menu id="menu-profile" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
           <MenuItem onClick={() => router.push("/dashboard/profile")}>Profile</MenuItem>

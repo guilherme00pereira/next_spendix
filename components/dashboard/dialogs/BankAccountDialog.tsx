@@ -85,7 +85,6 @@ const BankAccountDialog = () => {
                   fullWidth
                   name="balance"
                   label="Saldo"
-                  type="number"
                 />
               </Grid>
               <Grid xs={12} md={4} item>

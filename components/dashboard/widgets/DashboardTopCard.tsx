@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -18,7 +19,7 @@ const TopCard = styled(Card)(({ theme }) => ({
 
 const TopCardHeader = styled(CardHeader)(({ theme }) => ({
   padding: "12px",
-  color: theme.palette.primary.main,
+  color: theme.vars.palette.text.primary,
 }));
 
 const TopCardContent = styled(CardContent)(({ theme }) => ({
@@ -35,7 +36,7 @@ const DashboardTopCard = ({
 }: IDashboardTopCardProps) => {
   return (
     <TopCard>
-      <TopCardHeader title={title} />
+      <TopCardHeader title={title} titleTypographyProps={{fontSize: "1rem"}} />
       <TopCardContent>
         {loading && (
           <Skeleton

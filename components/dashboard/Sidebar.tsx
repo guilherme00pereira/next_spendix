@@ -35,14 +35,20 @@ const Drawer = styled(MuiDrawer, {
     whiteSpace: "nowrap",
     width: drawerWidth,
     backgroundColor: theme.vars.palette.background.paper,
+    [theme.getColorSchemeSelector("light")]: {
+      backgroundColor: neutral[900],
+    },
     border: "none",
-    color: neutral[50],
+    color: neutral[200],
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
     "& .MuiToolbar-root": {
       backgroundColor: theme.vars.palette.background.paper,
+      [theme.getColorSchemeSelector("light")]: {
+        backgroundColor: neutral[900],
+      },
       color: "#FFF",
       "& .MuiIconButton-root": {
         color: "#FFF",
@@ -57,7 +63,7 @@ const Drawer = styled(MuiDrawer, {
       }),
       width: theme.spacing(0),
       [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(7),
+        width: "52px",
       },
     }),
   },
@@ -67,6 +73,9 @@ const ParentListNode = styled(List, {
   shouldForwardProp: (prop) => prop !== "disablePadding",
 })(({ theme }) => ({
   backgroundColor: theme.vars.palette.background.paper,
+  [theme.getColorSchemeSelector("light")]: {
+    backgroundColor: neutral[900],
+  },
 }));
 
 export default function Sidebar({ open }: IDashboardLayoutProps) {

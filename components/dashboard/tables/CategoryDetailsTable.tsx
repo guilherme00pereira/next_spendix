@@ -1,5 +1,5 @@
 import React from "react";
-import { useSpeedDialStore } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/store";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";

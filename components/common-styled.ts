@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
-import { Stack, shouldForwardProp } from "@mui/system";
+import { Stack } from "@mui/system";
 
 export const DashboardTopCardContentInfo = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondary,

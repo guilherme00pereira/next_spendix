@@ -4,10 +4,12 @@ import {
     inputLabelClasses,
     outlinedInputClasses,
     paperClasses,
-    tableCellClasses
+    tableCellClasses,
+    typographyClasses
 } from '@mui/material';
 import { neutral } from './colors';
 import {alpha} from "@mui/material/styles";
+import { typography } from '@mui/system';
 
 // Used only to create transitions
 const muiTheme = createTheme();
@@ -312,10 +314,19 @@ export function createComponents() {
         MuiListItemIcon: {
             styleOverrides: {
                 root: {
-                    minWidth: 42
+                    minWidth: 36
                 }
             }
         },
+        MuiListItemText: {
+            styleOverrides: {
+                root: {
+                    [`& .${typographyClasses.root}`]: {
+                    fontSize: '14px',
+                    }
+                }
+            }
+    }   ,
         MuiTypography: {
             defaultProps: {
                 variantMapping: {

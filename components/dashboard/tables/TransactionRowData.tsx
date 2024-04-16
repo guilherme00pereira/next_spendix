@@ -13,7 +13,7 @@ import { amountFormatter } from "@/lib/functions";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { removeTransaction } from "@/lib/supabase/methods/transactions";
-import {useSpeedDialStore} from "@/lib/hooks";
+import {useSpeedDialStore} from "@/lib/store";
 import { IDeleteTransactionData, IRemovableEntity, ITransactionRowDataProps } from "@/types/interfaces";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
@@ -60,7 +60,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       payed_amount: t.payments?.amount ?? null,
       payment_method_id: 1,
       payment_id: t.payments?.id ?? 0,
-      in_installments: t.installments ? true : false,
+      in_installments: !!t.installments,
       installments: 2,
       draft: t.draft,
       tags: [],

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getTotalAmountAvailable } from "@/lib/supabase/methods/payment-methods";
-import { Stack } from "@mui/system";
 import { amountFormatter } from "@/lib/functions";
 import DashboardTopCard from "./DashboardTopCard";
 import {
