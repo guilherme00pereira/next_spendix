@@ -6,11 +6,11 @@ import { getCreditCardPaymentMethods } from "@/lib/supabase/methods/payment-meth
 import CreditCardWidget from "@/components/dashboard/widgets/CreditCardWidget";
 import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaymentMethodWidget";
 import CreditCardDialog from "@/components/dashboard/dialogs/CreditCardDialog";
-import PageTitle from "@/components/dashboard/PageTitle";
+import PageTitle from "@/components/dashboard/page/PageTitle";
 import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
 import { CreditCardType } from "@/types/entities";
 import { CreditCardContext } from "@/lib/hooks";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const CreditCardsPage = () => {
   const [editableCard, setEditableCard] = useState({} as CreditCardType);

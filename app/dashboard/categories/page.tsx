@@ -10,8 +10,8 @@ import CategoryTableLoader from "@/components/dashboard/loaders/CategoryTableLoa
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import {useSpeedDialStore} from "@/lib/store";
 import {IRemovableEntity} from "@/types/interfaces";
-import PageTitle from "@/components/dashboard/PageTitle";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageTitle from "@/components/dashboard/page/PageTitle";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const CategoriesPage = () => {
   const queryClient = useQueryClient();

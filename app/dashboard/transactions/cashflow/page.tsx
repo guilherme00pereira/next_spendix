@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import PageContainer from '@/components/dashboard/PageContainer';
+import PageContainer from '@/components/dashboard/page/PageContainer';
 
 const CashFlowPage = () => {
     return (

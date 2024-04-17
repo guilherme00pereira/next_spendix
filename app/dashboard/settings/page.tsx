@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Paper from "@mui/material/Paper";
-import PageTitle from "@/components/dashboard/PageTitle";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageTitle from "@/components/dashboard/page/PageTitle";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const Settings = () => {
   return (

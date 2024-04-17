@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useBankAccountContext, usePageContext } from "@/lib/hooks";
-import { Dialog, DialogContent, Grid, Input, TextField } from "@mui/material";
+import { Dialog, DialogContent, Grid, Input, Stack, TextField } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addBankAccount, editBankAccount } from "@/lib/supabase/methods/bank-accounts";
 import TopBarDialog from "./TopBarDialog";
-import { Stack } from "@mui/system";
 import { BankAccountType } from "@/types/entities";
 import { ColorPicker } from "material-ui-color";
 

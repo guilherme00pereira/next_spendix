@@ -7,7 +7,7 @@ import { getTransactionsByCategoriesLastSixMonths } from "@/lib/supabase/methods
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories } from "@/lib/supabase/methods/categories";
 import ApexCategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/ApexCategoryTransactionsSixMonthsLineChart";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const Subtitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.light,

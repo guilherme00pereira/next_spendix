@@ -8,9 +8,9 @@ import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/AddNewPaym
 import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog";
 import {BankAccountType} from "@/types/entities";
 import {BankAccountContext} from "@/lib/hooks";
-import PageTitle from "@/components/dashboard/PageTitle";
+import PageTitle from "@/components/dashboard/page/PageTitle";
 import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const BankAccountsPage = () => {
   const [editableAccount, setEditableAccount] = useState({} as BankAccountType);

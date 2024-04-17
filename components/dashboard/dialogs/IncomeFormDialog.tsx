@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { addTransaction, editTransaction } from "@/lib/supabase/methods/transactions";
 import { getCategories } from "@/lib/supabase/methods/categories";
-import { useSpeedDialStore } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import { convertPaymentMethodsToSelect } from "@/lib/functions";
@@ -52,6 +52,7 @@ const IncomeFormDialog = () => {
     onSubmit: (values) => {
       setIsPending(true);
       if (values.id) {
+        //TODO: extract object to a function
         editTransaction({
           id: values.id,
           amount: values["amount"],
@@ -66,6 +67,7 @@ const IncomeFormDialog = () => {
           payment_method_id: values["payment_method_id"],
           payment_id: values["payment_id"],
           draft: values["draft"],
+          tags: values["tags"],
         }).then((res) => {
           if (res !== null) {
             actionShowIncomeDialog(false);
@@ -86,6 +88,7 @@ const IncomeFormDialog = () => {
           payment_method_id: values["payment_method_id"],
           payment_id: null,
           draft: values["draft"],
+          tags: values["tags"],
         }).then((res) => {
           if (res !== null) {
             actionShowIncomeDialog(false);
@@ -190,7 +193,7 @@ const IncomeFormDialog = () => {
               <Grid item xs={12} md={4}>
                 <FormControlLabel
                   control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
-                  label="Marcar como previsto"
+                  label="Simulado"
                 />
                 </Grid>
             </Grid>

@@ -6,7 +6,7 @@ import DashboardTopCard from "@/components/dashboard/widgets/DashboardTopCard";
 import DashboardOverdueInvoices from "@/components/dashboard/widgets/DashboardOverdueInvoices";
 import DashboardCardInvoices from "@/components/dashboard/widgets/DashboardCardInvoices";
 import ApexParentCategoriesBarChart from "@/components/dashboard/charts/ApexParentCategoriesBarChart";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 //TODO: Add a chart for categories % variation
 

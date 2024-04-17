@@ -114,7 +114,7 @@ const TransactionFormDialog = () => {
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
-      if (values.id) {
+      if (values.id) {//TODO: extract object to a function
         editTransaction({
           id: values.id,
           amount: values["amount"],

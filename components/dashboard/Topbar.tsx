@@ -85,7 +85,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar sx={{ minHeight: "52px !important" }} variant="dense">
-        <Box>
+        <Box sx={{width: "20%"}}>
           <ToggleIconBox>
             {open || (
               <IconButton edge="start" aria-label="open drawer" onClick={handleToggleDrawer}>
@@ -102,7 +102,7 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
         <Box sx={{ flexGrow: 1 }}>
           <SelectMonthYear />
         </Box>
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+      <Box sx={{ display: { xs: "none", md: "flex" }, flexDirection: "row", justifyContent: "end", width: "20%" }}>
           <IconButton onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
             {mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
           </IconButton>
@@ -114,14 +114,14 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
           <IconButton onClick={handleFullScreen}>
             <FullscreenOutlinedIcon />
           </IconButton>
-        </Box>
-        <IconButton size="large" onClick={handleMenu}>
+          <IconButton size="large" onClick={handleMenu}>
           <AccountCircle sx={{ fontSize: "1.5rem" }} />
         </IconButton>
         <Menu id="menu-profile" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
           <MenuItem onClick={() => router.push("/dashboard/profile")}>Profile</MenuItem>
           <MenuItem onClick={() => router.push("/")}>Logout</MenuItem>
         </Menu>
+        </Box>
       </Toolbar>
     </AppBar>
   );

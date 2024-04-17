@@ -4,8 +4,8 @@ import { Stack } from "@mui/material";
 import TransactionsTable from "@/components/dashboard/tables/TransactionsTable";
 import { TransactionContext } from "@/lib/hooks";
 import { TransactionType } from "@/types/entities";
-import PageTitle from "@/components/dashboard/PageTitle";
-import PageContainer from "@/components/dashboard/PageContainer";
+import PageTitle from "@/components/dashboard/page/PageTitle";
+import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);

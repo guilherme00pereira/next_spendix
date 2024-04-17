@@ -6,19 +6,19 @@ import { useAppStore } from "@/lib/store";
 import dayjs from "dayjs";
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/entities";
+import { useColorScheme } from "@mui/material";
 
-//TODO: move to a global theme
-const barColor = "#49B6F5";
 
 const ApexParentCategoriesBarChart = () => {
   const date = useAppStore((state) => state.date);
   const [data, setData] = useState<ChartBarType[]>([]);
   const excludedCategories = [43, 63]
+  const { mode } = useColorScheme();
   
   useEffect(() => {
     getExpenseCategoriesTransactionsSum(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"))
       .then((response) => {
-        const items = response.filter((item: any) => !excludedCategories.includes(item.id)).filter((item: any) => item.value > 100);
+        const items = response.filter((item: any) => !excludedCategories.includes(item.id)).filter((item: any) => item.value > 200);
 
       const data: ChartBarType[] = items.sort((a: ChartBarType, b: ChartBarType) => a.value - b.value).reverse().map((item: ChartBarType) => {
         return { name: item.name, value: item.value, label: 'R$' + item.value.toFixed(2)};
@@ -33,6 +33,7 @@ const ApexParentCategoriesBarChart = () => {
         <Typography variant="h6" textAlign="center">
           Despesas por categoria
         </Typography>
+        
       </Stack>
       <Chart
         options={{
@@ -56,16 +57,16 @@ const ApexParentCategoriesBarChart = () => {
             enabled: true,
             textAnchor: "start",
             style: {
-              colors: [barColor],
+              colors: mode === "dark" ? ["#BEBFBF"] : ["#333333"],
             },
             formatter: function (val: any) {
               return "R$ " + val.toFixed(2);
             },
             offsetX: 0,
           },
-          colors: [barColor],
+          colors: ["#22A0C7"],
           grid: {
-            borderColor: "#f1f1f1",
+            borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
           },
           legend: {
             show: false,
@@ -78,7 +79,7 @@ const ApexParentCategoriesBarChart = () => {
           },
         ]}
         type="bar"
-        height={400}
+        height={460}
       />
     </>
   );
