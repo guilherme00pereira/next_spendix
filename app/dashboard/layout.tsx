@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {styled, getInitColorSchemeScript} from "@mui/material/styles";
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
@@ -12,7 +11,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
-import Breadcrumb from "@/components/dashboard/page/Breadcrumb";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,9 +50,6 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
           <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
           <Sidebar open={openSidebar} toggleDrawer={setOpenSidebar} />
           <LayoutBoxWrapper component="main">
-            <Toolbar sx={{margin: "48px 0"}}>
-              <Breadcrumb />
-            </Toolbar>
             {children}
           </LayoutBoxWrapper>
         </Box>

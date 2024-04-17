@@ -38,31 +38,31 @@ export const createTypography = () => {
     },
     h1: {
       fontWeight: 700,
-      fontSize: '3.5rem',
+      fontSize: '2.5rem',
       lineHeight: 1.2
     },
     h2: {
       fontWeight: 700,
-      fontSize: '3rem',
+      fontSize: '2rem',
       lineHeight: 1.2
     },
     h3: {
       fontWeight: 700,
-      fontSize: '2.25rem',
-      lineHeight: 1.2
-    },
-    h4: {
-      fontWeight: 700,
       fontSize: '1.75rem',
       lineHeight: 1.2
     },
+    h4: {
+      fontWeight: 600,
+      fontSize: '1.5rem',
+      lineHeight: 1.2
+    },
     h5: {
-      fontWeight: 700,
+      fontWeight: 600,
       fontSize: '1.25rem',
       lineHeight: 1.2
     },
     h6: {
-      fontWeight: 700,
+      fontWeight: 500,
       fontSize: '1.125rem',
       lineHeight: 1.2
     }

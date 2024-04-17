@@ -1,11 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Stack } from "@mui/material";
-import TransactionsTable from "@/components/dashboard/tables/TransactionsTable";
 import { TransactionContext } from "@/lib/hooks";
 import { TransactionType } from "@/types/entities";
-import PageTitle from "@/components/dashboard/page/PageTitle";
 import PageContainer from "@/components/dashboard/page/PageContainer";
+import Masonry from '@mui/lab/Masonry';
+import TransactionsByDueDayList from "@/components/dashboard/lists/TransactionsByDueDayDataList";
 
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -18,11 +17,10 @@ const TransactionsPage = () => {
         setList: setTransactions,
       }}
     >
-      <PageContainer>
-        <Stack>
-          <PageTitle title="Visão: despesas e receitas por dia de entrada" />
-          <TransactionsTable />
-        </Stack>
+      <PageContainer title="Transações">
+        <Masonry columns={2} spacing={2}>
+          <TransactionsByDueDayList />
+        </Masonry>
       </PageContainer>
     </TransactionContext.Provider>
   );

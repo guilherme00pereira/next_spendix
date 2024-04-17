@@ -111,6 +111,18 @@ interface IDashboardTopCardProps {
     loading: boolean;
 }
 
+interface IPageContainerProps {
+    title: string;
+    children: React.ReactNode;
+    hideBreadcrumb?: boolean;
+}
+
+interface IPaperHeaderProps {
+    title: string;
+    showSettingButon?: boolean;
+    buttonAction?: () => void;
+}
+
 export type {
     ISelectOption,
     IDeleteConfirmDialogProps,
@@ -126,6 +138,8 @@ export type {
     ICategoriesPanelProps,
     IEditableObjectContextData,
     IDashboardTopCardProps,
-    IDeleteTransactionData
+    IDeleteTransactionData,
+    IPageContainerProps,
+    IPaperHeaderProps
 }
 

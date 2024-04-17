@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import React from "react";
+import Breadcrumb from "./Breadcrumb";
 
 const PageTitle = ({title}: {title: string}) => {
   return (

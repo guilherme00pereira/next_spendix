@@ -13,12 +13,9 @@ const TagsPage = () => {
 
   return (
     <TagContext.Provider value={{ editableObject: editableTag, setEditableObject: setEditableTag }}>
-      <PageContainer>
-        <Stack>
-          <PageTitle title="Tags" />
+      <PageContainer title="Tags">
           <TagList />
           <TagFormDialog />
-        </Stack>
       </PageContainer>
     </TagContext.Provider>
   );

@@ -13,7 +13,7 @@ import PageContainer from "@/components/dashboard/page/PageContainer";
 const DashboardPage = () => {
 
   return (
-    <PageContainer>
+    <PageContainer title="Dashboard" hideBreadcrumb>
       <Grid container spacing={3} sx={{mb: 4}}>
         <Grid item xs={12} md={3}>
           <DashboardTotalAmountAvailable />
@@ -30,9 +30,7 @@ const DashboardPage = () => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-        <Paper sx={{p: 2}}>
             <ApexParentCategoriesBarChart />
-          </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>

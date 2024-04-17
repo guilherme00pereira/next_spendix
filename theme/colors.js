@@ -31,7 +31,7 @@ export const lightBase = {
     paper: '#FFFFFF',
     sidebar: '#111C43',
   },
-  divider: '#F2F4F7',
+  divider: '#E3E6E9',
   text: {
     primary: '#333',
     secondary: '#616163',

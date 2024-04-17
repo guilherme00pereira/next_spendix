@@ -6,7 +6,8 @@ import { useAppStore } from "@/lib/store";
 import dayjs from "dayjs";
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/entities";
-import { useColorScheme } from "@mui/material";
+import { Paper, useColorScheme } from "@mui/material";
+import PaperHeader from "../surfaces/PaperHeader";
 
 
 const ApexParentCategoriesBarChart = () => {
@@ -28,17 +29,15 @@ const ApexParentCategoriesBarChart = () => {
   }, [date]);
 
   return (
-    <>
-      <Stack direction="row" justifyContent="space-between" spacing={2} sx={{ pb: 2 }}>
-        <Typography variant="h6" textAlign="center">
-          Despesas por categoria
-        </Typography>
-        
-      </Stack>
+    <Paper sx={{p: 1}}>
+      <PaperHeader title="Categorias" showSettingButon />
       <Chart
         options={{
           chart: {
             id: "basic-bar",
+            toolbar: {
+              show: false,
+            },
           },
           xaxis: {
             categories: data.map((item) => item.name),
@@ -81,7 +80,7 @@ const ApexParentCategoriesBarChart = () => {
         type="bar"
         height={460}
       />
-    </>
+    </Paper>
   );
 };
 

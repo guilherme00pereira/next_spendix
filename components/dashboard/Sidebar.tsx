@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import type {} from '@mui/material/themeCssVarsAugmentation';
+import type {} from "@mui/material/themeCssVarsAugmentation";
 import MuiDrawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import { Stack } from "@mui/system";
@@ -11,16 +11,13 @@ import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
-import PriceChangeRoundedIcon from '@mui/icons-material/PriceChangeRounded';
-import AlarmRoundedIcon from '@mui/icons-material/AlarmRounded';
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import WalletIcon from '@mui/icons-material/Wallet';
-import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import WalletIcon from "@mui/icons-material/Wallet";
 import { Collapse, Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -79,9 +76,7 @@ const ParentListNode = styled(List, {
 }));
 
 export default function Sidebar({ open }: IDashboardLayoutProps) {
-  const [expandFinanceMenu, setExpandFinanceMenu] = React.useState(true);
   const [expandPaymentMethods, setExpandPaymentMethods] = React.useState(false);
-
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -94,15 +89,15 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
         }}
       >
         <Stack direction="row" spacing={1}>
-        {open && (
-          <>
-            <WalletIcon color="primary" />
-            <Typography variant="h5" color="primary">
-              1WALLET
-            </Typography>
-          </>
-        )}
-        {open || <WalletIcon color="primary" />}
+          {open && (
+            <>
+              <WalletIcon color="primary" />
+              <Typography variant="h5" color="primary">
+                1WALLET
+              </Typography>
+            </>
+          )}
+          {open || <WalletIcon color="primary" />}
         </Stack>
       </Toolbar>
 
@@ -114,34 +109,12 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
           <ListItemText primary="Dashboard" />
         </ListItemButton>
 
-        <ListItemButton LinkComponent="nav" onClick={() => setExpandFinanceMenu(!expandFinanceMenu)}>
+        <ListItemButton LinkComponent="a" href="/dashboard/transactions">
           <ListItemIcon>
-          {expandFinanceMenu ? <ExpandLessRoundedIcon /> : <PaidRoundedIcon />}
+            <ReceiptLongRoundedIcon />
           </ListItemIcon>
-          <ListItemText primary="Financeiro" />
+          <ListItemText primary="Transações" />
         </ListItemButton>
-          <Collapse in={expandFinanceMenu} timeout="auto" unmountOnExit>
-            <ParentListNode disablePadding>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions" sx={{ml: open ? 2 : 0}}>
-                <ListItemIcon>
-                  <ReceiptLongRoundedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Transações por dia" />
-              </ListItemButton>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions/cashflow" sx={{ml: open ? 2 : 0}}>
-                <ListItemIcon>
-                  <PriceChangeRoundedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Fluxo de Caixa" />
-              </ListItemButton>
-              <ListItemButton LinkComponent="a" href="/dashboard/transactions/overdue" sx={{ml: open ? 2 : 0}}>
-                <ListItemIcon>
-                  <AlarmRoundedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Contas vencidas" />
-              </ListItemButton>
-            </ParentListNode>
-          </Collapse>
 
         <ListItemButton LinkComponent="a" href="/dashboard/categories">
           <ListItemIcon>
@@ -158,20 +131,18 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
         </ListItemButton>
 
         <ListItemButton LinkComponent="nav" onClick={() => setExpandPaymentMethods(!expandPaymentMethods)}>
-          <ListItemIcon>
-            {expandPaymentMethods ? <ExpandLessRoundedIcon /> : <AccountBalanceWalletIcon />}
-          </ListItemIcon>
+          <ListItemIcon>{expandPaymentMethods ? <ExpandLessRoundedIcon /> : <AccountBalanceWalletIcon />}</ListItemIcon>
           <ListItemText primary="Carteira" />
         </ListItemButton>
         <Collapse in={expandPaymentMethods} timeout="auto" unmountOnExit>
           <ParentListNode disablePadding>
-            <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts" sx={{ml: open ? 2 : 0}}>
+            <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts" sx={{ ml: open ? 2 : 0 }}>
               <ListItemIcon>
                 <AccountBalanceRoundedIcon />
               </ListItemIcon>
               <ListItemText primary="Contas" />
             </ListItemButton>
-            <ListItemButton LinkComponent="a" href="/dashboard/credit-cards" sx={{ml: open ? 2 : 0}}>
+            <ListItemButton LinkComponent="a" href="/dashboard/credit-cards" sx={{ ml: open ? 2 : 0 }}>
               <ListItemIcon>
                 <CreditCardRoundedIcon />
               </ListItemIcon>

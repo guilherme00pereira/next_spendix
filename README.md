@@ -10,7 +10,11 @@ Spendix is a web application that allows users to track their spending habits. U
 
 ### Version
 
+##### 0.12
+- 0.12.0: Added @mui/lab and @mui/x-data-grid modules. Iinit refactor transactions page.
+
 ##### 0.11
+- 0.11.4: Card widgets header.
 - 0.11.3: Files relocation.
 - 0.11.1: Theme adjustements. Moved zustand stores to @lib/stores file.
 - 0.11.0: Set experimental mui material CSS theme variables for dark mode.
