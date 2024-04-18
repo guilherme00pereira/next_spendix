@@ -1,10 +1,13 @@
 "use client";
-import { useState } from "react";
-import { TransactionContext } from "@/lib/hooks";
-import { TransactionType } from "@/types/entities";
+import {useState} from "react";
+import {TransactionContext} from "@/lib/hooks";
+import {TransactionType} from "@/types/entities";
 import PageContainer from "@/components/dashboard/page/PageContainer";
-import Masonry from '@mui/lab/Masonry';
 import TransactionsByDueDayList from "@/components/dashboard/lists/TransactionsByDueDayDataList";
+import TransactionsTimeline from "@/components/dashboard/lists/TransactionsTimeline";
+import Grid from "@mui/material/Grid";
+import Masonry from "@mui/lab/Masonry";
+import OverdueTransactionsList from "@/components/dashboard/lists/OverdueTransactionsList";
 
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -18,8 +21,15 @@ const TransactionsPage = () => {
       }}
     >
       <PageContainer title="Transações">
-        <Masonry columns={2} spacing={2}>
-          <TransactionsByDueDayList />
+        <Grid container spacing={3} sx={{mb: 4}}>
+          <Grid item xs={12} md={6}>
+
+          </Grid>
+        </Grid>
+        <Masonry columns={2}>
+          <TransactionsByDueDayList/>
+          <TransactionsTimeline/>
+          <OverdueTransactionsList/>
         </Masonry>
       </PageContainer>
     </TransactionContext.Provider>

@@ -1,10 +1,10 @@
 "use client";
 import { Grid, Paper } from "@mui/material";
 import React from "react";
-import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/DashboardTotalAmountAvailable";
-import DashboardTopCard from "@/components/dashboard/widgets/DashboardTopCard";
-import DashboardOverdueInvoices from "@/components/dashboard/widgets/DashboardOverdueInvoices";
-import DashboardCardInvoices from "@/components/dashboard/widgets/DashboardCardInvoices";
+import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/home/DashboardTotalAmountAvailable";
+import DashboardTopCard from "@/components/dashboard/widgets/home/DashboardTopCard";
+import DashboardOverdueInvoices from "@/components/dashboard/widgets/home/DashboardOverdueInvoices";
+import DashboardCardInvoices from "@/components/dashboard/widgets/home/DashboardCardInvoices";
 import ApexParentCategoriesBarChart from "@/components/dashboard/charts/ApexParentCategoriesBarChart";
 import PageContainer from "@/components/dashboard/page/PageContainer";
 

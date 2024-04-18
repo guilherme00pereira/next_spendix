@@ -1,36 +1,57 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
-import type {} from "@mui/material/themeCssVarsAugmentation";
+import {styled} from "@mui/material/styles";
 import Stack from "@mui/system/Stack";
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import { IPaperHeaderProps } from "@/types/interfaces";
+import {IPaperHeaderProps} from "@/types/interfaces";
 
-const Header = styled(Stack)(({ theme }) => ({
-    borderBlockEnd: `1px solid ${theme.vars.palette.divider}`,
-    marginBlockEnd: theme.spacing(1),
-    paddingBlockEnd: theme.spacing(1),
+const Header = styled(Stack)(({theme}) => ({
+  borderBlockEnd: `1px solid ${theme.vars.palette.divider}`,
+  marginBlockEnd: theme.spacing(1),
+  paddingBlockEnd: theme.spacing(1),
+  position: "relative",
 }));
 
 const ActionButton = styled(Button)(({theme}) => ({
-    color: theme.vars.palette.text.secondary,
+  color: theme.vars.palette.text.secondary,
 }));
+
+const Title = styled("div")(({theme}) => ({
+  marginLeft: "12px !important",
+  fontSize: "1em",
+  fontWeight: "bold",
+  paddingBlockEnd: "8px !important",
+  "&::before": {
+    content: "''",
+    width: "4px",
+    height: "60%",
+    backgroundColor: theme.vars.palette.primary.main,
+    position: "absolute",
+    top: 0,
+    left: 0,
+  }
+
+}));
+
 
 const PaperHeader = ({title, showSettingButon, buttonAction}: IPaperHeaderProps) => {
   return (
     <Header direction="row" justifyContent="space-between" alignItems="center">
-      <Typography variant="h6" textAlign="center" sx={{ml: "12px !important"}}>
+      <Box>
+      <Title>
         {title}
-      </Typography>
+      </Title>
+      </Box>
+      
       {showSettingButon && (
-         <ActionButton
-         size="small"
-         variant="text"
-         onClick={buttonAction}
-       >
-            <SettingsRoundedIcon fontSize="small" />
-         </ActionButton>
+        <ActionButton
+          size="small"
+          variant="text"
+          onClick={buttonAction}
+        >
+          <SettingsRoundedIcon fontSize="small"/>
+        </ActionButton>
       )}
     </Header>
   );

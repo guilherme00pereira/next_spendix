@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import DashboardTopCard from "@/components/dashboard/widgets/DashboardTopCard";
+import DashboardTopCard from "@/components/dashboard/widgets/home/DashboardTopCard";
 import { getCreditCards } from "@/lib/supabase/methods/credit-cards";
 import { CreditCardType } from "@/types/entities";
 import {

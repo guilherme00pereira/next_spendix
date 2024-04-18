@@ -121,6 +121,14 @@ interface IPaperHeaderProps {
     title: string;
     showSettingButon?: boolean;
     buttonAction?: () => void;
+    badge?: number;
+    badgeColor?: string;
+}
+
+interface IDayOfMonthProps {
+    days: string[];
+    selectedDate: string;
+    setSelectedDate: Dispatch<SetStateAction<string>>;
 }
 
 export type {
@@ -140,6 +148,7 @@ export type {
     IDashboardTopCardProps,
     IDeleteTransactionData,
     IPageContainerProps,
-    IPaperHeaderProps
+    IPaperHeaderProps,
+    IDayOfMonthProps
 }
 

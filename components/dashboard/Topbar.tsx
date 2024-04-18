@@ -15,7 +15,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { IDashboardLayoutProps } from "@/types/interfaces";
-import SelectMonthYear from "@/components/dashboard/SelectMonthYear";
+import SelectMonthYear from "@/components/dashboard/calendar/SelectMonthYear";
 import { useRouter } from "next/navigation";
 import { Badge } from "@mui/material";
 
