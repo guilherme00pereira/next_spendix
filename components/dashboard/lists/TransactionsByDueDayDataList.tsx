@@ -36,7 +36,7 @@ const TransactionsByDueDayList = () => {
       <PaperHeader title='Transações por dia'/>
       <Stack>
         <Stack justifyContent="center">
-          <SelectDayOfMonth days={Array.from(mappedTransactions.keys())} />
+          <SelectDayOfMonth days={Array.from(mappedTransactions.keys())} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </Stack>
         {transactionsDay.map((transaction, index) => (
           <div key={index}>

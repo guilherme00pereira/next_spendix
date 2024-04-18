@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Box, Paper } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import CategoriesTable from "@/components/dashboard/tables/CategoriesTable";
 import Stack from "@mui/material/Stack";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ import { useSpeedDialStore } from "@/lib/store";
 import { IRemovableEntity } from "@/types/interfaces";
 import PageTitle from "@/components/dashboard/page/PageTitle";
 import PageContainer from "@/components/dashboard/page/PageContainer";
+import ApexParentCategoriesBarChart from "@/components/dashboard/charts/ApexParentCategoriesBarChart";
 
 const CategoriesPage = () => {
   const queryClient = useQueryClient();
@@ -63,10 +64,9 @@ const CategoriesPage = () => {
   };
 
   return (
-    <PageContainer>
-      <Stack>
-        <PageTitle title="Categorias" />
-        <Stack spacing={2} direction="row" justifyContent="start">
+    <PageContainer title="Categorias">
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid item xs={12} md={6}>
           <Paper sx={{ width: "100%" }}>
             <Box p={2}>
               {isLoading && <CategoryTableLoader />}
@@ -82,8 +82,11 @@ const CategoriesPage = () => {
               <ConfirmDeleteDialog entity={removableCategory} open={openConfirm} handleClose={setOpenConfirm} handleDelete={processDelete} />
             </Box>
           </Paper>
-        </Stack>
-      </Stack>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ApexParentCategoriesBarChart title="Total por categorias no mês" />
+        </Grid>
+      </Grid>
     </PageContainer>
   );
 };
