@@ -11,8 +11,9 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.12
-- 0.12.2: refactor categories page.
-- 0.12.1: refactor transactions page.
+- 0.12.3: Transactions per day - carousel of days.
+- 0.12.2: Refactor categories page.
+- 0.12.1: Refactor transactions page.
 - 0.12.0: Added @mui/lab and @mui/x-data-grid modules. Iinit refactor transactions page.
 
 ##### 0.11

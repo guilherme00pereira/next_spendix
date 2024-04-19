@@ -27,9 +27,7 @@ const CreditCardsPage = () => {
         setEditableObject: setEditableCard,
       }}
     >
-      <PageContainer>
-        <Stack>
-          <PageTitle title="Cartões de Crédito" />
+      <PageContainer title="Cartão de Crédito">
           <Paper>
             <Stack
               direction="row"
@@ -49,13 +47,12 @@ const CreditCardsPage = () => {
                         cc={payment_method.credit_cards}
                       />
                     ))}
-                  <AddNewPaymentMethodWidget height="180px" />
+                  <AddNewPaymentMethodWidget width="280px" height="160px" />
                   <CreditCardDialog />
                 </>
               )}
             </Stack>
           </Paper>
-        </Stack>
       </PageContainer>
     </CreditCardContext.Provider>
   );

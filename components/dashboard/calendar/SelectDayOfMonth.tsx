@@ -1,20 +1,35 @@
-import React from 'react';
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
-import {IDayOfMonthProps} from "@/types/interfaces";
+import { IDayOfMonthProps } from "@/types/interfaces";
 
-const Day = styled(Stack)(({theme}) => ({
+//TODO: add side buttons and load ant end of the month
+const DaysWrapper = styled(Stack)(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  padding: "12px",
+  overflowX: "scroll",
+  scrollBehaviorX: "smooth",
+  whiteSpace: "nowrap",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+}));
+
+const Day = styled(Stack)(({ theme }) => ({
   fontSize: "0.875rem",
-  width: "42px",
-  height: "52px",
+  width: "60px",
+  padding: "8px",
+  margin: "0 8px",
   display: "flex",
-  justifyContent: "center",
+  flexDirection: "column",
   alignItems: "center",
+  justifyContent: "space-around",
   color: theme.vars.palette.text.primary,
   backgroundColor: theme.vars.palette.background.paper,
   border: "1px solid",
+  borderRadius: "5px",
   borderColor: theme.vars.palette.divider,
   "&:hover": {
     backgroundColor: theme.vars.palette.action.hover,
@@ -27,22 +42,32 @@ const Day = styled(Stack)(({theme}) => ({
   },
 }));
 
-const SelectDayOfMonth = ({days, selectedDate, setSelectedDate}: IDayOfMonthProps) => {
+const SelectDayOfMonth = ({
+  days,
+  selectedDate,
+  setSelectedDate,
+}: IDayOfMonthProps) => {
 
-    return (
-        <Stack direction="row" justifyContent="center" spacing={1} sx={{flexWrap: "nowrap", overflow: "hidden"}}>
-          {days.map((day) => (
-            <Day direction="column" onClick={() => setSelectedDate(day)}>
-              <div>
-                {dayjs(day).format("DD")}
-              </div>
-              <div>
-                {dayjs(day).format("ddd")}
-              </div>
-            </Day>
-          ))}
-        </Stack>
-    );
+  return (
+    <DaysWrapper direction="row" justifyContent="center" spacing={2}>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {days.map((day, index) => (
+          <Day
+            key={day}
+            direction="column"
+            onClick={() => setSelectedDate(day)}
+          >
+            <div>{dayjs(day).format("DD")}</div>
+            <div>{dayjs(day).format("ddd")}</div>
+          </Day>
+        ))}
+      </Stack>
+    </DaysWrapper>
+  );
 };
 
 export default SelectDayOfMonth;

@@ -2,13 +2,13 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {PaperContainer} from '@/components/common-styled';
 import PaperHeader from '@/components/dashboard/surfaces/PaperHeader';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import {getTransactions} from "@/lib/supabase/methods/transactions";
 import dayjs from "dayjs";
 import {TransactionType} from "@/types/entities";
 import {useAppStore} from "@/lib/store";
 import {groupTransactionsByDate} from "@/lib/functions";
 import SelectDayOfMonth from "@/components/dashboard/calendar/SelectDayOfMonth";
+import TransactionByDueDayListItem from './items/TransactionByDueDayListItem';
 
 const TransactionsByDueDayList = () => {
   const date = useAppStore((state) => state.date);
@@ -35,15 +35,11 @@ const TransactionsByDueDayList = () => {
     <PaperContainer>
       <PaperHeader title='Transações por dia'/>
       <Stack>
-        <Stack justifyContent="center">
+        <Stack direction="row" justifyContent="center" alignItems="center">
           <SelectDayOfMonth days={Array.from(mappedTransactions.keys())} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </Stack>
         {transactionsDay.map((transaction, index) => (
-          <div key={index}>
-              {transaction.due_date}
-              <p>{transaction.amount} - {transaction.categories?.name}</p>
-              <p>{transaction.description}</p>
-          </div>
+          <TransactionByDueDayListItem key={index} transaction={transaction} />
         ))}
         {isLoading && <div>carregando...</div>}
       </Stack>

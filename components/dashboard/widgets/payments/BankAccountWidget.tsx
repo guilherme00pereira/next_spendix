@@ -11,8 +11,8 @@ const ColoredCard = styled(Card, {
   color: "white",
   backgroundColor: "#" + bgcolor || theme.palette.primary.main,
   padding: "10px",
-  width: "300px",
-  height: "130px",
+  width: "200px",
+  height: "110px",
   borderRadius: "8px",
   margin: "10px",
 }));
@@ -38,7 +38,7 @@ const BankAccountWidget = ({account}: {account: BankAccountType}) => {
           </Button>
         </Stack>
         
-        <Typography key={account.id} variant="h3" >
+        <Typography key={account.id} variant="h4" >
           R$ {account.balance}
         </Typography>
       </Stack>

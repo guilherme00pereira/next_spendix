@@ -8,7 +8,7 @@ import { CategoryFormData } from "@/types/entities";
 import { CategoryTypeDict } from "@/lib/data";
 import { addCategory, editCategory, getCategories } from "@/lib/supabase/methods/categories";
 import LinearProgress from "@mui/material/LinearProgress";
-import { useSpeedDialStore } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ISelectOption } from "@/types/interfaces";
 import { convertNameToSlug } from "@/lib/functions";

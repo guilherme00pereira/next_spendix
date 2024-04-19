@@ -3,7 +3,7 @@ import {useState} from "react";
 import {TransactionContext} from "@/lib/hooks";
 import {TransactionType} from "@/types/entities";
 import PageContainer from "@/components/dashboard/page/PageContainer";
-import TransactionsByDueDayList from "@/components/dashboard/lists/TransactionsByDueDayDataList";
+import TransactionsByDueDayList from "@/components/dashboard/lists/TransactionsByDueDayList";
 import TransactionsTimeline from "@/components/dashboard/lists/TransactionsTimeline";
 import Grid from "@mui/material/Grid";
 import Masonry from "@mui/lab/Masonry";

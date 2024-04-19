@@ -5,14 +5,14 @@ import { styled } from '@mui/material/styles';
 import { usePageContext } from '@/lib/hooks';
 
 const AddCard = styled(Card, {
-  shouldForwardProp: (prop) => prop !== "height",
-})<{ height?: string }>(({ theme, height }) => ({
+  shouldForwardProp: (prop) => prop !== "height" && prop !== "width",
+})<{ height?: string, width?: string }>(({ theme, height, width }) => ({
   padding: theme.spacing(3),
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
-  width: "300px",
+  width: width || "300px",
   height: height || "180px",
   margin: "10px",
   "&:hover": {
@@ -30,11 +30,11 @@ const AddCard = styled(Card, {
   },
 }));
 
-const AddNewPaymentMethodWidget = ({height}: {height: string}) => {
+const AddNewPaymentMethodWidget = ({height, width}: {height: string, width: string}) => {
   const {actionShowModal} = usePageContext();
 
   return (
-    <AddCard onClick={() => actionShowModal(true)} height={height}>
+    <AddCard onClick={() => actionShowModal(true)} height={height} width={width}>
       <AddCircleOutlineRoundedIcon />
     </AddCard>
   );

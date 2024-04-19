@@ -10,8 +10,8 @@ const ColoredCard = styled(Card, {
   color: "white",
   backgroundColor: "#" + bgcolor || theme.palette.primary.main,
   padding: "10px",
-  width: "300px",
-  height: "180px",
+  width: "280px",
+  height: "160px",
   borderRadius: "8px",
   margin: "10px",
 }));
@@ -46,7 +46,7 @@ const CreditCardWidget = ({ cc }: { cc: any }) => {
             <Typography key={cc.id} variant="subtitle1">
               Vencimento
             </Typography>
-            <Typography key={cc.id} variant="h6">
+            <Typography key={cc.id} variant="subtitle1">
               {cc.due_day}
             </Typography>
           </Stack>

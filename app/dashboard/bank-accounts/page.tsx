@@ -8,7 +8,6 @@ import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/payments/A
 import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog";
 import {BankAccountType} from "@/types/entities";
 import {BankAccountContext} from "@/lib/hooks";
-import PageTitle from "@/components/dashboard/page/PageTitle";
 import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
 import PageContainer from "@/components/dashboard/page/PageContainer";
 
@@ -22,11 +21,9 @@ const BankAccountsPage = () => {
 
   return (
     <BankAccountContext.Provider value={{editableObject: editableAccount, setEditableObject: setEditableAccount}}>
-      <PageContainer>
-        <Stack>
-          <PageTitle title="Contas Bancárias"/>
+      <PageContainer title="Contas Bancárias">
           <Paper>
-            <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{p: 2}}>
+            <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{py: 2, px: 4}}>
               {isLoading && 
                 <RepeatableLoader items={3} width={300} height={130} />
               }
@@ -36,13 +33,12 @@ const BankAccountsPage = () => {
                     payment_methods.map((payment_method: any) => (
                       <BankAccountWidget key={payment_method.id} account={payment_method.accounts}/>
                     ))}
-                  <AddNewPaymentMethodWidget height="130px"/>
+                  <AddNewPaymentMethodWidget width="200px" height="110px"/>
                   <BankAccountDialog/>
                 </>
               )}
             </Stack>
           </Paper>
-        </Stack>
       </PageContainer>
     </BankAccountContext.Provider>
   );
