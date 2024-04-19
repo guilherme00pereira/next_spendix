@@ -6,11 +6,16 @@ import { IDayOfMonthProps } from "@/types/interfaces";
 
 //TODO: add side buttons and load ant end of the month
 const DaysWrapper = styled(Stack)(({ theme }) => ({
-  width: "100%",
+  width: "90%",
   height: "100%",
-  padding: "12px",
+  padding: "8px",
+  marginBlockEnd: "12px",
   overflowX: "scroll",
   scrollBehaviorX: "smooth",
+  scrollSnapType: "x mandatory",
+  overscrollBehaviorX: "contain",
+  scrollbarWidth: "none",
+  scrollPaddingLeft: "calc((100% - 60px) / 2)",
   whiteSpace: "nowrap",
   "&::-webkit-scrollbar": {
     display: "none",
@@ -49,7 +54,7 @@ const SelectDayOfMonth = ({
 }: IDayOfMonthProps) => {
 
   return (
-    <DaysWrapper direction="row" justifyContent="center" spacing={2}>
+    <DaysWrapper direction="row" justifyContent="flex-start" spacing={2}>
       <Stack
         direction="row"
         justifyContent="center"

@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Box, Grid, Paper } from "@mui/material";
-import CategoriesTable from "@/components/dashboard/tables/CategoriesTable";
-import Stack from "@mui/material/Stack";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategories, removeCategory } from "@/lib/supabase/methods/categories";
 import { CategoryType } from "@/types/entities";
@@ -10,9 +8,10 @@ import CategoryTableLoader from "@/components/dashboard/loaders/CategoryTableLoa
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { useSpeedDialStore } from "@/lib/store";
 import { IRemovableEntity } from "@/types/interfaces";
-import PageTitle from "@/components/dashboard/page/PageTitle";
 import PageContainer from "@/components/dashboard/page/PageContainer";
 import ApexParentCategoriesBarChart from "@/components/dashboard/charts/ApexParentCategoriesBarChart";
+import ChooseIconDialog from "@/components/dashboard/dialogs/ChooseIconDialog";
+import CategoriesList from "@/components/dashboard/lists/CategoriesList";
 
 const CategoriesPage = () => {
   const queryClient = useQueryClient();
@@ -67,12 +66,10 @@ const CategoriesPage = () => {
     <PageContainer title="Categorias">
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
-          <Paper sx={{ width: "100%" }}>
-            <Box p={2}>
               {isLoading && <CategoryTableLoader />}
               {isLoading ||
                 (categories && (
-                  <CategoriesTable
+                  <CategoriesList
                     handleCategory={setChosenCategory}
                     categories={categories as CategoryType[]}
                     handleConfirmDelete={handleConfirmDelete}
@@ -80,13 +77,12 @@ const CategoriesPage = () => {
                   />
                 ))}
               <ConfirmDeleteDialog entity={removableCategory} open={openConfirm} handleClose={setOpenConfirm} handleDelete={processDelete} />
-            </Box>
-          </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ApexParentCategoriesBarChart title="Total por categorias no mês" />
+          <ApexParentCategoriesBarChart title="Despesas por categorias no mês" />
         </Grid>
       </Grid>
+      <ChooseIconDialog />
     </PageContainer>
   );
 };

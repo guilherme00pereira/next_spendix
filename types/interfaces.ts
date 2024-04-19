@@ -80,11 +80,18 @@ interface ISpeedDialStoreData {
     setRecurring: (r: RecurringFormData) => void;
 }
 
-interface ICategoryTableProps {
+interface ICategoryListProps {
     handleCategory: Dispatch<SetStateAction<number>>;
     categories: CategoryType[];
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
+}
+
+interface ICategoryListItemProps {
+    category: CategoryType;
+    handleEdit: (id: number) => void;
+    handleConfirmDelete: (id: number, name: string) => void;
+    handleView: (id: number) => void;
 }
 
 interface IChildrenCategoriesProps {
@@ -141,7 +148,8 @@ export type {
     ITransactionContextData,
     IAppPersistData,
     ISpeedDialStoreData,
-    ICategoryTableProps,
+    ICategoryListProps,
+    ICategoryListItemProps,
     IChildrenCategoriesProps,
     ICategoriesPanelProps,
     IEditableObjectContextData,

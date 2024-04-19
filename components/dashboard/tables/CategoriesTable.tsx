@@ -10,7 +10,7 @@ import {Button, Chip, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
-import {ICategoryTableProps} from "@/types/interfaces";
+import {ICategoryListProps} from "@/types/interfaces";
 import ChildrenCategoriesTable from "./ChildrenCategoriesTable";
 import {CategoryType} from "@/types/entities";
 
@@ -26,7 +26,7 @@ const getTypeColor = (type: string) => {
 }
 
 
-const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmDelete}: ICategoryTableProps) => {
+const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmDelete}: ICategoryListProps) => {
 
   const getSubCategories = (id: number) => {
     const subs = categories?.filter((c) => {

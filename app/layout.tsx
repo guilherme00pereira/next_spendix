@@ -19,6 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="initial-scale=1, width=device-width" />
+      <link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
+
       <body className={`${inter.className}`}>
           <ThemeRegistry>{children}</ThemeRegistry>
       </body>
