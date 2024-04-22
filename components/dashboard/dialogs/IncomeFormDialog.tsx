@@ -51,45 +51,31 @@ const IncomeFormDialog = () => {
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
+      const obj = {
+        id: values.id ?? undefined,
+        amount: values["amount"],
+        due_date: values["due_date"],
+        description: values["description"],
+        cashed: values["cashed"],
+        category_id: values["category_id"],
+        in_installments: values["in_installments"],
+        installments: values["installments"],
+        payment_date: values["payment_date"],
+        payed_amount: values["payed_amount"],
+        payment_method_id: values["payment_method_id"],
+        payment_id: values["payment_id"],
+        draft: values["draft"],
+        tags: values["tags"],
+      };
       if (values.id) {
-        //TODO: extract object to a function
-        editTransaction({
-          id: values.id,
-          amount: values["amount"],
-          due_date: values["due_date"],
-          description: values["description"],
-          cashed: values["cashed"],
-          category_id: values["category_id"],
-          in_installments: values["in_installments"],
-          installments: values["installments"],
-          payment_date: values["payment_date"],
-          payed_amount: values["payed_amount"],
-          payment_method_id: values["payment_method_id"],
-          payment_id: values["payment_id"],
-          draft: values["draft"],
-          tags: values["tags"],
-        }).then((res) => {
+        editTransaction(obj).then((res) => {
           if (res !== null) {
             actionShowIncomeDialog(false);
             setIsPending(false);
           }
         });
       } else {
-        addTransaction({
-          amount: values["amount"],
-          due_date: values["due_date"],
-          description: values["description"],
-          cashed: values["cashed"],
-          category_id: values["category_id"],
-          in_installments: values["in_installments"],
-          installments: values["installments"],
-          payment_date: values["payment_date"],
-          payed_amount: values["payed_amount"],
-          payment_method_id: values["payment_method_id"],
-          payment_id: null,
-          draft: values["draft"],
-          tags: values["tags"],
-        }).then((res) => {
+        addTransaction(obj).then((res) => {
           if (res !== null) {
             actionShowIncomeDialog(false);
             setIsPending(false);
@@ -102,7 +88,7 @@ const IncomeFormDialog = () => {
   return (
     <Dialog open={showIncomeDialog} fullWidth maxWidth="md" onClose={() => actionShowIncomeDialog(!showIncomeDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarSpeedDialog title="Nova Receita" showDialog={showIncomeDialog} closeAction={actionShowIncomeDialog} />
+        <TopBarSpeedDialog title="Receita" showDialog={showIncomeDialog} closeAction={actionShowIncomeDialog} />
         <DialogContent>
           {isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>

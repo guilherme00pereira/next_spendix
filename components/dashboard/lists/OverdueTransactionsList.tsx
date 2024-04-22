@@ -1,5 +1,5 @@
 import React from "react";
-import { PaperContainer } from "@/components/common-styled";
+import { PaperContainer } from "@/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
 

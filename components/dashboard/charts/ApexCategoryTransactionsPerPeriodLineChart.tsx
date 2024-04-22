@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { TextField, MenuItem, FormControl, Stack, useColorScheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
@@ -8,12 +8,12 @@ import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 
 
-const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { transactions: TransactionType[]; categories: CategoryType[] }) => {
+const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { transactions: TransactionType[]; categories: CategoryType[] }) => {
   const [data, setData] = useState<ChartBarType[]>([]);
   const router = useRouter();
   const { mode } = useColorScheme();
 
-  const handleChangeSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const categoryId = event.target.value;
     router.push(`/dashboard/categories/${categoryId}`);
   };
@@ -38,7 +38,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { 
 
   return (
     <PaperContainer>
-      <PaperHeader title="Evolução por mês" showSettingButon />
+      <PaperHeader title="Evolução por período" showSettingButon />
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
         <FormControl sx={{width: "50%"}}>
           <TextField
@@ -46,7 +46,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { 
             name="category_id"
             label="Trocar categoria: "
             size="small"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeSelect(e)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeSelect(e)}
           >
             {categories?.map((category) => (
               <MenuItem key={category.id} value={category.slug}>
@@ -115,4 +115,4 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { 
   );
 };
 
-export default CategoryTransactionsSixMonthsLineChart;
+export default CategoryTransactionsPerPeriodLineChart;

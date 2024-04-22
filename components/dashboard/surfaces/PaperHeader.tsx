@@ -35,7 +35,7 @@ const Title = styled("div")(({theme}) => ({
 }));
 
 
-const PaperHeader = ({title, showSettingButon, buttonAction}: IPaperHeaderProps) => {
+const PaperHeader = ({title, showLink, linkTo, linkText, showSettingButon, settingsButtonAction}: IPaperHeaderProps) => {
   return (
     <Header direction="row" justifyContent="space-between" alignItems="center">
       <Box>
@@ -43,12 +43,17 @@ const PaperHeader = ({title, showSettingButon, buttonAction}: IPaperHeaderProps)
         {title}
       </Title>
       </Box>
-      
+      {showLink && (
+        <ActionButton size="small" variant="text" href={linkTo
+        }>
+          {linkText}
+        </ActionButton>
+      )}
       {showSettingButon && (
         <ActionButton
           size="small"
           variant="text"
-          onClick={buttonAction}
+          onClick={settingsButtonAction}
         >
           <SettingsRoundedIcon fontSize="small"/>
         </ActionButton>

@@ -3,22 +3,20 @@ import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import MuiDrawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
-import { Stack } from "@mui/system";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import WalletIcon from "@mui/icons-material/Wallet";
-import { Collapse, Typography } from "@mui/material";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
 
@@ -66,17 +64,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const ParentListNode = styled(List, {
-  shouldForwardProp: (prop) => prop !== "disablePadding",
-})(({ theme }) => ({
-  backgroundColor: theme.vars.palette.background.paper,
-  [theme.getColorSchemeSelector("light")]: {
-    backgroundColor: neutral[900],
-  },
-}));
-
 export default function Sidebar({ open }: IDashboardLayoutProps) {
-  const [expandPaymentMethods, setExpandPaymentMethods] = React.useState(false);
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -123,33 +111,31 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
           <ListItemText primary="Categorias" />
         </ListItemButton>
 
+       <ListItemButton
+          LinkComponent="a"
+          href="/dashboard/bank-accounts"
+        >
+          <ListItemIcon>
+            <AccountBalanceRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contas" />
+        </ListItemButton>
+        <ListItemButton
+          LinkComponent="a"
+          href="/dashboard/credit-cards"
+        >
+          <ListItemIcon>
+            <CreditCardRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Cartões de Crédito" />
+        </ListItemButton>
+
         <ListItemButton LinkComponent="a" href="/dashboard/tags">
           <ListItemIcon>
             <LocalOfferRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Tags" />
         </ListItemButton>
-
-        <ListItemButton LinkComponent="nav" onClick={() => setExpandPaymentMethods(!expandPaymentMethods)}>
-          <ListItemIcon>{expandPaymentMethods ? <ExpandLessRoundedIcon /> : <AccountBalanceWalletIcon />}</ListItemIcon>
-          <ListItemText primary="Carteira" />
-        </ListItemButton>
-        <Collapse in={expandPaymentMethods} timeout="auto" unmountOnExit>
-          <ParentListNode disablePadding>
-            <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts" sx={{ ml: open ? 2 : 0 }}>
-              <ListItemIcon>
-                <AccountBalanceRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Contas" />
-            </ListItemButton>
-            <ListItemButton LinkComponent="a" href="/dashboard/credit-cards" sx={{ ml: open ? 2 : 0 }}>
-              <ListItemIcon>
-                <CreditCardRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Cartões de Crédito" />
-            </ListItemButton>
-          </ParentListNode>
-        </Collapse>
 
         <ListItemButton LinkComponent="a" href="/dashboard/settings">
           <ListItemIcon>

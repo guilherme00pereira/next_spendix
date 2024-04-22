@@ -5,7 +5,7 @@ import { CreditCardType } from "@/types/entities";
 import {
   DashboardTopCardContentInfo,
   DashboardTopCardContentRow,
-} from "@/components/common-styled";
+} from "@/components/dashboard/commonStyledComponents";
 import { amountFormatter } from "@/lib/functions";
 
 const DashboardCardInvoices = () => {

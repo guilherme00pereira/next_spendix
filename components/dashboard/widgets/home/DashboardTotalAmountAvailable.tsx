@@ -5,7 +5,7 @@ import DashboardTopCard from "./DashboardTopCard";
 import {
   DashboardTopCardContentInfo,
   DashboardTopCardContentRow,
-} from "@/components/common-styled";
+} from "@/components/dashboard/commonStyledComponents";
 
 const DashboardTotalAmountAvailable = () => {
   const [bankAmount, setBankAmount] = useState(0);

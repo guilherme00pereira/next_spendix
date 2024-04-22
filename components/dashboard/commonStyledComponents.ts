@@ -15,11 +15,14 @@ const DashboardTopCardContentRow = styled(Stack, {
 }));
 
 const PaperContainer = styled(Paper)(({theme}) => ({
-  paddingBlock: theme.spacing(3),
-  paddingInline: theme.spacing(1),
+  padding: theme.spacing(2),
 }));
 
 const TransactionListItem = styled(Stack)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
   width: "100%",
   height: "62px",
   padding: "8px 16px",

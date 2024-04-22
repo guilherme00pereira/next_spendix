@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Stack, Typography, Paper, Box } from "@mui/material";
+import { Stack, Typography, Paper, Box, Grid } from "@mui/material";
 import CategoryDetailsTable from "@/components/dashboard/tables/CategoryDetailsTable";
 import { getTransactionsByCategoriesLastSixMonths } from "@/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories } from "@/lib/supabase/methods/categories";
-import ApexCategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/ApexCategoryTransactionsSixMonthsLineChart";
+import ApexCategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
 import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const Subtitle = styled(Typography)(({ theme }) => ({
@@ -18,14 +18,24 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
   const [childrenNames, setChildrenNames] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [spendingsCategories, setSpendingsCategories] = useState<CategoryType[]>([]);
+  const [spendingsCategories, setSpendingsCategories] = useState<
+    CategoryType[]
+  >([]);
 
   useEffect(() => {
     getCategories().then((categories) => {
-      const currId = categories.filter((c) => c.slug === params.slug).map((c) => c.id)[0];
-      const ids = categories.filter((c) => c.parent === currId).map((c) => c.id);
-      setChildrenNames(categories.filter((c) => c.parent === currId).map((c) => c.name));
-      const title = categories.filter((c) => c.id === currId).map((c) => c.name);
+      const currId = categories
+        .filter((c) => c.slug === params.slug)
+        .map((c) => c.id)[0];
+      const ids = categories
+        .filter((c) => c.parent === currId)
+        .map((c) => c.id);
+      setChildrenNames(
+        categories.filter((c) => c.parent === currId).map((c) => c.name)
+      );
+      const title = categories
+        .filter((c) => c.id === currId)
+        .map((c) => c.name);
       setTitle(title[0]);
       ids.push(currId);
       getTransactionsByCategoriesLastSixMonths(ids).then((data) => {
@@ -36,28 +46,22 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
   }, []);
 
   return (
-    <PageContainer>
-      <Stack>
-        <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
-          <Stack sx={{ width: "75%" }}>
-            <Typography variant="h2" fontSize="1.5em" color="primary">
-              Categoria: {title}
-            </Typography>
-            {childrenNames.length > 0 && <Subtitle variant="h6">Subcategorias: {childrenNames.join(", ")}</Subtitle>}
-          </Stack>
-          <Box sx={{ width: "25%" }}>
-            
-          </Box>
-        </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <Paper sx={{ width: "58%" }}>
-            <Box flexWrap="wrap" sx={{ p: 2 }}>
-              {transactions && CategoryDetailsTable({ transactions: transactions })}
-            </Box>
+    <PageContainer title={`Categoria ${title}`}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid item xs={12} md={6}>
+          {transactions && CategoryDetailsTable({ transactions: transactions })}
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Paper>
+            {transactions.length > 0 && (
+              <ApexCategoryTransactionsSixMonthsLineChart
+                transactions={transactions}
+                categories={spendingsCategories}
+              />
+            )}
           </Paper>
-          <Paper sx={{ width: "40%" }}>{transactions.length > 0 && <ApexCategoryTransactionsSixMonthsLineChart transactions={transactions} categories={spendingsCategories} />}</Paper>
-        </Stack>
-      </Stack>
+        </Grid>
+      </Grid>
     </PageContainer>
   );
 };

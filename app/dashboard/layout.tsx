@@ -7,22 +7,24 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import { PageContext } from "@/lib/hooks";
 import { useAppStore } from "@/lib/store";
-import { QueryClient } from "@tanstack/react-query";
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+//import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 60,
-    },
-  },
-});
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       staleTime: 1000 * 60,
+//     },
+//   },
+// });
 
-const persister = createSyncStoragePersister({
-  storage: typeof window !== "undefined" ? window.localStorage : undefined,
-})
+// const persister = createSyncStoragePersister({
+  //   storage: typeof window !== "undefined" ? window.localStorage : undefined,
+  // })
+  
+const queryClient = new QueryClient()
 
 const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.vars.palette.background.default,
@@ -44,7 +46,8 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
         mediaQuery: "md"
       }}
     >
-      <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}>
+      {/* <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}> */}
+      <QueryClientProvider client={queryClient}>
         {getInitColorSchemeScript()}
         <Box sx={{ display: "flex" }}>
           <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
@@ -54,7 +57,8 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
           </LayoutBoxWrapper>
         </Box>
         <SpeedDialAdd />
-      </PersistQueryClientProvider>
+        </QueryClientProvider>
+      {/* </PersistQueryClientProvider> */}
     </PageContext.Provider>
   );
 }

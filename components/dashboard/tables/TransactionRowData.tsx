@@ -48,7 +48,6 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
   };
 
   const handleEdit = (t: TransactionType) => {
-    console.log(t)
     setTransaction({
       id: t.id,
       amount: t.amount,

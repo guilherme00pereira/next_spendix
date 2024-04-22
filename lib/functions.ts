@@ -26,7 +26,13 @@ const convertNameToSlug = (name: string) => {
 const groupTransactionsByDate = (transactions: TransactionType[]) => {
   const groups = new Map<string, TransactionType[]>();
   transactions.forEach((t) => {
-    if (t.due_date) {
+    if (t.payments) {
+      if (groups.has(t.payments.date)) {
+        groups.get(t.payments.date)?.push(t);
+      } else {
+        groups.set(t.payments.date, [t]);
+      }
+    } else {
       if (groups.has(t.due_date)) {
         groups.get(t.due_date)?.push(t);
       } else {

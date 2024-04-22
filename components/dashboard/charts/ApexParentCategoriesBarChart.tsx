@@ -6,6 +6,7 @@ import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/entities";
 import { Paper, useColorScheme } from "@mui/material";
 import PaperHeader from "../surfaces/PaperHeader";
+import { PaperContainer } from "../commonStyledComponents";
 
 
 const ApexParentCategoriesBarChart = ({title}: {title: string}) => {
@@ -27,7 +28,7 @@ const ApexParentCategoriesBarChart = ({title}: {title: string}) => {
   }, [date]);
 
   return (
-    <Paper sx={{p: 1}}>
+    <PaperContainer>
       <PaperHeader title={title} showSettingButon />
       <Chart
         options={{
@@ -78,7 +79,7 @@ const ApexParentCategoriesBarChart = ({title}: {title: string}) => {
         type="bar"
         height={460}
       />
-    </Paper>
+    </PaperContainer>
   );
 };
 

@@ -3,19 +3,16 @@ import type {} from "@mui/material/themeCssVarsAugmentation";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { IDayOfMonthProps } from "@/types/interfaces";
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 
-//TODO: add side buttons and load ant end of the month
 const DaysWrapper = styled(Stack)(({ theme }) => ({
   width: "90%",
   height: "100%",
   padding: "8px",
   marginBlockEnd: "12px",
   overflowX: "scroll",
-  scrollBehaviorX: "smooth",
-  scrollSnapType: "x mandatory",
-  overscrollBehaviorX: "contain",
+  scrollBehavior: "smooth",
   scrollbarWidth: "none",
-  scrollPaddingLeft: "calc((100% - 60px) / 2)",
   whiteSpace: "nowrap",
   "&::-webkit-scrollbar": {
     display: "none",
@@ -47,14 +44,16 @@ const Day = styled(Stack)(({ theme }) => ({
   },
 }));
 
+
+
 const SelectDayOfMonth = ({
   days,
   selectedDate,
   setSelectedDate,
 }: IDayOfMonthProps) => {
-
+  
   return (
-    <DaysWrapper direction="row" justifyContent="flex-start" spacing={2}>
+    <DaysWrapper id="days-wrapper" direction="row" justifyContent="start" spacing={2}>
       <Stack
         direction="row"
         justifyContent="center"

@@ -91,7 +91,7 @@ interface ICategoryListItemProps {
     category: CategoryType;
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
-    handleView: (id: number) => void;
+    isSubCategory?: boolean;
 }
 
 interface IChildrenCategoriesProps {
@@ -126,8 +126,11 @@ interface IPageContainerProps {
 
 interface IPaperHeaderProps {
     title: string;
+    showLink?: boolean;
+    linkTo?: string;
+    linkText?: string;
     showSettingButon?: boolean;
-    buttonAction?: () => void;
+    settingsButtonAction?: () => void;
     badge?: number;
     badgeColor?: string;
 }

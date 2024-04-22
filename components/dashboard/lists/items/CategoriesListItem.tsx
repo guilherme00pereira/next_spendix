@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
@@ -8,7 +9,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { ICategoryListItemProps } from "@/types/interfaces";
 import Chip from "@mui/material/Chip";
-import Link from "@mui/material/Link";
+import SubdirectoryArrowRightRoundedIcon from "@mui/icons-material/SubdirectoryArrowRightRounded";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -38,24 +39,51 @@ const ListItem = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete }: ICategoryListItemProps) => {
+const CategoriesListItem = ({
+  category,
+  handleEdit,
+  handleConfirmDelete,
+  isSubCategory,
+}: ICategoryListItemProps) => {
   return (
     <ListItem direction="row" justifyContent="space-between">
-      <Box sx={{ width: "50%" }}>
-        <Link href={`/dashboard/categories/${category.slug}`}>{category.name}</Link>
-      </Box>
+      {isSubCategory && (
+        <Box sx={{ width: "50px" }}>
+          <SubdirectoryArrowRightRoundedIcon fontSize="small" />
+        </Box>
+      )}
       <Box sx={{ flexGrow: 1 }}>
-        <Chip label={category.type} size="small" variant="outlined" color={getTypeColor(category.type)} />
+        <Link href={`/dashboard/categories/${category.slug}`}>
+          {category.name}
+        </Link>
+      </Box>
+      <Box sx={{ pr: 4 }}>
+        <Chip
+          label={category.type}
+          size="small"
+          variant="outlined"
+          color={getTypeColor(category.type)}
+        />
       </Box>
       <Box>
         <Stack direction="row" spacing={1}>
           <Box>
-            <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
+            <Button
+              size="small"
+              variant="text"
+              color="info"
+              onClick={() => handleEdit(category.id)}
+            >
               <EditRoundedIcon fontSize="small" />
             </Button>
           </Box>
           <Box>
-            <Button size="small" variant="text" color="error" onClick={() => handleConfirmDelete(category.id, category.name)}>
+            <Button
+              size="small"
+              variant="text"
+              color="error"
+              onClick={() => handleConfirmDelete(category.id, category.name)}
+            >
               <DeleteRoundedIcon fontSize="small" />
             </Button>
           </Box>

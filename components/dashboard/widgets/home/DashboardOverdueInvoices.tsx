@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DashboardTopCard from './DashboardTopCard';
-import { DashboardTopCardContentInfo, DashboardTopCardContentRow } from '@/components/common-styled';
+import { DashboardTopCardContentInfo, DashboardTopCardContentRow } from '@/components/dashboard/commonStyledComponents';
 
 //TODO: supabase function to get overdue bills sum and count
 const DashboardOverdueInvoices = () => {
