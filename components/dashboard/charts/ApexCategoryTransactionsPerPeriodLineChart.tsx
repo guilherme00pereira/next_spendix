@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { TextField, MenuItem, FormControl, Stack } from "@mui/material";
+import { TextField, MenuItem, FormControl, Stack, useColorScheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
 import { CategoryType, ChartBarType, TransactionType } from "@/types/entities";
 import { useRouter } from "next/navigation";
+import { PaperContainer } from "../commonStyledComponents";
+import PaperHeader from "../surfaces/PaperHeader";
 
-//TODO: move to a global theme
-const barColor = "#49B6F5";
 
 const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { transactions: TransactionType[]; categories: CategoryType[] }) => {
   const [data, setData] = useState<ChartBarType[]>([]);
   const router = useRouter();
+  const { mode } = useColorScheme();
 
   const handleChangeSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const categoryId = event.target.value;
@@ -36,7 +37,8 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { 
   }, []);
 
   return (
-    <>
+    <PaperContainer>
+      <PaperHeader title="Evolução por mês" showSettingButon />
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
         <FormControl sx={{width: "50%"}}>
           <TextField
@@ -82,16 +84,16 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { 
           enabled: true,
           textAnchor: "middle",
           style: {
-            colors: ["white"],
+            colors: mode === "dark" ? ["#BEBFBF"] : ["#333333"],
           },
           formatter: function (val: any) {
             return "R$ " + val.toFixed(2);
           },
           offsetX: 0,
         },
-        colors: [barColor],
+        colors: ["#22A0C7"],
         grid: {
-          borderColor: "#f1f1f1",
+          borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
         },
         legend: {
           show: false,
@@ -109,7 +111,7 @@ const CategoryTransactionsSixMonthsLineChart = ({ transactions, categories }: { 
       type="bar"
       height={300}
       />
-    </>
+    </PaperContainer>
   );
 };
 
