@@ -37,11 +37,12 @@ const getOverdueTransactions = async () => {
     .from("transactions")
     .select(getQuery)
     .lte("due_date", dayjs().format("YYYY-MM-DD"))
-    .eq("payment_id", false)
+    .is("payment_id", null)
     .order("due_date", { ascending: false });
   if (error) {
     throw error;
   }
+  console.log(data);
   return data;
 };
 

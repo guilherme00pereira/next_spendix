@@ -1,18 +1,16 @@
-import React from "react";
-import Stack from "@mui/material/Stack";
-import { TransactionType } from "@/types/entities";
-import { Button, ButtonGroup, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { amountFormatter } from "@/lib/functions";
-import { TransactionListItem } from "@/components/dashboard/commonStyledComponents";
-import { useSpeedDialStore } from "@/lib/store";
-import dayjs from "dayjs";
+import { Typography, ButtonGroup, Button } from "@mui/material";
+import { Stack, Box } from "@mui/system";
+import React from "react";
+import { TransactionListItem } from "../../commonStyledComponents";
+import { TransactionType } from "@/types/entities";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useTransactionContext } from "@/lib/hooks";
+import { useSpeedDialStore } from "@/lib/store";
+import dayjs from "dayjs";
 
-
-const TransactionPerDayListItem = ({ transaction }: { transaction: TransactionType }) => {
+const OverdueTransactionListItem = ({ transaction }: { transaction: TransactionType }) => {
   const { setTransaction, actionShowTransactionDialog, setIncome, actionShowIncomeDialog } = useSpeedDialStore();
   const { actionShowTransactionDetail, setSelectedTransaction } = useTransactionContext();
 
@@ -50,22 +48,25 @@ const TransactionPerDayListItem = ({ transaction }: { transaction: TransactionTy
 
   return (
     <TransactionListItem>
+      <Box sx={{ mr: "18px" }}>
+        <Typography variant="body1">{dayjs(transaction.due_date).format("DD [de] MMM")}</Typography>
+      </Box>
       <Stack direction="column" justifyContent="center" sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle1">{transaction.categories?.name}</Typography>
-        <Typography variant="subtitle2">{transaction.description}</Typography>
+        <Typography variant="body1">{transaction.categories?.name}</Typography>
+        <Typography variant="body2">{transaction.description}</Typography>
       </Stack>
-      <Box sx={{pr: "14px"}}>
-        <Typography variant="body1" color={transaction.categories?.type == "Receita" ? "success.dark" : "error.dark"}>
+      <Box sx={{ pr: "14px" }}>
+        <Typography variant="body1" color="error.dark">
           {amountFormatter(transaction.amount)}
         </Typography>
       </Box>
       <Stack direction="row" justifyContent="end">
         <ButtonGroup size="small">
           <Button size="small" variant="text" onClick={() => handleShowDetail(transaction)}>
-            <VisibilityRoundedIcon fontSize="small" color="action" sx={{fontSize: "1rem"}} />
+            <VisibilityRoundedIcon fontSize="small" color="action" sx={{ fontSize: "1rem" }} />
           </Button>
           <Button size="small" variant="text" onClick={() => handleEdit(transaction)}>
-            <EditRoundedIcon fontSize="small" color="action" sx={{fontSize: "1rem"}} />
+            <EditRoundedIcon fontSize="small" color="action" sx={{ fontSize: "1rem" }} />
           </Button>
         </ButtonGroup>
       </Stack>
@@ -73,4 +74,4 @@ const TransactionPerDayListItem = ({ transaction }: { transaction: TransactionTy
   );
 };
 
-export default TransactionPerDayListItem;
+export default OverdueTransactionListItem;

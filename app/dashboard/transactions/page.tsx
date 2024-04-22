@@ -13,9 +13,11 @@ import { useAppStore } from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import ApexCompareDailyTransactionsAndMean from "@/components/dashboard/charts/ApexCompareDailyTransactionsAndMean";
+import TransactionDetailRightDrawer from "@/components/dashboard/surfaces/TransactionDetailRightDrawer";
 
 const TransactionsPage = () => {
-  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [selectedTransaction, setSelectedTransaction] = useState<TransactionType>({} as TransactionType);
+  const [toggleTransactionDetail, setToggleTransactionDetail] = useState(false);
   const date = useAppStore((state) => state.date);
 
   const { data: allTransactions, isLoading } = useQuery({
@@ -24,10 +26,7 @@ const TransactionsPage = () => {
   });
 
   const pullTransactions = () => {
-    return getTransactions(
-      dayjs(date).startOf("M").format("YYYY-MM-DD"),
-      dayjs(date).endOf("M").format("YYYY-MM-DD")
-    ).then((data) => {
+    return getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD")).then((data) => {
       return data as TransactionType[];
     });
   };
@@ -35,9 +34,10 @@ const TransactionsPage = () => {
   return (
     <TransactionContext.Provider
       value={{
-        balanceTotal: [],
-        list: transactions,
-        setList: setTransactions,
+        selectedTransaction,
+        setSelectedTransaction,
+        showTransactionDetail: toggleTransactionDetail,
+        actionShowTransactionDetail: setToggleTransactionDetail,
       }}
     >
       <PageContainer title="Transações">
@@ -48,12 +48,13 @@ const TransactionsPage = () => {
           {isLoading || (
             <>
               {allTransactions && <TransactionsPerDayList transactions={allTransactions} />}
-              <ApexCompareDailyTransactionsAndMean />
               <TransactionsPrediction />
+              <ApexCompareDailyTransactionsAndMean />
               <OverdueTransactionsList />
             </>
           )}
         </Masonry>
+        <TransactionDetailRightDrawer />
       </PageContainer>
     </TransactionContext.Provider>
   );

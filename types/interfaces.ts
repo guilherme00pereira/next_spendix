@@ -49,9 +49,10 @@ interface IPageContextData {
 }
 
 interface ITransactionContextData {
-    balanceTotal: number[];
-    list: TransactionType[];
-    setList: Dispatch<SetStateAction<TransactionType[]>>;
+    selectedTransaction: TransactionType;
+    setSelectedTransaction: Dispatch<SetStateAction<TransactionType>>;
+    showTransactionDetail: boolean;
+    actionShowTransactionDetail: (action: boolean) => void;
 }
 
 interface IAppPersistData {
@@ -160,6 +161,6 @@ export type {
     IDeleteTransactionData,
     IPageContainerProps,
     IPaperHeaderProps,
-    IDayOfMonthProps
+    IDayOfMonthProps,
 }
 
