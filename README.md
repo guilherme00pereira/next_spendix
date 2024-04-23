@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.12
+- 0.12.7: Card header types.
 - 0.12.6: Overdue transactions card on transactions page.
 - 0.12.5: All transactions in a single page. Horizontal scrolling menu for days of the month.
 - 0.12.4: Refactor categories list on categories page.

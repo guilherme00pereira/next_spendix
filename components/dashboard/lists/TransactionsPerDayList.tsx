@@ -8,6 +8,7 @@ import { amountFormatter, groupTransactionsByDate } from "@/lib/functions";
 import SelectDayOfMonth from "@/components/dashboard/calendar/SelectDayOfMonth";
 import TransactionPerDayListItem from "./items/TransactionPerDayListItem";
 import Typography from "@mui/material/Typography";
+import { link } from "fs";
 
 const TransactionsPerDayList = ({ transactions }: { transactions: TransactionType[] }) => {
   const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());
@@ -22,9 +23,20 @@ const TransactionsPerDayList = ({ transactions }: { transactions: TransactionTyp
     return mappedTransactions.get(selectedDate) ?? [];
   }, [selectedDate, mappedTransactions]);
 
+  const dayBalance = useMemo(() => {
+    return transactionsDay.reduce((acc, curr) => curr.categories?.type == "Receita" ? acc + curr.amount : acc - curr.amount, 0);
+  }
+    , [transactionsDay]);
+
+    const linkObj = {
+        show: true,
+        text: "Ver todas",
+        target: "/dashboard/transactions/all"
+    };
+
   return (
     <PaperContainer>
-      <PaperHeader title="Transações por dia" showLink linkText="Ver todas" linkTo="/dashboard/transactions/all" />
+      <PaperHeader title="Transações por dia" link={linkObj} />
       <Stack>
         <Stack direction="row" justifyContent="center" alignItems="center">
           <SelectDayOfMonth days={Array.from(mappedTransactions.keys())} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
@@ -37,7 +49,7 @@ const TransactionsPerDayList = ({ transactions }: { transactions: TransactionTyp
             Saldo:
           </Typography>
           <Typography variant="subtitle1" fontWeight={900}>
-            {amountFormatter(transactionsDay.reduce((acc, curr) => acc + curr.amount, 0))}
+            {amountFormatter(dayBalance)}
           </Typography>
         </TransactionListItem>
       </Stack>

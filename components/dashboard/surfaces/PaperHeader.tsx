@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {IPaperHeaderProps} from "@/types/interfaces";
+import { Badge } from "@mui/material";
 
 const Header = styled(Stack)(({theme}) => ({
   borderBlockEnd: `1px solid ${theme.vars.palette.divider}`,
@@ -35,7 +36,7 @@ const Title = styled("div")(({theme}) => ({
 }));
 
 
-const PaperHeader = ({title, showLink, linkTo, linkText, showSettingButon, settingsButtonAction}: IPaperHeaderProps) => {
+const PaperHeader = ({title, link, settings, badge}: IPaperHeaderProps) => {
   return (
     <Header direction="row" justifyContent="space-between" alignItems="center">
       <Box>
@@ -43,17 +44,20 @@ const PaperHeader = ({title, showLink, linkTo, linkText, showSettingButon, setti
         {title}
       </Title>
       </Box>
-      {showLink && (
-        <ActionButton size="small" variant="text" href={linkTo
+      {(badge && badge.show) && (
+        <Badge badgeContent={badge.content} color={badge.color} />
+      )}
+      {(link && link.show) && (
+        <ActionButton size="small" variant="text" href={link.target
         }>
-          {linkText}
+          {link.text}
         </ActionButton>
       )}
-      {showSettingButon && (
+      {(settings && settings.showButton) && (
         <ActionButton
           size="small"
           variant="text"
-          onClick={settingsButtonAction}
+          onClick={settings.buttonAction}
         >
           <SettingsRoundedIcon fontSize="small"/>
         </ActionButton>

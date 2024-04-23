@@ -4,7 +4,10 @@ import {
     CategoryType,
     RecurringFormData,
     TransactionType,
-    TransactionFormData
+    TransactionFormData,
+    PaperHeaderLinkType,
+    PaperHeaderSettingsType,
+    PaperHeaderBadgeType
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
 
@@ -127,13 +130,9 @@ interface IPageContainerProps {
 
 interface IPaperHeaderProps {
     title: string;
-    showLink?: boolean;
-    linkTo?: string;
-    linkText?: string;
-    showSettingButon?: boolean;
-    settingsButtonAction?: () => void;
-    badge?: number;
-    badgeColor?: string;
+    link?: PaperHeaderLinkType;
+    settings?: PaperHeaderSettingsType
+    badge?: PaperHeaderBadgeType;
 }
 
 interface IDayOfMonthProps {

@@ -124,6 +124,22 @@ type TransferMoneyFormData = {
     amount: number;
 }
 
+type PaperHeaderLinkType = {
+    show: boolean;
+    text: string;
+    target: string;
+}
+
+type PaperHeaderBadgeType = {
+    show: boolean;
+    content: number;
+    color: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
+}
+
+type PaperHeaderSettingsType = {
+    showButton: boolean;
+    buttonAction: () => void;
+}
 
 export type {
     CategoryType,
@@ -138,5 +154,8 @@ export type {
     ChartBarType,
     BankAccountType,
     CreditCardType,
-    TransferMoneyFormData
+    TransferMoneyFormData,
+    PaperHeaderLinkType,
+    PaperHeaderBadgeType,
+    PaperHeaderSettingsType
 }
