@@ -24,7 +24,10 @@ const TransactionsPerDayList = ({ transactions }: { transactions: TransactionTyp
   }, [selectedDate, mappedTransactions]);
 
   const dayBalance = useMemo(() => {
-    return transactionsDay.reduce((acc, curr) => curr.categories?.type == "Receita" ? acc + curr.amount : acc - curr.amount, 0);
+    return transactionsDay.reduce((acc, curr) => { 
+      const v = curr.payments?.amount ?? curr.amount;
+      return curr.categories?.type == "Receita" ? acc + v : acc - v
+    }, 0);
   }
     , [transactionsDay]);
 

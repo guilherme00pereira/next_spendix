@@ -10,6 +10,20 @@ import { useTransactionContext } from "@/lib/hooks";
 import { useSpeedDialStore } from "@/lib/store";
 import dayjs from "dayjs";
 
+const getOverdueDays = (dueDate: string) => {
+  const due = dayjs(dueDate);
+  const today = dayjs();
+  const overdue = today.diff(due, "days");
+  let color = "info.dark";
+  if(overdue > 30) color = "error.main";
+  if(overdue > 15 && overdue <= 30) color = "warning.dark";
+  return (
+    <Typography variant="body2" color={color}>
+      {overdue} dias
+    </Typography>
+  );
+};
+
 const OverdueTransactionListItem = ({ transaction }: { transaction: TransactionType }) => {
   const { setTransaction, actionShowTransactionDialog, setIncome, actionShowIncomeDialog } = useSpeedDialStore();
   const { actionShowTransactionDetail, setSelectedTransaction } = useTransactionContext();
@@ -48,15 +62,15 @@ const OverdueTransactionListItem = ({ transaction }: { transaction: TransactionT
 
   return (
     <TransactionListItem>
-      <Box sx={{ mr: "18px" }}>
-        <Typography variant="body1">{dayjs(transaction.due_date).format("DD [de] MMM")}</Typography>
+      <Box sx={{ mr: "24px" }}>
+        {getOverdueDays(transaction.due_date)}
       </Box>
       <Stack direction="column" justifyContent="center" sx={{ flexGrow: 1 }}>
         <Typography variant="body1">{transaction.categories?.name}</Typography>
         <Typography variant="body2">{transaction.description}</Typography>
       </Stack>
       <Box sx={{ pr: "14px" }}>
-        <Typography variant="body1" color="error.dark">
+        <Typography variant="body1">
           {amountFormatter(transaction.amount)}
         </Typography>
       </Box>

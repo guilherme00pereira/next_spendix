@@ -6,6 +6,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useTransactionContext } from "@/lib/hooks";
 import { Typography } from "@mui/material";
+import { amountFormatter } from "@/lib/functions";
+import dayjs from "dayjs";
 
 const RightDrawer = styled(Drawer)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -36,16 +38,16 @@ const TransactionDetailRightDrawer = () => {
             <ListItemText primary="Descrição" secondary={selectedTransaction.description} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Data de vencimento" secondary={selectedTransaction.due_date} />
+            <ListItemText primary="Data de vencimento" secondary={dayjs(selectedTransaction.due_date).format('DD/MM/YYYY')} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Valor devido " secondary={selectedTransaction.amount} />
+            <ListItemText primary="Valor devido " secondary={amountFormatter(selectedTransaction.amount)} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Data de pagamento" secondary={selectedTransaction.payments?.date} />
+            <ListItemText primary="Data de pagamento" secondary={dayjs(selectedTransaction.payments?.date).format('DD/MM/YYYY')} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Valor pago" secondary={selectedTransaction.payments?.amount} />
+            <ListItemText primary="Valor pago" secondary={amountFormatter(selectedTransaction.payments?.amount ?? 0)} />
           </ListItem>
         </List>
       )}

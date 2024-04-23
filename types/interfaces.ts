@@ -7,7 +7,8 @@ import {
     TransactionFormData,
     PaperHeaderLinkType,
     PaperHeaderSettingsType,
-    PaperHeaderBadgeType
+    PaperHeaderBadgeType,
+    PaperHeaderFilterType
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
 
@@ -133,6 +134,7 @@ interface IPaperHeaderProps {
     link?: PaperHeaderLinkType;
     settings?: PaperHeaderSettingsType
     badge?: PaperHeaderBadgeType;
+    filter?: PaperHeaderFilterType;
 }
 
 interface IDayOfMonthProps {

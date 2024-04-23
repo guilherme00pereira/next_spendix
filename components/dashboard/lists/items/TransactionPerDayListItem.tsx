@@ -56,7 +56,7 @@ const TransactionPerDayListItem = ({ transaction }: { transaction: TransactionTy
       </Stack>
       <Box sx={{pr: "14px"}}>
         <Typography variant="body1" color={transaction.categories?.type == "Receita" ? "success.dark" : "error.dark"}>
-          {amountFormatter(transaction.amount)}
+          {amountFormatter(transaction.payments?.amount ?? transaction.amount)}
         </Typography>
       </Box>
       <Stack direction="row" justifyContent="end">

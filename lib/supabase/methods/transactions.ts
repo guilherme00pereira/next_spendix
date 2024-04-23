@@ -38,7 +38,7 @@ const getOverdueTransactions = async () => {
     .select(getQuery)
     .lte("due_date", dayjs().format("YYYY-MM-DD"))
     .is("payment_id", null)
-    .order("due_date")
+    .order("due_date", {ascending: false})
     .order("category_id");
   if (error) {
     throw error;

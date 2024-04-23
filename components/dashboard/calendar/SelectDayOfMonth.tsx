@@ -3,7 +3,6 @@ import type {} from "@mui/material/themeCssVarsAugmentation";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { IDayOfMonthProps } from "@/types/interfaces";
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 const DaysWrapper = styled(Stack)(({ theme }) => ({
   width: "90%",

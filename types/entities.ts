@@ -141,6 +141,11 @@ type PaperHeaderSettingsType = {
     buttonAction: () => void;
 }
 
+type PaperHeaderFilterType = {
+    show: boolean;
+    filterAction: () => void;
+}
+
 export type {
     CategoryType,
     PaymentType,
@@ -157,5 +162,6 @@ export type {
     TransferMoneyFormData,
     PaperHeaderLinkType,
     PaperHeaderBadgeType,
-    PaperHeaderSettingsType
+    PaperHeaderSettingsType,
+    PaperHeaderFilterType
 }
