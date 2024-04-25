@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { getTransactions } from "@/lib/supabase/methods/transactions";
 import { TransactionContext } from "@/lib/hooks";
 import { TransactionType } from "@/types/entities";
 import PageContainer from "@/components/dashboard/page/PageContainer";
@@ -12,6 +11,7 @@ import OverdueTransactionsList from "@/components/dashboard/lists/OverdueTransac
 import { useAppStore } from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { getPayedTransactions } from "@/lib/supabase/methods/transactions";
 import ApexCompareDailyTransactionsAndMean from "@/components/dashboard/charts/ApexCompareDailyTransactionsAndMean";
 import TransactionDetailRightDrawer from "@/components/dashboard/surfaces/TransactionDetailRightDrawer";
 
@@ -26,7 +26,7 @@ const TransactionsPage = () => {
   });
 
   const pullTransactions = () => {
-    return getTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD")).then((data) => {
+    return getPayedTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD")).then((data) => {
       return data as TransactionType[];
     });
   };

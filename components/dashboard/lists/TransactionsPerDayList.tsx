@@ -8,7 +8,6 @@ import { amountFormatter, groupTransactionsByDate } from "@/lib/functions";
 import SelectDayOfMonth from "@/components/dashboard/calendar/SelectDayOfMonth";
 import TransactionPerDayListItem from "./items/TransactionPerDayListItem";
 import Typography from "@mui/material/Typography";
-import { link } from "fs";
 
 const TransactionsPerDayList = ({ transactions }: { transactions: TransactionType[] }) => {
   const [mappedTransactions, setMappedTransactions] = useState<Map<string, TransactionType[]>>(new Map());

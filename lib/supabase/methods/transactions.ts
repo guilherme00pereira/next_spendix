@@ -3,7 +3,7 @@ import { TransactionFormData, RecurringFormData } from "@/types/entities";
 import { IDeleteTransactionData } from "@/types/interfaces";
 import dayjs from "dayjs";
 
-const getQuery = "id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)";
+const getQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), installments: transaction_installments(*)`;
 
 const getTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
@@ -12,6 +12,18 @@ const getTransactions = async (initial_date: string, final_date: string) => {
     .gte("due_date", initial_date)
     .lte("due_date", final_date)
     .order("due_date", { ascending: true });
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
+const getPayedTransactions = async (initial_date: string, final_date: string) => {
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(getQuery)
+    .gte("payments.date", initial_date)
+    .lte("payments.date", final_date)
   if (error) {
     throw error;
   }
@@ -43,7 +55,6 @@ const getOverdueTransactions = async () => {
   if (error) {
     throw error;
   }
-  console.log(data);
   return data;
 };
 
@@ -241,6 +252,7 @@ const managePaymentMethodUpdateBalance = async (payment_method_id: number, amoun
 
 export {
   getTransactions,
+  getPayedTransactions,
   getTransactionsByCategory,
   getOverdueTransactions,
   addTransaction,
