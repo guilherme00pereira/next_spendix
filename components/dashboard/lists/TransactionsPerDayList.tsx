@@ -37,7 +37,7 @@ const TransactionsPerDayList = ({ transactions }: { transactions: TransactionTyp
     };
 
   return (
-    <PaperContainer>
+    <PaperContainer sx={{minHeight: "400px"}}>
       <PaperHeader title="Transações por dia" link={linkObj} />
       <Stack>
         <Stack direction="row" justifyContent="center" alignItems="center">
@@ -50,7 +50,7 @@ const TransactionsPerDayList = ({ transactions }: { transactions: TransactionTyp
           <Typography variant="body1" fontWeight={600}>
             Saldo:
           </Typography>
-          <Typography variant="subtitle1" fontWeight={900}>
+          <Typography variant="body1" fontWeight={700}>
             {amountFormatter(dayBalance)}
           </Typography>
         </TransactionListItem>

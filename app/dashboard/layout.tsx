@@ -10,7 +10,10 @@ import { useAppStore } from "@/lib/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 //import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { TransactionContext } from "@/lib/hooks";
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
+import TransactionDetailRightDrawer from "@/components/dashboard/surfaces/TransactionDetailRightDrawer";
+import { TransactionType } from "@/types/entities";
 
 // const queryClient = new QueryClient({
 //   defaultOptions: {
@@ -37,6 +40,8 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const openSidebar = useAppStore((state) => state.openSidebar);
   const setOpenSidebar = useAppStore((state) => state.setOpenSidebar);
+  const [selectedTransaction, setSelectedTransaction] = useState<TransactionType>({} as TransactionType);
+  const [toggleTransactionDetail, setToggleTransactionDetail] = useState(false);
 
   return (
     <PageContext.Provider
@@ -48,6 +53,14 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     >
       {/* <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}> */}
       <QueryClientProvider client={queryClient}>
+      <TransactionContext.Provider
+      value={{
+        selectedTransaction,
+        setSelectedTransaction,
+        showTransactionDetail: toggleTransactionDetail,
+        actionShowTransactionDetail: setToggleTransactionDetail,
+      }}
+    >
         {getInitColorSchemeScript()}
         <Box sx={{ display: "flex" }}>
           <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
@@ -57,8 +70,11 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
           </LayoutBoxWrapper>
         </Box>
         <SpeedDialAdd />
+        <TransactionDetailRightDrawer />
+      </TransactionContext.Provider>
         </QueryClientProvider>
       {/* </PersistQueryClientProvider> */}
+        
     </PageContext.Provider>
   );
 }

@@ -1,43 +1,17 @@
 import React from "react";
-import { useSpeedDialStore } from "@/lib/store";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { amountFormatter } from "@/lib/functions";
 import { TransactionType } from "@/types/entities";
 import dayjs from "dayjs";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
+import TransactionActionButtons from "../buttons/TransactionActionButtons";
 
-const CategoryDetailsTable = ({
-  transactions,
-}: {
-  transactions: TransactionType[];
-}) => {
-  const { setTransaction, actionShowTransactionDialog } = useSpeedDialStore();
-
-  const handleEdit = (t: TransactionType) => {
-    setTransaction({
-      id: t.id,
-      amount: t.amount,
-      due_date: dayjs(t.due_date),
-      description: t.description,
-      cashed: !!t.payments?.id,
-      category_id: t.categories?.id ?? 0,
-      payment_date: t.payments?.date ? dayjs(t.payments.date) : null,
-      payed_amount: t.payments?.amount ?? null,
-      payment_method_id: 1,
-      payment_id: t.payments?.id ?? 0,
-      in_installments: !!t.installments,
-      installments: 2,
-      draft: t.draft,
-      tags: t.tags,
-    });
-    actionShowTransactionDialog(true);
-  };
+const CategoryDetailsTable = ({ transactions }: { transactions: TransactionType[] }) => {
 
   return (
     <PaperContainer>
@@ -47,17 +21,14 @@ const CategoryDetailsTable = ({
           <TableBody>
             {transactions &&
               transactions.map((transaction: any) => (
-                <TableRow
-                  key={transaction.id}
-                  onClick={() => handleEdit(transaction)}
-                  sx={{ cursor: "pointer" }}
-                >
-                  <TableCell align="center">
-                    {dayjs(transaction.due_date).format("DD/MM/YYYY")}
-                  </TableCell>
+                <TableRow key={transaction.id}>
+                  <TableCell align="center">{dayjs(transaction.due_date).format("DD/MM/YYYY")}</TableCell>
                   <TableCell>{amountFormatter(transaction.amount)}</TableCell>
                   <TableCell>{transaction.description}</TableCell>
                   <TableCell>{transaction.payments ? "Pago" : ""}</TableCell>
+                  <TableCell>
+                    <TransactionActionButtons transaction={transaction} />
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

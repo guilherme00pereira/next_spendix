@@ -3,6 +3,28 @@ import { TransactionFormData, RecurringFormData } from "@/types/entities";
 import { IDeleteTransactionData } from "@/types/interfaces";
 import dayjs from "dayjs";
 
+// enum QueryType {
+//   Full = "full",
+//   ByPaymentDate = "by_payment_date",
+// }
+
+// const buildQuery = (type?: QueryType) => {
+//   const basicFields = `id, amount, due_date, description, draft`;
+//   const joinCategories = `categories(*)`;
+//   const joinInnerPayments = `payments!inner(*)`;
+//   const joinPayments = `payments(*)`;
+//   const joinInstallments = `installments: transaction_installments(*)`;
+
+//   switch (type) {
+//     case QueryType.Full:
+//       return `${basicFields}, ${joinCategories}, ${joinPayments}, ${joinInstallments}`;
+//     case QueryType.ByPaymentDate:
+//       return `${basicFields}, ${joinCategories}, ${joinInnerPayments}, ${joinInstallments}`;
+//     default:
+//       return `${basicFields}`;
+//   }
+// };
+
 const getQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), installments: transaction_installments(*)`;
 const getOverdue = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
@@ -24,7 +46,7 @@ const getPayedTransactions = async (initial_date: string, final_date: string) =>
     .from("transactions")
     .select(getQuery)
     .gte("payments.date", initial_date)
-    .lte("payments.date", final_date)
+    .lte("payments.date", final_date);
   if (error) {
     throw error;
   }
@@ -51,7 +73,7 @@ const getOverdueTransactions = async () => {
     .select(getOverdue)
     .lte("due_date", dayjs().format("YYYY-MM-DD"))
     .is("payment_id", null)
-    .order("due_date", {ascending: false})
+    .order("due_date", { ascending: false })
     .order("category_id");
   if (error) {
     throw error;
@@ -88,27 +110,30 @@ const addTransaction = async ({
       payment_id: pay_id,
       draft,
     })
-    .select(getQuery);
+    .select("id");
 
   if (error) {
     throw error;
-  }
-  
-  if (in_installments) {
-    const { error } = await supabase.from("transaction_installments").insert({ transaction_id: data[0].id, installments });
-    if (error) {
-      //throw error;
-    }
-  }
+  } else {
+    if (data.length > 0) {
+      const tid = data[0].id;
 
-  if(tags && tags.length > 0) {
-    const { error } = await supabase.from("tags_transactions").insert(tags.map((tag) => ({ transaction_id: data[0].id, tag_id: tag.id })));
-    if (error) {
-      //throw error;
-    }
-  }
+      if (in_installments) {
+        const { error } = await supabase.from("transaction_installments").insert({ transaction_id: tid, installments });
+        if (error) {
+          //throw error;
+        }
+      }
 
-  return data;
+      if (tags && tags.length > 0) {
+        const { error } = await supabase.from("tags_transactions").insert(tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id })));
+        if (error) {
+          //throw error;
+        }
+      }
+    }
+    return data;
+  }
 };
 
 const addReccuringTransaction = async ({ amount, due_date, description, category_id, recurring_times }: RecurringFormData) => {
@@ -142,6 +167,7 @@ const editTransaction = async ({
   payment_id,
   draft,
   cashed,
+  tags,
 }: TransactionFormData) => {
   let pay_id = null;
   if (cashed) {
@@ -158,19 +184,29 @@ const editTransaction = async ({
       draft,
     })
     .match({ id })
-    .select(getQuery);
+    .select("id");
   if (error) {
     throw error;
+  } else {
+    if (data.length > 0) {
+      const tid = data[0].id;
+      if (tags && tags.length > 0) {
+        const { error } = await supabase.from("tags_transactions").insert(tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id })));
+        if (error) {
+          //throw error;
+        }
+      }
+    }
+    return data;
   }
-  return data;
 };
 
-const removeTransaction = async ({id, payment_id}: IDeleteTransactionData) => {
+const removeTransaction = async ({ id, payment_id }: IDeleteTransactionData) => {
   const { data, error } = await supabase.from("transactions").delete().eq("id", id);
   if (error) {
     throw error;
   }
-  if(payment_id) {
+  if (payment_id) {
     const { error } = await supabase.from("payments").delete().eq("id", payment_id);
     if (error) {
       throw error;
@@ -247,9 +283,7 @@ const managePaymentMethodUpdateBalance = async (payment_method_id: number, amoun
   } else {
     //await decrementPaymentMethodBalance(payment_method_id, amount);
   }
- 
 };
-
 
 export {
   getTransactions,

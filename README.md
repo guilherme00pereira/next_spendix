@@ -11,6 +11,7 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.12
+- 0.12.11: Extract transaction actions buttons to a component.
 - 0.12.9: Function getPayedTransactions() by payment date.
 - 0.12.8: Begin to adapt days of the month widget for scrolling.
 - 0.12.7: Card header types.
