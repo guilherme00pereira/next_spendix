@@ -4,6 +4,7 @@ import { IDeleteTransactionData } from "@/types/interfaces";
 import dayjs from "dayjs";
 
 const getQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), installments: transaction_installments(*)`;
+const getOverdue = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
 const getTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
@@ -47,7 +48,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 const getOverdueTransactions = async () => {
   const { data, error } = await supabase
     .from("transactions")
-    .select(getQuery)
+    .select(getOverdue)
     .lte("due_date", dayjs().format("YYYY-MM-DD"))
     .is("payment_id", null)
     .order("due_date", {ascending: false})
