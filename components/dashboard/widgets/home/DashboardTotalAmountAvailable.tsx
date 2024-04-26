@@ -35,7 +35,7 @@ const DashboardTotalAmountAvailable = () => {
           Cartões:
         </DashboardTopCardContentInfo>
         <DashboardTopCardContentInfo variant="subtitle2">
-          {amountFormatter(bankAmount)}
+          {amountFormatter(creditCardAmount)}
         </DashboardTopCardContentInfo>
       </DashboardTopCardContentRow>
       <DashboardTopCardContentRow
@@ -47,7 +47,7 @@ const DashboardTotalAmountAvailable = () => {
           C/C:
         </DashboardTopCardContentInfo>
         <DashboardTopCardContentInfo variant="subtitle2">
-          {amountFormatter(creditCardAmount)}
+          {amountFormatter(bankAmount)}
         </DashboardTopCardContentInfo>
       </DashboardTopCardContentRow>
     </DashboardTopCard>

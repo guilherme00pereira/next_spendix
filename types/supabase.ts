@@ -33,38 +33,6 @@ export type Database = {
         }
         Relationships: []
       }
-      card_invoices: {
-        Row: {
-          amount: number
-          created_at: string
-          credit_card_id: number
-          date: string
-          id: number
-        }
-        Insert: {
-          amount: number
-          created_at?: string
-          credit_card_id: number
-          date: string
-          id?: number
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          credit_card_id?: number
-          date?: string
-          id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "public_card_invoices_credit_card_id_fkey"
-            columns: ["credit_card_id"]
-            isOneToOne: false
-            referencedRelation: "credit_cards"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       categories: {
         Row: {
           color: string | null
@@ -100,8 +68,6 @@ export type Database = {
           closing_day: number
           color: string | null
           created_at: string
-          current_balance: number
-          current_invoice: number
           due_day: number
           id: number
           limit: number
@@ -111,8 +77,6 @@ export type Database = {
           closing_day: number
           color?: string | null
           created_at?: string
-          current_balance: number
-          current_invoice?: number
           due_day: number
           id?: number
           limit: number
@@ -122,8 +86,6 @@ export type Database = {
           closing_day?: number
           color?: string | null
           created_at?: string
-          current_balance?: number
-          current_invoice?: number
           due_day?: number
           id?: number
           limit?: number
@@ -131,38 +93,67 @@ export type Database = {
         }
         Relationships: []
       }
-      invoices_transactions: {
+      credit_cards_invoices: {
         Row: {
-          created_at: string
+          amount: number
+          credit_card_id: number
+          date: string
           id: number
-          invoice_id: number
-          transaction_id: number
         }
         Insert: {
-          created_at?: string
+          amount: number
+          credit_card_id: number
+          date: string
           id?: number
-          invoice_id: number
-          transaction_id: number
         }
         Update: {
-          created_at?: string
+          amount?: number
+          credit_card_id?: number
+          date?: string
           id?: number
-          invoice_id?: number
-          transaction_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "public_invoices_transactions_invoice_id_fkey"
+            foreignKeyName: "public_card_invoices_credit_card_id_fkey"
+            columns: ["credit_card_id"]
+            isOneToOne: false
+            referencedRelation: "credit_cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoice_payments: {
+        Row: {
+          adjustment: boolean | null
+          id: number
+          invoice_id: number
+          payment_id: number
+        }
+        Insert: {
+          adjustment?: boolean | null
+          id?: number
+          invoice_id: number
+          payment_id: number
+        }
+        Update: {
+          adjustment?: boolean | null
+          id?: number
+          invoice_id?: number
+          payment_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_payments_invoice_id_fkey"
             columns: ["invoice_id"]
-            isOneToOne: true
-            referencedRelation: "card_invoices"
+            isOneToOne: false
+            referencedRelation: "credit_cards_invoices"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "public_invoices_transactions_transaction_id_fkey"
-            columns: ["transaction_id"]
+            foreignKeyName: "invoice_payments_payment_id_fkey"
+            columns: ["payment_id"]
             isOneToOne: false
-            referencedRelation: "transactions"
+            referencedRelation: "payments"
             referencedColumns: ["id"]
           },
         ]
