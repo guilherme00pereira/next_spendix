@@ -1,30 +1,12 @@
-"use client";
-import { useState } from "react";
-import { TransactionType } from "@/types/entities";
-import PageContainer from "@/components/dashboard/page/PageContainer";
-import TransactionsPerDayList from "@/components/dashboard/lists/TransactionsPerDayList";
-import TransactionsPrediction from "@/components/dashboard/lists/TransactionsPrediction";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
+import TransactionsPerDayList from "@/app/components/dashboard/lists/TransactionsPerDayList";
+import TransactionsPrediction from "@/app/components/dashboard/lists/TransactionsPrediction";
 import Grid from "@mui/material/Grid";
 import Masonry from "@mui/lab/Masonry";
-import OverdueTransactionsList from "@/components/dashboard/lists/OverdueTransactionsList";
-import { useAppStore } from "@/lib/store";
-import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
-import { getPayedTransactions } from "@/lib/supabase/methods/transactions";
-import ApexCompareDailyTransactionsAndMean from "@/components/dashboard/charts/ApexCompareDailyTransactionsAndMean";
+import OverdueTransactionsList from "@/app/components/dashboard/lists/OverdueTransactionsList";
+import ApexCompareDailyTransactionsAndMean from "@/app/components/dashboard/charts/ApexCompareDailyTransactionsAndMean";
 
 const TransactionsPage = () => {
-  const date = useAppStore((state) => state.date);
-
-  const { data: allTransactions, isLoading } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => pullTransactions(),
-  });
-
-  const pullTransactions = async () => {
-    const data = await getPayedTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD"));
-    return data as TransactionType[];
-  };
 
   return (
     <PageContainer title="Transações">
@@ -32,14 +14,12 @@ const TransactionsPage = () => {
         <Grid item xs={12} md={6}></Grid>
       </Grid>
       <Masonry columns={2} spacing={3}>
-        {isLoading || (
-          <>
-            {allTransactions && <TransactionsPerDayList transactions={allTransactions} />}
+          
+            <TransactionsPerDayList />
+            <OverdueTransactionsList />
             <TransactionsPrediction />
             <ApexCompareDailyTransactionsAndMean />
-            <OverdueTransactionsList />
-          </>
-        )}
+          
       </Masonry>
     </PageContainer>
   );

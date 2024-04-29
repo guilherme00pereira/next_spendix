@@ -19,7 +19,7 @@ export default function SignIn() {
     setLoading(true);
     setButtonText("Aguarde...");
     let code = (document.querySelector("input[name=code]") as HTMLInputElement).value;
-    if (code === "1861") {//"f9d1152547c0bde01830b7e8bd60024c"
+    if (code === "1861") {
       //TODO: implement supabase auth and middleware
       router.push("/dashboard");
     } else {
@@ -57,10 +57,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: (theme: any) =>
-      theme.palette.mode === "light"
-        ? theme.palette.grey[100]
-        : theme.palette.grey[900],
+    backgroundColor: (theme: any) => theme.palette.background.default,
   },
   card: {
     p: 2,

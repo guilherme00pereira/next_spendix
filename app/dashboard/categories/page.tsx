@@ -1,11 +1,11 @@
 import Grid from "@mui/material/Grid";
-import { getCategories } from "@/lib/supabase/methods/categories";
+import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { CategoryType } from "@/types/entities";
-import PageContainer from "@/components/dashboard/page/PageContainer";
-import ChooseIconDialog from "@/components/dashboard/dialogs/ChooseIconDialog";
-import CategoriesList from "@/components/dashboard/lists/CategoriesList";
-import CategoryProvider from "@/components/context-providers/CategoryProvider";
-import ParentCategoriesChartPaper from "@/components/dashboard/surfaces/ParentCategoriesChartPaper";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
+import ChooseIconDialog from "@/app/components/dashboard/dialogs/ChooseIconDialog";
+import CategoriesList from "@/app/components/dashboard/lists/CategoriesList";
+import CategoryProvider from "@/app/context-providers/CategoryProvider";
+import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
 
 async function fetchCategories() {
   const res = await getCategories();

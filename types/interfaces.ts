@@ -150,12 +150,6 @@ interface IPaperHeaderProps {
     filter?: PaperHeaderFilterType;
 }
 
-interface IDayOfMonthProps {
-    days: string[];
-    selectedDate: string;
-    setSelectedDate: Dispatch<SetStateAction<string>>;
-}
-
 export type {
     ISelectOption,
     IDeleteConfirmDialogProps,
@@ -177,6 +171,5 @@ export type {
     IDeleteTransactionData,
     IPageContainerProps,
     IPaperHeaderProps,
-    IDayOfMonthProps,
 }
 

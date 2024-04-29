@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Stack, Typography, Paper, Box, Grid } from "@mui/material";
-import TransactionsTable from "@/components/dashboard/tables/TransactionsTable";
-import { getTransactionsByCategoriesLastSixMonths } from "@/lib/supabase/methods/transactions";
+import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
+import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
-import { getCategories } from "@/lib/supabase/methods/categories";
-import ApexCategoryTransactionsSixMonthsLineChart from "@/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
-import PageContainer from "@/components/dashboard/page/PageContainer";
+import { getCategories } from "@/app/lib/supabase/methods/categories";
+import ApexCategoryTransactionsSixMonthsLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
 
 const Subtitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.light,

@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import {styled, getInitColorSchemeScript} from "@mui/material/styles";
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import Box from "@mui/material/Box";
-import Sidebar from "@/components/dashboard/Sidebar";
-import Topbar from "@/components/dashboard/Topbar";
-import { PageContext } from "@/lib/contexts";
-import { useAppStore } from "@/lib/store";
+import Sidebar from "@/app/components/dashboard/Sidebar";
+import Topbar from "@/app/components/dashboard/Topbar";
+import { PageContext } from "@/app/lib/contexts";
+import { useAppStore } from "@/app/lib/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TransactionContext } from "@/lib/contexts";
-import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
-import TransactionDetailRightDrawer from "@/components/dashboard/surfaces/TransactionDetailRightDrawer";
+import { TransactionContext } from "@/app/lib/contexts";
+import SpeedDialAdd from "@/app/components/dashboard/SpeedDialAdd";
+import TransactionDetailRightDrawer from "@/app/components/dashboard/surfaces/TransactionDetailRightDrawer";
 import { TransactionType } from "@/types/entities";
 
 const queryClient = new QueryClient()

@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import PageContainer from "@/components/dashboard/page/PageContainer";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
 
 //TODO: list transactions related to this tag
 const TagDetailsPage = ({ params }: { params: { slug: string } }) => {

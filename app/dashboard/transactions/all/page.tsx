@@ -1,8 +1,8 @@
 "use client";
-import { TransactionListItem } from "@/components/dashboard/commonStyledComponents";
-import PageContainer from "@/components/dashboard/page/PageContainer";
-import { useAppStore } from "@/lib/store";
-import { getTransactions } from "@/lib/supabase/methods/transactions";
+import { TransactionListItem } from "@/app/components/dashboard/commonStyledComponents";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
+import { useAppStore } from "@/app/lib/store";
+import { getTransactions } from "@/app/lib/supabase/methods/transactions";
 import { TransactionType } from "@/types/entities";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";

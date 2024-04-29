@@ -1,12 +1,12 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import PageContainer from "@/components/dashboard/page/PageContainer";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import AccountsList from "@/components/dashboard/lists/AccountsList";
-import PageProvider from "@/components/context-providers/PageProvider";
-import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog";
-import BankAccountProvider from "@/components/context-providers/BankAccountProvider";
+import AccountsList from "@/app/components/dashboard/lists/AccountsList";
+import PageProvider from "@/app/context-providers/PageProvider";
+import BankAccountDialog from "@/app/components/dashboard/dialogs/BankAccountDialog";
+import BankAccountProvider from "@/app/context-providers/BankAccountProvider";
 import Loading from "./loading";
 
 export const metadata: Metadata = {

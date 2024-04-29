@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Paper } from "@mui/material";
-import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/home/DashboardTotalAmountAvailable";
-import DashboardTopCard from "@/components/dashboard/widgets/home/DashboardTopCard";
-import DashboardOverdueInvoices from "@/components/dashboard/widgets/home/DashboardOverdueInvoices";
-import DashboardCardInvoices from "@/components/dashboard/widgets/home/DashboardCardInvoices";
-import PageContainer from "@/components/dashboard/page/PageContainer";
-import ParentCategoriesChartPaper from "@/components/dashboard/surfaces/ParentCategoriesChartPaper";
+import DashboardTotalAmountAvailable from "@/app/components/dashboard/widgets/home/DashboardTotalAmountAvailable";
+import DashboardTopCard from "@/app/components/dashboard/widgets/home/DashboardTopCard";
+import DashboardOverdueInvoices from "@/app/components/dashboard/widgets/home/DashboardOverdueInvoices";
+import DashboardCardInvoices from "@/app/components/dashboard/widgets/home/DashboardCardInvoices";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
+import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
 
 const DashboardPage = () => {
 

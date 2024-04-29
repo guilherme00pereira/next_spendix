@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Paper from "@mui/material/Paper";
-import PageContainer from "@/components/dashboard/page/PageContainer";
+import PageContainer from "@/app/components/dashboard/page/PageContainer";
 
 const Settings = () => {
   return (

@@ -10,6 +10,9 @@ Spendix is a web application that allows users to track their spending habits. U
 
 ### Version
 
+##### 0.15
+- 0.15.0: Moved components into app directory. Refactor supabase client to use @suapabase/ssr. 
+
 ##### 0.14
 - 0.14.0: Refactoring pages for server side components.
 
