@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Stack, Typography, Paper, Box, Grid } from "@mui/material";
-import CategoryDetailsTable from "@/components/dashboard/tables/CategoryDetailsTable";
+import TransactionsTable from "@/components/dashboard/tables/TransactionsTable";
 import { getTransactionsByCategoriesLastSixMonths } from "@/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories } from "@/lib/supabase/methods/categories";
@@ -49,7 +49,7 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
     <PageContainer title={`Categoria ${title}`}>
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
-          {transactions && CategoryDetailsTable({ transactions: transactions })}
+          {transactions && TransactionsTable({ transactions: transactions })}
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>

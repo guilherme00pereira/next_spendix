@@ -1,11 +1,10 @@
+'use client'
 import { useEffect, useState, ChangeEvent } from "react";
-import { TextField, MenuItem, FormControl, Stack, useColorScheme } from "@mui/material";
+import { FormControl, MenuItem, Stack, TextField, useColorScheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
 import { CategoryType, ChartBarType, TransactionType } from "@/types/entities";
 import { useRouter } from "next/navigation";
-import { PaperContainer } from "../commonStyledComponents";
-import PaperHeader from "../surfaces/PaperHeader";
 
 
 const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { transactions: TransactionType[]; categories: CategoryType[] }) => {
@@ -37,8 +36,8 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
   }, []);
 
   return (
-    <PaperContainer>
-      <PaperHeader title="Evolução por período" showSettingButon />
+      <>
+      
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
         <FormControl sx={{width: "50%"}}>
           <TextField
@@ -111,7 +110,7 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
       type="bar"
       height={300}
       />
-    </PaperContainer>
+    </>    
   );
 };
 

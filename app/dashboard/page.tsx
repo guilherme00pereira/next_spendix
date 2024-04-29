@@ -4,8 +4,8 @@ import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/home/D
 import DashboardTopCard from "@/components/dashboard/widgets/home/DashboardTopCard";
 import DashboardOverdueInvoices from "@/components/dashboard/widgets/home/DashboardOverdueInvoices";
 import DashboardCardInvoices from "@/components/dashboard/widgets/home/DashboardCardInvoices";
-import ApexParentCategoriesBarChart from "@/components/dashboard/charts/ApexParentCategoriesBarChart";
 import PageContainer from "@/components/dashboard/page/PageContainer";
+import ParentCategoriesChartPaper from "@/components/dashboard/surfaces/ParentCategoriesChartPaper";
 
 const DashboardPage = () => {
 
@@ -27,7 +27,7 @@ const DashboardPage = () => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-            <ApexParentCategoriesBarChart title="Gastos por categoria no mês" />
+            <ParentCategoriesChartPaper title="Gastos por categoria no mês" />
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>

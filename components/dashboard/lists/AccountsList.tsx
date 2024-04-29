@@ -5,13 +5,17 @@ import { BankAccountType } from "@/types/entities";
 import AccountsListItem from "./items/AccountsListItem";
 import {getAccountPaymentMethods} from "@/lib/supabase/methods/payment-methods";
 
-async function getPaymentMethods() {
+async function fetchPaymentMethods() {
   const res = await getAccountPaymentMethods();
+  if (res instanceof Error) {
+    console.error(res);
+    return [];
+  }
   return res;
 }
 
 const AccountsList = async () => {
-  const accounts = await getPaymentMethods();
+  const accounts = await fetchPaymentMethods();
   return (
     <PaperContainer>
       <PaperHeader title="Contas" />

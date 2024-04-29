@@ -1,15 +1,14 @@
+'use client';
 import { useCreditCardContext, usePageContext } from "@/lib/contexts";
 import { Grid, Stack, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
-import * as yup from "yup";
 import { useFormik } from "formik";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCreditCard, editCreditCard } from "@/lib/supabase/methods/credit-cards";
 import { ColorPicker } from "material-ui-color";
 import { useEffect } from "react";
-import { CreditCardType } from "@/types/entities";
+import { formSubmit } from "@/app/dashboard/credit-cards/actions";
+import * as yup from "yup";
 
 const validate = yup.object({
   id: yup.number(),
@@ -23,7 +22,6 @@ const validate = yup.object({
 });
 
 const CreditCardDialog = () => {
-  const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
   const { editableObject } = useCreditCardContext();
 
@@ -31,31 +29,12 @@ const CreditCardDialog = () => {
     formik.setValues(editableObject);
   }, [editableObject]);
 
-  const addMutation = useMutation({
-    mutationFn: (values: CreditCardType) => addCreditCard(values),
-    onSuccess: () => {
-      actionShowModal(!showModal);
-      queryClient.invalidateQueries({ queryKey: ["credit_cards"] });
-    },
-  });
-
-  const editMutation = useMutation({
-    mutationFn: (values: CreditCardType) => editCreditCard(values),
-    onSuccess: () => {
-      actionShowModal(!showModal);
-      queryClient.invalidateQueries({ queryKey: ["credit_cards"] });
-    },
-  });
-
   const formik = useFormik({
     initialValues: editableObject,
     validationSchema: validate,
     onSubmit: (values) => {
-      if (values.id !== 0) {
-        editMutation.mutate(values);
-      } else {
-        addMutation.mutate(values);
-      }
+      actionShowModal(!showModal);
+      formSubmit(values)
     },
   });
 
@@ -120,30 +99,6 @@ const CreditCardDialog = () => {
 
         <Stack direction="row" sx={{ py: 2 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <TextField
-                helperText={formik.touched.current_balance && formik.errors.current_balance}
-                error={formik.touched.current_balance && Boolean(formik.errors.current_balance)}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.current_balance}
-                fullWidth
-                name="current_balance"
-                label="Saldo atual"
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                helperText={formik.touched.current_invoice && formik.errors.current_invoice}
-                error={formik.touched.current_invoice && Boolean(formik.errors.current_invoice)}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.current_invoice}
-                fullWidth
-                name="current_invoice"
-                label="Fatura atual"
-              />
-            </Grid>
             <Grid xs={12} md={4} item>
                 <ColorPicker onChange={formik.handleChange} value={"#" + formik.values.color} defaultValue={formik.values.color} />
               </Grid>

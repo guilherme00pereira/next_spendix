@@ -1,3 +1,4 @@
+'use client';
 import { amountFormatter } from "@/lib/functions";
 import { Typography, ButtonGroup, Button } from "@mui/material";
 import { Stack, Box } from "@mui/system";

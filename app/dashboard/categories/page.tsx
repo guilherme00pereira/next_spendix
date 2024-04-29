@@ -26,7 +26,7 @@ const CategoriesPage = async () => {
           </CategoryProvider>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ParentCategoriesChartPaper />
+          <ParentCategoriesChartPaper title="Despesas por categorias no mês" />
         </Grid>
       </Grid>
       <ChooseIconDialog />
