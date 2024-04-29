@@ -1,3 +1,4 @@
+'use client'
 import React, {useEffect} from "react";
 import {
     Grid,
@@ -9,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import * as yup from "yup";
 import {useFormik} from "formik";
 import LinearProgress from "@mui/material/LinearProgress";
-import {usePageContext, useTagContext} from "@/lib/hooks";
+import {usePageContext, useTagContext} from "@/lib/contexts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 import { addTag, editTag } from "@/lib/supabase/methods/tags";

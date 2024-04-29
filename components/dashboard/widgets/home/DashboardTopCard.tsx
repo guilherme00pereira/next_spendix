@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { styled } from "@mui/material/styles";
 import type {} from '@mui/material/themeCssVarsAugmentation';
@@ -32,21 +33,12 @@ const DashboardTopCard = ({
   children,
   title,
   bottomValue,
-  loading,
 }: IDashboardTopCardProps) => {
   return (
     <TopCard>
       <TopCardHeader title={title} titleTypographyProps={{fontSize: "1rem"}} />
       <TopCardContent>
-        {loading && (
-          <Skeleton
-            variant="rectangular"
-            width={300}
-            height={100}
-            animation="wave"
-          />
-        )}
-        {loading || (
+        
           <Stack
             direction="column"
             justifyContent="flex-end"
@@ -58,7 +50,7 @@ const DashboardTopCard = ({
               {bottomValue}
             </Typography>
           </Stack>
-        )}
+        
       </TopCardContent>
     </TopCard>
   );

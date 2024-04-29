@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
@@ -39,6 +39,10 @@ const ListItem = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const CategoryLink = styled(Link)(({ theme }) => ({
+  color: theme.vars.palette.text.primary,
+}));
+
 const CategoriesListItem = ({
   category,
   handleEdit,
@@ -53,9 +57,9 @@ const CategoriesListItem = ({
         </Box>
       )}
       <Box sx={{ flexGrow: 1 }}>
-        <Link href={`/dashboard/categories/${category.slug}`}>
+        <CategoryLink href={`/dashboard/categories/${category.slug}`} underline="none" variant="subtitle2">
           {category.name}
-        </Link>
+        </CategoryLink>
       </Box>
       <Box sx={{ pr: 4 }}>
         <Chip

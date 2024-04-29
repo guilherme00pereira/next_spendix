@@ -21,10 +21,9 @@ const TransactionsPage = () => {
     queryFn: () => pullTransactions(),
   });
 
-  const pullTransactions = () => {
-    return getPayedTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD")).then((data) => {
-      return data as TransactionType[];
-    });
+  const pullTransactions = async () => {
+    const data = await getPayedTransactions(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs(date).endOf("M").format("YYYY-MM-DD"));
+    return data as TransactionType[];
   };
 
   return (

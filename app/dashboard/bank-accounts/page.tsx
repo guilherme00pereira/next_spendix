@@ -1,46 +1,38 @@
-"use client";
-import {useState} from "react";
-import {Stack, Paper} from "@mui/material";
-import {useQuery} from "@tanstack/react-query";
-import {getAccountPaymentMethods} from "@/lib/supabase/methods/payment-methods";
-import BankAccountWidget from "@/components/dashboard/widgets/payments/BankAccountWidget";
-import AddNewPaymentMethodWidget from "@/components/dashboard/widgets/payments/AddNewPaymentMethodWidget";
-import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog";
-import {BankAccountType} from "@/types/entities";
-import {BankAccountContext} from "@/lib/hooks";
-import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
+import React, { Suspense } from "react";
+import type { Metadata } from "next";
 import PageContainer from "@/components/dashboard/page/PageContainer";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import AccountsList from "@/components/dashboard/lists/AccountsList";
+import PageProvider from "@/components/context-providers/PageProvider";
+import BankAccountDialog from "@/components/dashboard/dialogs/BankAccountDialog";
+import BankAccountProvider from "@/components/context-providers/BankAccountProvider";
+import Loading from "./loading";
+
+export const metadata: Metadata = {
+  title: "Spdx - Bank Accounts",
+  description: "",
+};
 
 const BankAccountsPage = () => {
-  const [editableAccount, setEditableAccount] = useState({} as BankAccountType);
-
-  const {data: payment_methods, isLoading} = useQuery({
-    queryKey: ["bank_accounts"],
-    queryFn: () => getAccountPaymentMethods(),
-  });
-
   return (
-    <BankAccountContext.Provider value={{editableObject: editableAccount, setEditableObject: setEditableAccount}}>
-      <PageContainer title="Contas Bancárias">
-          <Paper>
-            <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{py: 2, px: 4}}>
-              {isLoading && 
-                <RepeatableLoader items={3} width={300} height={130} />
-              }
-              {isLoading || (
-                <>
-                  {payment_methods &&
-                    payment_methods.map((payment_method: any) => (
-                      <BankAccountWidget key={payment_method.id} account={payment_method.accounts}/>
-                    ))}
-                  <AddNewPaymentMethodWidget width="200px" height="110px"/>
-                  <BankAccountDialog/>
-                </>
-              )}
-            </Stack>
-          </Paper>
-      </PageContainer>
-    </BankAccountContext.Provider>
+    <PageContainer title="Contas Bancárias">
+      <Stack spacing={3} direction="row" justifyContent="center">
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid item xs={12} md={5}>
+            <PageProvider>
+              <BankAccountProvider>
+                <Suspense fallback={<Loading />}>
+                  <AccountsList />
+                </Suspense>
+                <BankAccountDialog />
+              </BankAccountProvider>
+            </PageProvider>
+          </Grid>
+          <Grid item xs={12} md={7}></Grid>
+        </Grid>
+      </Stack>
+    </PageContainer>
   );
 };
 

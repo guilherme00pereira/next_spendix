@@ -1,3 +1,4 @@
+'use client'
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Typography from "@mui/material/Typography";

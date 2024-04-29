@@ -32,7 +32,7 @@ export default function SignIn() {
 
   return (
     <Container component="main" sx={styles.container} maxWidth={false}>
-      <Typography variant="h4" sx={styles.title}>SMALL WALLET</Typography>
+      <Typography variant="h4" sx={styles.title}>MY WALLET</Typography>
       <Paper sx={styles.card}>
         <Stack direction="column" spacing={2}>
           <TextField label="Código" error={error} helperText={helperText} variant="outlined" name="code"

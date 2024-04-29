@@ -6,7 +6,7 @@ import { TransactionListItem } from "../../commonStyledComponents";
 import { TransactionType } from "@/types/entities";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import { useTransactionContext } from "@/lib/hooks";
+import { useTransactionContext } from "@/lib/contexts";
 import { useSpeedDialStore } from "@/lib/store";
 import dayjs from "dayjs";
 

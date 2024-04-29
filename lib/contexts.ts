@@ -2,7 +2,8 @@ import {createContext, useContext} from "react";
 import {
   IPageContextData,
   ITransactionContextData,
-  IEditableObjectContextData
+  IEditableObjectContextData,
+  ICateroryContextData
 } from "@/types/interfaces";
 import {
   BankAccountType,
@@ -12,7 +13,17 @@ import {
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
 
+export const usePageContext = () => {
+  const context = useContext(PageContext);
+  if (!context) {
+    throw new Error("usePageContext must be used within a PageProvider");
+  }
+  return context;
+};
+
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
+
+export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
 
 export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>({} as IEditableObjectContextData<BankAccountType>);
 
@@ -20,18 +31,20 @@ export const CreditCardContext = createContext<IEditableObjectContextData<Credit
 
 export const TagContext = createContext<IEditableObjectContextData<TagType>>({} as IEditableObjectContextData<TagType>);
 
-export const usePageContext = () => {
-  const context = useContext(PageContext);
-  if (!context) {
-    throw new Error("usePageContext must be used within a PageContextProvider");
-  }
-  return context;
-};
+
 
 export const useTransactionContext = () => {
   const context = useContext(TransactionContext);
   if (!context) {
     throw new Error("useTransactionContext must be used within a TransactionContextProvider");
+  }
+  return context;
+};
+
+export const useCategoryContext = () => {
+  const context = useContext(CategoryContext);
+  if (!context) {
+    throw new Error("useCategoryContext must be used within a CategoryContextProvider");
   }
   return context;
 };

@@ -11,7 +11,7 @@ import { TransactionType } from "@/types/entities";
 import { getTransactions } from "@/lib/supabase/methods/transactions";
 import { amountFormatter, groupTransactionsByDate } from "@/lib/functions";
 import TransactionRow from "@/components/dashboard/tables/TransactionRow";
-import { useTransactionContext } from "@/lib/hooks";
+import { useTransactionContext } from "@/lib/contexts";
 import { useAppStore } from "@/lib/store";
 import dayjs from "dayjs";
 

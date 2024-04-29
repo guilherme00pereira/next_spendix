@@ -5,28 +5,14 @@ import type {} from '@mui/material/themeCssVarsAugmentation';
 import Box from "@mui/material/Box";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
-import { PageContext } from "@/lib/hooks";
+import { PageContext } from "@/lib/contexts";
 import { useAppStore } from "@/lib/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-//import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import { TransactionContext } from "@/lib/hooks";
+import { TransactionContext } from "@/lib/contexts";
 import SpeedDialAdd from "@/components/dashboard/SpeedDialAdd";
 import TransactionDetailRightDrawer from "@/components/dashboard/surfaces/TransactionDetailRightDrawer";
 import { TransactionType } from "@/types/entities";
 
-// const queryClient = new QueryClient({
-//   defaultOptions: {
-//     queries: {
-//       staleTime: 1000 * 60,
-//     },
-//   },
-// });
-
-// const persister = createSyncStoragePersister({
-  //   storage: typeof window !== "undefined" ? window.localStorage : undefined,
-  // })
-  
 const queryClient = new QueryClient()
 
 const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
@@ -51,7 +37,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
         mediaQuery: "md"
       }}
     >
-      {/* <PersistQueryClientProvider client={queryClient} persistOptions={{persister: persister}}> */}
+
       <QueryClientProvider client={queryClient}>
       <TransactionContext.Provider
       value={{
@@ -73,7 +59,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
         <TransactionDetailRightDrawer />
       </TransactionContext.Provider>
         </QueryClientProvider>
-      {/* </PersistQueryClientProvider> */}
+      
         
     </PageContext.Provider>
   );

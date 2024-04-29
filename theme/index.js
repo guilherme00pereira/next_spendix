@@ -1,3 +1,4 @@
+'use client'
 import {experimental_extendTheme as extendTheme} from "@mui/material/styles";
 import {createDarkPalette, createLightPalette} from './create-palette';
 import {createComponents} from './create-components';

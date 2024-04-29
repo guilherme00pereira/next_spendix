@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSpeedDialStore } from '@/lib/hooks';
+import { useSpeedDialStore } from '@/lib/contexts';
 import { Dialog, DialogContent, Grid, MenuItem, TextField } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as yup from "yup";

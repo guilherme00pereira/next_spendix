@@ -1,14 +1,11 @@
-"use client";
-import { Grid, Paper } from "@mui/material";
 import React from "react";
+import { Grid, Paper } from "@mui/material";
 import DashboardTotalAmountAvailable from "@/components/dashboard/widgets/home/DashboardTotalAmountAvailable";
 import DashboardTopCard from "@/components/dashboard/widgets/home/DashboardTopCard";
 import DashboardOverdueInvoices from "@/components/dashboard/widgets/home/DashboardOverdueInvoices";
 import DashboardCardInvoices from "@/components/dashboard/widgets/home/DashboardCardInvoices";
 import ApexParentCategoriesBarChart from "@/components/dashboard/charts/ApexParentCategoriesBarChart";
 import PageContainer from "@/components/dashboard/page/PageContainer";
-
-//TODO: Add a chart for categories % variation
 
 const DashboardPage = () => {
 
@@ -30,7 +27,7 @@ const DashboardPage = () => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-            <ApexParentCategoriesBarChart title="Categorias" />
+            <ApexParentCategoriesBarChart title="Gastos por categoria no mês" />
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>

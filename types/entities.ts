@@ -111,9 +111,15 @@ type CreditCardType = {
     limit: number;
     closing_day: number;
     due_day: number;
-    current_balance: number;
-    current_invoice: number;
     color: string | "000";
+    invoices: CreditCardInvoiceType[] | null;
+}
+
+type CreditCardInvoiceType = {
+    id: number;
+    credit_cards: CreditCardType | null;
+    date: string;
+    amount: number;
 }
 
 type TransferMoneyFormData = {
@@ -159,6 +165,7 @@ export type {
     ChartBarType,
     BankAccountType,
     CreditCardType,
+    CreditCardInvoiceType,
     TransferMoneyFormData,
     PaperHeaderLinkType,
     PaperHeaderBadgeType,

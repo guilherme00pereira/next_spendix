@@ -8,7 +8,7 @@ import {TransactionRowType, TransactionType} from "@/types/entities";
 import {amountFormatter} from "@/lib/functions";
 import TransactionRowData from "@/components/dashboard/tables/TransactionRowData";
 import {Chip, Typography} from "@mui/material";
-import {useTransactionContext} from "@/lib/hooks";
+import {useTransactionContext} from "@/lib/contexts";
 import { styled } from '@mui/system';
 
 const getBalanceColor = (balance: number) => {

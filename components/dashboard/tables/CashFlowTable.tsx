@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useTransactionContext} from "@/lib/hooks";
+import {useTransactionContext} from "@/lib/contexts";
 import {TransactionType} from "@/types/entities";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";

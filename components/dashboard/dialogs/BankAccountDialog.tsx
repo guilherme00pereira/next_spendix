@@ -1,13 +1,12 @@
+'use client'
 import React, { useEffect } from "react";
-import { useBankAccountContext, usePageContext } from "@/lib/hooks";
+import { useBankAccountContext, usePageContext } from "@/lib/contexts";
 import { Dialog, DialogContent, Grid, Input, Stack, TextField } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addBankAccount, editBankAccount } from "@/lib/supabase/methods/bank-accounts";
 import TopBarDialog from "./TopBarDialog";
-import { BankAccountType } from "@/types/entities";
 import { ColorPicker } from "material-ui-color";
+import { formSubmit } from "@/app/dashboard/bank-accounts/actions";
 
 const validate = yup.object({
   id: yup.number(),
@@ -17,7 +16,6 @@ const validate = yup.object({
 });
 
 const BankAccountDialog = () => {
-  const queryClient = useQueryClient();
   const { showModal, actionShowModal } = usePageContext();
   const { editableObject } = useBankAccountContext();
 
@@ -25,32 +23,13 @@ const BankAccountDialog = () => {
     formik.setValues(editableObject);
   }, [editableObject]);
 
-  const addMutation = useMutation({
-    mutationFn: (values: BankAccountType) => addBankAccount(values),
-    onSuccess: () => {
-      actionShowModal(!showModal);
-      queryClient.invalidateQueries({ queryKey: ["bank_accounts"] });
-    },
-  });
-
-  const editMutation = useMutation({
-    mutationFn: (values: BankAccountType) => editBankAccount(values),
-    onSuccess: () => {
-      actionShowModal(!showModal);
-      queryClient.invalidateQueries({ queryKey: ["bank_accounts"] });
-    },
-  });
 
   const formik = useFormik({
     initialValues: editableObject,
     validationSchema: validate,
     onSubmit: (values) => {
-      if (values.id) {
-        editMutation.mutate(values);
-        return;
-      } else {
-        addMutation.mutate(values);
-      }
+      actionShowModal(!showModal);
+      formSubmit(values)
     },
   });
 

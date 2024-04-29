@@ -2,7 +2,7 @@ import React from 'react';
 import Card from "@mui/material/Card";
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { styled } from '@mui/material/styles';
-import { usePageContext } from '@/lib/hooks';
+import { usePageContext } from '@/lib/contexts';
 
 const AddCard = styled(Card, {
   shouldForwardProp: (prop) => prop !== "height" && prop !== "width",

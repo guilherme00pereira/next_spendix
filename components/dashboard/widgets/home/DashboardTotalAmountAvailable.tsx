@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { getTotalAmountAvailable } from "@/lib/supabase/methods/payment-methods";
 import { amountFormatter } from "@/lib/functions";
 import DashboardTopCard from "./DashboardTopCard";
@@ -7,24 +6,18 @@ import {
   DashboardTopCardContentRow,
 } from "@/components/dashboard/commonStyledComponents";
 
-const DashboardTotalAmountAvailable = () => {
-  const [bankAmount, setBankAmount] = useState(0);
-  const [creditCardAmount, setCreditCardAmount] = useState(0);
-  const [loading, setLoading] = useState(true);
+async function getAccountAndCardsTotal() {
+  const res: any = await getTotalAmountAvailable();
+  return res;
+}
 
-  useEffect(() => {
-    getTotalAmountAvailable().then((data) => {
-      setBankAmount(data[0].total);
-      setCreditCardAmount(data[1].total);
-      setLoading(false);
-    });
-  }, []);
+const DashboardTotalAmountAvailable = async () => {
+  const totals = await getAccountAndCardsTotal();
 
   return (
     <DashboardTopCard
       title="Total disponível"
-      bottomValue={amountFormatter(bankAmount + creditCardAmount)}
-      loading={loading}
+      bottomValue={amountFormatter(totals[0].total + totals[1].total)}
     >
       <DashboardTopCardContentRow
         direction="row"
@@ -35,7 +28,7 @@ const DashboardTotalAmountAvailable = () => {
           Cartões:
         </DashboardTopCardContentInfo>
         <DashboardTopCardContentInfo variant="subtitle2">
-          {amountFormatter(creditCardAmount)}
+          {amountFormatter(totals[1].total)}
         </DashboardTopCardContentInfo>
       </DashboardTopCardContentRow>
       <DashboardTopCardContentRow
@@ -47,7 +40,7 @@ const DashboardTotalAmountAvailable = () => {
           C/C:
         </DashboardTopCardContentInfo>
         <DashboardTopCardContentInfo variant="subtitle2">
-          {amountFormatter(bankAmount)}
+          {amountFormatter(totals[0].total)}
         </DashboardTopCardContentInfo>
       </DashboardTopCardContentRow>
     </DashboardTopCard>

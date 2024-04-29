@@ -1,5 +1,5 @@
 import {supabase} from "@/lib/supabase/supabase-client";
-import { TransferMoneyFormData } from "@/types/entities";
+import { BankAccountType, TransferMoneyFormData } from "@/types/entities";
 
 const getAllPaymentMethods = async () => {
     const {data, error} = await supabase.from('payment_methods').select('*, credit_cards(*), accounts(*)')
@@ -22,8 +22,7 @@ const getAccountPaymentMethods = async () => {
     if (error) {
         throw error
     }
-    console.log(data)
-    return data
+    return data.map((pm: any) => pm.accounts as BankAccountType)
 }
 
 const transferMoney = async ({outcomeId, outcomeType, incomeId, incomeType, amount }: TransferMoneyFormData) => {
@@ -46,6 +45,7 @@ const getTotalAmountAvailable = async () => {
     if (error) {
         throw error
     }
+    console.log(data)
     return data
 }
 

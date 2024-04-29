@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { amountFormatter } from "@/lib/functions";
 import { TransactionListItem } from "@/components/dashboard/commonStyledComponents";
-import TransactionActionButtons from "../../buttons/TransactionActionButtons";
+import TransactionActionButtons from "@/components/dashboard/buttons/TransactionActionButtons";
 
 
 const TransactionPerDayListItem = ({ transaction }: { transaction: TransactionType }) => {

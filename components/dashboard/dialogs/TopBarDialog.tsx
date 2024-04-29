@@ -3,7 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import {AppBar, Button, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import {usePageContext} from "@/lib/hooks";
+import {usePageContext} from "@/lib/contexts";
 
 const TopBarDialog = ({title}: {title: string}) => {
     const {showModal, actionShowModal} = usePageContext();

@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react";
 import { getTags, removeTag } from "@/lib/supabase/methods/tags";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -5,11 +6,10 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
-import { usePageContext, useTagContext } from "@/lib/hooks";
+import { usePageContext, useTagContext } from "@/lib/contexts";
 import ConfirmDeleteDialog from "@/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { IRemovableEntity } from "@/types/interfaces";
 import NodeRepeaterLoader from "../loaders/RepeatableLoader";
-import Skeleton from "@mui/material/Skeleton";
 
 const TagList = () => {
   const queryClient = useQueryClient();

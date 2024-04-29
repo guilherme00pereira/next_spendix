@@ -10,7 +10,7 @@ import * as yup from "yup";
 import {useFormik} from "formik";
 import {addPaymentOptions} from "@/lib/supabase/methods/payment-options";
 import LinearProgress from "@mui/material/LinearProgress";
-import {usePageContext} from "@/lib/hooks";
+import {usePageContext} from "@/lib/contexts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TopBarDialog from "@/components/dashboard/dialogs/TopBarDialog";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, Stack, Typography, styled } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { useCreditCardContext, usePageContext } from "@/lib/hooks";
+import { useCreditCardContext, usePageContext } from "@/lib/contexts";
 import { amountFormatter } from "@/lib/functions";
 
 const ColoredCard = styled(Card, {

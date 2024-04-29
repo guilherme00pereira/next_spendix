@@ -12,7 +12,7 @@ import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlin
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import { amountFormatter } from "@/lib/functions";
-import { useAppStore } from "@/lib/hooks";
+import { useAppStore } from "@/lib/contexts";
 import dayjs from "dayjs";
 import { TransactionType } from "@/types/entities";
 import { ICategoriesPanelProps } from "@/types/interfaces";

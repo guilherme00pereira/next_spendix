@@ -9,7 +9,7 @@ import CreditCardDialog from "@/components/dashboard/dialogs/CreditCardDialog";
 import PageTitle from "@/components/dashboard/page/PageTitle";
 import RepeatableLoader from "@/components/dashboard/loaders/RepeatableLoader";
 import { CreditCardType } from "@/types/entities";
-import { CreditCardContext } from "@/lib/hooks";
+import { CreditCardContext } from "@/lib/contexts";
 import PageContainer from "@/components/dashboard/page/PageContainer";
 
 const CreditCardsPage = () => {

@@ -1,35 +1,14 @@
-import { useEffect, useState } from "react";
-import { getExpenseCategoriesTransactionsSum } from "@/lib/supabase/methods/categories";
-import { useAppStore } from "@/lib/store";
-import dayjs from "dayjs";
+'use client'
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/entities";
-import { Paper, useColorScheme } from "@mui/material";
-import PaperHeader from "../surfaces/PaperHeader";
-import { PaperContainer } from "../commonStyledComponents";
+import { useColorScheme } from "@mui/material";
 
 
-const ApexParentCategoriesBarChart = ({title}: {title: string}) => {
-  const date = useAppStore((state) => state.date);
-  const [data, setData] = useState<ChartBarType[]>([]);
-  const excludedCategories = [43, 63]
+const ApexParentCategoriesBarChart = ({data}: {data: ChartBarType[]}) => {
   const { mode } = useColorScheme();
-  
-  useEffect(() => {
-    getExpenseCategoriesTransactionsSum(dayjs(date).startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"))
-      .then((response) => {
-        const items = response.filter((item: any) => !excludedCategories.includes(item.id)).filter((item: any) => item.value > 200);
-
-      const data: ChartBarType[] = items.sort((a: ChartBarType, b: ChartBarType) => a.value - b.value).reverse().map((item: ChartBarType) => {
-        return { name: item.name, value: item.value, label: 'R$' + item.value.toFixed(2)};
-      });
-      setData(data);
-    });
-  }, [date]);
 
   return (
-    <PaperContainer>
-      <PaperHeader title={title} showSettingButon />
+    
       <Chart
         options={{
           chart: {
@@ -79,7 +58,7 @@ const ApexParentCategoriesBarChart = ({title}: {title: string}) => {
         type="bar"
         height={460}
       />
-    </PaperContainer>
+    
   );
 };
 

@@ -8,7 +8,7 @@ import {
     PaperHeaderLinkType,
     PaperHeaderSettingsType,
     PaperHeaderBadgeType,
-    PaperHeaderFilterType
+    PaperHeaderFilterType, BankAccountType
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
 
@@ -59,6 +59,13 @@ interface ITransactionContextData {
     actionShowTransactionDetail: (action: boolean) => void;
 }
 
+interface ICateroryContextData {
+    removableCategory: IRemovableEntity;
+    setRemovableCategory: Dispatch<SetStateAction<IRemovableEntity>>;
+    openConfirm: boolean;
+    setOpenConfirm: Dispatch<SetStateAction<boolean>>;
+}
+
 interface IAppPersistData {
     date: string;
     setDate: (d: string) => void;
@@ -86,7 +93,6 @@ interface ISpeedDialStoreData {
 }
 
 interface ICategoryListProps {
-    handleCategory: Dispatch<SetStateAction<number>>;
     categories: CategoryType[];
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
@@ -97,6 +103,13 @@ interface ICategoryListItemProps {
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
     isSubCategory?: boolean;
+}
+
+interface IAccountListItemProps {
+    account: BankAccountType;
+    handleEdit: (id: number) => void;
+    handleConfirmDelete: (id: number, name: string) => void;
+
 }
 
 interface IChildrenCategoriesProps {
@@ -120,7 +133,7 @@ interface IDashboardTopCardProps {
     children: React.ReactNode;
     title: string;
     bottomValue: string;
-    loading: boolean;
+    loading?: boolean;
 }
 
 interface IPageContainerProps {
@@ -151,10 +164,12 @@ export type {
     ITransactionRowDataProps,
     IPageContextData,
     ITransactionContextData,
+    ICateroryContextData,
     IAppPersistData,
     ISpeedDialStoreData,
     ICategoryListProps,
     ICategoryListItemProps,
+    IAccountListItemProps,
     IChildrenCategoriesProps,
     ICategoriesPanelProps,
     IEditableObjectContextData,
