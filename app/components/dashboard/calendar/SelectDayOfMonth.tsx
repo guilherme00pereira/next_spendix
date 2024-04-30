@@ -4,6 +4,7 @@ import type {} from "@mui/material/themeCssVarsAugmentation";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { TransactionType } from "@/types/entities";
+import { useTransactionsPerDayContext } from "@/app/lib/contexts";
 
 const DaysWrapper = styled(Stack)(({ theme }) => ({
   width: "90%",
@@ -44,8 +45,8 @@ const Day = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const SelectDayOfMonth = ({transactions}: {transactions: Map<string, TransactionType[]>}) => {
-  const days = Array.from(transactions.keys());
+const SelectDayOfMonth = ({days}: {days: string[]}) => {
+  const {setSelectedDay} = useTransactionsPerDayContext();
 
   return (
     <DaysWrapper
@@ -55,11 +56,11 @@ const SelectDayOfMonth = ({transactions}: {transactions: Map<string, Transaction
       spacing={2}
     >
       <Stack direction="row" justifyContent="center" alignItems="center">
-        {days.map((day, index) => (
+        {days.map((day) => (
           <Day
             key={day}
             direction="column"
-            onClick={() => console.log(day)}
+            onClick={() => setSelectedDay(day)}
           >
             <div>{dayjs(day).format("DD")}</div>
             <div>{dayjs(day).format("ddd")}</div>

@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { useTransactionContext } from "@/app/lib/contexts";
 import { useSpeedDialStore } from "@/app/lib/store";

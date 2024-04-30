@@ -4,13 +4,13 @@ import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import AccountsList from "@/app/components/dashboard/lists/AccountsList";
-import PageProvider from "@/app/context-providers/PageProvider";
+import PageProvider from "@/app/lib/providers/PageProvider";
 import BankAccountDialog from "@/app/components/dashboard/dialogs/BankAccountDialog";
-import BankAccountProvider from "@/app/context-providers/BankAccountProvider";
+import BankAccountProvider from "@/app/lib/providers/BankAccountProvider";
 import Loading from "./loading";
 
 export const metadata: Metadata = {
-  title: "Spdx - Bank Accounts",
+  title: "Spdx - Accounts",
   description: "",
 };
 

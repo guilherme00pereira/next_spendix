@@ -1,42 +1,23 @@
-import React, { useEffect, useMemo, useState } from "react";
-import {
-  PaperContainer,
-  TransactionListItem,
-} from "@/app/components/dashboard/commonStyledComponents";
+import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import dayjs from "dayjs";
-import { getPayedTransactions } from "@/app/lib/supabase/methods/transactions";
-import { TransactionType } from "@/types/entities";
-import { amountFormatter, groupTransactionsByDate } from "@/app/lib/functions";
 import SelectDayOfMonth from "@/app/components/dashboard/calendar/SelectDayOfMonth";
-import TransactionPerDayListItem from "./items/TransactionPerDayListItem";
-
-async function fetchTransactions() {
-  const res = await getPayedTransactions(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().endOf("M").format("YYYY-MM-DD"))
-  const filtered = res.filter(
-    (transaction: any) => transaction.categories.id != 43
-  );
-  return filtered;
-}
-
-const TransactionsPerDayList = async () => {
-  const transactions = await fetchTransactions();
-  const mappedTransactions = groupTransactionsByDate(transactions as TransactionType[]);
+import TransactionsPerDayProvider from "@/app/lib/providers/TransactionsPerDayProvider";
+import TransactionsPerDayBalanceListItem from "./items/TransactionsPerDayBalanceListItem";
+import TransactionsPerDayListItems from "./items/TransactionsPerDayListItems";
+import { TransactionType } from "@/types/entities";
+import { groupTransactionsByDate } from "@/app/lib/functions";
 
 
-  // const dayBalance = useMemo(() => {
-  //   return transactionsDay.reduce((acc, curr) => {
-  //     const v = curr.payments?.amount ?? curr.amount;
-  //     return curr.categories?.type == "Receita" ? acc + v : acc - v;
-  //   }, 0);
-  // }, [transactionsDay]);
+
+const TransactionsPerDayList = async ({transactions}: {transactions: TransactionType[]}) => {
+  const filtered = transactions.filter((transaction: any) => transaction.categories.id != 43)
+  const mapped = groupTransactionsByDate(filtered as TransactionType[])
 
   return (
     <PaperContainer sx={{ minHeight: "400px" }}>
       <PaperHeader
-        title="Transações por dia"
+        title="Transações diárias"
         link={{
           show: true,
           text: "Ver todas",
@@ -44,22 +25,13 @@ const TransactionsPerDayList = async () => {
         }}
       />
       <Stack>
-        <Stack direction="row" justifyContent="center" alignItems="center">
-          <SelectDayOfMonth
-            transactions={mappedTransactions}
-          />
-        </Stack>
-        {/* {transactionsDay.map((transaction, index) => (
-          <TransactionPerDayListItem key={index} transaction={transaction} />
-        ))} */}
-        {/* <TransactionListItem>
-          <Typography variant="body1" fontWeight={600}>
-            Saldo:
-          </Typography>
-          <Typography variant="body1" fontWeight={700}>
-            {amountFormatter(dayBalance)}
-          </Typography>
-        </TransactionListItem> */}
+        <TransactionsPerDayProvider>
+          <Stack direction="row" justifyContent="center" alignItems="center">
+            <SelectDayOfMonth days={Array.from(mapped.keys())} />
+          </Stack>
+          <TransactionsPerDayListItems transactions={mapped} />
+          <TransactionsPerDayBalanceListItem />
+        </TransactionsPerDayProvider>
       </Stack>
     </PaperContainer>
   );

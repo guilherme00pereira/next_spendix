@@ -1,15 +1,7 @@
-import {createContext, useContext} from "react";
-import {
-  IPageContextData,
-  ITransactionContextData,
-  IEditableObjectContextData,
-  ICateroryContextData
-} from "@/types/interfaces";
-import {
-  BankAccountType,
-  CreditCardType,
-  TagType,
-} from "@/types/entities";
+'use client'
+import { createContext, useContext } from "react";
+import { IPageContextData, ITransactionContextData, IEditableObjectContextData, ICateroryContextData, ITransactionsPerDayContextData } from "@/types/interfaces";
+import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
 
@@ -22,21 +14,24 @@ export const usePageContext = () => {
 };
 
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
-
+export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>({} as ITransactionsPerDayContextData);
 export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
-
 export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>({} as IEditableObjectContextData<BankAccountType>);
-
 export const CreditCardContext = createContext<IEditableObjectContextData<CreditCardType>>({} as IEditableObjectContextData<CreditCardType>);
-
 export const TagContext = createContext<IEditableObjectContextData<TagType>>({} as IEditableObjectContextData<TagType>);
-
-
 
 export const useTransactionContext = () => {
   const context = useContext(TransactionContext);
   if (!context) {
     throw new Error("useTransactionContext must be used within a TransactionContextProvider");
+  }
+  return context;
+};
+
+export const useTransactionsPerDayContext = () => {
+  const context = useContext(TransactionsPerDayContext);
+  if (!context) {
+    throw new Error("useTransactionsPerDayContext must be used within a TransactionsPerDayProvider");
   }
   return context;
 };
@@ -63,7 +58,7 @@ export const useCreditCardContext = () => {
     throw new Error("useCreditCardContext must be used within a CreditCardContextProvider");
   }
   return context;
-}
+};
 
 export const useTagContext = () => {
   const context = useContext(TagContext);

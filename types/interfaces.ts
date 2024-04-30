@@ -1,4 +1,3 @@
-import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {
     CategoryFormData,
     CategoryType,
@@ -57,6 +56,13 @@ interface ITransactionContextData {
     setSelectedTransaction: Dispatch<SetStateAction<TransactionType>>;
     showTransactionDetail: boolean;
     actionShowTransactionDetail: (action: boolean) => void;
+}
+
+interface ITransactionsPerDayContextData {
+    selectedDay: string;
+    setSelectedDay: Dispatch<SetStateAction<string>>;
+    dailyTransactions: TransactionType[];
+    setDailyTransactions: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
 interface ICateroryContextData {
@@ -158,6 +164,7 @@ export type {
     ITransactionRowDataProps,
     IPageContextData,
     ITransactionContextData,
+    ITransactionsPerDayContextData,
     ICateroryContextData,
     IAppPersistData,
     ISpeedDialStoreData,

@@ -1,3 +1,4 @@
+'use client'
 import { ScrollMenu, VisibilityContext, getItemsPos, slidingWindow } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./buttons/Arrows";
 import { DragManager } from "@/app/lib/drag-manager";

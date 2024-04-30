@@ -5,11 +5,12 @@ import { getOverdueTransactions } from "@/app/lib/supabase/methods/transactions"
 import { useQuery } from "@tanstack/react-query";
 import OverdueTransactionsListItem from "./items/OverdueTransactionListItem";
 
-const OverdueTransactionsList = () => {
-  const { data: transactions } = useQuery({
-    queryKey: ["overdue_transactions"],
-    queryFn: () => getOverdueTransactions(),
-  });
+async function fetchOverdueTransactions() {
+  return await getOverdueTransactions();
+}
+
+const OverdueTransactionsList = async () => {
+  const transactions = await fetchOverdueTransactions();
 
   return (
     <PaperContainer>
@@ -22,7 +23,7 @@ const OverdueTransactionsList = () => {
         }}
         badge={{
           show: true,
-          content: transactions?.length ?? 10,
+          content: transactions.length ?? 10,
           color: "error",
         }}
 

@@ -8,7 +8,6 @@ import CardContent from "@mui/material/CardContent";
 import { IDashboardTopCardProps } from "@/types/interfaces";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/system/Stack";
-import Skeleton from "@mui/material/Skeleton";
 
 const TopCard = styled(Card)(({ theme }) => ({
   minHeight: "180px",
