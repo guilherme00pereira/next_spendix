@@ -4,14 +4,15 @@ import PaperHeader from "./PaperHeader";
 import { getExpenseCategoriesTransactionsSum } from "@/app/lib/supabase/methods/categories";
 import ApexCategoriesPieChart from "@/app/components/dashboard/charts/ApexCategoriesPieChart";
 import dayjs from "dayjs";
+import { amountFormatter } from "@/app/lib/functions";
 
 const excludedCategories = [43, 63];
 
 async function fetchChartData() {
   const res = await getExpenseCategoriesTransactionsSum(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"));
-  const items = res.filter((item: any) => !excludedCategories.includes(item.id)).filter((item: any) => item.value > 200);
+  const items = res.filter((item: any) => !excludedCategories.includes(item.id));
   const series: number[] = items.map((item: any) => item.value);
-  const labels: string[] = items.map((item: any) => item.name);
+  const labels: string[] = items.map((item: any) => item.name + " - " + amountFormatter(item.value));
   return { series, labels };
 }
 

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
 
-const CategoryTypeDict = [
+export const CategoryTypeDict = [
     {
         value: 'Despesa',
         label: "Despesa"
@@ -15,23 +15,8 @@ const CategoryTypeDict = [
         label: "Transação"
     }
 ];
-const TransactionDefaultData = {
-    amount: 0,
-    category_id: 3,
-    cashed: true,
-    description: "",
-    due_date: dayjs(Date.now()),
-    in_installments: false,
-    installments: 2,
-    payment_date: dayjs(Date.now()),
-    payed_amount: 0,
-    payment_method_id: 1,
-    payment_id: null,
-    draft: false,
-    tags: [],
-}
 
-const latinCharacters: { [key: string]: string } = {
+export const latinCharacters: { [key: string]: string } = {
     á: "a",
     é: "e",
     í: "i",
@@ -73,9 +58,3 @@ const latinCharacters: { [key: string]: string } = {
     Ñ: "N",
     Ü: "U",
 };
-
-export {
-    CategoryTypeDict,
-    TransactionDefaultData,
-    latinCharacters,
-}

@@ -14,8 +14,7 @@ import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
-import { convertPaymentMethodsToSelect } from "@/app/lib/functions";
-import { getAllPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
+import { getAccountPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -37,14 +36,21 @@ const IncomeFormDialog = () => {
   });
 
   const { data: paymentMethods } = useQuery({
-    queryKey: ["payment_methods"],
-    queryFn: () => buildSelectPaymentMethods(),
+    queryKey: ["pm_accounts"],
+    queryFn: () => getAccountPaymentMethods(),
   });
 
-  const buildSelectPaymentMethods = async () => {
-    const res = await getAllPaymentMethods();
-    return convertPaymentMethodsToSelect(res);
+  const handleDateChange = (date: any) => {
+    formik.setFieldValue("due_date", date);
   };
+
+  const handleCashedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    formik.setFieldValue("cashed", event.target.checked);
+    formik.setFieldValue("payment_date", event.target.checked ? new Date() : null);
+    formik.setFieldValue("payed_amount", event.target.checked ? formik.values.amount : null);
+
+  }
+
 
   const formik = useFormik({
     initialValues: income,
@@ -52,16 +58,15 @@ const IncomeFormDialog = () => {
     onSubmit: (values) => {
       setIsPending(true);
       const obj = {
+        ...values,
         id: values.id ?? undefined,
         amount: values["amount"],
         due_date: values["due_date"],
         description: values["description"],
         cashed: values["cashed"],
         category_id: values["category_id"],
-        in_installments: values["in_installments"],
-        installments: values["installments"],
-        payment_date: values["payment_date"],
-        payed_amount: values["payed_amount"],
+        payment_date: values["due_date"],
+        payed_amount: values["amount"],
         payment_method_id: values["payment_method_id"],
         payment_id: values["payment_id"],
         draft: values["draft"],
@@ -126,7 +131,7 @@ const IncomeFormDialog = () => {
                     ?.filter((c) => c.type === "Receita")
                     .map((category) => (
                       <MenuItem key={category.id} value={category.id}>
-                        {category.type} - {category.name}
+                        {category.name}
                       </MenuItem>
                     ))}
                 </TextField>
@@ -135,7 +140,13 @@ const IncomeFormDialog = () => {
               <Grid item xs={12} md={4}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]} sx={{ pt: "0" }}>
-                    <DatePicker format="DD/MM/YYYY" onChange={(value) => formik.setFieldValue('due_date', value)} value={formik.values.due_date} name="due_date" label="Data de recebimento" />
+                    <DatePicker
+                      format="DD/MM/YYYY"
+                      onChange={(value) => handleDateChange(value)}
+                      value={formik.values.due_date}
+                      name="due_date"
+                      label="Data de recebimento"
+                    />
                   </DemoContainer>
                 </LocalizationProvider>
               </Grid>
@@ -144,7 +155,7 @@ const IncomeFormDialog = () => {
 
           <Stack direction="row" sx={{ py: 2 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   helperText={formik.touched.payment_method_id && formik.errors.payment_method_id}
                   error={formik.touched.payment_method_id && Boolean(formik.errors.payment_method_id)}
@@ -154,17 +165,17 @@ const IncomeFormDialog = () => {
                   select
                   fullWidth
                   name="payment_method_id"
-                  label="Meio de Pagamento"
+                  label="Recebido por"
                 >
                   {paymentMethods &&
                     paymentMethods.map((payment_method: any) => (
-                      <MenuItem key={payment_method.value} value={payment_method.value}>
-                        {payment_method.label}
+                      <MenuItem key={payment_method.id} value={payment_method.id}>
+                        {payment_method.bank}
                       </MenuItem>
                     ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   helperText={formik.touched.description && formik.errors.description}
                   error={formik.touched.description && Boolean(formik.errors.description)}
@@ -176,12 +187,23 @@ const IncomeFormDialog = () => {
                   label="Descrição"
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+            </Grid>
+          </Stack>
+
+          <Stack direction="row" sx={{ py: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
                 <FormControlLabel
-                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
-                  label="Simulado"
+                  control={<Checkbox name="draft" value={formik.values.cashed} onChange={(e) => handleCashedChange(e)} checked={formik.values.cashed} />}
+                  label="Recebido"
                 />
-                </Grid>
+              </Grid>
+              <Grid item xs={12} md={6}>
+              <FormControlLabel
+                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
+                  label="Marcar como rascunho"
+                />
+              </Grid>
             </Grid>
           </Stack>
         </DialogContent>

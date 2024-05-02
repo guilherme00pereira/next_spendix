@@ -13,11 +13,12 @@ const ApexCategoriesPieChart = ({series, labels}: ChartPieType) => {
               show: false,
             },
           },
+          labels: labels,
         }} 
         series={series}
-        labels={labels}
-        type="pie"
-        width={400}
+        type="donut"
+        width={480}
+        height={480}
       />
     
   );

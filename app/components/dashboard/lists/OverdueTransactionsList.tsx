@@ -2,7 +2,6 @@ import React from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { getOverdueTransactions } from "@/app/lib/supabase/methods/transactions";
-import { useQuery } from "@tanstack/react-query";
 import OverdueTransactionsListItem from "./items/OverdueTransactionListItem";
 
 async function fetchOverdueTransactions() {

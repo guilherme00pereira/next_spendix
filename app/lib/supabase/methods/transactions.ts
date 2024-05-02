@@ -27,13 +27,13 @@ import dayjs from "dayjs";
 
 const supabase = createClient();
 
-const getQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), installments: transaction_installments(*)`;
-const getOverdue = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
+const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), installments: transaction_installments(*)`;
+const getDefaultQuery = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
 const getTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
     .from("transactions")
-    .select(getQuery)
+    .select(getInnerPaymentsQuery)
     .gte("due_date", initial_date)
     .lte("due_date", final_date)
     .order("due_date", { ascending: true });
@@ -46,7 +46,7 @@ const getTransactions = async (initial_date: string, final_date: string) => {
 const getPayedTransactions = async (initial_date: string, final_date: string) => {
   const { data, error } = await supabase
     .from("transactions")
-    .select(getQuery)
+    .select(getInnerPaymentsQuery)
     .gte("payments.date", initial_date)
     .lte("payments.date", final_date);
   if (error) {
@@ -55,10 +55,23 @@ const getPayedTransactions = async (initial_date: string, final_date: string) =>
   return data;
 };
 
+const getFutureTransactions = async (initial_date: string, final_date: string) => {
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(getDefaultQuery)
+    .gte("due_date", initial_date)
+    .lte("due_date", final_date)
+    .order("due_date", { ascending: true });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
 const getTransactionsByCategory = async (di: string, df: string, category_id: number) => {
   const { data, error } = await supabase
     .from("transactions")
-    .select(getQuery)
+    .select(getInnerPaymentsQuery)
     .gte("due_date", di)
     .lte("due_date", df)
     .eq("category_id", category_id)
@@ -72,7 +85,7 @@ const getTransactionsByCategory = async (di: string, df: string, category_id: nu
 const getOverdueTransactions = async () => {
   const { data, error } = await supabase
     .from("transactions")
-    .select(getOverdue)
+    .select(getDefaultQuery)
     .lte("due_date", dayjs().format("YYYY-MM-DD"))
     .is("payment_id", null)
     .order("due_date", { ascending: false })
@@ -150,7 +163,7 @@ const addReccuringTransaction = async ({ amount, due_date, description, category
       payment_id: null,
     });
   }
-  const { data, error } = await supabase.from("transactions").insert(rows).select(getQuery);
+  const { data, error } = await supabase.from("transactions").insert(rows).select(getInnerPaymentsQuery);
   if (error) {
     throw error;
   }
@@ -235,7 +248,7 @@ const getSumIncomeTransactions = async (di: string, df: string) => {
 const getTransactionsByCategoriesLastSixMonths = async (category_ids: number[]) => {
   const { data, error } = await supabase
     .from("transactions")
-    .select(getQuery)
+    .select(getInnerPaymentsQuery)
     .in("category_id", category_ids)
     .gte("due_date", dayjs().subtract(6, "month").format("YYYY-MM-DD"))
     .lte("due_date", dayjs().format("YYYY-MM-DD"))
@@ -290,6 +303,7 @@ const managePaymentMethodUpdateBalance = async (payment_method_id: number, amoun
 export {
   getTransactions,
   getPayedTransactions,
+  getFutureTransactions,
   getTransactionsByCategory,
   getOverdueTransactions,
   addTransaction,

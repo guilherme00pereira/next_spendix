@@ -12,9 +12,25 @@ import dayjs from "dayjs";
 import CategoryFormDialog from "@/app/components/dashboard/dialogs/CategoryFormDialog";
 import { styled } from "@mui/material/styles";
 import RecurringFormDialog from "./dialogs/RecurringFormDialog";
-import { TransactionDefaultData } from "@/app/lib/data";
 import IncomeFormDialog from "./dialogs/IncomeFormDialog";
 import GroupFormDialog from "./dialogs/GroupFormDialog";
+
+
+const TransactionDefaultData = {
+  amount: 0,
+  category_id: 3,
+  cashed: true,
+  description: "",
+  due_date: dayjs(Date.now()),
+  in_installments: false,
+  installments: 2,
+  payment_date: dayjs(Date.now()),
+  payed_amount: 0,
+  payment_method_id: 1,
+  payment_id: null,
+  draft: false,
+  tags: [],
+}
 
 const dialActions = [
   { icon: <ShoppingCartCheckoutOutlinedIcon />, name: "Despesa", handler: "transaction" },
