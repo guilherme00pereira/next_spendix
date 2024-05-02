@@ -65,28 +65,34 @@ export type Database = {
       }
       credit_cards: {
         Row: {
+          brand: Database["public"]["Enums"]["credit_card_brand"] | null
           closing_day: number
           color: string | null
           created_at: string
           due_day: number
+          final_numbers: string | null
           id: number
           limit: number
           name: string
         }
         Insert: {
+          brand?: Database["public"]["Enums"]["credit_card_brand"] | null
           closing_day: number
           color?: string | null
           created_at?: string
           due_day: number
+          final_numbers?: string | null
           id?: number
           limit: number
           name?: string
         }
         Update: {
+          brand?: Database["public"]["Enums"]["credit_card_brand"] | null
           closing_day?: number
           color?: string | null
           created_at?: string
           due_day?: number
+          final_numbers?: string | null
           id?: number
           limit?: number
           name?: string
@@ -121,6 +127,60 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      group_categories: {
+        Row: {
+          category_id: number
+          group_id: number
+          id: number
+        }
+        Insert: {
+          category_id: number
+          group_id: number
+          id?: number
+        }
+        Update: {
+          category_id?: number
+          group_id?: number
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_categories_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      groups: {
+        Row: {
+          color: string | null
+          icon: string | null
+          id: number
+          name: string
+        }
+        Insert: {
+          color?: string | null
+          icon?: string | null
+          id?: number
+          name: string
+        }
+        Update: {
+          color?: string | null
+          icon?: string | null
+          id?: number
+          name?: string
+        }
+        Relationships: []
       }
       invoice_payments: {
         Row: {
@@ -404,6 +464,7 @@ export type Database = {
     }
     Enums: {
       category_type: "Receita" | "Despesa" | "Transacao"
+      credit_card_brand: "Visa" | "Mastercard"
       payment_type: "C" | "D" | "T"
     }
     CompositeTypes: {

@@ -6,6 +6,7 @@ import DashboardOverdueInvoices from "@/app/components/dashboard/widgets/home/Da
 import DashboardCardInvoices from "@/app/components/dashboard/widgets/home/DashboardCardInvoices";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
+import CategoriesPizzaChartPaper from "../components/dashboard/surfaces/CategoriesPizzaChartPaper";
 
 const DashboardPage = () => {
 
@@ -27,7 +28,7 @@ const DashboardPage = () => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-            <ParentCategoriesChartPaper title="Gastos por categoria no mês" />
+            <CategoriesPizzaChartPaper title="Gastos por categoria no mês" />
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>

@@ -26,7 +26,7 @@ const IconBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "income",
 })<{ income: boolean }>(({ theme, income }) => ({
   borderRadius: "8px",
-  padding: "8px",
+  padding: "4px",
   backgroundColor: income ? theme.vars.palette.success.dark : theme.vars.palette.error.dark,
   color: "white",
 }));
@@ -36,7 +36,7 @@ const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactions
     <Widget>
       <Stack direction="row" justifyContent="space-around" alignItems="center">
         <IconBox income={income}>
-          {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.5rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.5rem" }} />}
+          {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.25rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.25rem" }} />}
         </IconBox>
         <Stack direction="column" alignItems="start">
           <Box sx={{ fontSize: "0.75rem", color: "text.secondary" }}>{title}</Box>

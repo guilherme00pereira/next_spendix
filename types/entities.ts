@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 
-type CategoryType = {
+export type CategoryType = {
     id: number;
     name: string;
     slug: string;
@@ -10,7 +10,7 @@ type CategoryType = {
     icon: string | null;
 }
 
-type PaymentType = {
+export type PaymentType = {
     id: number;
     date: string;
     amount: number;
@@ -18,18 +18,25 @@ type PaymentType = {
     times: number;
 }
 
-type TagType = {
+export type TagType = {
     id: number;
     name: string;
 }
 
-type TransactionInstallmentsType = {
+export type GroupType = {
+    id: number;
+    name: string;
+    color: string | "#000";
+    icon: string | null;
+}
+
+export type TransactionInstallmentsType = {
     id: number;
     transaction_id: number;
     installments: number;
 }
 
-type CategoryFormData = {
+export type CategoryFormData = {
     id?: number;
     name: string;
     slug: string;
@@ -39,7 +46,14 @@ type CategoryFormData = {
     type: "Receita" | "Despesa" | "Transacao";
 }
 
-type TransactionType = {
+export type GroupFormData = {
+    id?: number;
+    name: string;
+    color: string | "#000";
+    icon: string | null;
+}
+
+export type TransactionType = {
     id: number;
     due_date: string;
     description: string;
@@ -51,7 +65,7 @@ type TransactionType = {
     tags: TagType[];
 }
 
-type TransactionFormData = {
+export type TransactionFormData = {
     id?: number,
     amount: number,
     due_date: Dayjs,
@@ -68,7 +82,7 @@ type TransactionFormData = {
     tags: TagType[];
 }
 
-type RecurringFormData = {
+export type RecurringFormData = {
     id?: number,
     amount: number,
     due_date: Dayjs,
@@ -78,34 +92,28 @@ type RecurringFormData = {
     recurring_times: number,
 }
 
-type TransactionRowType = {
+export type TransactionRowType = {
     day: string;
     income: number;
     expense: number;
     balance: number;
 }
 
-type TransactionUpdateStatusProps = {
+export type TransactionUpdateStatusProps = {
     id: number;
     cashed: boolean;
     payment_date: Dayjs;
     payed_amount: number;
 }
 
-type ChartBarType = {
-    name: string;
-    value: number;
-    label: string;
-}
-
-type BankAccountType = {
+export type BankAccountType = {
     id?: number;
     bank: string;
     balance: number;
     color: string | "000"; 
 }
 
-type CreditCardType = {
+export type CreditCardType = {
     id?: number;
     name: string;
     limit: number;
@@ -114,15 +122,14 @@ type CreditCardType = {
     color: string | "000";
     invoices: CreditCardInvoiceType[] | null;
 }
-
-type CreditCardInvoiceType = {
+export type CreditCardInvoiceType = {
     id: number;
     credit_cards: CreditCardType | null;
     date: string;
     amount: number;
 }
 
-type TransferMoneyFormData = {
+export type TransferMoneyFormData = {
     outcomeId: number;
     outcomeType: string;
     incomeId: number;
@@ -130,45 +137,24 @@ type TransferMoneyFormData = {
     amount: number;
 }
 
-type PaperHeaderLinkType = {
+export type PaperHeaderLinkType = {
     show: boolean;
     text: string;
     target: string;
 }
 
-type PaperHeaderBadgeType = {
+export type PaperHeaderBadgeType = {
     show: boolean;
     content: number;
     color: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
 }
 
-type PaperHeaderSettingsType = {
+export type PaperHeaderSettingsType = {
     showButton: boolean;
     buttonAction: () => void;
 }
 
-type PaperHeaderFilterType = {
+export type PaperHeaderFilterType = {
     show: boolean;
     filterAction: () => void;
-}
-
-export type {
-    CategoryType,
-    PaymentType,
-    TagType,
-    CategoryFormData,
-    TransactionType,
-    TransactionFormData,
-    RecurringFormData,
-    TransactionRowType,
-    TransactionUpdateStatusProps,
-    ChartBarType,
-    BankAccountType,
-    CreditCardType,
-    CreditCardInvoiceType,
-    TransferMoneyFormData,
-    PaperHeaderLinkType,
-    PaperHeaderBadgeType,
-    PaperHeaderSettingsType,
-    PaperHeaderFilterType
 }

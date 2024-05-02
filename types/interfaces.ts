@@ -7,7 +7,8 @@ import {
     PaperHeaderLinkType,
     PaperHeaderSettingsType,
     PaperHeaderBadgeType,
-    PaperHeaderFilterType, BankAccountType
+    PaperHeaderFilterType, BankAccountType,
+    GroupFormData
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
 
@@ -96,6 +97,10 @@ interface ISpeedDialStoreData {
     actionShowRecurringDialog: (action: boolean) => void;
     recurring: RecurringFormData;
     setRecurring: (r: RecurringFormData) => void;
+    showGroupDialog: boolean;
+    actionShowGroupDialog: (action: boolean) => void;
+    group: GroupFormData;
+    setGroup: (g: GroupFormData) => void;
 }
 
 interface ICategoryListProps {

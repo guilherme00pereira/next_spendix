@@ -22,6 +22,15 @@ const ListItem = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const CreditCardBox = styled(Stack)(({ theme }) => ({
+  alignItems: "center",
+  padding: "2px 4px",
+  color: "white",
+  borderRadius: "8px",
+  width: "140px",
+  height: "80px",
+}));
+
 const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
   const { showModal, actionShowModal } = usePageContext();
   const { setEditableObject } = useCreditCardContext();
@@ -32,10 +41,20 @@ const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
   };
 
   return (
-    <ListItem direction="row" justifyContent="space-between" alignItems="center" sx={{ color: "#" + card.color + " !important" }}>
-        <Box>
-            <Typography fontWeight="bold">{card.id}</Typography>
-        </Box>
+    <ListItem
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      sx={{ color: "#" + card.color + " !important" }}
+    >
+      <CreditCardBox
+        direction="column"
+        justifyContent="space-between"
+        alignItems="end"
+        sx={{ backgroundColor: "#" + card.color + " !important" }}
+      >
+        <Typography fontWeight="bold" fontSize="0.75rem">{card.name}</Typography>
+      </CreditCardBox>
       <Box sx={{ flexGrow: 1 }}>
         <Typography fontWeight="bold">{card.name}</Typography>
       </Box>

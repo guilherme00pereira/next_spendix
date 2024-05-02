@@ -1,9 +1,9 @@
 import React from "react";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "./PaperHeader";
-import ApexParentCategoriesBarChart from "../charts/ApexParentCategoriesBarChart";
 import { getExpenseCategoriesTransactionsSum } from "@/app/lib/supabase/methods/categories";
 import { ChartBarType } from "@/types/chart-types";
+import ApexCategoriesPieChart from "@/app/components/dashboard/charts/ApexCategoriesPieChart";
 import dayjs from "dayjs";
 
 const excludedCategories = [43, 63];
@@ -24,14 +24,14 @@ async function fetchChartData() {
   return data;
 }
 
-const ParentCategoriesChartPaper = async ({title}: {title:string}) => {
+const CategoriesPizzaChartPaper = async ({title}: {title:string}) => {
   const data = await fetchChartData();
   return (
     <PaperContainer>
       <PaperHeader title={title} />
-      {data && <ApexParentCategoriesBarChart data={data} />}
+      {data && <ApexCategoriesPieChart data={data} />}
     </PaperContainer>
   );
 };
 
-export default ParentCategoriesChartPaper;
+export default CategoriesPizzaChartPaper;

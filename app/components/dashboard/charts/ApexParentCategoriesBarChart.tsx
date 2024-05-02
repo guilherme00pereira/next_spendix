@@ -1,6 +1,6 @@
 'use client'
 import Chart from "react-apexcharts";
-import { ChartBarType } from "@/types/entities";
+import { ChartBarType } from "@/types/chart-types";
 import { useColorScheme } from "@mui/material";
 
 

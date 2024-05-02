@@ -4,7 +4,7 @@ import { CategoryType } from "@/types/entities";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import ChooseIconDialog from "@/app/components/dashboard/dialogs/ChooseIconDialog";
 import CategoriesList from "@/app/components/dashboard/lists/CategoriesList";
-import CategoryProvider from "@/app/context-providers/CategoryProvider";
+import CategoryProvider from "@/app/lib/providers/CategoryProvider";
 import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
 
 async function fetchCategories() {

@@ -3,7 +3,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { FormControl, MenuItem, Stack, TextField, useColorScheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
-import { CategoryType, ChartBarType, TransactionType } from "@/types/entities";
+import { CategoryType, ChartBarType, TransactionType } from "@/types/chart-types";
 import { useRouter } from "next/navigation";
 
 

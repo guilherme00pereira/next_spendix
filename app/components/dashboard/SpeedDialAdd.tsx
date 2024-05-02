@@ -1,8 +1,10 @@
+'use client'
 import { useState } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import InterestsRoundedIcon from '@mui/icons-material/InterestsRounded';
 import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
 import TransactionFormDialog from "@/app/components/dashboard/dialogs/TransactionFormDialog";
 import { useSpeedDialStore } from "@/app/lib/store";
@@ -12,12 +14,14 @@ import { styled } from "@mui/material/styles";
 import RecurringFormDialog from "./dialogs/RecurringFormDialog";
 import { TransactionDefaultData } from "@/app/lib/data";
 import IncomeFormDialog from "./dialogs/IncomeFormDialog";
+import GroupFormDialog from "./dialogs/GroupFormDialog";
 
 const dialActions = [
   { icon: <ShoppingCartCheckoutOutlinedIcon />, name: "Despesa", handler: "transaction" },
   { icon: <MonetizationOnOutlinedIcon />, name: "Receita", handler: "income" },
   { icon: <EventRepeatOutlinedIcon />, name: "Recorrente", handler: "recurring" },
   { icon: <CategoryOutlinedIcon />, name: "Categoria", handler: "category" },
+  { icon: <InterestsRoundedIcon />, name: "Grupo", handler: "group" },
 ];
 
 const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
@@ -50,6 +54,9 @@ const SpeedDialAdd = () => {
     setRecurring,
     showRecurringDialog,
     actionShowRecurringDialog,
+    setGroup,
+    showGroupDialog,
+    actionShowGroupDialog,
   } = useSpeedDialStore();
   const [open, setOpen] = useState(false);
 
@@ -73,6 +80,10 @@ const SpeedDialAdd = () => {
       case "recurring":
         actionShowRecurringDialog(true);
         setRecurring({ amount: 0, category_id: 3, description: "", due_date: dayjs(Date.now()), recurring: false, recurring_times: 2 });
+        break;
+      case "group":
+        actionShowGroupDialog(true);
+        setGroup({ color: "#000", icon: null, name: "" });
         break;
       default:
         handleClose();
@@ -98,6 +109,7 @@ const SpeedDialAdd = () => {
       {showRecurringDialog && <RecurringFormDialog />}
       {showCategoryDialog && <CategoryFormDialog />}
       {showIncomeDialog && <IncomeFormDialog />}
+      {showGroupDialog && <GroupFormDialog />}
     </>
   );
 };
