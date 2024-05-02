@@ -83,7 +83,7 @@ const SpeedDialAdd = () => {
         break;
       case "group":
         actionShowGroupDialog(true);
-        setGroup({ color: "#000", icon: null, name: "" });
+        setGroup({ color: null, icon: null, name: "" });
         break;
       default:
         handleClose();

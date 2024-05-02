@@ -10,6 +10,11 @@
 - box do cartão
 
 
+#### Categorias
+
+- renomear super almoço
+
+
 #### Speed Dial
 
 -botão grupo
@@ -20,5 +25,6 @@
 - nova despesa:
     - separar categorias em uma compra
     - calculadora
-    - 
+    - data vencimento com opções hoje, ontem e calendario
+    - meio de pagamento persist ultimo
 

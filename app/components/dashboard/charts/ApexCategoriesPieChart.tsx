@@ -1,11 +1,9 @@
 'use client'
 import Chart from "react-apexcharts";
-import { ChartBarType } from "@/types/chart-types";
+import { ChartPieType } from "@/types/chart-types";
 
-const ApexCategoriesPieChart = ({data}: {data: ChartBarType[]}) => {
-  const series = data.map((item) => item.value);
-  const labels = data.map((item) => item.name);
-
+const ApexCategoriesPieChart = ({series, labels}: ChartPieType) => {
+  console.log(series, labels);
   return (    
       <Chart
         options={{

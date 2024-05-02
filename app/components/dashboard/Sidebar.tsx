@@ -16,6 +16,7 @@ import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
+import InterestsRoundedIcon from '@mui/icons-material/InterestsRounded';
 import WalletIcon from "@mui/icons-material/Wallet";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
@@ -109,6 +110,14 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
             <ListAltRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Categorias" />
+        </ListItemButton>
+
+
+        <ListItemButton LinkComponent="a" href="/dashboard/groups">
+          <ListItemIcon>
+            <InterestsRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Grupo" />
         </ListItemButton>
 
        <ListItemButton

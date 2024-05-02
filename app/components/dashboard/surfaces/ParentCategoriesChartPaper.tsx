@@ -10,7 +10,7 @@ const excludedCategories = [43, 63];
 
 async function fetchChartData() {
   const res = await getExpenseCategoriesTransactionsSum(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"));
-  const items = res.filter((item: any) => !excludedCategories.includes(item.id)).filter((item: any) => item.value > 200);
+  const items = res.filter((item: any) => !excludedCategories.includes(item.id));
   const data: ChartBarType[] = items
     .sort((a: ChartBarType, b: ChartBarType) => a.value - b.value)
     .reverse()

@@ -19,11 +19,7 @@ const CategoriesPage = async () => {
     <PageContainer title="Categorias">
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
-          <CategoryProvider>
-              {categories && (
-                <CategoriesList categories={categories as CategoryType[]} />
-              )}
-          </CategoryProvider>
+          <CategoryProvider>{categories && <CategoriesList categories={categories as CategoryType[]} />}</CategoryProvider>
         </Grid>
         <Grid item xs={12} md={6}>
           <ParentCategoriesChartPaper title="Despesas por categorias no mês" />

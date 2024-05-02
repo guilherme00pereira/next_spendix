@@ -8,79 +8,80 @@ import {
     PaperHeaderSettingsType,
     PaperHeaderBadgeType,
     PaperHeaderFilterType, BankAccountType,
-    GroupFormData
+    GroupFormData,
+    GroupType
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
 
-interface ISelectOption {
+export interface ISelectOption {
     value: string;
     label: string;
 }
 
-interface IDashboardLayoutProps {
+export interface IDashboardLayoutProps {
     open: boolean;
     toggleDrawer?: (action: boolean) => void;
 }
 
-interface IDeleteConfirmDialogProps {
+export interface IDeleteConfirmDialogProps {
     entity: IRemovableEntity;
     open: boolean;
     handleClose: Dispatch<SetStateAction<boolean>>;
     handleDelete: () => void;
 }
 
-interface IRemovableEntity {
+export interface IRemovableEntity {
     id: number, 
     name: string, 
     type: string,
 }
 
-interface IDeleteTransactionData {
+export interface IDeleteTransactionData {
     id: number;
     payment_id: number | null;
 }
 
-interface ITransactionRowDataProps {
+export interface ITransactionRowDataProps {
     day: string,
     transactions: TransactionType[],
     open: boolean,
 }
 
-interface IPageContextData {
+export interface IPageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
     mediaQuery: string;
 }
 
-interface ITransactionContextData {
+export interface ITransactionContextData {
     selectedTransaction: TransactionType;
     setSelectedTransaction: Dispatch<SetStateAction<TransactionType>>;
     showTransactionDetail: boolean;
     actionShowTransactionDetail: (action: boolean) => void;
 }
 
-interface ITransactionsPerDayContextData {
+export interface ITransactionsPerDayContextData {
     selectedDay: string;
     setSelectedDay: Dispatch<SetStateAction<string>>;
     dailyTransactions: TransactionType[];
     setDailyTransactions: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
-interface ICateroryContextData {
+export interface ICateroryContextData {
     removableCategory: IRemovableEntity;
     setRemovableCategory: Dispatch<SetStateAction<IRemovableEntity>>;
     openConfirm: boolean;
     setOpenConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
-interface IAppPersistData {
+export interface IAppPersistData {
     date: string;
     setDate: (d: string) => void;
     openSidebar: boolean;
     setOpenSidebar: (action: boolean) => void;
 }
 
-interface ISpeedDialStoreData {
+export interface ISpeedDialStoreData {
     showTransactionDialog: boolean;
     actionShowTransactionDialog: (action: boolean) => void;
     transaction: TransactionFormData;
@@ -103,85 +104,66 @@ interface ISpeedDialStoreData {
     setGroup: (g: GroupFormData) => void;
 }
 
-interface ICategoryListProps {
+export interface ICategoryListProps {
     categories: CategoryType[];
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
 }
 
-interface ICategoryListItemProps {
+export interface ICategoryListItemProps {
     category: CategoryType;
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
     isSubCategory?: boolean;
 }
 
-interface IAccountListItemProps {
+export interface IGroupListItemProps {
+    group: GroupType;
+    handleEdit: (id: number) => void;
+    handleConfirmDelete: (id: number, name: string) => void;
+}
+
+export interface IAccountListItemProps {
     account: BankAccountType;
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
 
 }
 
-interface IChildrenCategoriesProps {
+export interface IChildrenCategoriesProps {
     subcategories: CategoryType[];
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
     handleView: (id: number) => void;
 }
 
-interface ICategoriesPanelProps {
+export interface ICategoriesPanelProps {
     id: number;
     action: Dispatch<SetStateAction<number>>;
 }
 
-interface IEditableObjectContextData<T> {
+export interface IEditableObjectContextData<T> {
     editableObject: T;
     setEditableObject: Dispatch<SetStateAction<T>>;
 }
 
-interface IDashboardTopCardProps {
+export interface IDashboardTopCardProps {
     children: React.ReactNode;
     title: string;
     bottomValue: string;
     loading?: boolean;
 }
 
-interface IPageContainerProps {
+export interface IPageContainerProps {
     title: string;
     children: React.ReactNode;
     hideBreadcrumb?: boolean;
 }
 
-interface IPaperHeaderProps {
+export interface IPaperHeaderProps {
     title: string;
     link?: PaperHeaderLinkType;
     settings?: PaperHeaderSettingsType
     badge?: PaperHeaderBadgeType;
     filter?: PaperHeaderFilterType;
 }
-
-export type {
-    ISelectOption,
-    IDeleteConfirmDialogProps,
-    IRemovableEntity,
-    IDashboardLayoutProps,
-    ITransactionRowDataProps,
-    IPageContextData,
-    ITransactionContextData,
-    ITransactionsPerDayContextData,
-    ICateroryContextData,
-    IAppPersistData,
-    ISpeedDialStoreData,
-    ICategoryListProps,
-    ICategoryListItemProps,
-    IAccountListItemProps,
-    IChildrenCategoriesProps,
-    ICategoriesPanelProps,
-    IEditableObjectContextData,
-    IDashboardTopCardProps,
-    IDeleteTransactionData,
-    IPageContainerProps,
-    IPaperHeaderProps,
-}
-

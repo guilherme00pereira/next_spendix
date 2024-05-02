@@ -26,7 +26,7 @@ export type TagType = {
 export type GroupType = {
     id: number;
     name: string;
-    color: string | "#000";
+    color: string | null;
     icon: string | null;
 }
 
@@ -49,7 +49,7 @@ export type CategoryFormData = {
 export type GroupFormData = {
     id?: number;
     name: string;
-    color: string | "#000";
+    color: string | null;
     icon: string | null;
 }
 

@@ -51,17 +51,12 @@ const GroupFormDialog = () => {
                   label="Nome"
                 />
               </Grid>
-            </Grid>
-          </Stack>
-
-          <Stack direction="row" sx={{ py: 2 }}>
-            <Grid container spacing={3}>
               <Grid xs={12} md={4} item>
-                <ColorPicker
+                {/* <ColorPicker
                   onChange={formik.handleChange}
                   value={"#" + formik.values.color}
-                  defaultValue={formik.values.color}
-                />
+                  defaultValue={formik.values.color ?? "#000000"}
+                /> */}
               </Grid>
             </Grid>
           </Stack>
