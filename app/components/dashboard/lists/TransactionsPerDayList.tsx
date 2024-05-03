@@ -17,7 +17,7 @@ const TransactionsPerDayList = async ({transactions}: {transactions: Transaction
   return (
     <PaperContainer sx={{ minHeight: "400px" }}>
       <PaperHeader
-        title="Transações diárias"
+        title="Transações realizadas no mês / dia"
         link={{
           show: true,
           text: "Ver todas",

@@ -63,6 +63,38 @@ export type Database = {
         }
         Relationships: []
       }
+      category_goal: {
+        Row: {
+          category_id: number
+          id: number
+          period: string
+          type: Database["public"]["Enums"]["goal_value_type"]
+          value: number
+        }
+        Insert: {
+          category_id: number
+          id?: number
+          period: string
+          type?: Database["public"]["Enums"]["goal_value_type"]
+          value: number
+        }
+        Update: {
+          category_id?: number
+          id?: number
+          period?: string
+          type?: Database["public"]["Enums"]["goal_value_type"]
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_goal_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       credit_cards: {
         Row: {
           brand: Database["public"]["Enums"]["credit_card_brand"] | null
@@ -465,6 +497,7 @@ export type Database = {
     Enums: {
       category_type: "Receita" | "Despesa" | "Transacao"
       credit_card_brand: "Visa" | "Mastercard"
+      goal_value_type: "Percentage" | "Fixed"
       payment_type: "C" | "D" | "T"
     }
     CompositeTypes: {

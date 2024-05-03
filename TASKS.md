@@ -1,5 +1,10 @@
 ## New Features
 
+#### Supabase
+
+- Implementar autenticação com Google
+- chamadas à api via server side
+
 #### Home
 
 - gráfico de pizza para despesas por categoria
@@ -28,3 +33,11 @@
     - data vencimento com opções hoje, ontem e calendario
     - meio de pagamento persist ultimo
 
+##### Geral
+
+- ver possibilidade de usar o mesmo componente para botões de ver, editar e excluir
+
+
+##### Charts
+- tema dark e light
+- cores das barras

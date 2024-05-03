@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {styled, useColorScheme} from "@mui/material/styles";
-import type {} from '@mui/material/themeCssVarsAugmentation';
+import { styled, useColorScheme } from "@mui/material/styles";
+import type {} from "@mui/material/themeCssVarsAugmentation";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,11 +13,12 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import SelectMonthYear from "@/app/components/dashboard/calendar/SelectMonthYear";
 import { useRouter } from "next/navigation";
 import { Badge } from "@mui/material";
+import { Stack } from "@mui/system";
 
 const drawerWidth: number = 240;
 
@@ -80,12 +81,13 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
 
   const handleToggleDrawer = () => {
     toggleDrawer && toggleDrawer(!open);
-  }
+  };
 
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar sx={{ minHeight: "52px !important" }} variant="dense">
-        <Box sx={{width: "20%"}}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width: "100%"}}>
+        <Box>
           <ToggleIconBox>
             {open || (
               <IconButton edge="start" aria-label="open drawer" onClick={handleToggleDrawer}>
@@ -99,12 +101,10 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
             )}
           </ToggleIconBox>
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
-          <SelectMonthYear />
-        </Box>
-      <Box sx={{ display: { xs: "none", md: "flex" }, flexDirection: "row", justifyContent: "end", width: "20%" }}>
-          <IconButton onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
-            {mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+
+        <Box sx={{ display: { xs: "none", md: "flex" }, flexDirection: "row", justifyContent: "end" }}>
+          <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
+            {mode === "dark" ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
           </IconButton>
           <IconButton>
             <Badge badgeContent={4} color="warning">
@@ -115,13 +115,14 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
             <FullscreenOutlinedIcon />
           </IconButton>
           <IconButton size="large" onClick={handleMenu}>
-          <AccountCircle sx={{ fontSize: "1.5rem" }} />
-        </IconButton>
-        <Menu id="menu-profile" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
-          <MenuItem onClick={() => router.push("/dashboard/profile")}>Profile</MenuItem>
-          <MenuItem onClick={() => router.push("/")}>Logout</MenuItem>
-        </Menu>
+            <AccountCircle sx={{ fontSize: "1.5rem" }} />
+          </IconButton>
+          <Menu id="menu-profile" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+            <MenuItem onClick={() => router.push("/dashboard/profile")}>Profile</MenuItem>
+            <MenuItem onClick={() => router.push("/")}>Logout</MenuItem>
+          </Menu>
         </Box>
+        </Stack>
       </Toolbar>
     </AppBar>
   );

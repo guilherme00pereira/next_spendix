@@ -3,7 +3,8 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { FormControl, MenuItem, Stack, TextField, useColorScheme } from "@mui/material";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
-import { CategoryType, ChartBarType, TransactionType } from "@/types/chart-types";
+import { ChartBarType } from "@/types/chart-types";
+import { CategoryType, TransactionType } from "@/types/entities";
 import { useRouter } from "next/navigation";
 
 
@@ -19,10 +20,9 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
 
   useEffect(() => {
     const data = transactions
-      .filter((transaction) => transaction.payments !== null)
       .reduce((acc, transaction) => {
         const month = dayjs(transaction.due_date).format("MMM");
-        const index = acc.findIndex((item) => item.name === month);
+        const index = acc.findIndex((item: any) => item.name === month);
         if (index === -1) {
           acc.push({ name: month, value: transaction.amount, label: "R$" + transaction.amount });
         } else {
@@ -34,6 +34,14 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
     setData(data.reverse());
     //TODO: set projection for actual month
   }, []);
+
+  const renderBarColor = (value: number) => {
+    if (value < 0) {
+      return "#FF0000";
+    } else {
+      return "#00FF00";
+    }
+  }
 
   return (
       <>
@@ -90,7 +98,6 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
           },
           offsetX: 0,
         },
-        colors: ["#22A0C7"],
         grid: {
           borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
         },

@@ -12,7 +12,7 @@ import { TransactionType } from "@/types/entities";
 import TransactionsTotalsWidget from "@/app/components/dashboard/widgets/transactions/TransactionsTotalsWidget";
 
 async function fetchTransactions() {
-  const res = await getPayedTransactions(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().endOf("M").format("YYYY-MM-DD"));
+  const res = await getPayedTransactions(dayjs().startOf("M").format("YYYY-MM-DD"));
   return res as TransactionType[];
 }
 

@@ -16,7 +16,6 @@ const Subtitle = styled(Typography)(({ theme }) => ({
 
 const CategoryPage = ({ params }: { params: { slug: string } }) => {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [childrenNames, setChildrenNames] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
   const [spendingsCategories, setSpendingsCategories] = useState<
     CategoryType[]
@@ -30,9 +29,6 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
       const ids = categories
         .filter((c) => c.parent === currId)
         .map((c) => c.id);
-      setChildrenNames(
-        categories.filter((c) => c.parent === currId).map((c) => c.name)
-      );
       const title = categories
         .filter((c) => c.id === currId)
         .map((c) => c.name);
