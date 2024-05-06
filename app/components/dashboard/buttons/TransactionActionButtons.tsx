@@ -5,8 +5,9 @@ import { useSpeedDialStore } from "@/app/lib/store";
 import { TransactionType } from "@/types/entities";
 import { ButtonGroup, Button } from "@mui/material";
 import dayjs from "dayjs";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { InfoActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
 
 const TransactionActionButtons = ({transaction}: {transaction: TransactionType}) => {
   const { setTransaction, actionShowTransactionDialog, setIncome, actionShowIncomeDialog } = useSpeedDialStore();
@@ -45,14 +46,14 @@ const TransactionActionButtons = ({transaction}: {transaction: TransactionType})
   };
 
   return (
-    <ButtonGroup size="small">
-      <Button size="small" variant="text" onClick={() => handleShowDetail(transaction)}>
-        <VisibilityRoundedIcon color="action" sx={{ fontSize: "1rem" }} />
-      </Button>
-      <Button size="small" variant="text" onClick={() => handleEdit(transaction)}>
-        <EditRoundedIcon color="action" sx={{ fontSize: "1rem" }} />
-      </Button>
-    </ButtonGroup>
+    <>
+      <PrimaryActionButton size="small" variant="text" onClick={() => handleShowDetail(transaction)}>
+        <VisibilityOutlinedIcon />
+      </PrimaryActionButton>
+      <InfoActionButton size="small" variant="text" onClick={() => handleEdit(transaction)}>
+        <EditOutlinedIcon />
+      </InfoActionButton>
+    </>
   );
 };
 

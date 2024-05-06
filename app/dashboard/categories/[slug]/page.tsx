@@ -1,45 +1,31 @@
-"use client";
-import { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import { Stack, Typography, Paper, Box, Grid } from "@mui/material";
+import { Paper, Grid } from "@mui/material";
 import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
 import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
-import { getCategories } from "@/app/lib/supabase/methods/categories";
-import ApexCategoryTransactionsSixMonthsLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
+import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
+import ApexCategoryTransactionsPerPeriodLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 
-const Subtitle = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.light,
-  marginTop: "8px",
-}));
+async function fetchCategoryData(slug: string) {
+  const res = await getSingleCategory(slug);
+  return res;
+}
 
-const CategoryPage = ({ params }: { params: { slug: string } }) => {
-  const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [title, setTitle] = useState<string>("");
-  const [spendingsCategories, setSpendingsCategories] = useState<
-    CategoryType[]
-  >([]);
+async function fetchRelatedTransactions(id: number) {
+  const res = await getTransactionsByCategoriesLastSixMonths(id);
+  return res as TransactionType[];
+}
 
-  useEffect(() => {
-    getCategories().then((categories) => {
-      const currId = categories
-        .filter((c) => c.slug === params.slug)
-        .map((c) => c.id)[0];
-      const ids = categories
-        .filter((c) => c.parent === currId)
-        .map((c) => c.id);
-      const title = categories
-        .filter((c) => c.id === currId)
-        .map((c) => c.name);
-      setTitle(title[0]);
-      ids.push(currId);
-      getTransactionsByCategoriesLastSixMonths(ids).then((data) => {
-        setTransactions(data as TransactionType[]);
-      });
-      setSpendingsCategories(categories.filter((c) => c.type === "Despesa"));
-    });
-  }, []);
+async function fetchSpendingsCategories() {
+  const res = await getCategories();
+  return res.filter((category: CategoryType) => category.type === "Despesa");
+}
+
+const CategoryPage = async ({ params }: { params: { slug: string } }) => {
+  const category = await fetchCategoryData(params.slug);
+  const title = category.name;
+  const transactions = await fetchRelatedTransactions(category.id);
+  const spendingsCategories = await fetchSpendingsCategories();
 
   return (
     <PageContainer title={`Categoria ${title}`}>
@@ -49,12 +35,7 @@ const CategoryPage = ({ params }: { params: { slug: string } }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>
-            {transactions.length > 0 && (
-              <ApexCategoryTransactionsSixMonthsLineChart
-                transactions={transactions}
-                categories={spendingsCategories}
-              />
-            )}
+            {transactions.length > 0 && <ApexCategoryTransactionsPerPeriodLineChart transactions={transactions} categories={spendingsCategories} />}
           </Paper>
         </Grid>
       </Grid>

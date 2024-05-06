@@ -41,7 +41,7 @@ const ApexParentCategoriesBarChart = ({data}: {data: ChartBarType[]}) => {
             },
             offsetX: 0,
           },
-          colors: ["#22A0C7"],
+          //colors: ["#22A0C7"],
           grid: {
             borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
           },

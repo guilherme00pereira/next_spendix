@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
@@ -7,34 +7,26 @@ import { useGroupContext } from "@/app/lib/contexts";
 import { getGroupCategories } from "@/app/lib/supabase/methods/groups";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FormControl, InputLabel, OutlinedInput, MenuItem, Checkbox, ListItemText } from "@mui/material";
+import { getCategories } from "@/app/lib/supabase/methods/categories";
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
 
 const GroupCategoriesList = () => {
   const { selectedGroup } = useGroupContext();
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  const [linkedCategories, setLinkedCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data.map((category) => category.name));
+    });
     getGroupCategories(selectedGroup.id).then((data) => {
       console.log(data);
     });
   }, [selectedGroup]);
 
-
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (event: SelectChangeEvent<typeof linkedCategories>) => {
     const { target: { value } } = event;
-    setPersonName(
+    setLinkedCategories(
       typeof value === "string" ? value.split(",") : value
     );
   };
@@ -45,13 +37,13 @@ const GroupCategoriesList = () => {
         <PaperContainer>
           <PaperHeader title={`Categorias em ${selectedGroup.name}`} />
           <Stack>
-            <FormControl sx={{ m: 1, width: 300 }}>
+            <FormControl sx={{ m: 1, width: 300 }} size="small">
               <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
               <Select
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
                 multiple
-                value={personName}
+                value={linkedCategories}
                 onChange={handleChange}
                 input={<OutlinedInput label="Tag" />}
                 renderValue={(selected) => selected.join(", ")}
@@ -64,10 +56,10 @@ const GroupCategoriesList = () => {
                   },
                 }}
               >
-                {names.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    <Checkbox checked={personName.indexOf(name) > -1} />
-                    <ListItemText primary={name} />
+                {categories.map((category) => (
+                  <MenuItem key={category} value={category}>
+                    <Checkbox checked={linkedCategories.indexOf(category) > -1} />
+                    <ListItemText primary={category} />
                   </MenuItem>
                 ))}
               </Select>

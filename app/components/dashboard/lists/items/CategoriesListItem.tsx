@@ -5,11 +5,12 @@ import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { ICategoryListItemProps } from "@/types/interfaces";
 import Chip from "@mui/material/Chip";
-import SubdirectoryArrowRightRoundedIcon from "@mui/icons-material/SubdirectoryArrowRightRounded";
+import SubdirectoryArrowRightOutlinedIcon from "@mui/icons-material/SubdirectoryArrowRightOutlined";
+import { InfoActionButton, DangerActionButton } from "@/app/components/dashboard/commonStyledComponents";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -53,7 +54,7 @@ const CategoriesListItem = ({
     <ListItem direction="row" justifyContent="space-between">
       {isSubCategory && (
         <Box sx={{ width: "50px" }}>
-          <SubdirectoryArrowRightRoundedIcon fontSize="small" />
+          <SubdirectoryArrowRightOutlinedIcon fontSize="small" />
         </Box>
       )}
       <Box sx={{ flexGrow: 1 }}>
@@ -61,36 +62,31 @@ const CategoriesListItem = ({
           {category.name}
         </CategoryLink>
       </Box>
-      <Box sx={{ pr: 4 }}>
+      <Box sx={{ pr: "3em" }}>
         <Chip
           label={category.type}
           size="small"
           variant="outlined"
           color={getTypeColor(category.type)}
+          sx={{borderRadius: "4px"}}
         />
       </Box>
       <Box>
         <Stack direction="row" spacing={1}>
-          <Box>
-            <Button
+            <InfoActionButton
               size="small"
               variant="text"
-              color="info"
               onClick={() => handleEdit(category.id)}
             >
-              <EditRoundedIcon fontSize="small" />
-            </Button>
-          </Box>
-          <Box>
-            <Button
+              <EditOutlinedIcon />
+            </InfoActionButton>
+            <DangerActionButton
               size="small"
               variant="text"
-              color="error"
               onClick={() => handleConfirmDelete(category.id, category.name)}
             >
-              <DeleteRoundedIcon fontSize="small" />
-            </Button>
-          </Box>
+              <DeleteOutlinedIcon />
+            </DangerActionButton>
         </Stack>
       </Box>
     </ListItem>

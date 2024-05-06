@@ -1,6 +1,7 @@
 'use client'
-import { useEffect, useState, ChangeEvent } from "react";
-import { FormControl, MenuItem, Stack, TextField, useColorScheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Stack, useColorScheme } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
 import { ChartBarType } from "@/types/chart-types";
@@ -13,7 +14,7 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
   const router = useRouter();
   const { mode } = useColorScheme();
 
-  const handleChangeSelect = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeSelect = (event: SelectChangeEvent<HTMLInputElement>) => {
     const categoryId = event.target.value;
     router.push(`/dashboard/categories/${categoryId}`);
   };
@@ -35,32 +36,23 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
     //TODO: set projection for actual month
   }, []);
 
-  const renderBarColor = (value: number) => {
-    if (value < 0) {
-      return "#FF0000";
-    } else {
-      return "#00FF00";
-    }
-  }
-
   return (
       <>
       
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
-        <FormControl sx={{width: "50%"}}>
-          <TextField
-            select
+        <FormControl sx={{width: "50%"}} size="small">
+        <InputLabel id="demo-multiple-checkbox-label">Trocar categoria: </InputLabel>
+          <Select
             name="category_id"
-            label="Trocar categoria: "
             size="small"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeSelect(e)}
+            onChange={(e: SelectChangeEvent<HTMLInputElement>) => handleChangeSelect(e)}
           >
             {categories?.map((category) => (
               <MenuItem key={category.id} value={category.slug}>
                 {category.name}
               </MenuItem>
             ))}
-          </TextField>
+          </Select>
         </FormControl>
       </Stack>
       <Chart options={{

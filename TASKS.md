@@ -7,21 +7,18 @@
 
 #### Home
 
-- gráfico de pizza para despesas por categoria
-- totais de despesas e3 receitas no mês
 
 #### Cartão de crédito
-
 - box do cartão
 
-
 #### Categorias
+- grafico por periodo ser mensal ou semanal
+- campo metas
 
-- renomear super almoço
-
+#### Grupos
+- função vincular categoria a grupo
 
 #### Speed Dial
-
 -botão grupo
 
 ##### Dialogs
@@ -34,9 +31,7 @@
     - meio de pagamento persist ultimo
 
 ##### Geral
-
 - ver possibilidade de usar o mesmo componente para botões de ver, editar e excluir
-
 
 ##### Charts
 - tema dark e light

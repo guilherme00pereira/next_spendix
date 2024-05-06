@@ -14,7 +14,16 @@ const getCategories = async () => {
     return data
 }
 
-
+const getSingleCategory = async (slug: string) => {
+    const {
+        data,
+        error
+    } = await supabase.from('categories').select('*').eq('slug', slug)
+    if (error) {
+        throw error
+    }
+    return data[0]
+}
 
 const getExpenseCategoriesTransactionsSum = async (initial_date: string, final_date: string) => {
     const {
@@ -61,6 +70,7 @@ const removeCategory = async (id: number) => {
 
 export {
     getCategories,
+    getSingleCategory,
     addCategory,
     editCategory,
     removeCategory,

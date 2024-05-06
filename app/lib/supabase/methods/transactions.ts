@@ -88,7 +88,7 @@ const getOverdueTransactions = async () => {
   const { data, error } = await supabase
     .from("transactions")
     .select(getDefaultQuery)
-    .lte("due_date", dayjs().format("YYYY-MM-DD"))
+    .lte("due_date", dayjs().subtract(1, "day").format("YYYY-MM-DD"))
     .is("payment_id", null)
     .order("due_date", { ascending: false })
     .order("category_id");
@@ -249,11 +249,11 @@ const getSumIncomeTransactions = async (di: string, df: string) => {
   return data;
 };
 
-const getTransactionsByCategoriesLastSixMonths = async (category_ids: number[]) => {
+const getTransactionsByCategoriesLastSixMonths = async (category_id: number) => {
   const { data, error } = await supabase
     .from("transactions")
     .select(getDefaultQuery)
-    .in("category_id", category_ids)
+    .eq("category_id", category_id)
     .gte("due_date", dayjs().subtract(6, "month").format("YYYY-MM-DD"))
     .lte("due_date", dayjs().add(1, "month").format("YYYY-MM-DD"))
     .order("due_date", { ascending: false });
