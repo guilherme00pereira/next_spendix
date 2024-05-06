@@ -17,8 +17,7 @@ const ApexCategoriesPieChart = ({series, labels}: ChartPieType) => {
         }} 
         series={series}
         type="donut"
-        width={480}
-        height={480}
+        
       />
     
   );

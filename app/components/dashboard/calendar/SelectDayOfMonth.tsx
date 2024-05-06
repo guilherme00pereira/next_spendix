@@ -1,9 +1,9 @@
 "use client";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
-import { TransactionType } from "@/types/entities";
 import { useTransactionsPerDayContext } from "@/app/lib/contexts";
 
 const DaysWrapper = styled(Stack)(({ theme }) => ({
@@ -36,31 +36,41 @@ const Day = styled(Stack)(({ theme }) => ({
   borderColor: theme.vars.palette.divider,
   "&:hover": {
     backgroundColor: theme.vars.palette.action.hover,
+    cursor: "pointer",
   },
   "&.selected": {
-    backgroundColor: theme.vars.palette.action.selected,
+    backgroundColor: theme.vars.palette.primary.main,
+    color: "white !important",
   },
   "&.today": {
-    backgroundColor: theme.vars.palette.action.selected,
+    borderColor: theme.vars.palette.primary.main,
+    color: theme.vars.palette.primary.main,
   },
 }));
 
-const SelectDayOfMonth = ({days}: {days: string[]}) => {
-  const {setSelectedDay} = useTransactionsPerDayContext();
+const SelectDayOfMonth = ({ days }: { days: string[] }) => {
+  const { setSelectedDay } = useTransactionsPerDayContext();
+  const today = dayjs().format("YYYY-MM-DD");
+
+  const checkIfToday = (day: string) => {
+    return day === today ? "today" : "";
+  };
+
+  const handleDayClick = (event: React.MouseEvent<HTMLDivElement>, day: string) => {
+    setSelectedDay(day);
+    event.currentTarget.parentElement?.querySelectorAll(".selected").forEach((el) => el.classList.remove("selected"));
+    event.currentTarget.classList.add("selected");
+  };
 
   return (
-    <DaysWrapper
-      id="days-wrapper"
-      direction="row"
-      justifyContent="start"
-      spacing={2}
-    >
+    <DaysWrapper id="days-wrapper" direction="row" justifyContent="start" spacing={2}>
       <Stack direction="row" justifyContent="center" alignItems="center">
         {days.map((day) => (
           <Day
             key={day}
             direction="column"
-            onClick={() => setSelectedDay(day)}
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => handleDayClick(e, day)}
+            className={checkIfToday(day)}
           >
             <div>{dayjs(day).format("DD")}</div>
             <div>{dayjs(day).format("ddd")}</div>

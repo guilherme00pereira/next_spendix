@@ -74,6 +74,11 @@ export interface ICateroryContextData {
     setOpenConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
+export interface IGroupContextData {
+    selectedGroup: GroupType;
+    setSelectedGroup: Dispatch<SetStateAction<GroupType>>;
+}
+
 export interface IAppPersistData {
     date: string;
     setDate: (d: string) => void;

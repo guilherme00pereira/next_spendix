@@ -11,6 +11,14 @@ const getGroups = async () => {
     return data
 }
 
+const getGroupCategories = async (groupId: number) => {
+    const {data, error} = await supabase.from('group_categories').select('categories(*)').match({group_id: groupId})
+    if (error) {
+        throw error
+    }
+    return data
+}
+
 const addGroup = async ({name, color}: GroupType) => {
     const {data, error} = await supabase.from('groups').insert({name, color})
     if (error) {
@@ -37,6 +45,7 @@ const removeGroup = async (id: number) => {
 
 export {
     getGroups,
+    getGroupCategories,
     addGroup,
     editGroup,
     removeGroup

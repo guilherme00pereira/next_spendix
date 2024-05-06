@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { ColorPicker } from "material-ui-color";
-import { formSubmit } from "@/app/dashboard/groups/actions";
+import { submitGroupForm } from "@/app/lib/actions/group-actions";
 import { useSpeedDialStore } from "@/app/lib/store";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
 
@@ -22,7 +22,7 @@ const GroupFormDialog = () => {
     initialValues: group,
     validationSchema: validate,
     onSubmit: (values) => {
-      formSubmit(values);
+      submitGroupForm(values);
     },
   });
 

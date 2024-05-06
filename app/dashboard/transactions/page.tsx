@@ -1,6 +1,6 @@
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import TransactionsPerDayList from "@/app/components/dashboard/lists/TransactionsPerDayList";
-import TransactionsPrediction from "@/app/components/dashboard/lists/TransactionsPrediction";
+import TransactionsForecast from "@/app/components/dashboard/lists/TransactionsForecast";
 import Grid from "@mui/material/Grid";
 import Masonry from "@mui/lab/Masonry";
 import OverdueTransactionsList from "@/app/components/dashboard/lists/OverdueTransactionsList";
@@ -18,11 +18,12 @@ async function fetchTransactions() {
 
 const TransactionsPage = async () => {
   const transactions = await fetchTransactions();
-  // const totalIncome = transactions.reduce((acc, transaction) => {
-  //   if(acc.payments && transaction.payments) {
-  //     return acc.payments?.amount + transaction.payments.amount;
-  //   }
-  // });
+  const totalIncome = transactions
+    .filter((transaction) => transaction.categories?.type === "Receita")
+    .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
+  const totalExpense = transactions
+    .filter((transaction) => transaction.categories?.type === "Despesa")
+    .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
 
   return (
     <PageContainer title="Transações">
@@ -31,17 +32,17 @@ const TransactionsPage = async () => {
           <SearchTransaction />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TransactionsTotalsWidget value={12000} title="Total de receitas" income={true} color="success.dark" />
+          <TransactionsTotalsWidget value={totalIncome} title="Total de receitas" income={true} color="success.dark" />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TransactionsTotalsWidget value={12000} title="Total de gastos" income={false} color="error.dark" />
+          <TransactionsTotalsWidget value={totalExpense} title="Total de gastos" income={false} color="error.dark" />
         </Grid>
       </Grid>
       <Masonry columns={2} spacing={3}>
-        <TransactionsPerDayList transactions={transactions as TransactionType[]} />
-        <TransactionsPrediction />
-        <ApexCompareDailyTransactionsAndMean />
-        <OverdueTransactionsList />
+          <TransactionsPerDayList transactions={transactions as TransactionType[]} />      
+          <TransactionsForecast />
+        {/* <ApexCompareDailyTransactionsAndMean /> */}      
+          <OverdueTransactionsList />
       </Masonry>
     </PageContainer>
   );

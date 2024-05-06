@@ -36,6 +36,8 @@ export type Database = {
       categories: {
         Row: {
           color: string | null
+          goal: number | null
+          goal_type: Database["public"]["Enums"]["goal_value_type"] | null
           icon: string | null
           id: number
           name: string
@@ -45,6 +47,8 @@ export type Database = {
         }
         Insert: {
           color?: string | null
+          goal?: number | null
+          goal_type?: Database["public"]["Enums"]["goal_value_type"] | null
           icon?: string | null
           id?: number
           name: string
@@ -54,6 +58,8 @@ export type Database = {
         }
         Update: {
           color?: string | null
+          goal?: number | null
+          goal_type?: Database["public"]["Enums"]["goal_value_type"] | null
           icon?: string | null
           id?: number
           name?: string
@@ -62,38 +68,6 @@ export type Database = {
           type?: Database["public"]["Enums"]["category_type"]
         }
         Relationships: []
-      }
-      category_goal: {
-        Row: {
-          category_id: number
-          id: number
-          period: string
-          type: Database["public"]["Enums"]["goal_value_type"]
-          value: number
-        }
-        Insert: {
-          category_id: number
-          id?: number
-          period: string
-          type?: Database["public"]["Enums"]["goal_value_type"]
-          value: number
-        }
-        Update: {
-          category_id?: number
-          id?: number
-          period?: string
-          type?: Database["public"]["Enums"]["goal_value_type"]
-          value?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "category_goal_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       credit_cards: {
         Row: {

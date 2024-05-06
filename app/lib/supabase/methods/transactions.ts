@@ -143,7 +143,8 @@ const addTransaction = async ({
       }
 
       if (tags && tags.length > 0) {
-        const { error } = await supabase.from("tags_transactions").insert(tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id })));
+        const rows = tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id }));
+        const { error } = await supabase.from("tags_transactions").insert(rows);
         if (error) {
           //throw error;
         }
@@ -208,7 +209,8 @@ const editTransaction = async ({
     if (data.length > 0) {
       const tid = data[0].id;
       if (tags && tags.length > 0) {
-        const { error } = await supabase.from("tags_transactions").insert(tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id })));
+        const rows = tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id }));
+        const { error } = await supabase.from("tags_transactions").insert(rows);
         if (error) {
           //throw error;
         }

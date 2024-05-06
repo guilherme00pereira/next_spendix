@@ -47,10 +47,10 @@ const TransactionActionButtons = ({transaction}: {transaction: TransactionType})
   return (
     <ButtonGroup size="small">
       <Button size="small" variant="text" onClick={() => handleShowDetail(transaction)}>
-        <VisibilityRoundedIcon fontSize="small" color="action" sx={{ fontSize: "1rem" }} />
+        <VisibilityRoundedIcon color="action" sx={{ fontSize: "1rem" }} />
       </Button>
       <Button size="small" variant="text" onClick={() => handleEdit(transaction)}>
-        <EditRoundedIcon fontSize="small" color="action" sx={{ fontSize: "1rem" }} />
+        <EditRoundedIcon color="action" sx={{ fontSize: "1rem" }} />
       </Button>
     </ButtonGroup>
   );

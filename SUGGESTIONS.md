@@ -22,3 +22,13 @@
 7. Metas Financeiras:
 - Uma tela para definir metas financeiras (por exemplo, economizar para uma viagem).
 - O aplicativo pode acompanhar o progresso em direção a essas metas.
+
+
+
+
+1. Platform Features:
+- Account Aggregation: Integration with multiple financial institutions to aggregate and display user's financial data in one place.
+- Expense Tracking: Ability to categorize and track expenses, set budgets, and receive notifications for overspending.
+- Income Management: Track income sources, schedule payments, and manage recurring transactions.
+- Goal Setting: Allow users to set financial goals, track progress, and receive insights and recommendations.
+- Reports and Analytics: Provide detailed reports, charts, and analytics to help users understand their spending habits and financial health.

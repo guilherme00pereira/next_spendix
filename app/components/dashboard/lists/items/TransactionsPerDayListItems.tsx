@@ -8,6 +8,7 @@ import { amountFormatter } from "@/app/lib/functions";
 import { TransactionListItem } from "@/app/components/dashboard/commonStyledComponents";
 import TransactionActionButtons from "@/app/components/dashboard/buttons/TransactionActionButtons";
 import { useTransactionsPerDayContext } from "@/app/lib/contexts";
+import dayjs from "dayjs";
 
 const TransactionsPerDayListItems = ({transactions}: {transactions: Map<string, TransactionType[]>}) => {
   const { selectedDay, dailyTransactions, setDailyTransactions } = useTransactionsPerDayContext();
@@ -15,13 +16,15 @@ const TransactionsPerDayListItems = ({transactions}: {transactions: Map<string, 
   useEffect(() => {
     if (selectedDay) {
       setDailyTransactions(transactions.get(selectedDay) ?? []);
+    } else {
+      setDailyTransactions(transactions.get(dayjs().format("YYYY-MM-DD")) ?? []);
     }
   }, [selectedDay]);
 
   return (
     <>
       {dailyTransactions.map((transaction: TransactionType) => (
-        <TransactionListItem>
+        <TransactionListItem key={transaction.id}>
           <Stack direction="column" justifyContent="center" sx={{ flexGrow: 1 }}>
             <Typography variant="subtitle1">{transaction.categories?.name}</Typography>
             <Typography variant="subtitle2">{transaction.description}</Typography>
