@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { InfoActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
+import Stack from "@mui/material/Stack";
 
 const TransactionActionButtons = ({transaction}: {transaction: TransactionType}) => {
   const { setTransaction, actionShowTransactionDialog, setIncome, actionShowIncomeDialog } = useSpeedDialStore();
@@ -46,14 +47,14 @@ const TransactionActionButtons = ({transaction}: {transaction: TransactionType})
   };
 
   return (
-    <>
+    <Stack direction="row" spacing={1}>
       <PrimaryActionButton size="small" variant="text" onClick={() => handleShowDetail(transaction)}>
         <VisibilityOutlinedIcon />
       </PrimaryActionButton>
       <InfoActionButton size="small" variant="text" onClick={() => handleEdit(transaction)}>
         <EditOutlinedIcon />
       </InfoActionButton>
-    </>
+    </Stack>
   );
 };
 

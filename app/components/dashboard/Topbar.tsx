@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@mui/material";
 import { Stack } from "@mui/system";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 210;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",

@@ -53,13 +53,12 @@ const PrimaryActionButton = styled(ActionButton)(({ theme }) => ({
   backgroundColor: theme.vars.palette.primary.alpha8,
   "&:hover": {
     backgroundColor: theme.vars.palette.primary.dark,
+    "& .MuiSvgIcon-root": {
+      color: "white !important",
+    }
   },
   "& .MuiSvgIcon-root": {
-    fill: theme.vars.palette.primary.dark,
-    "&:hover": {
-      //@ts-ignore
-      fill: theme.vars.palette.primary.alpha8 + " !important",
-    },
+    color: theme.vars.palette.primary.dark,
   },
 }));
 
@@ -68,13 +67,12 @@ const InfoActionButton = styled(ActionButton)(({ theme }) => ({
   backgroundColor: theme.vars.palette.info.alpha8,
   "&:hover": {
     backgroundColor: theme.vars.palette.info.dark,
+    "& .MuiSvgIcon-root": {
+      color: "white !important",
+    }
   },
   "& .MuiSvgIcon-root": {
-    fill: theme.vars.palette.info.dark,
-    "&:hover": {
-      //@ts-ignore
-      fill: theme.vars.palette.info.alpha8 + " !important",
-    },
+    color: theme.vars.palette.info.dark,
   },
 }));
 
@@ -83,11 +81,12 @@ const DangerActionButton = styled(ActionButton)(({ theme }) => ({
   backgroundColor: theme.vars.palette.error.alpha8,
   "&:hover": {
     backgroundColor: theme.vars.palette.error.dark,
-    //@ts-ignore
-    color: "white !important",
+    "& .MuiSvgIcon-root": {
+      color: "white !important",
+    }
   },
   "& .MuiSvgIcon-root": {
-    fill: theme.vars.palette.error.dark,
+    color: theme.vars.palette.error.dark,
   },
 }));
 

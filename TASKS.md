@@ -5,6 +5,9 @@
 - Implementar autenticação com Google
 - chamadas à api via server side
 
+#### Login
+-descartar tema dark
+
 #### Home
 
 

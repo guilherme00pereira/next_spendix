@@ -22,7 +22,7 @@ import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
 import { Tooltip } from "@mui/material";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 210;
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -94,7 +94,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
         <ListItemButton LinkComponent="a" href="/dashboard">
           <ListItemIcon>
             <Tooltip title="Dashboard" placement="right" arrow>
-              <DashboardIcon />
+              <DashboardIcon fontSize="small" />
             </Tooltip>
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
@@ -102,48 +102,48 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
 
         <ListItemButton LinkComponent="a" href="/dashboard/transactions">
           <ListItemIcon>
-            <ReceiptLongRoundedIcon />
+            <ReceiptLongRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Transações" />
         </ListItemButton>
 
         <ListItemButton LinkComponent="a" href="/dashboard/categories">
           <ListItemIcon>
-            <ListAltRoundedIcon />
+            <ListAltRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Categorias" />
         </ListItemButton>
 
         <ListItemButton LinkComponent="a" href="/dashboard/groups">
           <ListItemIcon>
-            <InterestsRoundedIcon />
+            <InterestsRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Grupo" />
         </ListItemButton>
 
         <ListItemButton LinkComponent="a" href="/dashboard/bank-accounts">
           <ListItemIcon>
-            <AccountBalanceRoundedIcon />
+            <AccountBalanceRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Contas" />
         </ListItemButton>
         <ListItemButton LinkComponent="a" href="/dashboard/credit-cards">
           <ListItemIcon>
-            <CreditCardRoundedIcon />
+            <CreditCardRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Cartões de Crédito" />
         </ListItemButton>
 
         <ListItemButton LinkComponent="a" href="/dashboard/tags">
           <ListItemIcon>
-            <LocalOfferRoundedIcon />
+            <LocalOfferRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Tags" />
         </ListItemButton>
 
         <ListItemButton LinkComponent="a" href="/dashboard/settings">
           <ListItemIcon>
-            <DisplaySettingsRoundedIcon />
+            <DisplaySettingsRoundedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Configurações" />
         </ListItemButton>

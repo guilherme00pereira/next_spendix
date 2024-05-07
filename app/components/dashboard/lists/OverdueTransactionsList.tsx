@@ -29,7 +29,7 @@ const OverdueTransactionsList = async () => {
       />
       {transactions &&
         transactions
-        .slice(0, 10)
+        .slice(0, 6)
           .filter((t) => t.categories?.type == "Despesa")
           .map((transaction: any, index: number) => (
             <OverdueTransactionsListItem
