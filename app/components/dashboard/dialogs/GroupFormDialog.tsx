@@ -10,9 +10,7 @@ import { useSpeedDialStore } from "@/app/lib/store";
 import DialogActionButtons from "./DialogActionButtons";
 
 const validate = yup.object({
-  id: yup.number(),
   name: yup.string().required("Campo obrigatório"),
-  color: yup.string(),
 });
 
 const GroupFormDialog = () => {
@@ -22,7 +20,6 @@ const GroupFormDialog = () => {
     initialValues: group,
     validationSchema: validate,
     onSubmit: (values) => {
-      console.log(values);
       submitGroupForm(values);
     },
   });
@@ -35,7 +32,7 @@ const GroupFormDialog = () => {
       onClose={() => actionShowGroupDialog(!showGroupDialog)}
     >
       <DialogTitle>{group.id ? "Editar" : "Adicionar"} grupo</DialogTitle>
-      <form onSubmit={formik.handleSubmit} autoComplete="off">
+      <form onSubmit={formik.handleSubmit}>
         <DialogContent dividers>
           <Stack direction="row">
             <Grid container spacing={3}>

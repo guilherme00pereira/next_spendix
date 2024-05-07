@@ -67,14 +67,16 @@ export interface ITransactionsPerDayContextData {
     setDailyTransactions: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
-export interface ICateroryContextData {
-    removableCategory: IRemovableEntity;
-    setRemovableCategory: Dispatch<SetStateAction<IRemovableEntity>>;
+interface IDeletableObjectContextData {
+    removableObject: IRemovableEntity;
+    setRemovableObject: Dispatch<SetStateAction<IRemovableEntity>>;
     openConfirm: boolean;
     setOpenConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
-export interface IGroupContextData {
+export interface ICateroryContextData extends IDeletableObjectContextData{}
+
+export interface IGroupContextData extends IDeletableObjectContextData {
     selectedGroup: GroupType;
     setSelectedGroup: Dispatch<SetStateAction<GroupType>>;
 }
@@ -167,8 +169,8 @@ export interface IPageContainerProps {
 
 export interface IPaperHeaderProps {
     title: string;
+    children?: React.ReactNode;
     link?: PaperHeaderLinkType;
     settings?: PaperHeaderSettingsType
     badge?: PaperHeaderBadgeType;
-    filter?: PaperHeaderFilterType;
 }

@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { editCreditCard, addCreditCard } from "@/app/lib/supabase/methods/credit-cards";
 
-export async function formSubmit(values: any): Promise<void> {
+export async function submitCardForm(values: any): Promise<void> {
   if (values.id) {
     editCreditCard(values);
   } else {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { getTags, removeTag } from "@/app/lib/supabase/methods/tags";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -73,13 +73,7 @@ const TagList = () => {
               onDelete={() => handleConfirmDelete(tag.id, tag.name)}
             />
           ))}
-        <Chip
-          label="Nova tag"
-          color="success"
-          sx={{ mx: 2 }}
-          icon={<AddCircleOutlineRoundedIcon />}
-          onClick={addTag}
-        />
+        <Chip label="Nova tag" color="success" sx={{ mx: 2 }} icon={<AddCircleOutlineRoundedIcon />} onClick={addTag} />
       </Stack>
       <ConfirmDeleteDialog
         entity={removableTag}

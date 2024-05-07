@@ -10,6 +10,7 @@ import { useSpeedDialStore } from "@/app/lib/store";
 import { useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
+import Box from "@mui/material/Box";
 
 const RenderSubCategories = ({
   categories,
@@ -29,14 +30,12 @@ const RenderSubCategories = ({
 
 const CategoriesList = ({categories}: {categories: CategoryType[]}) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
-  const { openConfirm, setOpenConfirm, removableCategory, setRemovableCategory} = useCategoryContext();
+  const { openConfirm, setOpenConfirm, removableObject, setRemovableObject} = useCategoryContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
-    setRemovableCategory({ ...removableCategory, id, name });
+    setRemovableObject({ ...removableObject, id, name });
     setOpenConfirm(true);
-  };
-
-  
+  };  
 
   const handleEdit = (id: number) => {
     actionShowCategoryDialog(true);
@@ -72,7 +71,11 @@ const CategoriesList = ({categories}: {categories: CategoryType[]}) => {
 
   return (
     <PaperContainer>
-      <PaperHeader title="Lista de categorias" />
+      <PaperHeader title="Lista de categorias">
+          <Box>
+            sdsdas
+          </Box>
+        </PaperHeader>
       <Stack>
         {categories.length > 0 &&
           categories
@@ -94,11 +97,11 @@ const CategoriesList = ({categories}: {categories: CategoryType[]}) => {
             ))}
       </Stack>
       <ConfirmDeleteDialog
-        entity={removableCategory}
+        entity={removableObject}
         open={openConfirm}
         handleClose={setOpenConfirm}
         handleDelete={() => {
-          removeCategory(removableCategory.id);
+          removeCategory(removableObject.id);
           setOpenConfirm(false);
         }}
       />

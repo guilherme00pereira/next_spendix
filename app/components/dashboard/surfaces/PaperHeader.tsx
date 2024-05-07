@@ -8,6 +8,7 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {IPaperHeaderProps} from "@/types/interfaces";
 import { Badge } from "@mui/material";
 
+
 const Header = styled(Stack)(({theme}) => ({
   borderBlockEnd: `1px solid ${theme.vars.palette.divider}`,
   marginBlockEnd: theme.spacing(1),
@@ -36,7 +37,7 @@ const Title = styled("div")(({theme}) => ({
 }));
 
 
-const PaperHeader = ({title, link, settings, badge}: IPaperHeaderProps) => {
+const PaperHeader = ({title, children, link, settings, badge}: IPaperHeaderProps) => {
   return (
     <Header direction="row" justifyContent="space-between" alignItems="center">
       <Stack direction="row" justifyContent="start" alignItems="center">
@@ -46,6 +47,9 @@ const PaperHeader = ({title, link, settings, badge}: IPaperHeaderProps) => {
       {(badge && badge.show) && (
         <Badge badgeContent={badge.content} color={badge.color} sx={{marginTop: "-5px"}} />
       )}
+      </Stack>
+      <Stack direction="row" justifyContent="center" sx={{flexGrow: "1"}}>
+        {children}
       </Stack>
       
       {(link && link.show) && (

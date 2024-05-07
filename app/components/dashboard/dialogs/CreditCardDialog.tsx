@@ -7,7 +7,7 @@ import TopBarDialog from "@/app/components/dashboard/dialogs/TopBarDialog";
 import { useFormik } from "formik";
 import { ColorPicker } from "material-ui-color";
 import { useEffect } from "react";
-import { formSubmit } from "@/app/dashboard/credit-cards/actions";
+import { submitCardForm } from "@/app/lib/actions/credit-card-actions";
 import * as yup from "yup";
 
 const validate = yup.object({
@@ -34,7 +34,7 @@ const CreditCardDialog = () => {
     validationSchema: validate,
     onSubmit: (values) => {
       actionShowModal(!showModal);
-      formSubmit(values)
+      submitCardForm(values)
     },
   });
 

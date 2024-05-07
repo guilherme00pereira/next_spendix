@@ -88,7 +88,7 @@ const CategoryFormDialog = () => {
 
   return (
     <Dialog open={showCategoryDialog} fullWidth maxWidth="md" onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
-      <form onSubmit={formik.handleSubmit} autoComplete="off">
+      <form onSubmit={formik.handleSubmit}>
         <TopBarSpeedDialog title="Nova categoria" showDialog={showCategoryDialog} closeAction={actionShowCategoryDialog} />
         <DialogContent>
           {addMutation.isPending && (

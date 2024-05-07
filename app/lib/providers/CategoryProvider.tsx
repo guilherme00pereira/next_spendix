@@ -14,8 +14,8 @@ const CategoryProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <CategoryContext.Provider
       value={{
-        removableCategory,
-        setRemovableCategory,
+        removableObject: removableCategory,
+        setRemovableObject: setRemovableCategory,
         openConfirm,
         setOpenConfirm,
       }}

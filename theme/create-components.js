@@ -30,11 +30,11 @@ export function createComponents() {
         MuiButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: '12px',
+                    borderRadius: '6px',
                     textTransform: 'none'
                 },
                 sizeSmall: {
-                    padding: '6px 16px'
+                    padding: '4px 12px'
                 },
                 sizeMedium: {
                     padding: '8px 20px'
