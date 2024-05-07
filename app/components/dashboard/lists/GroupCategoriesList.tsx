@@ -9,7 +9,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FormControl, InputLabel, OutlinedInput, MenuItem, Checkbox, ListItemText } from "@mui/material";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
 
-
 const GroupCategoriesList = () => {
   const { selectedGroup } = useGroupContext();
   const [linkedCategories, setLinkedCategories] = useState<string[]>([]);
@@ -19,16 +18,18 @@ const GroupCategoriesList = () => {
     getCategories().then((data) => {
       setCategories(data.map((category) => category.name));
     });
-    getGroupCategories(selectedGroup.id).then((data) => {
-      console.log(data);
-    });
+    if (selectedGroup.id) {
+      getGroupCategories(selectedGroup.id).then((data) => {
+        console.log(data);
+      });
+    }
   }, [selectedGroup]);
 
   const handleChange = (event: SelectChangeEvent<typeof linkedCategories>) => {
-    const { target: { value } } = event;
-    setLinkedCategories(
-      typeof value === "string" ? value.split(",") : value
-    );
+    const {
+      target: { value },
+    } = event;
+    setLinkedCategories(typeof value === "string" ? value.split(",") : value);
   };
 
   return (

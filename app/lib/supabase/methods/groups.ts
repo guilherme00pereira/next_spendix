@@ -19,8 +19,8 @@ const getGroupCategories = async (groupId: number) => {
     return data
 }
 
-const addGroup = async ({name, color}: GroupType) => {
-    const {data, error} = await supabase.from('groups').insert({name, color})
+const addGroup = async ({name}: GroupType) => {
+    const {data, error} = await supabase.from('groups').insert({name})
     if (error) {
         throw error
     }

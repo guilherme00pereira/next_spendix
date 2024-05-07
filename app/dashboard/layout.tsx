@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import {styled, getInitColorSchemeScript} from "@mui/material/styles";
-import type {} from '@mui/material/themeCssVarsAugmentation';
+import { styled, getInitColorSchemeScript } from "@mui/material/styles";
+import type {} from "@mui/material/themeCssVarsAugmentation";
 import Box from "@mui/material/Box";
 import Sidebar from "@/app/components/dashboard/Sidebar";
 import Topbar from "@/app/components/dashboard/Topbar";
@@ -13,7 +13,7 @@ import SpeedDialAdd from "@/app/components/dashboard/SpeedDialAdd";
 import TransactionDetailRightDrawer from "@/app/components/dashboard/surfaces/TransactionDetailRightDrawer";
 import { TransactionType } from "@/types/entities";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.vars.palette.background.default,
@@ -34,33 +34,28 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       value={{
         showModal: showAdd,
         actionShowModal: setShowAdd,
-        mediaQuery: "md"
+        mediaQuery: "md",
       }}
     >
-
       <QueryClientProvider client={queryClient}>
-      <TransactionContext.Provider
-      value={{
-        selectedTransaction,
-        setSelectedTransaction,
-        showTransactionDetail: toggleTransactionDetail,
-        actionShowTransactionDetail: setToggleTransactionDetail,
-      }}
-    >
-        {getInitColorSchemeScript()}
-        <Box sx={{ display: "flex" }}>
-          <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
-          <Sidebar open={openSidebar} toggleDrawer={setOpenSidebar} />
-          <LayoutBoxWrapper component="main">
-            {children}
-          </LayoutBoxWrapper>
-        </Box>
-        <SpeedDialAdd />
-        <TransactionDetailRightDrawer />
-      </TransactionContext.Provider>
-        </QueryClientProvider>
-      
-        
+        <TransactionContext.Provider
+          value={{
+            selectedTransaction,
+            setSelectedTransaction,
+            showTransactionDetail: toggleTransactionDetail,
+            actionShowTransactionDetail: setToggleTransactionDetail,
+          }}
+        >
+          {getInitColorSchemeScript()}
+          <Box sx={{ display: "flex" }}>
+            <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
+            <Sidebar open={openSidebar} toggleDrawer={setOpenSidebar} />
+            <LayoutBoxWrapper component="main">{children}</LayoutBoxWrapper>
+          </Box>
+          <SpeedDialAdd />
+          <TransactionDetailRightDrawer />
+        </TransactionContext.Provider>
+      </QueryClientProvider>
     </PageContext.Provider>
   );
 }

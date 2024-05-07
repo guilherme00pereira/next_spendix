@@ -10,7 +10,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
   return (
     // <NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
-      <CssVarsProvider theme={theme} defaultMode="dark">
+      <CssVarsProvider theme={theme} defaultMode="light">
         <CssBaseline />
         {children}
       </CssVarsProvider>
