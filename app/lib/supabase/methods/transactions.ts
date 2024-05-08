@@ -27,7 +27,8 @@ import dayjs from "dayjs";
 
 const supabase = createClient();
 
-const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), installments: transaction_installments(*)`;
+const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), 
+                  installments: transaction_installments(*), tags(*)`;
 const getDefaultQuery = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
 const getTransactions = async (initial_date: string, final_date: string) => {
@@ -45,11 +46,7 @@ const getTransactions = async (initial_date: string, final_date: string) => {
 };
 
 const getPayedTransactions = async (initial_date: string) => {
-  const { data, error } = await supabase
-    .from("transactions")
-    .select(getInnerPaymentsQuery)
-    .eq("draft", false)
-    .gte("payments.date", initial_date)
+  const { data, error } = await supabase.from("transactions").select(getInnerPaymentsQuery).eq("draft", false).gte("payments.date", initial_date);
   if (error) {
     throw error;
   }
@@ -68,7 +65,7 @@ const getFutureTransactions = async (initial_date: string, final_date: string) =
     throw error;
   }
   return data;
-}
+};
 
 const getTransactionsByCategory = async (di: string, df: string, category_id: number) => {
   const { data, error } = await supabase

@@ -20,6 +20,13 @@ const RightDrawer = styled(Drawer)(({ theme }) => ({
 const TransactionDetailRightDrawer = () => {
   const { selectedTransaction, showTransactionDetail, actionShowTransactionDetail } = useTransactionContext();
 
+  const renderTags = (tags: any) => {
+    if (tags) {
+      return tags.map((tag: any) => tag.name).join(", ");
+    }
+    return "";
+  };
+
   return (
     <RightDrawer anchor="right" open={showTransactionDetail} onClose={() => actionShowTransactionDetail(!showTransactionDetail)}>
       <Typography variant="h6">Detalhes da transação</Typography>
@@ -49,6 +56,9 @@ const TransactionDetailRightDrawer = () => {
           <ListItem>
             <ListItemText primary="Valor pago" secondary={amountFormatter(selectedTransaction.payments?.amount ?? 0)} />
           </ListItem>
+          <ListItem>
+            <ListItemText primary="Tags" secondary={renderTags(selectedTransaction.tags)} />
+            </ListItem>
         </List>
       )}
     </RightDrawer>

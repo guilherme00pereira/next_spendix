@@ -62,7 +62,7 @@ export type TransactionType = {
     installments: TransactionInstallmentsType[] | null;
     payments: PaymentType | null;
     draft: boolean;
-    tags: TagType[];
+    tags: TagType[] | null;
 }
 
 export type TransactionFormData = {

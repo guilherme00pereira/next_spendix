@@ -3,7 +3,6 @@ import React from "react";
 import { useTransactionContext } from "@/app/lib/contexts";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { TransactionType } from "@/types/entities";
-import { ButtonGroup, Button } from "@mui/material";
 import dayjs from "dayjs";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -42,6 +41,7 @@ const TransactionActionButtons = ({transaction}: {transaction: TransactionType})
   };
 
   const handleShowDetail = (t: TransactionType) => {
+    console.log("handleShowDetail", t);
     setSelectedTransaction(t);
     actionShowTransactionDetail(true);
   };

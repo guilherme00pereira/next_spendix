@@ -5,9 +5,6 @@
 - Implementar autenticação com Google
 - chamadas à api via server side
 
-#### Login
--descartar tema dark
-
 #### Home
 
 
@@ -21,10 +18,8 @@
 #### Grupos
 - função vincular categoria a grupo
 
-#### Speed Dial
--botão grupo
-
 ##### Dialogs
+- dialog transaction edit trazer as tags
 - ao add receita, campo data recebimento
 - dialog grupo com select de categorias
 - nova despesa:
