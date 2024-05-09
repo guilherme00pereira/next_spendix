@@ -25,7 +25,6 @@ const TransactionsTable = ({ transactions }: { transactions: TransactionType[] }
                   <TableCell align="center">{dayjs(transaction.due_date).format("DD/MM/YYYY")}</TableCell>
                   <TableCell>{amountFormatter(transaction.amount)}</TableCell>
                   <TableCell>{transaction.description}</TableCell>
-                  <TableCell>{transaction.payments ? "Pago" : ""}</TableCell>
                   <TableCell>
                     <TransactionActionButtons transaction={transaction} />
                   </TableCell>

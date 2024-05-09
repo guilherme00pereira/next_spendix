@@ -5,14 +5,11 @@ import { getGroups } from "@/app/lib/supabase/methods/groups";
 import GroupsList from "@/app/components/dashboard/lists/GroupsList";
 import GroupCategoriesList from "@/app/components/dashboard/lists/GroupCategoriesList";
 import GroupProvider from "@/app/lib/providers/GroupProvider";
-
-async function fetchGroups() {
-  const res = await getGroups();
-  return res;
-}
+import { getCategories } from "@/app/lib/supabase/methods/categories";
 
 const GroupsPage = async () => {
-  const groups = await fetchGroups();
+  const groups = await getGroups();
+  const categories = await getCategories();
 
   return (
     <PageContainer title="Grupos de categorias">
@@ -22,7 +19,7 @@ const GroupsPage = async () => {
             <GroupsList groups={groups} />
           </Grid>
           <Grid item xs={12} md={6}>
-            <GroupCategoriesList />
+            <GroupCategoriesList categories={categories} />
           </Grid>
         </Grid>
       </GroupProvider>

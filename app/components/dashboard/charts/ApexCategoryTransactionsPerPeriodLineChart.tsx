@@ -1,15 +1,24 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
-import { FormControl, InputLabel, MenuItem, Stack, useColorScheme } from "@mui/material";
+import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack, useColorScheme } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
 import { ChartBarType } from "@/types/chart-types";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { useRouter } from "next/navigation";
+import { PaperContainer } from "../commonStyledComponents";
+import PaperHeader from "../surfaces/PaperHeader";
 
-
-const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { transactions: TransactionType[]; categories: CategoryType[] }) => {
+const CategoryTransactionsPerPeriodLineChart = ({
+  transactions,
+  categories,
+  title,
+}: {
+  transactions: TransactionType[];
+  categories: CategoryType[];
+  title: string;
+}) => {
   const [data, setData] = useState<ChartBarType[]>([]);
   const router = useRouter();
   const { mode } = useColorScheme();
@@ -20,96 +29,105 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions, categories }: { 
   };
 
   useEffect(() => {
-    const data = transactions
-      .reduce((acc, transaction) => {
-        const month = dayjs(transaction.due_date).format("MMM");
-        const index = acc.findIndex((item: any) => item.name === month);
-        if (index === -1) {
-          acc.push({ name: month, value: transaction.amount, label: "R$" + transaction.amount });
-        } else {
-          acc[index].value += transaction.amount;
-          acc[index].label = "R$" + acc[index].value.toFixed(2);
-        }
-        return acc;
-      }, [] as ChartBarType[]);
+    const data = transactions.reduce((acc, transaction) => {
+      const month = dayjs(transaction.due_date).format("MMM");
+      const index = acc.findIndex((item: any) => item.name === month);
+      if (index === -1) {
+        acc.push({ name: month, value: transaction.amount, label: "R$" + transaction.amount });
+      } else {
+        acc[index].value += transaction.amount;
+        acc[index].label = "R$" + acc[index].value.toFixed(2);
+      }
+      return acc;
+    }, [] as ChartBarType[]);
     setData(data.reverse());
-    //TODO: set projection for actual month
+    //TODO: set projection for actual month 
   }, []);
 
   return (
-      <>
-      
+    <PaperContainer>
+      <PaperHeader title={`Evolução mensal em '${title}'`} />
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
-        <FormControl sx={{width: "50%"}} size="small">
-        <InputLabel id="demo-multiple-checkbox-label">Trocar categoria: </InputLabel>
+        <FormControl sx={{ width: "60%" }} size="small">
+          <InputLabel>Trocar categoria </InputLabel>
           <Select
             name="category_id"
             size="small"
             onChange={(e: SelectChangeEvent<HTMLInputElement>) => handleChangeSelect(e)}
+            input={<OutlinedInput label="Trocar Categoria" />}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 500,
+                  width: 250,
+                },
+              },
+            }}
           >
             {categories?.map((category) => (
               <MenuItem key={category.id} value={category.slug}>
-                {category.name}
+                <ListItemText primary={category.name} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
       </Stack>
-      <Chart options={{
-        chart: {
-          id: "basic-bar",
-        },
-        xaxis: {
-          categories: data.map((item) => item.name),
-        },
-        yaxis: {
-          labels: {
+      <Chart
+        options={{
+          chart: {
+            id: "basic-bar",
+          },
+          xaxis: {
+            categories: data.map((item) => item.name),
+          },
+          yaxis: {
+            labels: {
+              formatter: function (val: any) {
+                return val;
+              },
+            },
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              barHeight: "75%",
+              distributed: true,
+              dataLabels: {
+                position: "top",
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            textAnchor: "middle",
+            style: {
+              colors: mode === "dark" ? ["#BEBFBF"] : ["#333333"],
+            },
             formatter: function (val: any) {
-              return val;
+              return "R$ " + val.toFixed(2);
             },
+            offsetX: 0,
           },
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            barHeight: "75%",
-            distributed: true,
-            dataLabels: {
-              position: "top",
-            },
+          grid: {
+            borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
           },
-        },
-        dataLabels: {
-          enabled: true,
-          textAnchor: "middle",
-          style: {
-            colors: mode === "dark" ? ["#BEBFBF"] : ["#333333"],
+          legend: {
+            show: false,
           },
-          formatter: function (val: any) {
-            return "R$ " + val.toFixed(2);
+          tooltip: {
+            enabled: false,
           },
-          offsetX: 0,
-        },
-        grid: {
-          borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
-        },
-        legend: {
-          show: false,
-        },
-        tooltip: {
-          enabled: false,
-        },
-      }}
-      series={[
-        {
-          name: "Despesas",
-          data: data.map((item) => item.value),
-        },
-      ]}
-      type="bar"
-      height={300}
+        }}
+        series={[
+          {
+            name: "Despesas",
+            data: data.map((item) => item.value),
+          },
+        ]}
+        type="bar"
+        height={300}
       />
-    </>    
+    </PaperContainer>
   );
 };
 

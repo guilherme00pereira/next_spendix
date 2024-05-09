@@ -1,4 +1,4 @@
-import { Paper, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
 import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
@@ -19,7 +19,7 @@ async function fetchRelatedTransactions(id: number) {
 async function fetchSpendingsCategories() {
   const res = await getCategories();
   return res.filter((category: CategoryType) => category.type === "Despesa");
-}
+} 
 
 const CategoryPage = async ({ params }: { params: { slug: string } }) => {
   const category = await fetchCategoryData(params.slug);
@@ -34,9 +34,13 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
           {transactions && TransactionsTable({ transactions: transactions })}
         </Grid>
         <Grid item xs={12} md={6}>
-          <Paper>
-            {transactions.length > 0 && <ApexCategoryTransactionsPerPeriodLineChart transactions={transactions} categories={spendingsCategories} />}
-          </Paper>
+          {transactions.length > 0 && (
+            <ApexCategoryTransactionsPerPeriodLineChart
+              title={title}
+              transactions={transactions}
+              categories={spendingsCategories}
+            />
+          )}
         </Grid>
       </Grid>
     </PageContainer>
