@@ -9,7 +9,7 @@ import { TransactionType } from "@/types/entities";
 import dayjs from "dayjs";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
-import TransactionActionButtons from "../buttons/TransactionActionButtons";
+import TransactionActionButtons from "../elements/TransactionActionButtons";
 
 const TransactionsTable = ({ transactions }: { transactions: TransactionType[] }) => {
 

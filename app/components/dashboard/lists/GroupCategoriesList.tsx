@@ -15,7 +15,7 @@ import { PaperContainer } from "@/app/components/dashboard/commonStyledComponent
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
 import { useGroupContext } from "@/app/lib/contexts";
-import { getGroupCategories } from "@/app/lib/supabase/methods/groups";
+import { getGroupCategories } from "@/app/lib/actions/group-actions";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import AddIcon from "@mui/icons-material/Add";
 import { CategoryType } from "@/types/entities";

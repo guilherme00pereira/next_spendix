@@ -7,13 +7,8 @@ import CategoriesList from "@/app/components/dashboard/lists/CategoriesList";
 import CategoryProvider from "@/app/lib/providers/CategoryProvider";
 import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
 
-async function fetchCategories() {
-  const res = await getCategories();
-  return res;
-}
-
 const CategoriesPage = async () => {
-  const categories = await fetchCategories();
+  const categories = await getCategories();
 
   return (
     <PageContainer title="Categorias">

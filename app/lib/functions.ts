@@ -1,4 +1,4 @@
-import { CategoryType, PaymentType, TransactionType } from "@/types/entities";
+import { TransactionType } from "@/types/entities";
 import { latinCharacters } from "./data";
 import { getAllPaymentMethods } from "./supabase/methods/payment-methods";
 
@@ -65,10 +65,16 @@ const convertPaymentMethodsToSelect = (payment_methods: any) => {
   });
 };
 
+const serializeToServeActions = (data: any) => {
+  return JSON.parse(JSON.stringify(data));
+}
+
+
 export { 
   amountFormatter, 
   groupTransactionsByDate,
   convertPaymentMethodsToSelect, 
   convertNameToSlug,
-  buildSelectPaymentMethods
+  buildSelectPaymentMethods,
+  serializeToServeActions,
 };

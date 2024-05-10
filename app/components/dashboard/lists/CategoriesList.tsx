@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
@@ -11,37 +11,22 @@ import { useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import Box from "@mui/material/Box";
+import { FormControl, OutlinedInput } from "@mui/material";
+import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 
-const RenderSubCategories = ({
-  categories,
-  handleEdit,
-  handleConfirmDelete,
-}: ICategoryListProps) => {
-  return categories.map((category) => (
-    <CategoriesListItem
-      key={category.id}
-      category={category}
-      handleEdit={handleEdit}
-      handleConfirmDelete={handleConfirmDelete}
-      isSubCategory
-    />
-  ));
-};
-
-const CategoriesList = ({categories}: {categories: CategoryType[]}) => {
+const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
-  const { openConfirm, setOpenConfirm, removableObject, setRemovableObject} = useCategoryContext();
+  const { openConfirm, setOpenConfirm, removableObject, setRemovableObject } = useCategoryContext();
+  const [filteredCategories, setFilteredCategories] = React.useState<CategoryType[]>(categories);
 
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableObject({ ...removableObject, id, name });
     setOpenConfirm(true);
-  };  
+  };
 
   const handleEdit = (id: number) => {
     actionShowCategoryDialog(true);
-    const c =
-      categories?.filter((category) => category.id === id)[0] ??
-      ({} as CategoryType);
+    const c = categories?.filter((category) => category.id === id)[0] ?? ({} as CategoryType);
     setCategory({
       id,
       name: c.name ?? "",
@@ -53,47 +38,42 @@ const CategoriesList = ({categories}: {categories: CategoryType[]}) => {
     });
   };
 
-  const getSubCategories = (id: number) => {
-    const subs = categories?.filter((c) => {
-      if (c.parent === id) {
-        return {
-          id: c.id,
-          name: c.name,
-          type: c.type,
-          parent: c.parent ?? null,
-          color: c.color ?? null,
-          icon: c.icon ?? null,
-        };
+  const searchCategory = (event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const search = (event.target as HTMLInputElement).value;
+      if (search === "") {
+        setFilteredCategories(categories);
+      } else {
+        setFilteredCategories(categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())));
       }
-    });
-    return subs as CategoryType[];
   };
 
   return (
     <PaperContainer>
       <PaperHeader title="Lista de categorias">
-          <Box>
-            sdsdas
-          </Box>
-        </PaperHeader>
+        <Box>
+          <FormControl>
+            <OutlinedInput
+              id="search"
+              size="small"
+              type="search"
+              fullWidth
+              onKeyUp={(e) => searchCategory(e)}
+              endAdornment={<FilterListRoundedIcon color="primary" />}
+            />
+
+          </FormControl>
+        </Box>
+      </PaperHeader>
       <Stack>
-        {categories.length > 0 &&
-          categories
-            ?.filter((c) => c.parent === null)
+        {filteredCategories.length > 0 &&
+          filteredCategories
             .map((category) => (
-              <>
                 <CategoriesListItem
                   key={category.id}
                   category={category}
                   handleEdit={handleEdit}
                   handleConfirmDelete={handleConfirmDelete}
                 />
-                <RenderSubCategories
-                  categories={getSubCategories(category.id)}
-                  handleEdit={handleEdit}
-                  handleConfirmDelete={handleConfirmDelete}
-                />
-              </>
             ))}
       </Stack>
       <ConfirmDeleteDialog

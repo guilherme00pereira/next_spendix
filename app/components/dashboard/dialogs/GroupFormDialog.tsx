@@ -20,7 +20,7 @@ const GroupFormDialog = () => {
     initialValues: group,
     validationSchema: validate,
     onSubmit: (values) => {
-      submitGroupForm(values);
+      submitGroupForm(values).then( () => actionShowGroupDialog(false))
     },
   });
 

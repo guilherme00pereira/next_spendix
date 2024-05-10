@@ -1,4 +1,5 @@
 import { createClient } from "@/app/lib/supabase/client";
+
 import { TransactionFormData, RecurringFormData } from "@/types/entities";
 import { IDeleteTransactionData } from "@/types/interfaces";
 import dayjs from "dayjs";
@@ -95,61 +96,7 @@ const getOverdueTransactions = async () => {
   return data;
 };
 
-const addTransaction = async ({
-  amount,
-  due_date,
-  description,
-  category_id,
-  payment_date,
-  payed_amount,
-  payment_method_id,
-  payment_id,
-  in_installments,
-  installments,
-  draft,
-  cashed,
-  tags,
-}: TransactionFormData) => {
-  let pay_id = null;
-  if (cashed) {
-    pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
-  }
-  const { data, error } = await supabase
-    .from("transactions")
-    .insert({
-      amount,
-      due_date: due_date.format("YYYY-MM-DD"),
-      description,
-      category_id,
-      payment_id: pay_id,
-      draft,
-    })
-    .select("id");
 
-  if (error) {
-    throw error;
-  } else {
-    if (data.length > 0) {
-      const tid = data[0].id;
-
-      if (in_installments) {
-        const { error } = await supabase.from("transaction_installments").insert({ transaction_id: tid, installments });
-        if (error) {
-          //throw error;
-        }
-      }
-
-      if (tags && tags.length > 0) {
-        const rows = tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id }));
-        const { error } = await supabase.from("tags_transactions").insert(rows);
-        if (error) {
-          //throw error;
-        }
-      }
-    }
-    return data;
-  }
-};
 
 const addReccuringTransaction = async ({ amount, due_date, description, category_id, recurring_times }: RecurringFormData) => {
   const rows = [];
@@ -170,52 +117,7 @@ const addReccuringTransaction = async ({ amount, due_date, description, category
   return data;
 };
 
-const editTransaction = async ({
-  id,
-  amount,
-  due_date,
-  description,
-  category_id,
-  payment_date,
-  payed_amount,
-  payment_method_id,
-  payment_id,
-  draft,
-  cashed,
-  tags,
-}: TransactionFormData) => {
-  let pay_id = null;
-  if (cashed) {
-    pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
-  }
-  const { data, error } = await supabase
-    .from("transactions")
-    .update({
-      amount,
-      due_date: due_date.format("YYYY-MM-DD"),
-      description,
-      category_id,
-      payment_id: pay_id,
-      draft,
-    })
-    .match({ id })
-    .select("id");
-  if (error) {
-    throw error;
-  } else {
-    if (data.length > 0) {
-      const tid = data[0].id;
-      if (tags && tags.length > 0) {
-        const rows = tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id }));
-        const { error } = await supabase.from("tags_transactions").insert(rows);
-        if (error) {
-          //throw error;
-        }
-      }
-    }
-    return data;
-  }
-};
+
 
 const removeTransaction = async ({ id, payment_id }: IDeleteTransactionData) => {
   const { data, error } = await supabase.from("transactions").delete().eq("id", id);
@@ -260,38 +162,7 @@ const getTransactionsByCategoriesLastSixMonths = async (category_id: number) => 
   return data;
 };
 
-const managePaymentRecord = async (payment_date: dayjs.Dayjs | null, payed_amount: number | null, payment_id: number | null, payment_method_id: number) => {
-  let pay_id = null;
-  if (payment_id) {
-    const { data, error } = await supabase
-      .from("payments")
-      .update({
-        date: payment_date ? payment_date.format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
-        amount: payed_amount ?? 0,
-        payment_method_id: payment_method_id ? payment_method_id : 1,
-      })
-      .eq("id", payment_id)
-      .select("id");
-    if (error) {
-      throw error;
-    }
-    pay_id = data[0].id;
-  } else {
-    const { data, error } = await supabase
-      .from("payments")
-      .insert({
-        date: payment_date ? payment_date.format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
-        amount: payed_amount ?? 0,
-        payment_method_id: payment_method_id ? payment_method_id : 1,
-      })
-      .select("id");
-    if (error) {
-      throw error;
-    }
-    pay_id = data[0].id;
-  }
-  return pay_id;
-};
+
 
 const managePaymentMethodUpdateBalance = async (payment_method_id: number, amount: number, type: string) => {
   if (type === "Receita") {
@@ -307,9 +178,7 @@ export {
   getFutureTransactions,
   getTransactionsByCategory,
   getOverdueTransactions,
-  addTransaction,
   addReccuringTransaction,
-  editTransaction,
   removeTransaction,
   getSumIncomeTransactions,
   getTransactionsByCategoriesLastSixMonths,

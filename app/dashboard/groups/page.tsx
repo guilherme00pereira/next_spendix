@@ -1,11 +1,11 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
-import { getGroups } from "@/app/lib/supabase/methods/groups";
 import GroupsList from "@/app/components/dashboard/lists/GroupsList";
 import GroupCategoriesList from "@/app/components/dashboard/lists/GroupCategoriesList";
 import GroupProvider from "@/app/lib/providers/GroupProvider";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
+import { getGroups } from "@/app/lib/actions/group-actions";
 
 const GroupsPage = async () => {
   const groups = await getGroups();

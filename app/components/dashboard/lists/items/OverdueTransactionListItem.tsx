@@ -8,7 +8,7 @@ import { TransactionType } from "@/types/entities";
 import { useTransactionContext } from "@/app/lib/contexts";
 import { useSpeedDialStore } from "@/app/lib/store";
 import dayjs from "dayjs";
-import TransactionActionButtons from "@/app/components/dashboard/buttons/TransactionActionButtons";
+import TransactionActionButtons from "@/app/components/dashboard/elements/TransactionActionButtons";
 
 const getOverdueDays = (dueDate: string) => {
   const due = dayjs(dueDate);

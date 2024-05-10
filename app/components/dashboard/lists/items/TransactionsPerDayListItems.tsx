@@ -6,7 +6,7 @@ import { TransactionType } from "@/types/entities";
 import Typography from "@mui/material/Typography";
 import { amountFormatter } from "@/app/lib/functions";
 import { TransactionListItem } from "@/app/components/dashboard/commonStyledComponents";
-import TransactionActionButtons from "@/app/components/dashboard/buttons/TransactionActionButtons";
+import TransactionActionButtons from "@/app/components/dashboard/elements/TransactionActionButtons";
 import { useTransactionsPerDayContext } from "@/app/lib/contexts";
 import dayjs from "dayjs";
 

@@ -23,14 +23,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { addTransaction, editTransaction } from "@/app/lib/supabase/methods/transactions";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
-import { buildSelectPaymentMethods } from "@/app/lib/functions";
+import { buildSelectPaymentMethods, serializeToServeActions } from "@/app/lib/functions";
 import { CategoryType, TagType } from "@/types/entities";
 import { getTags } from "@/app/lib/supabase/methods/tags";
+import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
+import dayjs from "dayjs";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -89,8 +90,8 @@ const TransactionFormDialog = () => {
   };
 
   const handleDueDateChange = (value: any) => {
-    formik.setFieldValue("due_date", value);
-    formik.setFieldValue("payment_date", value);
+    formik.setFieldValue("due_date", dayjs(value).format("YYYY-MM-DD"));
+    formik.setFieldValue("payment_date", dayjs(value).format("YYYY-MM-DD"));
   };
 
   const handleCashedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,42 +115,17 @@ const TransactionFormDialog = () => {
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
-      const obj = {
-        id: values.id ?? undefined,
-        amount: values["amount"],
-        due_date: values["due_date"],
-        description: values["description"],
-        cashed: values["cashed"],
-        category_id: values["category_id"],
-        in_installments: values["in_installments"],
-        installments: values["installments"],
-        payment_date: values["payment_date"],
-        payed_amount: values["payed_amount"],
-        payment_method_id: values["payment_method_id"],
-        payment_id: values["payment_id"],
-        draft: values["draft"],
-        tags: values["tags"],
+      const data = {
+        ...values,
+        due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
+        payment_date: values.payment_date ? dayjs(values.payment_date).format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
       }
-      if(values.id) {
-        editTransaction(obj).then((res) => {
-          if (res !== null) {
-            actionShowTransactionDialog(false);
-            setIsPending(false);
-          }
-        });
-      } else {
-        addTransaction(obj).then((res) => {
-          if (res !== null) {
-            actionShowTransactionDialog(false);
-            setIsPending(false);
-          }
-        });
-      }
+      submitTransactionForm( serializeToServeActions(data) ).then(() => setIsPending(false));
     },
   });
 
   return (
-    <Dialog open={showTransactionDialog} fullWidth maxWidth="lg" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+    <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <TopBarSpeedDialog title="Despesa" showDialog={showTransactionDialog} closeAction={actionShowTransactionDialog} />
         <DialogContent>
