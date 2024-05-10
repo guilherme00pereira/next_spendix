@@ -37,10 +37,6 @@ export const useAppStore = create<IAppPersistData>()(
       actionShowRecurringDialog: (action) => set((state) => ({...state, showRecurringDialog: action})),
       recurring: {} as RecurringFormData,
       setRecurring: (r: RecurringFormData) => set((state) => ({...state, recurring: r})),
-      showGroupDialog: false,
-      actionShowGroupDialog: (action) => set((state) => ({...state, showGroupDialog: action})),
-      group: {} as GroupFormData,
-      setGroup: (g: GroupFormData) => set((state) => ({...state, group: g})),
     }
   ));
   

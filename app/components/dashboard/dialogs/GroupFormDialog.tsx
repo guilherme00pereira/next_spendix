@@ -6,21 +6,23 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { ColorPicker } from "material-ui-color";
 import { submitGroupForm } from "@/app/lib/actions/group-actions";
-import { useSpeedDialStore } from "@/app/lib/store";
 import DialogActionButtons from "./DialogActionButtons";
+import { useGroupContext } from "@/app/lib/contexts";
 
 const validate = yup.object({
   name: yup.string().required("Campo obrigatório"),
 });
 
 const GroupFormDialog = () => {
-  const { showGroupDialog, actionShowGroupDialog, group } = useSpeedDialStore();
+  const { showGroupDialog, setShowGroupDialog, editableGroup } = useGroupContext();
 
   const formik = useFormik({
-    initialValues: group,
+    initialValues: editableGroup,
     validationSchema: validate,
     onSubmit: (values) => {
-      submitGroupForm(values).then( () => actionShowGroupDialog(false))
+      submitGroupForm(values).then( () => {
+        setShowGroupDialog(false)
+      })
     },
   });
 
@@ -29,9 +31,9 @@ const GroupFormDialog = () => {
       open={showGroupDialog}
       fullWidth
       maxWidth="md"
-      onClose={() => actionShowGroupDialog(!showGroupDialog)}
+      onClose={() => setShowGroupDialog(!showGroupDialog)}
     >
-      <DialogTitle>{group.id ? "Editar" : "Adicionar"} grupo</DialogTitle>
+      <DialogTitle>{editableGroup.id ? "Editar" : "Adicionar"} grupo</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent dividers>
           <Stack direction="row">
@@ -59,7 +61,7 @@ const GroupFormDialog = () => {
             </Grid>
           </Stack>
         </DialogContent>
-        <DialogActionButtons showDialog={showGroupDialog} closeAction={actionShowGroupDialog} />
+        <DialogActionButtons showDialog={showGroupDialog} closeAction={setShowGroupDialog} />
       </form>
     </Dialog>
   );

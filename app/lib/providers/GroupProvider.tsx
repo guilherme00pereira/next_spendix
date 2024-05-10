@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { GroupContext } from "@/app/lib/contexts";
-import { GroupType } from "@/types/entities";
+import { GroupFormData, GroupType } from "@/types/entities";
 import { IRemovableEntity } from "@/types/interfaces";
 
 const GroupProvider = ({ children }: { children: React.ReactNode }) => {
+  const [editableGroup, setEditableGroup] = useState<GroupFormData>({} as GroupFormData);
+  const [ showGroupDialog, setShowGroupDialog ] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<GroupType>({} as GroupType);
   const [removableGroup, setRemovableGroup] = useState<IRemovableEntity>({
@@ -20,6 +22,10 @@ const GroupProvider = ({ children }: { children: React.ReactNode }) => {
     setRemovableObject: setRemovableGroup,
     openConfirm,
     setOpenConfirm,
+    editableGroup,
+    setEditableGroup,
+    showGroupDialog,
+    setShowGroupDialog,
    }}>{children}</GroupContext.Provider>;
 };
 

@@ -2,11 +2,8 @@
 import React from "react";
 import {styled} from "@mui/material/styles";
 import Stack from "@mui/system/Stack";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {IPaperHeaderProps} from "@/types/interfaces";
-import { Badge } from "@mui/material";
 
 
 const Header = styled(Stack)(({theme}) => ({
@@ -37,36 +34,17 @@ const Title = styled("div")(({theme}) => ({
 }));
 
 
-const PaperHeader = ({title, children, link, settings, badge}: IPaperHeaderProps) => {
+const PaperHeader = ({title, children}: IPaperHeaderProps) => {
   return (
     <Header direction="row" justifyContent="space-between" alignItems="center">
       <Stack direction="row" justifyContent="start" alignItems="center">
       <Title>
         {title}
       </Title>
-      {(badge && badge.show) && (
-        <Badge badgeContent={badge.content} color={badge.color} sx={{marginTop: "-5px"}} />
-      )}
       </Stack>
-      <Stack direction="row" justifyContent="center" sx={{flexGrow: "1"}}>
+      <Stack direction="row" justifyContent="flex-end" sx={{flexGrow: "1"}}>
         {children}
       </Stack>
-      
-      {(link && link.show) && (
-        <ActionButton size="small" variant="text" href={link.target
-        }>
-          {link.text}
-        </ActionButton>
-      )}
-      {(settings && settings.showButton) && (
-        <ActionButton
-          size="small"
-          variant="text"
-          onClick={settings.buttonAction}
-        >
-          <SettingsRoundedIcon fontSize="small"/>
-        </ActionButton>
-      )}
     </Header>
   );
 };

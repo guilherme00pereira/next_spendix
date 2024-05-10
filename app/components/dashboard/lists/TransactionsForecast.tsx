@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { getFutureTransactions } from "@/app/lib/supabase/methods/transactions";
 import { TransactionType } from "@/types/entities";
 import ForecastedTransactionListItem from "./items/ForecastedTransactionListItem";
+import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
 
 async function fetchFutureTransactions() {
   const tomorrow = dayjs().format("YYYY-MM-DD");
@@ -19,14 +20,9 @@ const TransactionsForecast = async () => {
 
   return (
     <PaperContainer>
-      <PaperHeader 
-        title="Próximos lançamentos"
-        link={{
-          show: true,
-          text: "Ver todos",
-          target: "/dashboard/transactions/forecast",
-        }}
-         />
+      <PaperHeader title="Próximos lançamentos">
+        <PaperHeaderLink text="Ver todos" target="/dashboard/transactions/forecast" />
+      </PaperHeader>
       <Stack>
         {transactions.slice(0, 6).map((transaction) => (
           <ForecastedTransactionListItem key={transaction.id} transaction={transaction} />

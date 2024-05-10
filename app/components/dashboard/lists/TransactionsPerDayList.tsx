@@ -8,32 +8,26 @@ import TransactionsPerDayListItems from "./items/TransactionsPerDayListItems";
 import { TransactionType } from "@/types/entities";
 import { groupTransactionsByDate } from "@/app/lib/functions";
 import dayjs from "dayjs";
+import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
 
-
-
-const TransactionsPerDayList = async ({transactions}: {transactions: TransactionType[]}) => {
-  const filtered = transactions.filter((transaction: any) => transaction.categories.id != 43)
-  const mapped = groupTransactionsByDate(filtered as TransactionType[])
+const TransactionsPerDayList = async ({ transactions }: { transactions: TransactionType[] }) => {
+  const filtered = transactions.filter((transaction: any) => transaction.categories.id != 43);
+  const mapped = groupTransactionsByDate(filtered as TransactionType[]);
 
   const daysOfTheMonth = () => {
-    const existingDays = Array.from(mapped.keys())
-    const today = dayjs().format("YYYY-MM-DD")
-    if(!existingDays.includes(today)) {
-      existingDays.push(today)
+    const existingDays = Array.from(mapped.keys());
+    const today = dayjs().format("YYYY-MM-DD");
+    if (!existingDays.includes(today)) {
+      existingDays.push(today);
     }
-    return existingDays
-  } 
+    return existingDays;
+  };
 
   return (
     <PaperContainer sx={{ minHeight: "400px" }}>
-      <PaperHeader
-        title="Transações realizadas no mês / dia"
-        link={{
-          show: true,
-          text: "Ver todas",
-          target: "/dashboard/transactions/all",
-        }}
-      />
+      <PaperHeader title="Transações realizadas no mês / dia">
+        <PaperHeaderLink text="Ver todas" target="/dashboard/transactions/all" />
+      </PaperHeader>
       <Stack>
         <TransactionsPerDayProvider>
           <Stack direction="row" justifyContent="center" alignItems="center">

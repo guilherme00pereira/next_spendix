@@ -6,17 +6,8 @@ import CreditCardsListItem from '@/app/components/dashboard/lists/items/CreditCa
 import { getCreditCardPaymentMethods } from '@/app/lib/supabase/methods/payment-methods';
 import Button from '@mui/material/Button';
 
-async function fetchCreditCards() {
-  const res = await getCreditCardPaymentMethods();
-  if (res instanceof Error) {
-    console.error(res);
-    return [];
-  }
-  return res
-}
-
 const CreditCardsList = async () => {
-  const cards = await fetchCreditCards();
+  const cards = await getCreditCardPaymentMethods();
   return (
     <PaperContainer>
       <PaperHeader  title="Cartões de Crédito">

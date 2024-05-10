@@ -1,35 +1,32 @@
 "use server";
 import { createClientServerSide } from "@/app/lib/supabase/server";
 import { GroupType } from "@/types/entities";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { revalidateTag, revalidatePath, unstable_cache } from "next/cache";
 
 const supabase = createClientServerSide()
 
 export async function submitGroupForm(data: object): Promise<void> {
   const values = data as GroupType;
   if (values.id) {
-    editGroup(values);
+    editGroup(values).then(() => revalidatePath("/dashboard/groups"));
   } else {
-    addGroup(values);
+    addGroup(values).then(() => revalidatePath("/dashboard/groups"));
   }
-  revalidateTag("get-groups");
+  
 }
 
 export async function deleteGroup(id: number): Promise<void> {
-  removeGroup(id);
-  revalidateTag("get-groups");
+  removeGroup(id).then(() => revalidatePath("/dashboard/groups"));
 }
 
-export const getGroups = unstable_cache( 
+export const getGroups = 
   async () => {
     const {data, error} = await supabase.from('groups').select('*')
     if (error) {
         throw error
     }
     return data
-  },
-  ['get-groups']
-)
+  }
 
 export const getGroupCategories = unstable_cache(
   async (groupId: number) => {

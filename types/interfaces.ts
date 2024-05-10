@@ -4,10 +4,7 @@ import {
     RecurringFormData,
     TransactionType,
     TransactionFormData,
-    PaperHeaderLinkType,
-    PaperHeaderSettingsType,
-    PaperHeaderBadgeType,
-    PaperHeaderFilterType, BankAccountType,
+    BankAccountType,
     GroupFormData,
     GroupType
 } from "@/types/entities";
@@ -53,7 +50,14 @@ export interface IPageContextData {
     mediaQuery: string;
 }
 
-export interface ITransactionContextData {
+interface IDeletableObjectContextData {
+    removableObject: IRemovableEntity;
+    setRemovableObject: Dispatch<SetStateAction<IRemovableEntity>>;
+    openConfirm: boolean;
+    setOpenConfirm: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface ITransactionContextData extends IDeletableObjectContextData{
     selectedTransaction: TransactionType;
     setSelectedTransaction: Dispatch<SetStateAction<TransactionType>>;
     showTransactionDetail: boolean;
@@ -67,18 +71,15 @@ export interface ITransactionsPerDayContextData {
     setDailyTransactions: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
-interface IDeletableObjectContextData {
-    removableObject: IRemovableEntity;
-    setRemovableObject: Dispatch<SetStateAction<IRemovableEntity>>;
-    openConfirm: boolean;
-    setOpenConfirm: Dispatch<SetStateAction<boolean>>;
-}
-
 export interface ICateroryContextData extends IDeletableObjectContextData{}
 
 export interface IGroupContextData extends IDeletableObjectContextData {
     selectedGroup: GroupType;
     setSelectedGroup: Dispatch<SetStateAction<GroupType>>;
+    showGroupDialog: boolean;
+    setShowGroupDialog: (action: boolean) => void;
+    editableGroup: GroupFormData;
+    setEditableGroup: (g: GroupFormData) => void;
 }
 
 export interface IAppPersistData {
@@ -105,10 +106,6 @@ export interface ISpeedDialStoreData {
     actionShowRecurringDialog: (action: boolean) => void;
     recurring: RecurringFormData;
     setRecurring: (r: RecurringFormData) => void;
-    showGroupDialog: boolean;
-    actionShowGroupDialog: (action: boolean) => void;
-    group: GroupFormData;
-    setGroup: (g: GroupFormData) => void;
 }
 
 export interface ICategoryListProps {
@@ -170,7 +167,18 @@ export interface IPageContainerProps {
 export interface IPaperHeaderProps {
     title: string;
     children?: React.ReactNode;
-    link?: PaperHeaderLinkType;
-    settings?: PaperHeaderSettingsType
-    badge?: PaperHeaderBadgeType;
+}
+
+export interface IPaperHeaderLinkType {
+    text: string;
+    target: string;
+}
+
+export interface IPaperHeaderBadgeType {
+    content: number;
+    color: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
+}
+
+export interface IPaperHeaderSettingsType {
+    buttonAction: () => void;
 }

@@ -12,6 +12,7 @@ import { TransactionContext } from "@/app/lib/contexts";
 import SpeedDialAdd from "@/app/components/dashboard/SpeedDialAdd";
 import TransactionDetailRightDrawer from "@/app/components/dashboard/surfaces/TransactionDetailRightDrawer";
 import { TransactionType } from "@/types/entities";
+import TransactionProvider from "../lib/providers/TransactionProvider";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +27,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const openSidebar = useAppStore((state) => state.openSidebar);
   const setOpenSidebar = useAppStore((state) => state.setOpenSidebar);
-  const [selectedTransaction, setSelectedTransaction] = useState<TransactionType>({} as TransactionType);
-  const [toggleTransactionDetail, setToggleTransactionDetail] = useState(false);
+  
 
   return (
     <PageContext.Provider
@@ -38,14 +38,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       }}
     >
       <QueryClientProvider client={queryClient}>
-        <TransactionContext.Provider
-          value={{
-            selectedTransaction,
-            setSelectedTransaction,
-            showTransactionDetail: toggleTransactionDetail,
-            actionShowTransactionDetail: setToggleTransactionDetail,
-          }}
-        >
+        <TransactionProvider>
           {getInitColorSchemeScript()}
           <Box sx={{ display: "flex" }}>
             <Topbar open={openSidebar} toggleDrawer={setOpenSidebar} />
@@ -54,7 +47,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
           </Box>
           <SpeedDialAdd />
           <TransactionDetailRightDrawer />
-        </TransactionContext.Provider>
+        </TransactionProvider>
       </QueryClientProvider>
     </PageContext.Provider>
   );

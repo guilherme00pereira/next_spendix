@@ -6,6 +6,7 @@ import GroupCategoriesList from "@/app/components/dashboard/lists/GroupCategorie
 import GroupProvider from "@/app/lib/providers/GroupProvider";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { getGroups } from "@/app/lib/actions/group-actions";
+import GroupFormDialog from "@/app/components/dashboard/dialogs/GroupFormDialog";
 
 const GroupsPage = async () => {
   const groups = await getGroups();
@@ -22,6 +23,7 @@ const GroupsPage = async () => {
             <GroupCategoriesList categories={categories} />
           </Grid>
         </Grid>
+        <GroupFormDialog />
       </GroupProvider>
     </PageContainer>
   );

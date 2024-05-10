@@ -136,25 +136,3 @@ export type TransferMoneyFormData = {
     incomeType: string;
     amount: number;
 }
-
-export type PaperHeaderLinkType = {
-    show: boolean;
-    text: string;
-    target: string;
-}
-
-export type PaperHeaderBadgeType = {
-    show: boolean;
-    content: number;
-    color: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
-}
-
-export type PaperHeaderSettingsType = {
-    showButton: boolean;
-    buttonAction: () => void;
-}
-
-export type PaperHeaderFilterType = {
-    show: boolean;
-    filterAction: () => void;
-}
