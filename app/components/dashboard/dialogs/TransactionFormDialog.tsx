@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import {
   Box,
@@ -23,18 +24,21 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import { buildSelectPaymentMethods, serializeToServeActions } from "@/app/lib/functions";
-import { CategoryType, TagType } from "@/types/entities";
-import { getTags } from "@/app/lib/supabase/methods/tags";
 import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
 import dayjs from "dayjs";
+import { ISpeedDiaDialogsData } from "@/types/interfaces";
+import { CategoryType, TagType } from "@/types/entities";
 
 const validate = yup.object({
-  amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
+  amount: yup
+    .number()
+    .min(1, "Insira apenas valores maiores que 1")
+    .typeError("não é um número válido")
+    .required("Campo obrigatório"),
   category_id: yup.string().required("Campo obrigatório"),
   cashed: yup.boolean(),
   description: yup.string(),
@@ -62,27 +66,12 @@ const SelectTagMenuProps = {
 //TODO: Adjust credit card or bank account balance when adding or updating a transaction
 //TOD: hide installmennts when editing a transaction
 
-const TransactionFormDialog = () => {
+const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) => {
   const { showTransactionDialog, actionShowTransactionDialog, transaction } = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);
   const [hasInstallments, setHasInstallments] = useState<boolean>(false);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
   const [isPending, setIsPending] = useState<boolean>(false);
-
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getCategories(),
-  });
-
-  const { data: paymentMethods } = useQuery({
-    queryKey: ["payment_methods"],
-    queryFn: () => buildSelectPaymentMethods(),
-  });
-
-  const { data: tags } = useQuery({
-    queryKey: ["tags"],
-    queryFn: () => getTags(),
-  });
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("amount", e.target.value);
@@ -90,8 +79,8 @@ const TransactionFormDialog = () => {
   };
 
   const handleDueDateChange = (value: any) => {
-    formik.setFieldValue("due_date", dayjs(value).format("YYYY-MM-DD"));
-    formik.setFieldValue("payment_date", dayjs(value).format("YYYY-MM-DD"));
+    formik.setFieldValue("due_date", value);
+    formik.setFieldValue("payment_date", value);
   };
 
   const handleCashedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,23 +100,36 @@ const TransactionFormDialog = () => {
   };
 
   const formik = useFormik({
-    initialValues: transaction,
+    initialValues: {
+      ...transaction,
+      due_date: dayjs(),
+      payment_date: dayjs(),
+    },
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
       const data = {
         ...values,
         due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
-        payment_date: values.payment_date ? dayjs(values.payment_date).format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
-      }
-      submitTransactionForm( serializeToServeActions(data) ).then(() => setIsPending(false));
+        payment_date: values.payment_date
+          ? dayjs(values.payment_date).format("YYYY-MM-DD")
+          : dayjs().format("YYYY-MM-DD"),
+      };
+      submitTransactionForm(serializeToServeActions(data)).then(() => {
+        setIsPending(false);
+        actionShowTransactionDialog(false);
+      });
     },
   });
 
   return (
     <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarSpeedDialog title="Despesa" showDialog={showTransactionDialog} closeAction={actionShowTransactionDialog} />
+        <TopBarSpeedDialog
+          title="Despesa"
+          showDialog={showTransactionDialog}
+          closeAction={actionShowTransactionDialog}
+        />
         <DialogContent>
           {isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
@@ -174,13 +176,26 @@ const TransactionFormDialog = () => {
               <Grid item xs={12} md={3}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]} sx={{ pt: "0" }}>
-                    <DatePicker format="DD/MM/YYYY" onChange={handleDueDateChange} value={formik.values.due_date} name="due_date" label="Vencimento" />
+                    <DatePicker
+                      format="DD/MM/YYYY"
+                      onChange={handleDueDateChange}
+                      value={formik.values.due_date}
+                      name="due_date"
+                      label="Vencimento"
+                    />
                   </DemoContainer>
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12} md={3}>
                 <FormControlLabel
-                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
+                  control={
+                    <Checkbox
+                      name="draft"
+                      value={formik.values.draft}
+                      onChange={formik.handleChange}
+                      checked={formik.values.draft}
+                    />
+                  }
                   label="Marcar como previsto"
                 />
               </Grid>
@@ -215,7 +230,7 @@ const TransactionFormDialog = () => {
                     renderValue={(selected) => (
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
                         {selected.map((value) => (
-                          <Chip key={value} label={tags?.find(tag => tag.id === value)?.name} />
+                          <Chip key={value} label={tags?.find((tag) => tag.id === value)?.name} />
                         ))}
                       </Box>
                     )}
@@ -300,7 +315,6 @@ const TransactionFormDialog = () => {
               )}
             </Grid>
           </Stack>
-
 
           <Stack direction="row" sx={{ py: 2 }}>
             <Grid container spacing={2}>

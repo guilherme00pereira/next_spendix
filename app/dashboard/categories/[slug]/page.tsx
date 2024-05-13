@@ -6,25 +6,15 @@ import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/cat
 import ApexCategoryTransactionsPerPeriodLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 
-async function fetchCategoryData(slug: string) {
-  const res = await getSingleCategory(slug);
-  return res;
-}
-
-async function fetchRelatedTransactions(id: number) {
-  const res = await getTransactionsByCategoriesLastSixMonths(id);
-  return res as TransactionType[];
-}
-
 async function fetchSpendingsCategories() {
   const res = await getCategories();
   return res.filter((category: CategoryType) => category.type === "Despesa");
 } 
 
 const CategoryPage = async ({ params }: { params: { slug: string } }) => {
-  const category = await fetchCategoryData(params.slug);
+  const category = await getSingleCategory(params.slug);
   const title = category.name;
-  const transactions = await fetchRelatedTransactions(category.id);
+  const transactions = await getTransactionsByCategoriesLastSixMonths(category.id) as TransactionType[];
   const spendingsCategories = await fetchSpendingsCategories();
 
   return (

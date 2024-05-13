@@ -9,12 +9,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { addTransaction, editTransaction } from "@/app/lib/supabase/methods/transactions";
+import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import { getAccountPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
+import dayjs from "dayjs";
+import { serializeToServeActions } from "@/app/lib/functions";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -57,36 +59,17 @@ const IncomeFormDialog = () => {
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
-      const obj = {
+      const data = {
         ...values,
-        id: values.id ?? undefined,
-        amount: values["amount"],
-        due_date: values["due_date"],
-        description: values["description"],
-        cashed: values["cashed"],
-        category_id: values["category_id"],
-        payment_date: values["due_date"],
-        payed_amount: values["amount"],
-        payment_method_id: values["payment_method_id"],
-        payment_id: values["payment_id"],
-        draft: values["draft"],
-        tags: values["tags"],
+        due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
+        payment_date: values.payment_date
+          ? dayjs(values.payment_date).format("YYYY-MM-DD")
+          : dayjs().format("YYYY-MM-DD"),
       };
-      if (values.id) {
-        editTransaction(obj).then((res) => {
-          if (res !== null) {
-            actionShowIncomeDialog(false);
-            setIsPending(false);
-          }
-        });
-      } else {
-        addTransaction(obj).then((res) => {
-          if (res !== null) {
-            actionShowIncomeDialog(false);
-            setIsPending(false);
-          }
-        });
-      }
+      submitTransactionForm(serializeToServeActions(data)).then(() => {
+        setIsPending(false);
+        actionShowIncomeDialog(false);
+      });
     },
   });
 

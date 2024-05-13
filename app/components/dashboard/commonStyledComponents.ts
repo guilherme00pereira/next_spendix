@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import { fontSize } from "@mui/system";
 
 const DashboardTopCardContentInfo = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -50,21 +49,29 @@ const ActionButton = styled(Button)(({ theme }) => ({
 
 const PrimaryActionButton = styled(ActionButton)(({ theme }) => ({
   //@ts-ignore
-  backgroundColor: theme.vars.palette.primary.alpha8,
+  backgroundColor: theme.vars.palette.primary.alpha20,
+  [theme.getColorSchemeSelector("light")]: {
+    //@ts-ignore
+    backgroundColor: theme.vars.palette.primary.alpha8,
+  },
   "&:hover": {
-    backgroundColor: theme.vars.palette.primary.dark,
+    backgroundColor: theme.vars.palette.primary.main,
     "& .MuiSvgIcon-root": {
       color: "white !important",
     }
   },
   "& .MuiSvgIcon-root": {
-    color: theme.vars.palette.primary.dark,
+    color: theme.vars.palette.primary.main,
   },
 }));
 
 const InfoActionButton = styled(ActionButton)(({ theme }) => ({
   //@ts-ignore
-  backgroundColor: theme.vars.palette.info.alpha8,
+  backgroundColor: theme.vars.palette.info.alpha20,
+  [theme.getColorSchemeSelector("light")]: {
+    //@ts-ignore
+    backgroundColor: theme.vars.palette.info.alpha8,
+  },
   "&:hover": {
     backgroundColor: theme.vars.palette.info.dark,
     "& .MuiSvgIcon-root": {
@@ -78,7 +85,11 @@ const InfoActionButton = styled(ActionButton)(({ theme }) => ({
 
 const DangerActionButton = styled(ActionButton)(({ theme }) => ({
   //@ts-ignore
-  backgroundColor: theme.vars.palette.error.alpha8,
+  backgroundColor: theme.vars.palette.error.alpha20,
+  [theme.getColorSchemeSelector("light")]: {
+    //@ts-ignore
+    backgroundColor: theme.vars.palette.error.alpha8,
+  },
   "&:hover": {
     backgroundColor: theme.vars.palette.error.dark,
     "& .MuiSvgIcon-root": {

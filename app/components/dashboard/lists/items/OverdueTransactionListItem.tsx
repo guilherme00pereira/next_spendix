@@ -1,19 +1,17 @@
 'use client';
+import React from "react";
 import { amountFormatter } from "@/app/lib/functions";
 import { Typography } from "@mui/material";
 import { Stack, Box } from "@mui/system";
-import React from "react";
 import { TransactionListItem } from "../../commonStyledComponents";
 import { TransactionType } from "@/types/entities";
-import { useTransactionContext } from "@/app/lib/contexts";
-import { useSpeedDialStore } from "@/app/lib/store";
-import dayjs from "dayjs";
 import TransactionActionButtons from "@/app/components/dashboard/elements/TransactionActionButtons";
+import dayjs from "dayjs";
 
 const getOverdueDays = (dueDate: string) => {
   const due = dayjs(dueDate);
   const today = dayjs();
-  const overdue = today.diff(due, "days");
+  const overdue = today.diff(due, "d");
   let color = "info.dark";
   if(overdue > 30) color = "error.main";
   if(overdue > 15 && overdue <= 30) color = "warning.dark";
@@ -25,8 +23,6 @@ const getOverdueDays = (dueDate: string) => {
 };
 
 const OverdueTransactionListItem = ({ transaction }: { transaction: TransactionType }) => {
-  const { setTransaction, actionShowTransactionDialog, setIncome, actionShowIncomeDialog } = useSpeedDialStore();
-  const { actionShowTransactionDetail, setSelectedTransaction } = useTransactionContext();
 
   return (
     <TransactionListItem>

@@ -10,9 +10,7 @@ import { useSpeedDialStore } from "@/app/lib/store";
 import { useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
-import Box from "@mui/material/Box";
-import { FormControl, OutlinedInput } from "@mui/material";
-import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import PaperHeaderFilter from "@/app/components/dashboard/elements/paper-header/PaperHeaderFilter";
 
 const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
@@ -50,19 +48,7 @@ const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   return (
     <PaperContainer>
       <PaperHeader title="Lista de categorias">
-        <Box>
-          <FormControl>
-            <OutlinedInput
-              id="search"
-              size="small"
-              type="search"
-              fullWidth
-              onKeyUp={(e) => searchCategory(e)}
-              endAdornment={<FilterListRoundedIcon color="primary" />}
-            />
-
-          </FormControl>
-        </Box>
+        <PaperHeaderFilter action={searchCategory} />
       </PaperHeader>
       <Stack>
         {filteredCategories.length > 0 &&

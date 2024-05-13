@@ -14,7 +14,6 @@
     "jsx": "preserve",
     "incremental": true,
     "downlevelIteration": true,
-    "allowSyntheticDefaultImports": true,
     "plugins": [
       {
         "name": "next"

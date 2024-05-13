@@ -1,6 +1,6 @@
 import { createClient } from "@/app/lib/supabase/client";
 
-import { TransactionFormData, RecurringFormData } from "@/types/entities";
+import { RecurringFormData } from "@/types/entities";
 import { IDeleteTransactionData } from "@/types/interfaces";
 import dayjs from "dayjs";
 
@@ -32,41 +32,7 @@ const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categor
                   installments: transaction_installments(*), tags(*)`;
 const getDefaultQuery = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
-const getTransactions = async (initial_date: string, final_date: string) => {
-  const { data, error } = await supabase
-    .from("transactions")
-    .select(getDefaultQuery)
-    .eq("draft", false)
-    .gte("due_date", initial_date)
-    .lte("due_date", final_date)
-    .order("due_date", { ascending: true });
-  if (error) {
-    throw error;
-  }
-  return data;
-};
 
-const getPayedTransactions = async (initial_date: string) => {
-  const { data, error } = await supabase.from("transactions").select(getInnerPaymentsQuery).eq("draft", false).gte("payments.date", initial_date);
-  if (error) {
-    throw error;
-  }
-  return data;
-};
-
-const getFutureTransactions = async (initial_date: string, final_date: string) => {
-  const { data, error } = await supabase
-    .from("transactions")
-    .select(getDefaultQuery)
-    .is("payment_id", null)
-    .gte("due_date", initial_date)
-    .lte("due_date", final_date)
-    .order("due_date", { ascending: true });
-  if (error) {
-    throw error;
-  }
-  return data;
-};
 
 const getTransactionsByCategory = async (di: string, df: string, category_id: number) => {
   const { data, error } = await supabase
@@ -173,9 +139,6 @@ const managePaymentMethodUpdateBalance = async (payment_method_id: number, amoun
 };
 
 export {
-  getTransactions,
-  getPayedTransactions,
-  getFutureTransactions,
   getTransactionsByCategory,
   getOverdueTransactions,
   addReccuringTransaction,

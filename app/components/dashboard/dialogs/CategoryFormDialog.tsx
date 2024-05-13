@@ -23,7 +23,6 @@ const validate = yup.object({
 const CategoryFormDialog = () => {
   const queryClient = useQueryClient();
   const { showCategoryDialog, actionShowCategoryDialog, category } = useSpeedDialStore();
-  const [parents, setParents] = useState<ISelectOption[]>([]);
 
   const addMutation = useMutation({
     mutationFn: (values: CategoryFormData) => addCategory(values),
@@ -40,24 +39,6 @@ const CategoryFormDialog = () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
-
-  useEffect(() => {
-    let options: ISelectOption[] = [];
-    queryClient
-      .ensureQueryData({
-        queryKey: ["categories"],
-        queryFn: () => getCategories(),
-      })
-      .then((data) => {
-        const filtered = data?.filter((category: any) => {
-          if (category.parent === null) return category;
-        });
-        filtered?.map((category: any) => {
-          options.push({ value: category.id, label: category.name });
-        });
-        setParents([...options]);
-      });
-  }, []);
 
   const formik = useFormik({
     initialValues: category,
@@ -110,28 +91,7 @@ const CategoryFormDialog = () => {
                   name="name"
                   label="Nome"
                 />
-              </Grid>
-              <Grid xs={12} md={4} item>
-                <TextField
-                  helperText={formik.touched.parent && formik.errors.parent}
-                  error={formik.touched.parent && Boolean(formik.errors.parent)}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.parent}
-                  fullWidth
-                  name="parent"
-                  label="Categoria pai"
-                  select
-                >
-                  <MenuItem value={0}>Nenhuma</MenuItem>
-                  {parents &&
-                    parents.map((option: ISelectOption) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                </TextField>
-              </Grid>
+              </Grid>              
               <Grid xs={12} md={4} item>
                 <TextField
                   helperText={formik.touched.type && formik.errors.type}

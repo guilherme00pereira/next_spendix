@@ -1,5 +1,6 @@
 'use client'
 import React, {useState} from 'react';
+import { getInitColorSchemeScript } from "@mui/material/styles";
 import { PageContext } from '@/app/lib/contexts';
 
 const PageProvider = ({children}: {children: React.ReactNode}) => {
@@ -12,6 +13,7 @@ const PageProvider = ({children}: {children: React.ReactNode}) => {
       actionShowModal: setShowAdd,
       mediaQuery: "md"
     }}>
+      {getInitColorSchemeScript()}
       {children}
     </PageContext.Provider>
   );

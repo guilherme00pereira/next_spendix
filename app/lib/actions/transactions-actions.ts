@@ -1,19 +1,82 @@
 "use server";
 import { createClientServerSide } from "@/app/lib/supabase/server";
-import { revalidatePath } from "next/cache";
-import { TransactionFormData } from "@/types/entities";
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { TransactionFormData, TransactionType } from "@/types/entities";
+
+const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), 
+                  installments: transaction_installments(*), tags(*)`;
+const getDefaultQuery = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*), tags(*)`;
 
 const supabase = createClientServerSide();
 
 export async function submitTransactionForm(data: object): Promise<void> {
   const values = data as TransactionFormData;
   if (values.id) {
-    editTransaction(values);
+    await editTransaction(values);
+    revalidateTransactions();
+    
   } else {
-    addTransaction(values);
+    await addTransaction(values);
+    revalidateTransactions();
   }
+  
+}
+
+export const revalidateTransactions = () => {
+  revalidateTag("get_transactions");
+  revalidateTag("get_payed_transactions");
+  revalidateTag("get_future_transactions");
   revalidatePath("/dashboard/transactions");
 }
+
+export const getTransactions = unstable_cache(
+  async (initial_date: string, final_date: string) => {
+    const { data, error } = await supabase
+      .from("transactions")
+      .select(getDefaultQuery)
+      .eq("draft", false)
+      .gte("due_date", initial_date)
+      .lte("due_date", final_date)
+      .order("due_date", { ascending: true });
+    if (error) {
+      throw error;
+    }
+    return data as TransactionType[];
+  },
+  ["get_transactions"]
+);
+
+export const getPayedTransactions = unstable_cache(
+  async (initial_date: string) => {
+    const { data, error } = await supabase
+      .from("transactions")
+      .select(getInnerPaymentsQuery)
+      .eq("draft", false)
+      .gte("payments.date", initial_date);
+    if (error) {
+      throw error;
+    }
+    return data;
+  },
+  ["get_payed_transactions"]
+);
+
+export const getFutureTransactions = unstable_cache(
+  async (initial_date: string, final_date: string) => {
+    const { data, error } = await supabase
+      .from("transactions")
+      .select(getDefaultQuery)
+      .is("payment_id", null)
+      .gte("due_date", initial_date)
+      .lte("due_date", final_date)
+      .order("due_date", { ascending: true });
+    if (error) {
+      throw error;
+    }
+    return data;
+  },
+  ["get_future_transactions"]
+);
 
 const addTransaction = async ({
   amount,
@@ -30,9 +93,6 @@ const addTransaction = async ({
   cashed,
   tags,
 }: TransactionFormData) => {
-
-  
-
   let pay_id = null;
   if (cashed) {
     pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
@@ -74,7 +134,6 @@ const addTransaction = async ({
   }
 };
 
-
 const editTransaction = async ({
   id,
   amount,
@@ -89,7 +148,6 @@ const editTransaction = async ({
   cashed,
   tags,
 }: TransactionFormData) => {
-
   let pay_id = null;
   if (cashed) {
     pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
@@ -123,8 +181,12 @@ const editTransaction = async ({
   }
 };
 
-const managePaymentRecord = async (payment_date: string, payed_amount: number | null, payment_id: number | null, payment_method_id: number) => {
-  
+const managePaymentRecord = async (
+  payment_date: string,
+  payed_amount: number | null,
+  payment_id: number | null,
+  payment_method_id: number
+) => {
   let pay_id = null;
   if (payment_id) {
     const { data, error } = await supabase

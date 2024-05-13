@@ -1,37 +1,26 @@
-"use client";
 import { TransactionListItem } from "@/app/components/dashboard/commonStyledComponents";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
-import { useAppStore } from "@/app/lib/store";
-import { getTransactions } from "@/app/lib/supabase/methods/transactions";
-import { TransactionType } from "@/types/entities";
-import { useQuery } from "@tanstack/react-query";
+import { getTransactions } from "@/app/lib/actions/transactions-actions";
 import dayjs from "dayjs";
 import React from "react";
 
-const AllTransactions = () => {
-  const date = useAppStore((state) => state.date);
-
-  const { data: transactions } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => getTransactions(
-      dayjs(date).startOf("M").format("YYYY-MM-DD"),
-      dayjs(date).endOf("M").format("YYYY-MM-DD")
-    ).then((data) => {
-      return data as TransactionType[];
-      }),
-  });
+const AllTransactions = async () => {
+  const transactions = await getTransactions(
+    dayjs().startOf("M").format("YYYY-MM-DD"),
+    dayjs().endOf("M").format("YYYY-MM-DD")
+  );
 
   return (
     <PageContainer title="Lista de Transações do mês">
-      
-      {transactions && transactions.map((transaction, index) => (
-        <TransactionListItem key={index}>
+      {transactions &&
+        transactions.map((transaction, index) => (
+          <TransactionListItem key={index}>
             <div>{transaction.due_date}</div>
             <div>{transaction.categories?.name}</div>
             <div>{transaction.description}</div>
             <div>{transaction.amount}</div>
-        </TransactionListItem>
-       ))}
+          </TransactionListItem>
+        ))}
     </PageContainer>
   );
 };

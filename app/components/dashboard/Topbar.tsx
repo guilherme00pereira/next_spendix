@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import { styled, useColorScheme } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
@@ -19,6 +20,7 @@ import SelectMonthYear from "@/app/components/dashboard/calendar/SelectMonthYear
 import { useRouter } from "next/navigation";
 import { Badge } from "@mui/material";
 import { Stack } from "@mui/system";
+import { useSidebarContext } from "@/app/lib/contexts";
 
 const drawerWidth: number = 210;
 
@@ -62,7 +64,8 @@ const ToggleIconBox = styled(Box)(({ theme }) => ({
   padding: 0,
 }));
 
-const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
+const Topbar = () => {
+  const {openSidebar, setOpenSidebar} = useSidebarContext();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { mode, setMode } = useColorScheme();
@@ -80,21 +83,21 @@ const Topbar = ({ open, toggleDrawer }: IDashboardLayoutProps) => {
   };
 
   const handleToggleDrawer = () => {
-    toggleDrawer && toggleDrawer(!open);
+    setOpenSidebar && setOpenSidebar(!openSidebar);
   };
 
   return (
-    <AppBar position="absolute" open={open}>
+    <AppBar position="absolute" open={openSidebar}>
       <Toolbar sx={{ minHeight: "52px !important" }} variant="dense">
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width: "100%"}}>
         <Box>
           <ToggleIconBox>
-            {open || (
+            {openSidebar || (
               <IconButton edge="start" aria-label="open drawer" onClick={handleToggleDrawer}>
                 <MenuIcon />
               </IconButton>
             )}
-            {open && (
+            {openSidebar && (
               <IconButton edge="start" aria-label="close drawer" onClick={handleToggleDrawer}>
                 <MenuOpenIcon />
               </IconButton>

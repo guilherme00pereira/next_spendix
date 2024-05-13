@@ -1,3 +1,4 @@
+'use client'
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
@@ -18,9 +19,9 @@ import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
 import InterestsRoundedIcon from "@mui/icons-material/InterestsRounded";
 import WalletIcon from "@mui/icons-material/Wallet";
-import { IDashboardLayoutProps } from "@/types/interfaces";
 import { neutral } from "@/theme/colors";
 import { Tooltip } from "@mui/material";
+import { useSidebarContext } from "@/app/lib/contexts";
 
 const drawerWidth: number = 210;
 
@@ -66,9 +67,10 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function Sidebar({ open }: IDashboardLayoutProps) {
+export default function Sidebar() {
+  const { openSidebar } = useSidebarContext();
   return (
-    <Drawer variant="permanent" open={open}>
+    <Drawer variant="permanent" open={openSidebar}>
       <Toolbar
         sx={{
           display: "flex",
@@ -78,7 +80,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
         }}
       >
         <Stack direction="row" spacing={1}>
-          {open && (
+          {openSidebar && (
             <>
               <WalletIcon color="primary" />
               <Typography variant="h5" color="primary">
@@ -86,7 +88,7 @@ export default function Sidebar({ open }: IDashboardLayoutProps) {
               </Typography>
             </>
           )}
-          {open || <WalletIcon color="primary" />}
+          {openSidebar || <WalletIcon color="primary" />}
         </Stack>
       </Toolbar>
 

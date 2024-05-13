@@ -1,6 +1,14 @@
-'use client'
+"use client";
 import { createContext, useContext } from "react";
-import { IPageContextData, ITransactionContextData, IEditableObjectContextData, ICateroryContextData, ITransactionsPerDayContextData, IGroupContextData } from "@/types/interfaces";
+import {
+  IPageContextData,
+  ITransactionContextData,
+  IEditableObjectContextData,
+  ICateroryContextData,
+  ITransactionsPerDayContextData,
+  IGroupContextData,
+  ISidebarContextData,
+} from "@/types/interfaces";
 import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
@@ -13,12 +21,28 @@ export const usePageContext = () => {
   return context;
 };
 
+export const SidebarContext = createContext<ISidebarContextData>({} as ISidebarContextData);
+
+export const useSidebarContext = () => {
+  const context = useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebarContext must be used within a SidebarProvider");
+  }
+  return context;
+};
+
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
-export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>({} as ITransactionsPerDayContextData);
+export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>(
+  {} as ITransactionsPerDayContextData
+);
 export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
 export const GroupContext = createContext<IGroupContextData>({} as IGroupContextData);
-export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>({} as IEditableObjectContextData<BankAccountType>);
-export const CreditCardContext = createContext<IEditableObjectContextData<CreditCardType>>({} as IEditableObjectContextData<CreditCardType>);
+export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>(
+  {} as IEditableObjectContextData<BankAccountType>
+);
+export const CreditCardContext = createContext<IEditableObjectContextData<CreditCardType>>(
+  {} as IEditableObjectContextData<CreditCardType>
+);
 export const TagContext = createContext<IEditableObjectContextData<TagType>>({} as IEditableObjectContextData<TagType>);
 
 export const useTransactionContext = () => {
@@ -51,7 +75,7 @@ export const useGroupContext = () => {
     throw new Error("useGroupContext must be used within a GroupContextProvider");
   }
   return context;
-}
+};
 
 export const useBankAccountContext = () => {
   const context = useContext(BankAccountContext);

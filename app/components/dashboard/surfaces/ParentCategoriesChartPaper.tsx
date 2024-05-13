@@ -6,7 +6,7 @@ import { getExpenseCategoriesTransactionsSum } from "@/app/lib/supabase/methods/
 import { ChartBarType } from "@/types/chart-types";
 import dayjs from "dayjs";
 
-const excludedCategories = [43, 63];
+const excludedCategories = [2, 43, 63];
 
 async function fetchChartData() {
   const res = await getExpenseCategoriesTransactionsSum(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"));

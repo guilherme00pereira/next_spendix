@@ -9,7 +9,7 @@ import { TransactionType } from '@/types/entities';
 import dayjs from "dayjs";
 
 const getForecastDays = (date: string) => {
-    const forecast = dayjs(date).get("date") - dayjs().get("date");
+    const forecast = dayjs(date).diff(dayjs(), 'd');
     let color = "info.dark";
     if(forecast > 30) color = "error.main";
     if(forecast > 15 && forecast <= 30) color = "warning.dark";

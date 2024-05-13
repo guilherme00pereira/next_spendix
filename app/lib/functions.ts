@@ -69,7 +69,6 @@ const serializeToServeActions = (data: any) => {
   return JSON.parse(JSON.stringify(data));
 }
 
-
 export { 
   amountFormatter, 
   groupTransactionsByDate,

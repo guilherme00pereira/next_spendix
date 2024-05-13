@@ -2,6 +2,7 @@
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/chart-types";
 import { useColorScheme } from "@mui/material";
+import { chartColors } from "@/theme/colors";
 
 const ApexParentCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
   const { mode } = useColorScheme();
@@ -17,6 +18,18 @@ const ApexParentCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
         },
         xaxis: {
           categories: data.map((item) => item.name),
+          labels: {
+            style: {
+              colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+            },
+          },
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+            },
+          },
         },
         plotOptions: {
           bar: {
@@ -32,14 +45,13 @@ const ApexParentCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
           enabled: true,
           textAnchor: "start",
           style: {
-            colors: mode === "dark" ? ["#BEBFBF"] : ["#333333"],
+            colors: mode === "dark" ? ['white'] : [chartColors.lightThemeLabel],
           },
           formatter: function (val: any) {
             return "R$ " + val.toFixed(2);
           },
           offsetX: 0,
         },
-        //colors: ["#22A0C7"],
         grid: {
           borderColor: mode === "dark" ? "#333333" : "#BEBFBF",
         },

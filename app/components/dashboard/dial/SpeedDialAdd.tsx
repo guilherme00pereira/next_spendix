@@ -5,13 +5,14 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
-import TransactionFormDialog from "@/app/components/dashboard/dialogs/TransactionFormDialog";
 import { useSpeedDialStore } from "@/app/lib/store";
 import dayjs from "dayjs";
-import CategoryFormDialog from "@/app/components/dashboard/dialogs/CategoryFormDialog";
 import { styled } from "@mui/material/styles";
-import RecurringFormDialog from "./dialogs/RecurringFormDialog";
-import IncomeFormDialog from "./dialogs/IncomeFormDialog";
+import CategoryFormDialog from "../dialogs/CategoryFormDialog";
+import IncomeFormDialog from "../dialogs/IncomeFormDialog";
+import RecurringFormDialog from "../dialogs/RecurringFormDialog";
+import TransactionFormDialog from "../dialogs/TransactionFormDialog";
+import { ISpeedDiaDialogsData } from "@/types/interfaces";
 
 
 const TransactionDefaultData = {
@@ -54,7 +55,7 @@ const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
   },
 }));
 
-const SpeedDialAdd = () => {
+const SpeedDialAdd = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) => {
   const {
     setTransaction,
     showTransactionDialog,
@@ -112,10 +113,10 @@ const SpeedDialAdd = () => {
           />
         ))}
       </SpeedDialButton>
-      {showTransactionDialog && <TransactionFormDialog />}
-      {showRecurringDialog && <RecurringFormDialog />}
-      {showCategoryDialog && <CategoryFormDialog />}
-      {showIncomeDialog && <IncomeFormDialog />}
+      { showTransactionDialog && <TransactionFormDialog categories={categories} tags={tags} paymentMethods={paymentMethods} /> }
+      { showRecurringDialog &&  <RecurringFormDialog /> }
+      { showCategoryDialog && <CategoryFormDialog /> }
+      { showIncomeDialog && <IncomeFormDialog /> }
     </>
   );
 };

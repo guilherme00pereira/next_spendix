@@ -6,7 +6,7 @@ import ApexCategoriesPieChart from "@/app/components/dashboard/charts/ApexCatego
 import dayjs from "dayjs";
 import { amountFormatter } from "@/app/lib/functions";
 
-const excludedCategories = [43, 63];
+const excludedCategories = [2, 43, 63];
 
 async function fetchChartData() {
   const res = await getExpenseCategoriesTransactionsSum(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"));

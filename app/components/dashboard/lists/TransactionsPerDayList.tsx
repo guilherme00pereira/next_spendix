@@ -11,8 +11,7 @@ import dayjs from "dayjs";
 import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
 
 const TransactionsPerDayList = async ({ transactions }: { transactions: TransactionType[] }) => {
-  const filtered = transactions.filter((transaction: any) => transaction.categories.id != 43);
-  const mapped = groupTransactionsByDate(filtered as TransactionType[]);
+  const mapped = groupTransactionsByDate(transactions);
 
   const daysOfTheMonth = () => {
     const existingDays = Array.from(mapped.keys());

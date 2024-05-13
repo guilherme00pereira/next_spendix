@@ -6,7 +6,8 @@ import {
     TransactionFormData,
     BankAccountType,
     GroupFormData,
-    GroupType
+    GroupType,
+    TagType
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
 
@@ -48,6 +49,11 @@ export interface IPageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
     mediaQuery: string;
+}
+
+export interface ISidebarContextData {
+    openSidebar: boolean;
+    setOpenSidebar: (action: boolean) => void;
 }
 
 interface IDeletableObjectContextData {
@@ -106,6 +112,12 @@ export interface ISpeedDialStoreData {
     actionShowRecurringDialog: (action: boolean) => void;
     recurring: RecurringFormData;
     setRecurring: (r: RecurringFormData) => void;
+}
+
+export interface ISpeedDiaDialogsData {
+    categories: CategoryType[], 
+    tags: TagType[],
+    paymentMethods: ISelectOption[],
 }
 
 export interface ICategoryListProps {
