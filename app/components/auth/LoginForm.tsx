@@ -2,6 +2,8 @@ import React from "react";
 import { TextField, Button, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { AuthType, IAuthContainerProps } from "./AuthContainer";
+import { loginFormSubmit } from "@/app/lib/actions/auth-actions";
+
 
 const LoginForm = ({ handler }: IAuthContainerProps) => {
   const router = useRouter();
@@ -10,42 +12,34 @@ const LoginForm = ({ handler }: IAuthContainerProps) => {
   const [loading, setLoading] = React.useState(false);
   const [buttonText, setButtonText] = React.useState("Entrar");
 
-  const handleCodeChange = () => {
-    setLoading(true);
-    setButtonText("Aguarde...");
-    let code = (document.querySelector("input[name=code]") as HTMLInputElement).value;
-    if (code === "1861") {
-      //TODO: implement supabase auth and middleware
-      router.push("/dashboard");
-    } else {
-      setError(true);
-      setHelperText("Código inválido");
-    }
-    setLoading(false);
-    setButtonText("Entrar");
-  };
-
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2} sx={{ minHeight: "400px" }}>
-      <TextField
-        label="Código"
-        error={error}
-        helperText={helperText}
-        variant="outlined"
-        name="code"
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleCodeChange();
-          }
-        }}
-      />
-      <Button variant="contained" onClick={handleCodeChange} sx={{ mt: 2 }}>
-        {buttonText}
-      </Button>
-      <Button color="primary" onClick={() => handler(AuthType.REGISTER)} sx={{ mt: 2 }}>
-        Registrar
+    <form action={loginFormSubmit}>
+      <Stack direction="column" justifyContent="center" alignItems="center" spacing={2} sx={{ minHeight: "400px" }}>
+        <TextField
+          label="E-mail"
+          error={error}
+          helperText={helperText}
+          variant="outlined"
+          name="email"
+          autoComplete="email"
+        />
+        <TextField
+          label="Senha"
+          error={error}
+          helperText={helperText}
+          variant="outlined"
+          name="password"
+          type="password"
+          autoComplete="current-password"
+        />
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+          {buttonText}
         </Button>
-    </Stack>
+        <Button color="primary" onClick={() => handler(AuthType.REGISTER)} sx={{ mt: 2 }}>
+          Registrar
+        </Button>
+      </Stack>
+    </form>
   );
 };
 

@@ -19,8 +19,8 @@ const AccountsList = async () => {
   return (
     <PaperContainer>
       <PaperHeader title="Contas" />
-      {accounts && accounts.map((account: BankAccountType) => (
-        <AccountsListItem key={account.id} account={account} />
+      {accounts.length > 0 && accounts.map((account: BankAccountType) => (
+        account ? <AccountsListItem key={account.id} account={account} /> : null
       ))}
     </PaperContainer>
   );
