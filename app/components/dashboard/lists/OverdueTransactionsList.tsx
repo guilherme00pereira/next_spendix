@@ -7,12 +7,8 @@ import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
 import PaperHeaderBadge from "../elements/paper-header/PaperHeaderBadge";
 import { Stack } from "@mui/system";
 
-async function fetchOverdueTransactions() {
-  return await getOverdueTransactions();
-}
-
 const OverdueTransactionsList = async () => {
-  const transactions = await fetchOverdueTransactions();
+  const transactions = await getOverdueTransactions();
 
   return (
     <PaperContainer>

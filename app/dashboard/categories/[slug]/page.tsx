@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
+import CategoryTransactionsTable from "@/app/components/dashboard/tables/CategoryTransactionsTable";
 import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
@@ -21,7 +21,7 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
     <PageContainer title={`Categoria ${title}`}>
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
-          {transactions && TransactionsTable({ transactions: transactions })}
+          {transactions && <CategoryTransactionsTable transactions={transactions} />}
         </Grid>
         <Grid item xs={12} md={6}>
           {transactions.length > 0 && (

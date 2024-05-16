@@ -10,16 +10,18 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
-import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/app/lib/store";
-import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
-import { getAccountPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
 import dayjs from "dayjs";
 import { serializeToServeActions } from "@/app/lib/functions";
+import { ISpeedDiaDialogsData } from "@/types/interfaces";
 
 const validate = yup.object({
-  amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
+  amount: yup
+    .number()
+    .min(1, "Insira apenas valores maiores que 1")
+    .typeError("não é um número válido")
+    .required("Campo obrigatório"),
   category_id: yup.string().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
@@ -28,19 +30,9 @@ const validate = yup.object({
   draft: yup.boolean(),
 });
 
-const IncomeFormDialog = () => {
+const IncomeFormDialog = ({ categories, paymentMethods }: ISpeedDiaDialogsData) => {
   const { showIncomeDialog, actionShowIncomeDialog, income } = useSpeedDialStore();
   const [isPending, setIsPending] = useState<boolean>(false);
-
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getCategories(),
-  });
-
-  const { data: paymentMethods } = useQuery({
-    queryKey: ["pm_accounts"],
-    queryFn: () => getAccountPaymentMethods(),
-  });
 
   const handleDateChange = (date: any) => {
     formik.setFieldValue("due_date", date);
@@ -50,9 +42,7 @@ const IncomeFormDialog = () => {
     formik.setFieldValue("cashed", event.target.checked);
     formik.setFieldValue("payment_date", event.target.checked ? new Date() : null);
     formik.setFieldValue("payed_amount", event.target.checked ? formik.values.amount : null);
-
-  }
-
+  };
 
   const formik = useFormik({
     initialValues: income,
@@ -152,8 +142,8 @@ const IncomeFormDialog = () => {
                 >
                   {paymentMethods &&
                     paymentMethods.map((payment_method: any) => (
-                      <MenuItem key={payment_method.id} value={payment_method.id}>
-                        {payment_method.bank}
+                      <MenuItem key={payment_method.value} value={payment_method.value}>
+                        {payment_method.label}
                       </MenuItem>
                     ))}
                 </TextField>
@@ -177,13 +167,27 @@ const IncomeFormDialog = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <FormControlLabel
-                  control={<Checkbox name="draft" value={formik.values.cashed} onChange={(e) => handleCashedChange(e)} checked={formik.values.cashed} />}
+                  control={
+                    <Checkbox
+                      name="draft"
+                      value={formik.values.cashed}
+                      onChange={(e) => handleCashedChange(e)}
+                      checked={formik.values.cashed}
+                    />
+                  }
                   label="Recebido"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-              <FormControlLabel
-                  control={<Checkbox name="draft" value={formik.values.draft} onChange={formik.handleChange} checked={formik.values.draft} />}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="draft"
+                      value={formik.values.draft}
+                      onChange={formik.handleChange}
+                      checked={formik.values.draft}
+                    />
+                  }
                   label="Marcar como rascunho"
                 />
               </Grid>

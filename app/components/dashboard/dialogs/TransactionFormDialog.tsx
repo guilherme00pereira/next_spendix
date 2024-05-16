@@ -102,7 +102,7 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
   const formik = useFormik({
     initialValues: {
       ...transaction,
-      due_date: dayjs(),
+      due_date: dayjs(transaction.due_date),
       payment_date: dayjs(),
     },
     validationSchema: validate,
