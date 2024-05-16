@@ -2,7 +2,6 @@
 import React from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
-import { ICategoryListProps } from "@/types/interfaces";
 import { CategoryType } from "@/types/entities";
 import { Stack } from "@mui/system";
 import CategoriesListItem from "./items/CategoriesListItem";
@@ -10,7 +9,7 @@ import { useSpeedDialStore } from "@/app/lib/store";
 import { useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
-import PaperHeaderFilter from "@/app/components/dashboard/elements/paper-header/PaperHeaderFilter";
+import CategoriesFilters from "../widgets/filters/CategoriesFilters";
 
 const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
@@ -36,8 +35,7 @@ const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
     });
   };
 
-  const searchCategory = (event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const search = (event.target as HTMLInputElement).value;
+  const searchCategory = (search: string) => {
       if (search === "") {
         setFilteredCategories(categories);
       } else {
@@ -48,7 +46,7 @@ const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   return (
     <PaperContainer>
       <PaperHeader title="Lista de categorias">
-        <PaperHeaderFilter action={searchCategory} />
+        <CategoriesFilters action={searchCategory} />
       </PaperHeader>
       <Stack>
         {filteredCategories.length > 0 &&

@@ -4,7 +4,7 @@ import { amountFormatter } from "@/app/lib/functions";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import TransactionActionButtons from "@/app/components/dashboard/elements/TransactionActionButtons";
+import TransactionActionButtons from "@/app/components/dashboard/widgets/buttons/TransactionActionButtons";
 import { TransactionType } from '@/types/entities';
 import dayjs from "dayjs";
 

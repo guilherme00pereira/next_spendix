@@ -36,8 +36,8 @@ const TransactionsPage = async () => {
       </Grid>
       <Masonry columns={2} spacing={3}>
           <TransactionsPerDayList transactions={transactions as TransactionType[]} />      
+          <ApexCompareDailyTransactionsAndMean />
           <TransactionsForecast />
-        {/* <ApexCompareDailyTransactionsAndMean /> */}      
           <OverdueTransactionsList />
       </Masonry>
     </PageContainer>

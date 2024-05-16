@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { Stack, Box } from "@mui/system";
 import { TransactionListItem } from "../../commonStyledComponents";
 import { TransactionType } from "@/types/entities";
-import TransactionActionButtons from "@/app/components/dashboard/elements/TransactionActionButtons";
+import TransactionActionButtons from "@/app/components/dashboard/widgets/buttons/TransactionActionButtons";
 import dayjs from "dayjs";
 
 const getOverdueDays = (dueDate: string) => {

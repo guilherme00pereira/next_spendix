@@ -10,7 +10,6 @@ const ArrowButton = styled(Button)(({ theme }) => ({
     transform: "translateY(-50%)",
     zIndex: 1,
     backgroundColor: theme.palette.background.paper,
-    borderRadius: "50%",
     "&:hover": {
         backgroundColor: theme.palette.action.hover,
     },

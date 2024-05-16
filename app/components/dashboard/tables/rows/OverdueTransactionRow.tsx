@@ -3,7 +3,7 @@ import { TransactionType } from "@/types/entities";
 import { amountFormatter } from "@/app/lib/functions";
 import { TableRow, TableCell, Typography } from "@mui/material";
 import dayjs from "dayjs";
-import TransactionActionButtons from "@/app/components/dashboard/elements/TransactionActionButtons";
+import TransactionActionButtons from "@/app/components/dashboard/widgets/buttons/TransactionActionButtons";
 
 const getOverdueDays = (dueDate: string) => {
   const due = dayjs(dueDate);

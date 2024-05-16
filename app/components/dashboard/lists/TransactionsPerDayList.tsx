@@ -29,9 +29,7 @@ const TransactionsPerDayList = async ({ transactions }: { transactions: Transact
       </PaperHeader>
       <Stack>
         <TransactionsPerDayProvider>
-          <Stack direction="row" justifyContent="center" alignItems="center">
-            <SelectDayOfMonth days={daysOfTheMonth()} />
-          </Stack>
+          <SelectDayOfMonth days={daysOfTheMonth()} />
           <TransactionsPerDayListItems transactions={mapped} />
           <TransactionsPerDayBalanceListItem />
         </TransactionsPerDayProvider>
