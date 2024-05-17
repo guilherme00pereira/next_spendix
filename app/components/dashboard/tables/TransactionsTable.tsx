@@ -8,8 +8,9 @@ import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { TransactionType } from "@/types/entities";
 import TransactionRow from "@/app/components/dashboard/tables/rows/TransactionRow";
 import TransactionsFilters from "../widgets/filters/TransactionsFilters";
+import { ITransactionTableProps } from "@/types/interfaces";
 
-const TransactionsTable = ({ transactions }: { transactions: TransactionType[] }) => {
+const TransactionsTable = ({ transactions, categories }: ITransactionTableProps) => {
   const [filteredTransactions, setFilteredTransactions] = React.useState<TransactionType[]>(transactions);
 
   const searchTransaction = (search: string) => {

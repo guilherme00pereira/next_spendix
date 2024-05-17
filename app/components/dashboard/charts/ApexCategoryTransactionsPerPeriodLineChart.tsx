@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack, useColorScheme } from "@mui/material";
+import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
@@ -9,6 +9,8 @@ import { CategoryType, TransactionType } from "@/types/entities";
 import { useRouter } from "next/navigation";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
+import { useColorScheme } from "@mui/material";
+import { chartColors } from "@/theme/colors";
 
 const CategoryTransactionsPerPeriodLineChart = ({
   transactions,
@@ -79,9 +81,17 @@ const CategoryTransactionsPerPeriodLineChart = ({
           },
           xaxis: {
             categories: data.map((item) => item.name),
+            labels: {
+              style: {
+                colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+              },
+            },
           },
           yaxis: {
             labels: {
+              style: {
+                colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+              },
               formatter: function (val: any) {
                 return val;
               },
@@ -101,7 +111,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
             enabled: true,
             textAnchor: "middle",
             style: {
-              colors: mode === "dark" ? ["#BEBFBF"] : ["#333333"],
+              colors: mode === "dark" ? ['white'] : [chartColors.lightThemeLabel],
             },
             formatter: function (val: any) {
               return "R$ " + val.toFixed(2);

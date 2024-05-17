@@ -1,9 +1,12 @@
 'use client'
 import Chart from "react-apexcharts";
 import { ChartPieType } from "@/types/chart-types";
+import { useColorScheme } from "@mui/material";
+import { chartColors } from "@/theme/colors";
 
 const ApexCategoriesPieChart = ({series, labels}: ChartPieType) => {
-  console.log(series, labels);
+  const { mode } = useColorScheme();
+  
   return (    
       <Chart
         options={{
@@ -14,6 +17,11 @@ const ApexCategoriesPieChart = ({series, labels}: ChartPieType) => {
             },
           },
           labels: labels,
+          legend: {
+            labels: {
+              colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+            },
+          },
         }} 
         series={series}
         type="donut"

@@ -45,6 +45,11 @@ export interface ITransactionRowDataProps {
     open: boolean,
 }
 
+export interface ITransactionTableProps {
+    transactions: TransactionType[];
+    categories: CategoryType[];
+}
+
 export interface IPageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
@@ -89,8 +94,6 @@ export interface IGroupContextData extends IDeletableObjectContextData {
 }
 
 export interface IAppPersistData {
-    date: string;
-    setDate: (d: string) => void;
     openSidebar: boolean;
     setOpenSidebar: (action: boolean) => void;
 }

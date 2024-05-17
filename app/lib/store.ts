@@ -7,8 +7,6 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export const useAppStore = create<IAppPersistData>()(
     persist((set) => (
         {
-          date: dayjs().format("YYYYMM"),
-          setDate: (d) => set((state) => ({...state, date: d})),
           openSidebar: false,
           setOpenSidebar: (action) => set((state) => ({...state, openSidebar: action})),
         }),
