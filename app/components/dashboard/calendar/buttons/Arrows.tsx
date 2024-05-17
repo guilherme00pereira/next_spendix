@@ -1,19 +1,22 @@
-import {useContext, ReactNode} from "react";
+import { useContext, ReactNode } from "react";
 import { styled } from "@mui/material/styles";
+import type {} from "@mui/material/themeCssVarsAugmentation";
 import Button from "@mui/material/Button";
 import { VisibilityContext } from "react-horizontal-scrolling-menu";
-import KeyboardDoubleArrowLeftRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowLeftRounded';
-import KeyboardDoubleArrowRightRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowRightRounded';
+import KeyboardDoubleArrowLeftRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftRounded";
+import KeyboardDoubleArrowRightRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowRightRounded";
 
 const ArrowButton = styled(Button)(({ theme }) => ({
-    top: "50%",
-    transform: "translateY(-50%)",
-    zIndex: 1,
-    backgroundColor: theme.palette.background.paper,
-    "&:hover": {
-        backgroundColor: theme.palette.action.hover,
-    },
-    }));
+  top: "50%",
+  transform: "translateY(-50%)",
+  zIndex: 1,
+  backgroundColor: theme.vars.palette.background.paper,
+  "&:hover": {
+    backgroundColor: theme.vars.palette.action.hover,
+  },
+  minWidth: "32px",
+  padding: "0 8px",
+}));
 
 export function LeftArrow() {
   const visibility = useContext(VisibilityContext);
@@ -39,7 +42,7 @@ export function RightArrow() {
 
 function Arrow({ children, disabled, action }: { children: ReactNode; disabled: boolean; action: VoidFunction }) {
   return (
-    <ArrowButton onClick={action} disabled={disabled}>
+    <ArrowButton onClick={action} sx={{ display: disabled ? "none" : "block" }}>
       {children}
     </ArrowButton>
   );

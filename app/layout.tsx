@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import ThemeRegistry from "@/app/components/theme-registry/ThemeRegistry";
 import "dayjs/locale/pt-br";
+import "./global.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
