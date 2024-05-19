@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack } from "@mui/material";
+import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack, Button } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
@@ -11,6 +11,9 @@ import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import { useColorScheme } from "@mui/material";
 import { chartColors } from "@/theme/colors";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+
+dayjs.extend(weekOfYear);
 
 const CategoryTransactionsPerPeriodLineChart = ({
   transactions,
@@ -22,6 +25,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
   title: string;
 }) => {
   const [data, setData] = useState<ChartBarType[]>([]);
+  const [groupByMonth, setGroupByMonth] = useState<boolean>(true);
   const router = useRouter();
   const { mode } = useColorScheme();
 
@@ -32,23 +36,30 @@ const CategoryTransactionsPerPeriodLineChart = ({
 
   useEffect(() => {
     const data = transactions.reduce((acc, transaction) => {
-      const month = dayjs(transaction.due_date).format("MMM");
-      const index = acc.findIndex((item: any) => item.name === month);
+      const period = groupByMonth
+        ? dayjs(transaction.due_date).format("MMM")
+        : dayjs(transaction.due_date).week().toString();
+      const index = acc.findIndex((item: any) => item.name === period);
       if (index === -1) {
-        acc.push({ name: month, value: transaction.amount, label: "R$" + transaction.amount });
+        acc.push({ name: period, value: transaction.amount, label: "R$" + transaction.amount });
       } else {
         acc[index].value += transaction.amount;
         acc[index].label = "R$" + acc[index].value.toFixed(2);
       }
       return acc;
     }, [] as ChartBarType[]);
-    setData(data.reverse());
-    //TODO: set projection for actual month 
-  }, []);
+    const periods = groupByMonth ? data.reverse() : data.reverse().slice(10);
+    setData(periods);
+    //TODO: set projection for actual month
+  }, [groupByMonth, transactions]);
 
   return (
     <PaperContainer>
-      <PaperHeader title={`Evolução mensal em '${title}'`} />
+      <PaperHeader title={`Evolução mensal em '${title}'`}>
+        <Button variant="contained" size="small" color="primary" onClick={() => setGroupByMonth(!groupByMonth)}>
+          Weeks
+        </Button>
+      </PaperHeader>
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
         <FormControl sx={{ width: "60%" }} size="small">
           <InputLabel>Trocar categoria </InputLabel>
@@ -111,7 +122,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
             enabled: true,
             textAnchor: "middle",
             style: {
-              colors: mode === "dark" ? ['white'] : [chartColors.lightThemeLabel],
+              colors: mode === "dark" ? ["white"] : [chartColors.lightThemeLabel],
             },
             formatter: function (val: any) {
               return "R$ " + val.toFixed(2);

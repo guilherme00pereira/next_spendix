@@ -4,13 +4,13 @@ import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { ICategoryListItemProps } from "@/types/interfaces";
 import Chip from "@mui/material/Chip";
 import SubdirectoryArrowRightOutlinedIcon from "@mui/icons-material/SubdirectoryArrowRightOutlined";
-import { InfoActionButton, DangerActionButton } from "@/app/components/dashboard/commonStyledComponents";
+import { InfoActionButton, DangerActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -73,6 +73,9 @@ const CategoriesListItem = ({
       </Box>
       <Box>
         <Stack direction="row" spacing={1}>
+        <PrimaryActionButton size="small" variant="text" onClick={() => console.log(`/dashboard/categories/${category.slug}`)}>
+          <VisibilityOutlinedIcon />
+        </PrimaryActionButton>
             <InfoActionButton
               size="small"
               variant="text"

@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
-import { Grid, Stack, MenuItem, TextField, Input } from "@mui/material";
+"use client";
+import { Grid, Stack, MenuItem, TextField, Input, DialogTitle } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { CategoryFormData } from "@/types/entities";
 import { CategoryTypeDict } from "@/app/lib/data";
-import { addCategory, editCategory, getCategories } from "@/app/lib/supabase/methods/categories";
-import LinearProgress from "@mui/material/LinearProgress";
 import { useSpeedDialStore } from "@/app/lib/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ISelectOption } from "@/types/interfaces";
-import { convertNameToSlug } from "@/app/lib/functions";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
+import { submitCategoryForm } from "@/app/lib/actions/categories-actions";
+import DialogActionButtons from "./DialogActionButtons";
 
 const validate = yup.object({
   name: yup.string().required("Campo obrigatório"),
@@ -21,62 +18,28 @@ const validate = yup.object({
 });
 
 const CategoryFormDialog = () => {
-  const queryClient = useQueryClient();
   const { showCategoryDialog, actionShowCategoryDialog, category } = useSpeedDialStore();
-
-  const addMutation = useMutation({
-    mutationFn: (values: CategoryFormData) => addCategory(values),
-    onSuccess: () => {
-      actionShowCategoryDialog(!showCategoryDialog);
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-  });
-
-  const editMutation = useMutation({
-    mutationFn: (values: CategoryFormData) => editCategory(values),
-    onSuccess: () => {
-      actionShowCategoryDialog(!showCategoryDialog);
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-  });
 
   const formik = useFormik({
     initialValues: category,
     validationSchema: validate,
     onSubmit: (values) => {
-      if (values.id) {
-        editMutation.mutate({ 
-          id: values.id, 
-          name: values.name, 
-          slug: convertNameToSlug(values.name), 
-          parent: values.parent === 0 ? null : values.parent, 
-          type: values.type, 
-          color: null, 
-          icon: null 
-        });
-      } else {
-        addMutation.mutate({ 
-          name: values.name,
-          slug: convertNameToSlug(values.name), 
-          parent: values.parent === 0 ? null : values.parent, 
-          type: values.type, 
-          color: null, 
-          icon: null 
-        });
-      }
+      submitCategoryForm(values).then(() => {
+        actionShowCategoryDialog(false);
+      });
     },
   });
 
   return (
-    <Dialog open={showCategoryDialog} fullWidth maxWidth="md" onClose={() => actionShowCategoryDialog(!showCategoryDialog)}>
+    <Dialog
+      open={showCategoryDialog}
+      fullWidth
+      maxWidth="md"
+      onClose={() => actionShowCategoryDialog(!showCategoryDialog)}
+    >
+      <DialogTitle>{category.id ? "Editar" : "Adicionar"} categoria</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
-        <TopBarSpeedDialog title="Nova categoria" showDialog={showCategoryDialog} closeAction={actionShowCategoryDialog} />
-        <DialogContent>
-          {addMutation.isPending && (
-            <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
-              <LinearProgress />
-            </Stack>
-          )}
+        <DialogContent dividers>
           <Stack direction="row">
             <Grid container spacing={3}>
               <Grid xs={12} md={4} item>
@@ -91,7 +54,7 @@ const CategoryFormDialog = () => {
                   name="name"
                   label="Nome"
                 />
-              </Grid>              
+              </Grid>
               <Grid xs={12} md={4} item>
                 <TextField
                   helperText={formik.touched.type && formik.errors.type}
@@ -114,6 +77,7 @@ const CategoryFormDialog = () => {
             </Grid>
           </Stack>
         </DialogContent>
+        <DialogActionButtons showDialog={showCategoryDialog} closeAction={actionShowCategoryDialog} />
       </form>
     </Dialog>
   );

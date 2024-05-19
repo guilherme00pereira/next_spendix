@@ -33,7 +33,7 @@ const CategoriesFilters = ({ action }: { action: (search: string) => void }) => 
             }
           />
         </FormControl>
-        <IconButton onClick={() => setShowInput(true)} sx={{ display: showInput ? "none" : "block" }}>
+        <IconButton onClick={() => setShowInput(true)} sx={{ display: showInput ? "none" : "block", padding: "6px 14px 0 0" }}>
           <FilterListRoundedIcon color="primary" />
         </IconButton>
       </Stack>

@@ -45,16 +45,19 @@ const IncomeFormDialog = ({ categories, paymentMethods }: ISpeedDiaDialogsData) 
   };
 
   const formik = useFormik({
-    initialValues: income,
+    initialValues: {
+      ...income,
+      due_date: dayjs(income.due_date),
+      payment_date: dayjs(),
+    },
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
       const data = {
         ...values,
         due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
-        payment_date: values.payment_date
-          ? dayjs(values.payment_date).format("YYYY-MM-DD")
-          : dayjs().format("YYYY-MM-DD"),
+        payment_date: dayjs(values.due_date).format("YYYY-MM-DD"),
+        payed_amount: values.amount,
       };
       submitTransactionForm(serializeToServeActions(data)).then(() => {
         setIsPending(false);

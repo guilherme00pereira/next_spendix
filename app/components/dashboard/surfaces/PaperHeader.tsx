@@ -21,6 +21,7 @@ const Title = styled("div")(({theme}) => ({
   margin: "0 24px 0 18px !important",
   fontSize: "1em",
   fontWeight: "bold",
+  height: "38px",
   paddingBlockEnd: "8px !important",
   "&::before": {
     content: "''",

@@ -40,7 +40,6 @@ const TransactionActionButtons = ({transaction}: {transaction: TransactionType})
   };
 
   const handleShowDetail = (t: TransactionType) => {
-    console.log("handleShowDetail", t);
     setSelectedTransaction(t);
     actionShowTransactionDetail(true);
   };

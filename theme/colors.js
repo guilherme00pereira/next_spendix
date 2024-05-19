@@ -43,9 +43,9 @@ export const lightBase = {
 
 export const darkBase = {
   background: {
-    default: '#24272d',//'#252729',
-    paper: '#212325',//'#1A1C1E',
-    sidebar: '#212325',
+    default: '#262C3C',//'#24272d',
+    paper: '#1C212C',//'#212325',
+    sidebar: '#1C212C',
   },
   divider: '#2E3034',
   text: {
