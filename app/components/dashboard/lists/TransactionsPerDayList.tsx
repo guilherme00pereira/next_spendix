@@ -8,7 +8,7 @@ import TransactionsPerDayListItems from "./items/TransactionsPerDayListItems";
 import { TransactionType } from "@/types/entities";
 import { groupTransactionsByDate } from "@/app/lib/functions";
 import dayjs from "dayjs";
-import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
+import PaperHeaderLink from "../widgets/paper-header/PaperHeaderLink";
 
 const TransactionsPerDayList = async ({ transactions }: { transactions: TransactionType[] }) => {
   const mapped = groupTransactionsByDate(transactions);

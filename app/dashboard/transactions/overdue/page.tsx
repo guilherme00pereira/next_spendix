@@ -6,7 +6,7 @@ import { getOverdueTransactions } from "@/app/lib/supabase/methods/transactions"
 import { TransactionType } from "@/types/entities";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
-import PaperHeaderBadge from "@/app/components/dashboard/elements/paper-header/PaperHeaderBadge";
+import PaperHeaderBadge from "@/app/components/dashboard/widgets/paper-header/PaperHeaderBadge";
 import Stack from "@mui/material/Stack";
 
 const OverdueTransactions = async () => {

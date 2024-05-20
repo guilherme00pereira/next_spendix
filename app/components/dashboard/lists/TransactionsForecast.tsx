@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { getFutureTransactions } from "@/app/lib/actions/transactions-actions";
 import { TransactionType } from "@/types/entities";
 import ForecastedTransactionListItem from "./items/ForecastedTransactionListItem";
-import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
+import PaperHeaderLink from "../widgets/paper-header/PaperHeaderLink";
 
 async function fetchFutureTransactions() {
   const tomorrow = dayjs().format("YYYY-MM-DD");

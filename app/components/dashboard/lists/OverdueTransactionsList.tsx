@@ -3,8 +3,8 @@ import { PaperContainer } from "@/app/components/dashboard/commonStyledComponent
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { getOverdueTransactions } from "@/app/lib/supabase/methods/transactions";
 import OverdueTransactionsListItem from "./items/OverdueTransactionListItem";
-import PaperHeaderLink from "../elements/paper-header/PaperHeaderLink";
-import PaperHeaderBadge from "../elements/paper-header/PaperHeaderBadge";
+import PaperHeaderLink from "../widgets/paper-header/PaperHeaderLink";
+import PaperHeaderBadge from "../widgets/paper-header/PaperHeaderBadge";
 import { Stack } from "@mui/system";
 
 const OverdueTransactionsList = async () => {

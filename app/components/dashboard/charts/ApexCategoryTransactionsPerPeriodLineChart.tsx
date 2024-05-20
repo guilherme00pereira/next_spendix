@@ -38,7 +38,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
     const data = transactions.reduce((acc, transaction) => {
       const period = groupByMonth
         ? dayjs(transaction.due_date).format("MMM")
-        : dayjs(transaction.due_date).week().toString();
+        : "semana " + dayjs(transaction.due_date).week().toString();
       const index = acc.findIndex((item: any) => item.name === period);
       if (index === -1) {
         acc.push({ name: period, value: transaction.amount, label: "R$" + transaction.amount });
@@ -57,7 +57,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
     <PaperContainer>
       <PaperHeader title={`Evolução mensal em '${title}'`}>
         <Button variant="contained" size="small" color="primary" onClick={() => setGroupByMonth(!groupByMonth)}>
-          Weeks
+          Agrupar por Semana
         </Button>
       </PaperHeader>
       <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
@@ -96,6 +96,8 @@ const CategoryTransactionsPerPeriodLineChart = ({
               style: {
                 colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
               },
+              rotate: -45,
+              rotateAlways: true,
             },
           },
           yaxis: {

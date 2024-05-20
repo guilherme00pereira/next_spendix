@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
@@ -50,6 +51,8 @@ const CategoriesListItem = ({
   handleConfirmDelete,
   isSubCategory,
 }: ICategoryListItemProps) => {
+  const router = useRouter();
+
   return (
     <ListItem direction="row" justifyContent="space-between">
       {isSubCategory && (
@@ -73,7 +76,7 @@ const CategoriesListItem = ({
       </Box>
       <Box>
         <Stack direction="row" spacing={1}>
-        <PrimaryActionButton size="small" variant="text" onClick={() => console.log(`/dashboard/categories/${category.slug}`)}>
+        <PrimaryActionButton size="small" variant="text" onClick={() => router.push(`/dashboard/categories/${category.slug}`)}>
           <VisibilityOutlinedIcon />
         </PrimaryActionButton>
             <InfoActionButton
