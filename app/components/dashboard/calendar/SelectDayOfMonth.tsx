@@ -1,12 +1,11 @@
 "use client";
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext, useCallback } from "react";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import dayjs from "dayjs";
 import { useTransactionsPerDayContext } from "@/app/lib/contexts";
-import { ScrollMenu, VisibilityContext, getItemsPos } from "react-horizontal-scrolling-menu";
+import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./buttons/Arrows";
-import { DragManager } from "@/app/lib/drag-manager";
 import "react-horizontal-scrolling-menu/dist/styles.css";
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
@@ -42,8 +41,6 @@ const Day = styled("div")(({ theme }) => ({
 const SelectDayOfMonth = ({ days }: { days: string[] }) => {
   const { setSelectedDay } = useTransactionsPerDayContext();
   const today = dayjs().format("YYYY-MM-DD");
-  const dragState = useRef(new DragManager());
-  const v = useContext(VisibilityContext)
 
   const checkIfToday = (day: string) => {
     return day === today ? "today" : "";
@@ -59,19 +56,19 @@ const SelectDayOfMonth = ({ days }: { days: string[] }) => {
       event.currentTarget.classList.add("selected");
     };
 
-    useEffect(() => {
+    const scrollToEnd = useCallback(({scrollContainer}: scrollVisibilityApiType) => {
+      if(scrollContainer.current)
+        scrollContainer.current.scrollLeft = scrollContainer.current.scrollWidth;
+    }, []);
       
-    }, [])
 
   return (
     <div className="example">
-      <div onMouseLeave={dragState.current.dragStop}>
+      <div>
         <ScrollMenu
           LeftArrow={LeftArrow}
           RightArrow={RightArrow}
-          onInit={({ getItemById, scrollToItem }: scrollVisibilityApiType) => {
-            scrollToItem(getItemById(today), "smooth", "center");
-          }}
+          onInit={scrollToEnd}
         >
           {days.map((day) => (
             <Day

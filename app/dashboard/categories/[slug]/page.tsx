@@ -5,6 +5,7 @@ import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
 import ApexCategoryTransactionsPerPeriodLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
+import { Stack } from "@mui/system";
 
 async function fetchSpendingsCategories() {
   const res = await getCategories();
@@ -26,7 +27,6 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
         <Grid item xs={12} md={6}>
           {transactions.length > 0 && (
             <ApexCategoryTransactionsPerPeriodLineChart
-              title={title}
               transactions={transactions}
               categories={spendingsCategories}
             />

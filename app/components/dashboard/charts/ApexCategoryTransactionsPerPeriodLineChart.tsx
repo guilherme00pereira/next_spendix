@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack, Button } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chart from "react-apexcharts";
@@ -18,13 +18,10 @@ dayjs.extend(weekOfYear);
 const CategoryTransactionsPerPeriodLineChart = ({
   transactions,
   categories,
-  title,
 }: {
   transactions: TransactionType[];
   categories: CategoryType[];
-  title: string;
 }) => {
-  const [data, setData] = useState<ChartBarType[]>([]);
   const [groupByMonth, setGroupByMonth] = useState<boolean>(true);
   const router = useRouter();
   const { mode } = useColorScheme();
@@ -34,7 +31,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
     router.push(`/dashboard/categories/${categoryId}`);
   };
 
-  useEffect(() => {
+  const data = useMemo(() => {
     const data = transactions.reduce((acc, transaction) => {
       const period = groupByMonth
         ? dayjs(transaction.due_date).format("MMM")
@@ -49,13 +46,12 @@ const CategoryTransactionsPerPeriodLineChart = ({
       return acc;
     }, [] as ChartBarType[]);
     const periods = groupByMonth ? data.reverse() : data.reverse().slice(10);
-    setData(periods);
-    //TODO: set projection for actual month
+    return periods;
   }, [groupByMonth, transactions]);
 
   return (
     <PaperContainer>
-      <PaperHeader title={`Evolução mensal em '${title}'`}>
+      <PaperHeader title="Evolução mensal">
         <Button variant="contained" size="small" color="primary" onClick={() => setGroupByMonth(!groupByMonth)}>
           Agrupar por Semana
         </Button>

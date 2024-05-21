@@ -78,8 +78,6 @@ export interface ITransactionContextData extends IDeletableObjectContextData{
 export interface ITransactionsPerDayContextData {
     selectedDay: string;
     setSelectedDay: Dispatch<SetStateAction<string>>;
-    dailyTransactions: TransactionType[];
-    setDailyTransactions: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
 export interface ICateroryContextData extends IDeletableObjectContextData{}

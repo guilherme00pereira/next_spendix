@@ -3,7 +3,6 @@ import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
 import SelectDayOfMonth from "@/app/components/dashboard/calendar/SelectDayOfMonth";
 import TransactionsPerDayProvider from "@/app/lib/providers/TransactionsPerDayProvider";
-import TransactionsPerDayBalanceListItem from "./items/TransactionsPerDayBalanceListItem";
 import TransactionsPerDayListItems from "./items/TransactionsPerDayListItems";
 import { TransactionType } from "@/types/entities";
 import { groupTransactionsByDate } from "@/app/lib/functions";
@@ -31,8 +30,7 @@ const TransactionsPerDayList = async ({ transactions }: { transactions: Transact
         <TransactionsPerDayProvider>
           <SelectDayOfMonth days={daysOfTheMonth()} />
           <TransactionsPerDayListItems transactions={mapped} />
-          <TransactionsPerDayBalanceListItem />
-        </TransactionsPerDayProvider>
+      </TransactionsPerDayProvider>
       </Stack>
     </PaperContainer>
   );
