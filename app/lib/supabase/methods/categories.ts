@@ -8,7 +8,7 @@ const supabase = createClient();
 const getCategories = unstable_cache(async () => {
   const { data, error } = await supabase
     .from("categories")
-    .select("*")
+    .select("*, groups: groups(*)")
     .order("type", { ascending: true })
     .order("name", { ascending: true });
   if (error) {

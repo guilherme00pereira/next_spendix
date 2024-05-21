@@ -12,20 +12,6 @@ export const getGroups = unstable_cache(async () => {
   return data;
 }, ["get_groups"]);
 
-export const getGroupCategories = unstable_cache(
-  async (groupId: number) => {
-    const { data, error } = await supabase
-      .from("group_categories")
-      .select("categories(*)")
-      .match({ group_id: groupId });
-    if (error) {
-      throw error;
-    }
-    return data;
-  },
-  ["get_group_categories"]
-);
-
 export const addGroup = async ({ name }: GroupType) => {
   const { data, error } = await supabase.from("groups").insert({ name });
   if (error) {

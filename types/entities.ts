@@ -8,6 +8,7 @@ export type CategoryType = {
     type: "Receita" | "Despesa" | "Transacao";
     color: string | null;
     icon: string | null;
+    groups: GroupType[] | null;
 }
 
 export type PaymentType = {

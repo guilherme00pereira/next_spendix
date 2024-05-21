@@ -3,7 +3,11 @@
 #### Supabase
 
 - Implementar autenticação com Google
-- chamadas à api via server side
+
+##### Geral
+- ver possibilidade de usar o mesmo componente para botões de ver, editar e excluir
+- modal para icones
+- i18n
 
 #### Home
 
@@ -12,11 +16,10 @@
 - box do cartão
 
 #### Categorias
-- grafico por periodo ser mensal ou semanal
-- campo metas
+- campo metas 
 
 #### Grupos
-- função vincular categoria a grupo
+- função vincular categorias a grupo
 
 ##### Dialogs
 - dialog transaction edit trazer as tags
@@ -28,9 +31,6 @@
     - data vencimento com opções hoje, ontem e calendario
     - meio de pagamento persist ultimo
 
-##### Geral
-- ver possibilidade de usar o mesmo componente para botões de ver, editar e excluir
-
 ##### Charts
-- tema dark e light
 - cores das barras
+- labels clicáveis

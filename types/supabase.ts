@@ -16,6 +16,7 @@ export type Database = {
           color: string | null
           created_at: string
           id: number
+          user_id: string | null
         }
         Insert: {
           balance?: number
@@ -23,6 +24,7 @@ export type Database = {
           color?: string | null
           created_at?: string
           id?: number
+          user_id?: string | null
         }
         Update: {
           balance?: number
@@ -30,8 +32,17 @@ export type Database = {
           color?: string | null
           created_at?: string
           id?: number
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "accounts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       categories: {
         Row: {

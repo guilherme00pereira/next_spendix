@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -15,7 +15,6 @@ import { PaperContainer } from "@/app/components/dashboard/commonStyledComponent
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
 import { useGroupContext } from "@/app/lib/contexts";
-import { getGroupCategories } from "@/app/lib/actions/group-actions";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import AddIcon from "@mui/icons-material/Add";
 import { CategoryType } from "@/types/entities";
@@ -25,13 +24,15 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
   const [linkedCategories, setLinkedCategories] = useState<CategoryType[]>([]);
 
-  // useEffect(() => {
-  //   if (selectedGroup.id) {
-  //     getGroupCategories(selectedGroup.id).then((data) => {
-  //       console.log(data);
-  //     });
-  //   }
-  // }, [selectedGroup]);
+  const filteredCategories = useMemo(() => {
+    return categories.filter((category) => !category.groups?.some((group) => group.id === selectedGroup.id));
+  }, [selectedGroup, categories]);
+
+  const existingCategories = useMemo(() => {
+    if (selectedGroup.id) {
+      return categories.filter((category) => category.groups?.some((group) => group.id === selectedGroup.id));
+    }
+  }, [selectedGroup, categories]);
 
   const handleChange = (event: SelectChangeEvent<typeof checkedCategories>) => {
     const {
@@ -42,8 +43,8 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
 
   const handleLinkCategories = () => {
     const cs = categories.filter((category) => checkedCategories.includes(category.name));
-    console.log(cs);
     setLinkedCategories(cs);
+    setCheckedCategories([]);
   };
 
   return (
@@ -71,7 +72,7 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
                   },
                 }}
               >
-                {categories.map((category) => (
+                {filteredCategories.map((category) => (
                   <MenuItem key={category.id} value={category.name}>
                     <Checkbox checked={checkedCategories.indexOf(category.name) > -1} />
                     <ListItemText primary={category.name} />
@@ -86,6 +87,9 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
           <Stack direction="column" justifyContent="center">
             <List>
               {linkedCategories.map((category) => (
+                <ListItem key={category.id}>{category.name}</ListItem>
+              ))}
+              {existingCategories?.map((category: CategoryType) => (
                 <ListItem key={category.id}>{category.name}</ListItem>
               ))}
             </List>

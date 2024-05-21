@@ -1,6 +1,6 @@
 {
   "name": "next_spendix",
-  "version": "0.17.18",
+  "version": "0.17.19",
   "private": true,
   "scripts": {
     "dev": "next dev",
