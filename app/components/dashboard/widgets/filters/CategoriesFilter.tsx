@@ -3,22 +3,23 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import { FormControl, IconButton, OutlinedInput } from "@mui/material";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
-import SelectMonthYear from "../../calendar/SelectMonthYear";
+import FilterListOffRoundedIcon from '@mui/icons-material/FilterListOffRounded';
 
-const TransactionsFilters = ({ action }: { action: (search: string) => void }) => {
+const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
+    const [showInput, setShowInput] = React.useState(false);
   
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       action((e.target as HTMLInputElement).value);
     };
   
     const handleResetSearch = () => {
+      setShowInput(false);
       action("");
     };
   
     return (
       <Stack direction="row">
-        <SelectMonthYear />
-        <FormControl>
+        <FormControl sx={{ display: showInput ? "block" : "none" }}>
           <OutlinedInput
             id="search"
             size="small"
@@ -27,13 +28,16 @@ const TransactionsFilters = ({ action }: { action: (search: string) => void }) =
             onChange={(e) => handleChange(e)}
             endAdornment={
               <IconButton onClick={handleResetSearch}>
-                <FilterListRoundedIcon color="primary" fontSize="small" />
+                <FilterListOffRoundedIcon color="action" fontSize="small" />
               </IconButton>
             }
           />
         </FormControl>
+        <IconButton onClick={() => setShowInput(true)} sx={{ display: showInput ? "none" : "block", padding: "6px 14px 0 0" }}>
+          <FilterListRoundedIcon color="primary" />
+        </IconButton>
       </Stack>
     );
   };
 
-export default TransactionsFilters;
+export default CategoriesFilter;

@@ -12,6 +12,7 @@ import PaperHeader from "../surfaces/PaperHeader";
 import { useColorScheme } from "@mui/material";
 import { chartColors } from "@/theme/colors";
 import weekOfYear from "dayjs/plugin/weekOfYear";
+import { useCategoryDetailContext } from "@/app/lib/contexts";
 
 dayjs.extend(weekOfYear);
 
@@ -22,7 +23,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
   transactions: TransactionType[];
   categories: CategoryType[];
 }) => {
-  const [groupByMonth, setGroupByMonth] = useState<boolean>(true);
+  const { groupByMonth, setGroupByMonth } = useCategoryDetailContext();
   const router = useRouter();
   const { mode } = useColorScheme();
 

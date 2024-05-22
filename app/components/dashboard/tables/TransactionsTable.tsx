@@ -7,7 +7,7 @@ import { PaperContainer } from "@/app/components/dashboard/commonStyledComponent
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { TransactionType } from "@/types/entities";
 import TransactionRow from "@/app/components/dashboard/tables/rows/TransactionRow";
-import TransactionsFilters from "../widgets/filters/TransactionsFilters";
+import TransactionsFilter from "../widgets/filters/TransactionsFilter";
 import { ITransactionTableProps } from "@/types/interfaces";
 
 const TransactionsTable = ({ transactions, categories }: ITransactionTableProps) => {
@@ -17,14 +17,18 @@ const TransactionsTable = ({ transactions, categories }: ITransactionTableProps)
     if (search === "") {
       setFilteredTransactions(transactions);
     } else {
-      setFilteredTransactions(transactions.filter((t) => t.description.toLowerCase().includes(search.toLowerCase())));
+      setFilteredTransactions(
+        transactions.filter((t) => {
+          t.description.toLowerCase().includes(search.toLowerCase()) || t.categories?.name.toLowerCase().includes(search.toLowerCase());
+        })
+      );
     }
   };
 
   return (
     <PaperContainer sx={{ width: "90%" }}>
       <PaperHeader title="Transações">
-        <TransactionsFilters action={searchTransaction} />
+        <TransactionsFilter action={searchTransaction} />
       </PaperHeader>
       <TableContainer>
         <Table size="small" aria-label="simple table">

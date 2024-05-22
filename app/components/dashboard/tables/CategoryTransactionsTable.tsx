@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,12 +12,20 @@ import dayjs from "dayjs";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import TransactionActionButtons from "../widgets/buttons/TransactionActionButtons";
+import { useCategoryDetailContext } from "@/app/lib/contexts";
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 
 const CategoryTransactionsTable = ({ transactions }: { transactions: TransactionType[] }) => {
+  const { groupByMonth } = useCategoryDetailContext();
 
   return (
     <PaperContainer>
-      <PaperHeader title="Transações por dia" />
+      <PaperHeader title="Transações por dia">
+        <Button variant="contained">
+          <FilterListRoundedIcon fontSize="small" />
+          Filtrar
+        </Button>
+      </PaperHeader>
       <TableContainer sx={{ maxHeight: "60vh" }}>
         <Table stickyHeader size="small" aria-label="simple table">
           <TableBody>

@@ -5,7 +5,7 @@ import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
 import ApexCategoryTransactionsPerPeriodLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
-import { Stack } from "@mui/system";
+import CategoryDetailProvider from "@/app/lib/providers/CategoryDetailProvider";
 
 async function fetchSpendingsCategories() {
   const res = await getCategories();
@@ -20,6 +20,7 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <PageContainer title={`Categoria ${title}`}>
+      <CategoryDetailProvider>
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
           {transactions && <CategoryTransactionsTable transactions={transactions} />}
@@ -33,6 +34,7 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
           )}
         </Grid>
       </Grid>
+      </CategoryDetailProvider>
     </PageContainer>
   );
 };

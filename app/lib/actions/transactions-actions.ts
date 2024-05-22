@@ -27,6 +27,8 @@ export const revalidateTransactions = () => {
   revalidateTag("get_payed_transactions");
   revalidateTag("get_future_transactions");
   revalidatePath("/dashboard/transactions");
+  revalidatePath("/dashboard/transactions/all");
+  revalidatePath("/dashboard/transactions/overdue");
 }
 
 export const getTransactions = unstable_cache(

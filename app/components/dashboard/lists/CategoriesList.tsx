@@ -9,7 +9,7 @@ import { useSpeedDialStore } from "@/app/lib/store";
 import { useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
-import CategoriesFilters from "../widgets/filters/CategoriesFilters";
+import CategoriesFilter from "@/app/components/dashboard/widgets/filters/CategoriesFilter";
 
 const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
@@ -46,7 +46,7 @@ const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   return (
     <PaperContainer>
       <PaperHeader title="Lista de categorias">
-        <CategoriesFilters action={searchCategory} />
+        <CategoriesFilter action={searchCategory} />
       </PaperHeader>
       <Stack>
         {filteredCategories.length > 0 &&

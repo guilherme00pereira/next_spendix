@@ -8,6 +8,7 @@ import {
   ITransactionsPerDayContextData,
   IGroupContextData,
   ISidebarContextData,
+  ICategoryDetailContextData,
 } from "@/types/interfaces";
 import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
@@ -36,6 +37,7 @@ export const TransactionsPerDayContext = createContext<ITransactionsPerDayContex
   {} as ITransactionsPerDayContextData
 );
 export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
+export const CategoryDetailContext = createContext<ICategoryDetailContextData>({} as ICategoryDetailContextData);
 export const GroupContext = createContext<IGroupContextData>({} as IGroupContextData);
 export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>(
   {} as IEditableObjectContextData<BankAccountType>
@@ -65,6 +67,14 @@ export const useCategoryContext = () => {
   const context = useContext(CategoryContext);
   if (!context) {
     throw new Error("useCategoryContext must be used within a CategoryContextProvider");
+  }
+  return context;
+};
+
+export const useCategoryDetailContext = () => {
+  const context = useContext(CategoryDetailContext);
+  if (!context) {
+    throw new Error("useCategoryDetailContext must be used within a CategoryDetailContextProvider");
   }
   return context;
 };

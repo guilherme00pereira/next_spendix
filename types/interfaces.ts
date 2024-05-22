@@ -82,6 +82,11 @@ export interface ITransactionsPerDayContextData {
 
 export interface ICateroryContextData extends IDeletableObjectContextData{}
 
+export interface ICategoryDetailContextData extends IDeletableObjectContextData {
+    groupByMonth: boolean;
+    setGroupByMonth: Dispatch<SetStateAction<boolean>>;
+}
+
 export interface IGroupContextData extends IDeletableObjectContextData {
     selectedGroup: GroupType;
     setSelectedGroup: Dispatch<SetStateAction<GroupType>>;
