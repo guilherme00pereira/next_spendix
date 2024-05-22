@@ -24,14 +24,17 @@ const TransactionsPage = async () => {
   return (
     <PageContainer title="Transações">
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={6}>
-          
+        <Grid item xs={12} md={4}>
+          <SearchTransaction />
         </Grid>
         <Grid item xs={12} md={3}>
           <TransactionsTotalsWidget value={totalIncome} title="Total de receitas" income={true} color="success.dark" />
         </Grid>
         <Grid item xs={12} md={3}>
           <TransactionsTotalsWidget value={totalExpense} title="Total de gastos" income={false} color="error.dark" />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <TransactionsTotalsWidget value={totalIncome - totalExpense} title="Saldo" income={true} color="text.primary" />
         </Grid>
       </Grid>
       <Masonry columns={2} spacing={3}>
