@@ -1,6 +1,6 @@
 {
   "name": "next_spendix",
-  "version": "0.17.21",
+  "version": "0.18.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +12,7 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@formatjs/intl-localematcher": "^0.5.4",
     "@mui/icons-material": "^5.14.19",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "^5.14.18",
@@ -28,6 +29,7 @@
     "dayjs": "^1.11.10",
     "formik": "^2.4.5",
     "material-ui-color": "^1.2.0",
+    "negotiator": "^0.6.3",
     "next": "14.2.3",
     "react": "^18",
     "react-apexcharts": "^1.4.1",

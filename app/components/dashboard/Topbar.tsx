@@ -14,6 +14,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { IDashboardLayoutProps } from "@/types/interfaces";
 import SelectMonthYear from "@/app/components/dashboard/calendar/SelectMonthYear";
@@ -67,12 +68,9 @@ const ToggleIconBox = styled(Box)(({ theme }) => ({
 const Topbar = () => {
   const {openSidebar, setOpenSidebar} = useSidebarContext();
   const router = useRouter();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorProfile, setAnchorProfile] = useState<null | HTMLElement>(null);
+  const [anchorLanguage, setAnchorLanguage] = useState<null | HTMLElement>(null);
   const { mode, setMode } = useColorScheme();
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleFullScreen = () => {
     if (document.fullscreenElement) {
@@ -85,6 +83,11 @@ const Topbar = () => {
   const handleToggleDrawer = () => {
     setOpenSidebar && setOpenSidebar(!openSidebar);
   };
+
+  const handleLanguageSwitch = (lang: string) => {
+    setAnchorLanguage(null);
+    console.log(lang);
+  }
 
   return (
     <AppBar position="absolute" open={openSidebar}>
@@ -106,6 +109,14 @@ const Topbar = () => {
         </Box>
 
         <Box sx={{ display: { xs: "none", md: "flex" }, flexDirection: "row", justifyContent: "end" }}>
+          <IconButton onClick={(e) => setAnchorLanguage(e.currentTarget)}>
+            <LanguageOutlinedIcon />
+          </IconButton>
+          <Menu id="menu-language" anchorEl={anchorLanguage} keepMounted open={Boolean(anchorLanguage)} onClose={() => setAnchorLanguage(null)}>
+            <MenuItem onClick={() => handleLanguageSwitch("en")}>English</MenuItem>
+            <MenuItem onClick={() => handleLanguageSwitch("pt")}>Portuguese</MenuItem>
+            <MenuItem onClick={() => handleLanguageSwitch("auto")}>Auto</MenuItem>
+          </Menu>
           <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
             {mode === "dark" ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
           </IconButton>
@@ -117,10 +128,10 @@ const Topbar = () => {
           <IconButton onClick={handleFullScreen}>
             <FullscreenOutlinedIcon />
           </IconButton>
-          <IconButton size="large" onClick={handleMenu}>
+          <IconButton size="large" onClick={(e) => setAnchorProfile(e.currentTarget)}>
             <AccountCircle sx={{ fontSize: "1.5rem" }} />
           </IconButton>
-          <Menu id="menu-profile" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+          <Menu id="menu-profile" anchorEl={anchorProfile} keepMounted open={Boolean(anchorProfile)} onClose={() => setAnchorProfile(null)}>
             <MenuItem onClick={() => router.push("/dashboard/profile")}>Profile</MenuItem>
             <MenuItem onClick={() => router.push("/")}>Logout</MenuItem>
           </Menu>
