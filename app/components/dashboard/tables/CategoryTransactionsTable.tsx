@@ -20,13 +20,12 @@ const CategoryTransactionsTable = ({ transactions }: { transactions: Transaction
 
   return (
     <PaperContainer>
-      <PaperHeader title="Transações por dia">
-        <Button variant="contained">
-          <FilterListRoundedIcon fontSize="small" />
+      <PaperHeader title="Transações">
+        <Button variant="outlined" size="small" startIcon={<FilterListRoundedIcon />}>
           Filtrar
         </Button>
       </PaperHeader>
-      <TableContainer sx={{ maxHeight: "60vh" }}>
+      <TableContainer sx={{ maxHeight: "360px" }}>
         <Table stickyHeader size="small" aria-label="simple table">
           <TableBody>
             {transactions &&

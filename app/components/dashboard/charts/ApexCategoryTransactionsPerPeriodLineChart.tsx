@@ -1,36 +1,24 @@
 "use client";
 import { useMemo, useState } from "react";
-import { FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Stack, Button } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Button from "@mui/material/Button";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
 import { ChartBarType } from "@/types/chart-types";
 import { CategoryType, TransactionType } from "@/types/entities";
-import { useRouter } from "next/navigation";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import { useColorScheme } from "@mui/material";
 import { chartColors } from "@/theme/colors";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import { useCategoryDetailContext } from "@/app/lib/contexts";
+import SyncRoundedIcon from "@mui/icons-material/SyncRounded";
 
 dayjs.extend(weekOfYear);
 
-const CategoryTransactionsPerPeriodLineChart = ({
-  transactions,
-  categories,
-}: {
-  transactions: TransactionType[];
-  categories: CategoryType[];
-}) => {
+const CategoryTransactionsPerPeriodLineChart = ({ transactions }: { transactions: TransactionType[] }) => {
   const { groupByMonth, setGroupByMonth } = useCategoryDetailContext();
-  const router = useRouter();
+  const [buttonText, setButtonText] = useState("Ver por Semana" as string);
   const { mode } = useColorScheme();
-
-  const handleChangeSelect = (event: SelectChangeEvent<HTMLInputElement>) => {
-    const categoryId = event.target.value;
-    router.push(`/dashboard/categories/${categoryId}`);
-  };
 
   const data = useMemo(() => {
     const data = transactions.reduce((acc, transaction) => {
@@ -50,38 +38,25 @@ const CategoryTransactionsPerPeriodLineChart = ({
     return periods;
   }, [groupByMonth, transactions]);
 
+  const handleButtonClick = () => {
+    setGroupByMonth(!groupByMonth);
+    setButtonText(groupByMonth ? "Agrupar por Semana" : "Agrupar por Mês");
+  };
+
   return (
     <PaperContainer>
-      <PaperHeader title="Evolução mensal">
-        <Button variant="contained" size="small" color="primary" onClick={() => setGroupByMonth(!groupByMonth)}>
-          Agrupar por Semana
+      <PaperHeader title="Evolução por período">
+        <Button
+          variant="outlined"
+          size="small"
+          color="primary"
+          onClick={handleButtonClick}
+          startIcon={<SyncRoundedIcon />}
+        >
+          {buttonText}
         </Button>
       </PaperHeader>
-      <Stack direction="row" justifyContent="center" alignItems="center" sx={{ p: 2 }}>
-        <FormControl sx={{ width: "60%" }} size="small">
-          <InputLabel>Trocar categoria </InputLabel>
-          <Select
-            name="category_id"
-            size="small"
-            onChange={(e: SelectChangeEvent<HTMLInputElement>) => handleChangeSelect(e)}
-            input={<OutlinedInput label="Trocar Categoria" />}
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 500,
-                  width: 250,
-                },
-              },
-            }}
-          >
-            {categories?.map((category) => (
-              <MenuItem key={category.id} value={category.slug}>
-                <ListItemText primary={category.name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Stack>
+
       <Chart
         options={{
           chart: {
@@ -145,7 +120,7 @@ const CategoryTransactionsPerPeriodLineChart = ({
           },
         ]}
         type="bar"
-        height={300}
+        height={360}
       />
     </PaperContainer>
   );
