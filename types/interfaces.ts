@@ -45,11 +45,6 @@ export interface ITransactionRowDataProps {
     open: boolean,
 }
 
-export interface ITransactionTableProps {
-    transactions: TransactionType[];
-    categories: CategoryType[];
-}
-
 export interface IPageContextData {
     showModal: boolean;
     actionShowModal: (action: boolean) => void;
@@ -80,6 +75,11 @@ export interface ITransactionsPerDayContextData {
     setSelectedDay: Dispatch<SetStateAction<string>>;
 }
 
+export interface ITransactionsFiltersContextData {
+    filteredTransactions: TransactionType[];
+    setFilteredTransactions: Dispatch<SetStateAction<TransactionType[]>>;
+}
+
 export interface ICateroryContextData extends IDeletableObjectContextData{}
 
 export interface ICategoryDetailContextData extends IDeletableObjectContextData {
@@ -94,6 +94,8 @@ export interface IGroupContextData extends IDeletableObjectContextData {
     setShowGroupDialog: (action: boolean) => void;
     editableGroup: GroupFormData;
     setEditableGroup: (g: GroupFormData) => void;
+    showChart: boolean;
+    setShowChart: (action: boolean) => void;
 }
 
 export interface IAppPersistData {
@@ -143,6 +145,7 @@ export interface IGroupListItemProps {
     group: GroupType;
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
+    handleOpenChart: (id: number) => void;
 }
 
 export interface IAccountListItemProps {

@@ -8,6 +8,7 @@ import { TransactionType } from "@/types/entities";
 import { groupTransactionsByDate } from "@/app/lib/functions";
 import dayjs from "dayjs";
 import PaperHeaderLink from "../widgets/paper-header/PaperHeaderLink";
+import TabsDayOfMonth from "../calendar/TabsDayOfMonth";
 
 const TransactionsPerDayList = async ({ transactions }: { transactions: TransactionType[] }) => {
   const mapped = groupTransactionsByDate(transactions);
@@ -28,7 +29,8 @@ const TransactionsPerDayList = async ({ transactions }: { transactions: Transact
       </PaperHeader>
       <Stack>
         <TransactionsPerDayProvider>
-          <SelectDayOfMonth days={daysOfTheMonth()} />
+          {/* <SelectDayOfMonth days={daysOfTheMonth()} /> */}
+          <TabsDayOfMonth days={daysOfTheMonth()} />
           <TransactionsPerDayListItems transactions={mapped} />
       </TransactionsPerDayProvider>
       </Stack>

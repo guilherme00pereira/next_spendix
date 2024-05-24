@@ -9,6 +9,7 @@ import {
   IGroupContextData,
   ISidebarContextData,
   ICategoryDetailContextData,
+  ITransactionsFiltersContextData,
 } from "@/types/interfaces";
 import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
@@ -36,6 +37,7 @@ export const TransactionContext = createContext<ITransactionContextData>({} as I
 export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>(
   {} as ITransactionsPerDayContextData
 );
+export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>({} as ITransactionsFiltersContextData);
 export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
 export const CategoryDetailContext = createContext<ICategoryDetailContextData>({} as ICategoryDetailContextData);
 export const GroupContext = createContext<IGroupContextData>({} as IGroupContextData);
@@ -59,6 +61,14 @@ export const useTransactionsPerDayContext = () => {
   const context = useContext(TransactionsPerDayContext);
   if (!context) {
     throw new Error("useTransactionsPerDayContext must be used within a TransactionsPerDayProvider");
+  }
+  return context;
+};
+
+export const useTransactionsTableFilterContext = () => {
+  const context = useContext(TransactionsTableFilterContext);
+  if (!context) {
+    throw new Error("useTransactionsTableFilterContext must be used within a TransactionsTableFilterProvider");
   }
   return context;
 };

@@ -9,6 +9,7 @@ import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { getGroups } from "@/app/lib/supabase/methods/groups";
 import GroupFormDialog from "@/app/components/dashboard/dialogs/GroupFormDialog";
 import { getDictionary } from "@/app/lib/i18n/dictionary";
+import TransactionsTotalPerPeriodChartPaper from "@/app/components/dashboard/surfaces/TransactionsTotalPerPeriodChartPaper";
 
 export const metadata: Metadata = {
   title: "Spdx - Category Groups",
@@ -29,6 +30,7 @@ const GroupsPage = async () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <GroupCategoriesList categories={categories} />
+            <TransactionsTotalPerPeriodChartPaper />
           </Grid>
         </Grid>
         <GroupFormDialog />

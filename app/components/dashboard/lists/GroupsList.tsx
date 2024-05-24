@@ -11,7 +11,16 @@ import { deleteGroup } from "@/app/lib/actions/group-actions";
 import Button from "@mui/material/Button";
 
 const GroupsList = ({ groups }: { groups: GroupType[] }) => {
-  const { openConfirm, setOpenConfirm, removableObject, setRemovableObject, setShowGroupDialog, setEditableGroup } = useGroupContext();
+  const { 
+    openConfirm, 
+    setOpenConfirm, 
+    removableObject, 
+    setRemovableObject, 
+    setShowGroupDialog, 
+    setEditableGroup, 
+    setShowChart, 
+    setSelectedGroup 
+  } = useGroupContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableObject({ ...removableObject, id, name });
@@ -39,6 +48,12 @@ const GroupsList = ({ groups }: { groups: GroupType[] }) => {
     });
   };
 
+  const handleOpenChart = (id: number) => {
+    setShowChart(true);
+    setSelectedGroup({} as GroupType);
+    
+  };
+
   return (
     <PaperContainer>
       <PaperHeader title="Grupos">
@@ -48,7 +63,7 @@ const GroupsList = ({ groups }: { groups: GroupType[] }) => {
       </PaperHeader>
       <Stack>
         {groups.map((group) => (
-          <GroupListItem key={group.id} group={group} handleEdit={handleEdit} handleConfirmDelete={handleConfirmDelete} />
+          <GroupListItem key={group.id} group={group} handleEdit={handleEdit} handleConfirmDelete={handleConfirmDelete} handleOpenChart={handleOpenChart} />
         ))}
       </Stack>
       <ConfirmDeleteDialog

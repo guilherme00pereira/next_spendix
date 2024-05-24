@@ -3,7 +3,7 @@ import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/met
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
 import CategoryTransactionsTable from "@/app/components/dashboard/tables/CategoryTransactionsTable";
-import ApexCategoryTransactionsPerPeriodLineChart from "@/app/components/dashboard/charts/ApexCategoryTransactionsPerPeriodLineChart";
+import ApexTransactionsTotalPerPeriodBarChart from "@/app/components/dashboard/charts/ApexTransactionsTotalPerPeriodBarChart";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import CategoryDetailProvider from "@/app/lib/providers/CategoryDetailProvider";
 import CategoryDetailsPageSelect from "@/app/components/dashboard/surfaces/CategoryDetailsPageSelect";
@@ -30,7 +30,7 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
             {transactions && <CategoryTransactionsTable transactions={transactions} />}
           </Grid>
           <Grid item xs={12} md={6}>
-            {transactions.length > 0 && <ApexCategoryTransactionsPerPeriodLineChart transactions={transactions} />}
+            {transactions.length > 0 && <ApexTransactionsTotalPerPeriodBarChart transactions={transactions} />}
           </Grid>
         </Grid>
       </CategoryDetailProvider>

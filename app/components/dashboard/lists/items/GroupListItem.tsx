@@ -33,18 +33,23 @@ const ListItem = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const GroupListItem = ({ group, handleConfirmDelete, handleEdit }: IGroupListItemProps) => {
-  const { setSelectedGroup } = useGroupContext();
+const GroupListItem = ({ group, handleConfirmDelete, handleEdit, handleOpenChart }: IGroupListItemProps) => {
+  const { setSelectedGroup, setShowChart } = useGroupContext();
+
+  const handleShowCategories = (group: any) => {
+    setSelectedGroup(group);
+    setShowChart(false);
+  }
 
   return (
     <ListItem direction="row" justifyContent="space-between">
       <Box sx={{ flexGrow: 1 }}>{group.name}</Box>
       <Box>
         <Stack direction="row" spacing={1}>
-          <PrimaryActionButton size="small" variant="text" onClick={() => console.log("Show group details")}>
+          <PrimaryActionButton size="small" variant="text" onClick={() => handleOpenChart(group.id)}>
             <BarChartOutlinedIcon />
           </PrimaryActionButton>
-          <PrimaryActionButton size="small" variant="text" onClick={() => setSelectedGroup(group)}>
+          <PrimaryActionButton size="small" variant="text" onClick={() => handleShowCategories(group)}>
             <FormatListBulletedOutlinedIcon />
           </PrimaryActionButton>
           <InfoActionButton size="small" variant="text" onClick={() => handleEdit(group.id)}>

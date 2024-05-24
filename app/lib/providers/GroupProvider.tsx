@@ -8,6 +8,7 @@ const GroupProvider = ({ children }: { children: React.ReactNode }) => {
   const [editableGroup, setEditableGroup] = useState<GroupFormData>({} as GroupFormData);
   const [ showGroupDialog, setShowGroupDialog ] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [showChart, setShowChart] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<GroupType>({} as GroupType);
   const [removableGroup, setRemovableGroup] = useState<IRemovableEntity>({
     id: 0,
@@ -26,6 +27,8 @@ const GroupProvider = ({ children }: { children: React.ReactNode }) => {
     setEditableGroup,
     showGroupDialog,
     setShowGroupDialog,
+    showChart,
+    setShowChart,
    }}>{children}</GroupContext.Provider>;
 };
 

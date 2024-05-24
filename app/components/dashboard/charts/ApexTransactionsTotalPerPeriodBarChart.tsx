@@ -15,7 +15,7 @@ import SyncRoundedIcon from "@mui/icons-material/SyncRounded";
 
 dayjs.extend(weekOfYear);
 
-const CategoryTransactionsPerPeriodLineChart = ({ transactions }: { transactions: TransactionType[] }) => {
+const ApexTransactionsTotalPerPeriodBarChart = ({ transactions }: { transactions: TransactionType[] }) => {
   const { groupByMonth, setGroupByMonth } = useCategoryDetailContext();
   const [buttonText, setButtonText] = useState("Ver por Semana" as string);
   const { mode } = useColorScheme();
@@ -126,4 +126,4 @@ const CategoryTransactionsPerPeriodLineChart = ({ transactions }: { transactions
   );
 };
 
-export default CategoryTransactionsPerPeriodLineChart;
+export default ApexTransactionsTotalPerPeriodBarChart;

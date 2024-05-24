@@ -4,16 +4,25 @@ import Stack from "@mui/material/Stack";
 import { FormControl, IconButton, OutlinedInput } from "@mui/material";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import SelectMonthYear from "../../calendar/SelectMonthYear";
+import { useTransactionsTableFilterContext } from "@/app/lib/contexts";
+import { TransactionType } from "@/types/entities";
 
-const TransactionsFilter = ({ action }: { action: (search: string) => void }) => {
+const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] }) => {
+  const { setFilteredTransactions } = useTransactionsTableFilterContext();
   
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      action((e.target as HTMLInputElement).value);
-    };
-  
-    const handleResetSearch = () => {
-      action("");
-    };
+  const searchTransaction = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const search = (e.target as HTMLInputElement).value;
+    if (search === "") {
+      setFilteredTransactions(transactions);
+    } else {
+      const filtered = transactions.filter((t) => t.description.toLowerCase().includes(search.toLowerCase()));
+      setFilteredTransactions(filtered);
+    }
+  };
+
+  const handleResetSearch = () => {
+    setFilteredTransactions(transactions);
+  }
   
     return (
       <Stack direction="row">
@@ -24,7 +33,7 @@ const TransactionsFilter = ({ action }: { action: (search: string) => void }) =>
             size="small"
             type="search"
             fullWidth
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => searchTransaction(e)}
             endAdornment={
               <IconButton onClick={handleResetSearch}>
                 <FilterListRoundedIcon color="primary" fontSize="small" />
