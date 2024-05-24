@@ -4,7 +4,7 @@ import PaperHeader from "./PaperHeader";
 
 async function fetchChartData() {}
 
-const CategoryTransactionsPerPeriodChartPaper = () => {
+const GroupTransactionsPerPeriodChartPaper = () => {
   return (
     <PaperContainer>
       <PaperHeader title="Evolução por período" />
@@ -12,4 +12,4 @@ const CategoryTransactionsPerPeriodChartPaper = () => {
   );
 };
 
-export default CategoryTransactionsPerPeriodChartPaper;
+export default GroupTransactionsPerPeriodChartPaper;

@@ -1,8 +1,32 @@
 {
-    "sidebar": {
-        "groups": "Groups"
+  "entities": {
+    "dashboard": {
+      "name": "Dashboard",
+      "singular": "Dashboard"
     },
-    "page_titles": {
-        "groups": "Category Groups"
+    "transactions": {
+      "name": "Transactions",
+      "singular": "Transaction"
+    },
+    "categories": {
+      "name": "Categories",
+      "singular": "Category"
+    },
+    "groups": {
+      "name": "Groups",
+      "singular": "Group"
+    },
+    "accounts": {
+      "name": "Accounts",
+      "singular": "Account"
+    },
+    "credit_cards": {
+      "name": "Credit Cards",
+      "singular": "Credit Card"
+    },
+    "settings": {
+      "name": "Settings",
+      "singular": "Setting"
     }
+  }
 }

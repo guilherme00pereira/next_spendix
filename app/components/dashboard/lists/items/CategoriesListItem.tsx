@@ -8,10 +8,15 @@ import Box from "@mui/material/Box";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import { ICategoryListItemProps } from "@/types/interfaces";
 import Chip from "@mui/material/Chip";
 import SubdirectoryArrowRightOutlinedIcon from "@mui/icons-material/SubdirectoryArrowRightOutlined";
-import { InfoActionButton, DangerActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
+import {
+  InfoActionButton,
+  DangerActionButton,
+  PrimaryActionButton,
+} from "@/app/components/dashboard/commonStyledComponents";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -45,12 +50,7 @@ const CategoryLink = styled(Link)(({ theme }) => ({
   color: theme.vars.palette.text.primary,
 }));
 
-const CategoriesListItem = ({
-  category,
-  handleEdit,
-  handleConfirmDelete,
-  isSubCategory,
-}: ICategoryListItemProps) => {
+const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCategory }: ICategoryListItemProps) => {
   const router = useRouter();
 
   return (
@@ -71,28 +71,35 @@ const CategoriesListItem = ({
           size="small"
           variant="outlined"
           color={getTypeColor(category.type)}
-          sx={{borderRadius: "4px"}}
+          sx={{ borderRadius: "4px" }}
         />
       </Box>
       <Box>
         <Stack direction="row" spacing={1}>
-        <PrimaryActionButton size="small" variant="text" onClick={() => router.push(`/dashboard/categories/${category.slug}`)}>
-          <VisibilityOutlinedIcon />
-        </PrimaryActionButton>
-            <InfoActionButton
-              size="small"
-              variant="text"
-              onClick={() => handleEdit(category.id)}
-            >
-              <EditOutlinedIcon />
-            </InfoActionButton>
-            <DangerActionButton
-              size="small"
-              variant="text"
-              onClick={() => handleConfirmDelete(category.id, category.name)}
-            >
-              <DeleteOutlinedIcon />
-            </DangerActionButton>
+          <PrimaryActionButton
+            size="small"
+            variant="text"
+            onClick={() => router.push(`/dashboard/categories/${category.slug}/transactions`)}
+          >
+            <BarChartOutlinedIcon />
+          </PrimaryActionButton>
+          <PrimaryActionButton
+            size="small"
+            variant="text"
+            onClick={() => router.push(`/dashboard/categories/${category.slug}`)}
+          >
+            <VisibilityOutlinedIcon />
+          </PrimaryActionButton>
+          <InfoActionButton size="small" variant="text" onClick={() => handleEdit(category.id)}>
+            <EditOutlinedIcon />
+          </InfoActionButton>
+          <DangerActionButton
+            size="small"
+            variant="text"
+            onClick={() => handleConfirmDelete(category.id, category.name)}
+          >
+            <DeleteOutlinedIcon />
+          </DangerActionButton>
         </Stack>
       </Box>
     </ListItem>

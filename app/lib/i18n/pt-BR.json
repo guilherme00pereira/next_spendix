@@ -1,8 +1,47 @@
 {
-    "sidebar": {
-        "groups": "Grupos"
+  "entities": {
+    "dashboard": {
+      "name": "Dashboard",
+      "singular": "Dashboard"
     },
-    "page_titles": {
-        "groups": "Grupos de Categorias"
+    "transactions": {
+      "name": "Transações",
+      "singular": "Transação"
+    },
+    "categories": {
+      "name": "Categorias",
+      "singular": "Categoria"
+    },
+    "groups": {
+      "name": "Grupos",
+      "singular": "Grupo"
+    },
+    "accounts": {
+      "name": "Contas",
+      "singular": "Conta"
+    },
+    "credit_cards": {
+      "name": "Cartões de Crédito",
+      "singular": "Cartão de Crédito"
+    },
+    "settings": {
+      "name": "Configurações",
+      "singular": "Configuração"
     }
+  },
+  "card": {
+    "titles": {
+      "transactions_per_day": "Transações realizadas no mês/ dia",
+      "future_transactions": "Próximos lançamentos"
+    },
+    "actions": {
+    "add": "Adicionar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "confirm": "Confirmar",
+    "see_all": "Ver todos"
+    }
+  }
 }

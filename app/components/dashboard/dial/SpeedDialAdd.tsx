@@ -41,8 +41,8 @@ const dialActions = [
 
 const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
   position: "fixed",
-  bottom: 32,
-  right: 32,
+  bottom: 16,
+  right: 24,
   "& .MuiSpeedDial-fab": {
     lineHeight: 0.75,
     width: "42px",

@@ -21,7 +21,7 @@ const GroupsPage = async () => {
   const d = await getDictionary();
 
   return (
-    <PageContainer title={d.page_titles.groups}>
+    <PageContainer title={d.entities.groups.name}>
       <GroupProvider>
         <Grid container spacing={3} sx={{ mb: 4 }}>
           <Grid item xs={12} md={6}>

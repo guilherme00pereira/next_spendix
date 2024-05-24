@@ -7,9 +7,14 @@ import Box from "@mui/material/Box";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import { IGroupListItemProps } from "@/types/interfaces";
 import { useGroupContext } from "@/app/lib/contexts";
-import { InfoActionButton, DangerActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
+import {
+  InfoActionButton,
+  DangerActionButton,
+  PrimaryActionButton,
+} from "@/app/components/dashboard/commonStyledComponents";
 
 const ListItem = styled(Stack)(({ theme }) => ({
   width: "100%",
@@ -36,6 +41,9 @@ const GroupListItem = ({ group, handleConfirmDelete, handleEdit }: IGroupListIte
       <Box sx={{ flexGrow: 1 }}>{group.name}</Box>
       <Box>
         <Stack direction="row" spacing={1}>
+          <PrimaryActionButton size="small" variant="text" onClick={() => console.log("Show group details")}>
+            <BarChartOutlinedIcon />
+          </PrimaryActionButton>
           <PrimaryActionButton size="small" variant="text" onClick={() => setSelectedGroup(group)}>
             <FormatListBulletedOutlinedIcon />
           </PrimaryActionButton>

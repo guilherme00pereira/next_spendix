@@ -18,6 +18,6 @@ export const getDictionary = async () => {
    // try {
    //     return dictionaries[lng]();
    // } catch (error) {
-        return dictionaries['pt-BR']();
+        return await dictionaries['pt-BR']();
     //}
 }
