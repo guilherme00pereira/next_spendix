@@ -1,9 +1,11 @@
+'use client';
 import React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import { PaperHeaderButton } from "@/app/components/dashboard/commonStyledComponents";
 
 const PeriodFilter = ({items}: {items: string[]}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -18,9 +20,15 @@ const PeriodFilter = ({items}: {items: string[]}) => {
 
   return (
     <div>
-      <Button variant="outlined" size="small" onClick={handleClick} startIcon={<CalendarMonthOutlinedIcon />}>
+      <PaperHeaderButton 
+        variant="outlined" 
+        size="small" 
+        onClick={handleClick} 
+        startIcon={<CalendarMonthOutlinedIcon />}
+        endIcon={<ExpandMoreOutlinedIcon />}
+      >
         Período
-      </Button>
+      </PaperHeaderButton>
       <Menu id="period-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         {items.map((item) => (
           <MenuItem key={item} onClick={() => {}}>

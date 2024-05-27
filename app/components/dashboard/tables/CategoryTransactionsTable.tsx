@@ -1,19 +1,20 @@
 "use client";
 import React from "react";
-import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import type {} from "@mui/material/themeCssVarsAugmentation";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+import { ScrollableTable } from "@/app/components/dashboard/commonStyledComponents";
 import { amountFormatter } from "@/app/lib/functions";
 import { TransactionType } from "@/types/entities";
-import dayjs from "dayjs";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import TransactionActionButtons from "../widgets/buttons/TransactionActionButtons";
 import PeriodFilter from "../widgets/filters/PeriodFilter";
 import { useCategoryDetailContext } from "@/app/lib/contexts";
+import dayjs from "dayjs";
 
 const CategoryTransactionsTable = ({ transactions }: { transactions: TransactionType[] }) => {
   const { groupByMonth } = useCategoryDetailContext();
@@ -43,7 +44,7 @@ const CategoryTransactionsTable = ({ transactions }: { transactions: Transaction
       <PaperHeader title="Transações">
         <PeriodFilter items={getFilterItems()} />
       </PaperHeader>
-      <TableContainer sx={{ maxHeight: "480px" }}>
+      <ScrollableTable>
         <Table stickyHeader size="small" aria-label="simple table">
           <TableBody>
             {transactions &&
@@ -59,7 +60,7 @@ const CategoryTransactionsTable = ({ transactions }: { transactions: Transaction
               ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </ScrollableTable>
     </PaperContainer>
   );
 };

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/chart-types";
 import { CategoryType, TransactionType } from "@/types/entities";
-import { PaperContainer } from "../commonStyledComponents";
+import { PaperContainer, PaperHeaderButton } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import { useColorScheme } from "@mui/material";
 import { chartColors } from "@/theme/colors";
@@ -46,7 +46,7 @@ const ApexTransactionsTotalPerPeriodBarChart = ({ transactions }: { transactions
   return (
     <PaperContainer sx={{width: "80%"}}>
       <PaperHeader title="Evolução por período">
-        <Button
+        <PaperHeaderButton
           variant="outlined"
           size="small"
           color="primary"
@@ -54,7 +54,7 @@ const ApexTransactionsTotalPerPeriodBarChart = ({ transactions }: { transactions
           startIcon={<SyncRoundedIcon />}
         >
           {buttonText}
-        </Button>
+        </PaperHeaderButton>
       </PaperHeader>
 
       <Chart

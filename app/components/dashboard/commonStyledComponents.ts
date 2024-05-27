@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import TableContainer from "@mui/material/TableContainer";
 
 export const DashboardTopCardContentInfo = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -104,6 +105,27 @@ export const DangerActionButton = styled(ActionButton)(({ theme }) => ({
 
 export const RegularLink = styled(Link)(({ theme }) => ({
   color: theme.vars.palette.text.primary,
+}));
+
+export const ScrollableTable = styled(TableContainer)({
+  maxHeight: "480px",
+  "&::-webkit-scrollbar": {
+    webkitAppearance: "none",
+    width: "6px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: "4px",
+    boxShadow: "inset 0 0 6px rgba(0,0,0,0.5)",
+    height: "100px",
+  },
+});
+
+export const PaperHeaderButton = styled(Button)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.vars.palette.primary.main,
+    color: "white",
+  },
 }));
 
 

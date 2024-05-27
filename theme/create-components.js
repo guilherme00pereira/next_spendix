@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { neutral } from './colors';
 import {alpha} from "@mui/material/styles";
-import { typography } from '@mui/system';
+import { maxHeight, typography } from '@mui/system';
 
 // Used only to create transitions
 const muiTheme = createTheme();
@@ -34,7 +34,8 @@ export function createComponents() {
                     textTransform: 'none'
                 },
                 sizeSmall: {
-                    padding: '4px 12px'
+                    padding: '2px 12px',
+                    maxHeight: '32px'
                 },
                 sizeMedium: {
                     padding: '8px 20px'
@@ -43,7 +44,7 @@ export function createComponents() {
                     padding: '11px 24px'
                 },
                 textSizeSmall: {
-                    padding: '7px 12px'
+                    padding: '4px 8px'
                 },
                 textSizeMedium: {
                     padding: '9px 16px'

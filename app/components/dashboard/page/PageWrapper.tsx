@@ -9,6 +9,13 @@ const LayoutBoxWrapper = styled(Box)(({ theme }) => ({
     flexGrow: 1,
     height: "100vh",
     overflow: "auto",
+    "&::-webkit-scrollbar": {
+        webkitAppearance: "none",
+        width: "8px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "rgba(0,0,0,0.5)",
+      },
   }));
 
 const PageWrapper = ({children}: {children: React.ReactNode}) => {

@@ -3,7 +3,6 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import { FormControl, IconButton, OutlinedInput } from "@mui/material";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
-import SelectMonthYear from "../../calendar/SelectMonthYear";
 import { useTransactionsTableFilterContext } from "@/app/lib/contexts";
 import { TransactionType } from "@/types/entities";
 
@@ -27,7 +26,6 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
   
     return (
       <Stack direction="row">
-        <SelectMonthYear />
         <FormControl>
           <OutlinedInput
             id="search"
