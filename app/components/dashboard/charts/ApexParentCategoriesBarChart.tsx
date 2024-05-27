@@ -66,7 +66,7 @@ const ApexParentCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
         },
       ]}
       type="bar"
-      height={460}
+      height={600}
     />
   );
 };

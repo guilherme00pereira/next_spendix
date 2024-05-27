@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { TransactionType } from "@/types/entities";
 import Typography from "@mui/material/Typography";
 import { amountFormatter } from "@/app/lib/functions";
-import { TransactionListItem } from "@/app/components/dashboard/commonStyledComponents";
+import { RegularLink, TransactionListItem } from "@/app/components/dashboard/commonStyledComponents";
 import TransactionActionButtons from "@/app/components/dashboard/widgets/buttons/TransactionActionButtons";
 import { useTransactionsPerDayContext } from "@/app/lib/contexts";
 import dayjs from "dayjs";
@@ -22,7 +22,7 @@ const TransactionsPerDayListItems = ({ transactions }: { transactions: Map<strin
   const dayBalance = useMemo(() => {
     if (transactions === undefined) return 0;
     if (selectedDay === undefined) return 0;
-      return transactions.get(selectedDay)?.reduce((acc, curr) => {
+    return transactions.get(selectedDay)?.reduce((acc, curr) => {
       const v = curr.payments?.amount ?? curr.amount;
       return curr.categories?.type == "Receita" ? acc + v : acc - v;
     }, 0);
@@ -33,7 +33,13 @@ const TransactionsPerDayListItems = ({ transactions }: { transactions: Map<strin
       {getTransactionsOfTheDay?.map((transaction: TransactionType) => (
         <TransactionListItem key={transaction.id}>
           <Stack direction="column" justifyContent="center" sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">{transaction.categories?.name}</Typography>
+            <RegularLink
+              href={`/dashboard/categories/${transaction.categories?.slug}`}
+              underline="none"
+              variant="subtitle2"
+            >
+              {transaction.categories?.name}
+            </RegularLink>
             <Typography variant="subtitle2">{transaction.description}</Typography>
           </Stack>
           <Box sx={{ pr: "14px" }}>
@@ -50,13 +56,13 @@ const TransactionsPerDayListItems = ({ transactions }: { transactions: Map<strin
         </TransactionListItem>
       ))}
       <TransactionListItem>
-      <Typography variant="body1" fontWeight={600}>
-        Saldo:
-      </Typography>
-      <Typography variant="body1" fontWeight={700}>
-        {amountFormatter(dayBalance ?? 0)}
-      </Typography>
-    </TransactionListItem>
+        <Typography variant="body1" fontWeight={600}>
+          Saldo:
+        </Typography>
+        <Typography variant="body1" fontWeight={700}>
+          {amountFormatter(dayBalance ?? 0)}
+        </Typography>
+      </TransactionListItem>
     </>
   );
 };

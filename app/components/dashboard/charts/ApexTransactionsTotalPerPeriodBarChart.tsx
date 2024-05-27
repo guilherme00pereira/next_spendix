@@ -2,7 +2,6 @@
 import { useMemo, useState } from "react";
 import Button from "@mui/material/Button";
 import Chart from "react-apexcharts";
-import dayjs from "dayjs";
 import { ChartBarType } from "@/types/chart-types";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { PaperContainer } from "../commonStyledComponents";
@@ -12,12 +11,13 @@ import { chartColors } from "@/theme/colors";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import { useCategoryDetailContext } from "@/app/lib/contexts";
 import SyncRoundedIcon from "@mui/icons-material/SyncRounded";
+import dayjs from "dayjs";
 
 dayjs.extend(weekOfYear);
 
 const ApexTransactionsTotalPerPeriodBarChart = ({ transactions }: { transactions: TransactionType[] }) => {
   const { groupByMonth, setGroupByMonth } = useCategoryDetailContext();
-  const [buttonText, setButtonText] = useState("Ver por Semana" as string);
+  const [buttonText, setButtonText] = useState("Semanal" as string);
   const { mode } = useColorScheme();
 
   const data = useMemo(() => {
@@ -34,17 +34,17 @@ const ApexTransactionsTotalPerPeriodBarChart = ({ transactions }: { transactions
       }
       return acc;
     }, [] as ChartBarType[]);
-    const periods = groupByMonth ? data.reverse() : data.reverse().slice(10);
+    const periods = groupByMonth ? data.reverse() : data.reverse().slice(12);
     return periods;
   }, [groupByMonth, transactions]);
 
   const handleButtonClick = () => {
     setGroupByMonth(!groupByMonth);
-    setButtonText(groupByMonth ? "Agrupar por Semana" : "Agrupar por Mês");
+    setButtonText(groupByMonth ? "Semanal" : "Mensal");
   };
 
   return (
-    <PaperContainer>
+    <PaperContainer sx={{width: "80%"}}>
       <PaperHeader title="Evolução por período">
         <Button
           variant="outlined"

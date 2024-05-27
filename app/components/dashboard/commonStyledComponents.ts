@@ -1,26 +1,27 @@
 "use client";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
-const DashboardTopCardContentInfo = styled(Typography)(({ theme }) => ({
+export const DashboardTopCardContentInfo = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const DashboardTopCardContentRow = styled(Stack, {
+export const DashboardTopCardContentRow = styled(Stack, {
   shouldForwardProp: (prop) => prop !== "width",
 })<{ width?: string }>(({ theme, width }) => ({
   width: width || "100%",
 }));
 
-const PaperContainer = styled(Paper)(({ theme }) => ({
+export const PaperContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
-const TransactionListItem = styled(Stack)(({ theme }) => ({
+export const TransactionListItem = styled(Stack)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
@@ -38,7 +39,7 @@ const TransactionListItem = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const ActionButton = styled(Button)(({ theme }) => ({
+export const ActionButton = styled(Button)(({ theme }) => ({
   padding: "4px",
   borderRadius: "4px",
   minWidth: "32px !important",
@@ -47,7 +48,7 @@ const ActionButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const PrimaryActionButton = styled(ActionButton)(({ theme }) => ({
+export const PrimaryActionButton = styled(ActionButton)(({ theme }) => ({
   //@ts-ignore
   backgroundColor: theme.vars.palette.primary.alpha20,
   [theme.getColorSchemeSelector("light")]: {
@@ -65,7 +66,7 @@ const PrimaryActionButton = styled(ActionButton)(({ theme }) => ({
   },
 }));
 
-const InfoActionButton = styled(ActionButton)(({ theme }) => ({
+export const InfoActionButton = styled(ActionButton)(({ theme }) => ({
   //@ts-ignore
   backgroundColor: theme.vars.palette.info.alpha20,
   [theme.getColorSchemeSelector("light")]: {
@@ -83,7 +84,7 @@ const InfoActionButton = styled(ActionButton)(({ theme }) => ({
   },
 }));
 
-const DangerActionButton = styled(ActionButton)(({ theme }) => ({
+export const DangerActionButton = styled(ActionButton)(({ theme }) => ({
   //@ts-ignore
   backgroundColor: theme.vars.palette.error.alpha20,
   [theme.getColorSchemeSelector("light")]: {
@@ -101,12 +102,8 @@ const DangerActionButton = styled(ActionButton)(({ theme }) => ({
   },
 }));
 
-export {
-  DashboardTopCardContentInfo,
-  DashboardTopCardContentRow,
-  PaperContainer,
-  TransactionListItem,
-  PrimaryActionButton,
-  InfoActionButton,
-  DangerActionButton,
-};
+export const RegularLink = styled(Link)(({ theme }) => ({
+  color: theme.vars.palette.text.primary,
+}));
+
+

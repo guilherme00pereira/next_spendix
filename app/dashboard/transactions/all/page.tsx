@@ -5,6 +5,9 @@ import dayjs from "dayjs";
 import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
 import { Stack } from "@mui/system";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
+import TransactionsFilter from "@/app/components/dashboard/widgets/filters/TransactionsFilter";
+import TransactionsTableFilterProvider from "@/app/lib/providers/TransactionsTableFilterProvider";
+import TransactionRows from "@/app/components/dashboard/tables/rows/TransactionRows";
 
 const AllTransactions = async () => {
   const transactions = await getTransactions(
@@ -14,9 +17,13 @@ const AllTransactions = async () => {
   const categories = await getCategories();
 
   return (
-    <PageContainer title="Lista de Transações do mês">
+    <PageContainer title="Lista de Transações por mês">
       <Stack direction={{ xs: "column", md: "row" }} justifyContent="center">
-        <TransactionsTable transactions={transactions} categories={categories} />
+      <TransactionsTableFilterProvider>
+          <TransactionsTable filters={<TransactionsFilter transactions={transactions} />}>
+            <TransactionRows transactions={transactions} />
+          </TransactionsTable>
+        </TransactionsTableFilterProvider>
       </Stack>
     </PageContainer>
   );

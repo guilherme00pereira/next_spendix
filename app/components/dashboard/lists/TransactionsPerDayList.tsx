@@ -1,7 +1,6 @@
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import Stack from "@mui/material/Stack";
-import SelectDayOfMonth from "@/app/components/dashboard/calendar/SelectDayOfMonth";
 import TransactionsPerDayProvider from "@/app/lib/providers/TransactionsPerDayProvider";
 import TransactionsPerDayListItems from "./items/TransactionsPerDayListItems";
 import { TransactionType } from "@/types/entities";

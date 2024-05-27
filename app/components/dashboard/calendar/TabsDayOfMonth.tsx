@@ -31,14 +31,14 @@ const Day = styled(Tab)(({ theme }) => ({
 const TabsDayOfMonth = ({ days }: { days: string[] }) => {
   const { setSelectedDay } = useTransactionsPerDayContext();
   const today = dayjs().format("YYYY-MM-DD");
-  const [value, setValue] = React.useState<string>(today);
+  const [value, setValue] = React.useState<number>(days.length - 1);
   const divRef = React.useRef<HTMLDivElement>(null);
 
   const checkIfToday = (day: string) => {
     return day === today ? "today" : "";
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -48,7 +48,7 @@ const TabsDayOfMonth = ({ days }: { days: string[] }) => {
 
   useEffect(() => {
     if (divRef && divRef.current) {
-      divRef.current.scrollLeft = divRef.current.scrollWidth;
+      divRef.current.scrollTo({ left: divRef.current.scrollWidth, behavior: "smooth" });
     }
   }, [divRef]);
 

@@ -12,20 +12,38 @@ import dayjs from "dayjs";
 import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import TransactionActionButtons from "../widgets/buttons/TransactionActionButtons";
+import PeriodFilter from "../widgets/filters/PeriodFilter";
 import { useCategoryDetailContext } from "@/app/lib/contexts";
-import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 
 const CategoryTransactionsTable = ({ transactions }: { transactions: TransactionType[] }) => {
   const { groupByMonth } = useCategoryDetailContext();
 
+  const getFilterItems = () => {
+    const items: string[] = [];
+    if (groupByMonth) {
+      transactions.forEach((transaction) => {
+        const month = dayjs(transaction.due_date).format("MMMM");
+        if (!items.includes(month)) {
+          items.push(month);
+        }
+      });
+    } else {
+      transactions.forEach((transaction) => {
+        const week = dayjs(transaction.due_date).week().toString();
+        if (!items.includes(week)) {
+          items.push(week);
+        }
+      });
+    }
+    return items;
+  };
+
   return (
-    <PaperContainer>
+    <PaperContainer sx={{ width: "100%" }}>
       <PaperHeader title="Transações">
-        <Button variant="outlined" size="small" startIcon={<FilterListRoundedIcon />}>
-          Filtrar
-        </Button>
+        <PeriodFilter items={getFilterItems()} />
       </PaperHeader>
-      <TableContainer sx={{ maxHeight: "360px" }}>
+      <TableContainer sx={{ maxHeight: "480px" }}>
         <Table stickyHeader size="small" aria-label="simple table">
           <TableBody>
             {transactions &&

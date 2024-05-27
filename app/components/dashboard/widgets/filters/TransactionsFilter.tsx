@@ -15,7 +15,8 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
     if (search === "") {
       setFilteredTransactions(transactions);
     } else {
-      const filtered = transactions.filter((t) => t.description.toLowerCase().includes(search.toLowerCase()));
+      const filtered = transactions.filter((t) => t.description.toLowerCase().includes(search.toLowerCase()) 
+      || t.categories?.name.toLowerCase().includes(search.toLowerCase()));
       setFilteredTransactions(filtered);
     }
   };

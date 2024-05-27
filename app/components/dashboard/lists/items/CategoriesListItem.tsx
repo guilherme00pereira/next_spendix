@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
@@ -16,6 +15,7 @@ import {
   InfoActionButton,
   DangerActionButton,
   PrimaryActionButton,
+  RegularLink,
 } from "@/app/components/dashboard/commonStyledComponents";
 
 const getTypeColor = (type: string) => {
@@ -46,10 +46,6 @@ const ListItem = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const CategoryLink = styled(Link)(({ theme }) => ({
-  color: theme.vars.palette.text.primary,
-}));
-
 const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCategory }: ICategoryListItemProps) => {
   const router = useRouter();
 
@@ -61,9 +57,9 @@ const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCa
         </Box>
       )}
       <Box sx={{ flexGrow: 1 }}>
-        <CategoryLink href={`/dashboard/categories/${category.slug}`} underline="none" variant="subtitle2">
+        <RegularLink href={`/dashboard/categories/${category.slug}`} underline="none" variant="subtitle2">
           {category.name}
-        </CategoryLink>
+        </RegularLink>
       </Box>
       <Box sx={{ pr: "3em" }}>
         <Chip

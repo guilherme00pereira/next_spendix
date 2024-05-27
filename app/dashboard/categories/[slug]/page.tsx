@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
@@ -7,6 +7,7 @@ import ApexTransactionsTotalPerPeriodBarChart from "@/app/components/dashboard/c
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import CategoryDetailProvider from "@/app/lib/providers/CategoryDetailProvider";
 import CategoryDetailsPageSelect from "@/app/components/dashboard/surfaces/CategoryDetailsPageSelect";
+import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 
 async function fetchSpendingsCategories() {
   const res = await getCategories();
@@ -19,20 +20,16 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
   const transactions = (await getTransactionsByCategoriesLastSixMonths(category.id)) as TransactionType[];
   const spendingsCategories = await fetchSpendingsCategories();
 
-  
-
   return (
     <PageContainer title={`Categoria ${title}`}>
       <CategoryDetailProvider>
-        <CategoryDetailsPageSelect categories={spendingsCategories} />
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={12} md={6}>
-            {transactions && <CategoryTransactionsTable transactions={transactions} />}
-          </Grid>
-          <Grid item xs={12} md={6}>
+        <PageTopCard>
+          <CategoryDetailsPageSelect categories={spendingsCategories} />
+        </PageTopCard>
+        <Stack direction={{xs: "column", md: "row"}} justifyContent="center" alignItems="start" spacing={2}>
             {transactions.length > 0 && <ApexTransactionsTotalPerPeriodBarChart transactions={transactions} />}
-          </Grid>
-        </Grid>
+            {transactions && <CategoryTransactionsTable transactions={transactions} />}
+        </Stack>
       </CategoryDetailProvider>
     </PageContainer>
   );

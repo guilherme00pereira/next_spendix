@@ -1,6 +1,3 @@
-import dayjs from "dayjs";
-
-
 export const CategoryTypeDict = [
     {
         value: 'Despesa',
