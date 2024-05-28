@@ -4,7 +4,6 @@ import { getPayedTransactions, getTransactions } from "@/app/lib/actions/transac
 import dayjs from "dayjs";
 import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
 import Stack from "@mui/material/Stack";
-import { getCategories } from "@/app/lib/supabase/methods/categories";
 import TransactionsFilter from "@/app/components/dashboard/widgets/filters/TransactionsFilter";
 import TransactionsTableFilterProvider from "@/app/lib/providers/TransactionsTableFilterProvider";
 import TransactionRows from "@/app/components/dashboard/tables/rows/TransactionRows";
@@ -14,7 +13,7 @@ import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/Transact
 const AllTransactions = async ({searchParams}: {searchParams: { [key: string]: string | string[] | undefined }}) => {
   const startDate = searchParams.date ? dayjs(searchParams.date as string).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");
   const endDate = searchParams.date ? dayjs(searchParams.date as string).endOf("M").format("YYYY-MM-DD") : dayjs().endOf("M").format("YYYY-MM-DD");
-  const transactions = await getPayedTransactions(startDate, endDate);
+  const transactions = searchParams.due_date ? await getTransactions(startDate, endDate) : await getPayedTransactions(startDate, endDate);
 
 
   const totalIncome = transactions

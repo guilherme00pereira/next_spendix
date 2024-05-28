@@ -30,7 +30,7 @@ const TransactionRows = ({ transactions }: { transactions: TransactionType[] }) 
             </TableCell>
             <TableCell>{transaction.description}</TableCell>
             <TableCell>
-              <TransactionActionButtons transaction={transaction} />
+              <TransactionActionButtons transaction={transaction} showDelete />
             </TableCell>
           </TableRow>
         ))}

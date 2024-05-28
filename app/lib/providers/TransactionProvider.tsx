@@ -2,16 +2,18 @@
 import React, { useState } from "react";
 import { TransactionContext } from "@/app/lib/contexts";
 import { TransactionType } from "@/types/entities";
-import { IRemovableEntity } from "@/types/interfaces";
+import { IRemovableTransaction } from "@/types/interfaces";
 
 const TransactionProvider = ({ children }: { children: React.ReactNode }) => {
     const [selectedTransaction, setSelectedTransaction] = useState<TransactionType>({} as TransactionType);
     const [toggleTransactionDetail, setToggleTransactionDetail] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
-    const [removableTransaction, setRemovableTransaction] = useState<IRemovableEntity>({
+    const [removableTransaction, setRemovableTransaction] = useState<IRemovableTransaction>({
         id: 0,
         name: "",
         type: "transação",
+        payment_id: null,
+        amount: 0,
     });
 
 
@@ -24,8 +26,8 @@ const TransactionProvider = ({ children }: { children: React.ReactNode }) => {
             actionShowTransactionDetail: setToggleTransactionDetail,
             openConfirm,
             setOpenConfirm,
-            removableObject: removableTransaction,
-            setRemovableObject: setRemovableTransaction,
+            removableTransaction,
+            setRemovableTransaction,
           }}
         >
             {children}

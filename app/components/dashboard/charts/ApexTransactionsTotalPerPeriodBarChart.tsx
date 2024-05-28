@@ -1,9 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
-import Button from "@mui/material/Button";
 import Chart from "react-apexcharts";
 import { ChartBarType } from "@/types/chart-types";
-import { CategoryType, TransactionType } from "@/types/entities";
+import { TransactionType } from "@/types/entities";
 import { PaperContainer, PaperHeaderButton } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import { useColorScheme } from "@mui/material";

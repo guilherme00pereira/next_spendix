@@ -1,16 +1,23 @@
-'use client';
+"use client";
 import React from "react";
 import { useTransactionContext } from "@/app/lib/contexts";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { TransactionType } from "@/types/entities";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { InfoActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
+import { DangerActionButton, InfoActionButton, PrimaryActionButton } from "@/app/components/dashboard/commonStyledComponents";
 import Stack from "@mui/material/Stack";
 
-const TransactionActionButtons = ({transaction}: {transaction: TransactionType}) => {
+const TransactionActionButtons = ({ transaction, showDelete }: { transaction: TransactionType; showDelete?: boolean }) => {
   const { setTransaction, actionShowTransactionDialog, setIncome, actionShowIncomeDialog } = useSpeedDialStore();
-  const { actionShowTransactionDetail, setSelectedTransaction } = useTransactionContext();
+  const { actionShowTransactionDetail, setSelectedTransaction, openConfirm, setOpenConfirm, removableTransaction, setRemovableTransaction } =
+    useTransactionContext();
+
+  const handleConfirmDelete = () => {
+    setRemovableTransaction({ ...removableTransaction, id: transaction.id, name: transaction.description });
+    setOpenConfirm(true);
+  };
 
   const handleEdit = (t: TransactionType) => {
     const obj = {
@@ -52,6 +59,11 @@ const TransactionActionButtons = ({transaction}: {transaction: TransactionType})
       <InfoActionButton size="small" variant="text" onClick={() => handleEdit(transaction)}>
         <EditOutlinedIcon />
       </InfoActionButton>
+      {showDelete && (
+        <DangerActionButton size="small" variant="text" onClick={handleConfirmDelete}>
+          <DeleteOutlinedIcon />
+        </DangerActionButton>
+      )}
     </Stack>
   );
 };

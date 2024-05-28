@@ -230,6 +230,7 @@ export function createComponents() {
                     fontSize: 14,
                     fontWeight: 500,
                     lineHeight: '24px',
+                    padding: '6px 14px'
                 },
                 notchedOutline: {
                     borderColor: neutral[200],

@@ -34,6 +34,11 @@ export interface IRemovableEntity {
     type: string,
 }
 
+export interface IRemovableTransaction extends IRemovableEntity {
+    payment_id: number | null;
+    amount: number;
+}
+
 export interface IDeleteTransactionData {
     id: number;
     payment_id: number | null;
@@ -63,11 +68,15 @@ interface IDeletableObjectContextData {
     setOpenConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
-export interface ITransactionContextData extends IDeletableObjectContextData{
+export interface ITransactionContextData {
     selectedTransaction: TransactionType;
     setSelectedTransaction: Dispatch<SetStateAction<TransactionType>>;
     showTransactionDetail: boolean;
     actionShowTransactionDetail: (action: boolean) => void;
+    removableTransaction: IRemovableTransaction;
+    setRemovableTransaction: Dispatch<SetStateAction<IRemovableTransaction>>;
+    openConfirm: boolean;
+    setOpenConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ITransactionsPerDayContextData {

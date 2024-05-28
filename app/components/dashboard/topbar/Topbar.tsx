@@ -27,7 +27,7 @@ const AppBar = styled(MuiAppBar, {
     backgroundColor: theme.vars.palette.background.paper,
     color: theme.vars.palette.text.primary,
     "& .MuiSvgIcon-root": {
-      color: theme.vars.palette.primary.main,
+      color: theme.vars.palette.action,
     },
     left: open ? "0px" : "52px",
     width: open ? `calc(100% - 240px)` : `calc(100% - 52px)`,

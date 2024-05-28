@@ -15,13 +15,13 @@ const OverdueTransactions = async () => {
 
   return (
     <PageContainer title="Lista de Transações do mês">
-      <Stack direction="column" justifyContent="center">
         <TransactionsTableFilterProvider>
-          <TransactionsTable filters={<TransactionsFilter transactions={transactions} />}>
+        <Stack sx={{width: "90%"}} justifyContent="center">
+          <TransactionsTable>
             <OverdueTransactionRows transactions={transactions} />
           </TransactionsTable>
+          </Stack>
         </TransactionsTableFilterProvider>
-      </Stack>
     </PageContainer>
   );
 };

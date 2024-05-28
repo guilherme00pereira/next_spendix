@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 
 const PageTopCard = ({ children }: { children: React.ReactNode }) => {
   return (
-    <PaperContainer sx={{ width: "100%", mb: 4 }}>
+    <PaperContainer sx={{ width: "100%", marginBottom: "24px !important" }}>
       <Stack direction="row" justifyContent="center" alignItems="center">
         {children}
       </Stack>

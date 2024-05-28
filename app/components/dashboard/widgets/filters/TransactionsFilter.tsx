@@ -1,13 +1,18 @@
 "use client";
 import React from "react";
+import { usePathname, useParams } from "next/navigation";
 import Stack from "@mui/material/Stack";
-import { FormControl, IconButton, OutlinedInput } from "@mui/material";
+import { FormControl, OutlinedInput } from "@mui/material";
 import { useTransactionsTableFilterContext } from "@/app/lib/contexts";
 import { TransactionType } from "@/types/entities";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { PaperHeaderButton } from "../../commonStyledComponents";
+import SyncRoundedIcon from "@mui/icons-material/SyncRounded";
 
 const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] }) => {
   const { setFilteredTransactions } = useTransactionsTableFilterContext();
+  const pathname = usePathname();
+  const params = useParams();
   
   const searchTransaction = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const search = (e.target as HTMLInputElement).value;
@@ -21,7 +26,7 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
   };
   
     return (
-      <Stack direction="row">
+      <Stack direction="row" alignItems="center" spacing={2}>
         <FormControl>
           <OutlinedInput
             id="search"
@@ -34,6 +39,15 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
             }
           />
         </FormControl>
+        <PaperHeaderButton
+          variant="outlined"
+          size="small"
+          color="primary"
+          href={pathname + (params.due_date ? "" : "?due_date=true")}
+          startIcon={<SyncRoundedIcon />}
+        >
+          Listar por {params.due_date ? "data pagamento" : "data devida"} 
+        </PaperHeaderButton>
       </Stack>
     );
   };
