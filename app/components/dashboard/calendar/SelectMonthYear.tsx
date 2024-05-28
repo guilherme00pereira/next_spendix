@@ -8,12 +8,10 @@ import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 
 const DateSelector = styled(Stack)(({ theme }) => ({
-  borderRadius: "0.5em",
-  border: "1px solid",
-  width: "fit-content",
+  borderBottom: "1px solid",
+  borderTop: "1px solid",
   borderColor: theme.palette.primary.main,
   padding: "0.25em",
-  height: "40px",
 }));
 
 const SelectMonthYear = () => {
@@ -32,11 +30,11 @@ const SelectMonthYear = () => {
     <Stack direction="row" justifyContent="center" spacing={2} sx={{width: "100%"}}>
       <DateSelector direction="row" justifyContent="center" alignItems="center">
         <IconButton href={`/dashboard/transactions/all?date=${prevLink}`}>
-          <ArrowCircleLeftRoundedIcon color="primary" />
+          <ArrowCircleLeftRoundedIcon />
         </IconButton>
-        <Typography fontSize="14px">{dayjs(date).format("MMMM [/] YYYY")}</Typography>
+        <Typography fontSize="18px">{dayjs(date).format("MMMM [/] YYYY")}</Typography>
         <IconButton href={`/dashboard/transactions/all?date=${nextLink}`}>
-          <ArrowCircleRightRoundedIcon color="primary" />
+          <ArrowCircleRightRoundedIcon />
         </IconButton>
       </DateSelector>
     </Stack>

@@ -203,3 +203,9 @@ export interface IPaperHeaderBadgeType {
 export interface IPaperHeaderSettingsType {
     buttonAction: () => void;
 }
+
+export interface ITransactionTopPageInfoProps {
+    income: number;
+    spendings: number;
+    showDataSelector: boolean;
+}

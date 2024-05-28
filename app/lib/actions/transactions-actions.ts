@@ -49,16 +49,17 @@ export const getTransactions = unstable_cache(
 );
 
 export const getPayedTransactions = unstable_cache(
-  async (initial_date: string) => {
+  async (initial_date: string, final_date: string) => {
     const { data, error } = await supabase
       .from("transactions")
       .select(getInnerPaymentsQuery)
       .eq("draft", false)
-      .gte("payments.date", initial_date);
+      .gte("payments.date", initial_date)
+      .lte("payments.date", final_date);
     if (error) {
       throw error;
     }
-    return data;
+    return data as TransactionType[];
   },
   ["get_payed_transactions"]
 );

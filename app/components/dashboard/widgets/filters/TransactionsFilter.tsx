@@ -2,9 +2,9 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import { FormControl, IconButton, OutlinedInput } from "@mui/material";
-import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import { useTransactionsTableFilterContext } from "@/app/lib/contexts";
 import { TransactionType } from "@/types/entities";
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] }) => {
   const { setFilteredTransactions } = useTransactionsTableFilterContext();
@@ -19,10 +19,6 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
       setFilteredTransactions(filtered);
     }
   };
-
-  const handleResetSearch = () => {
-    setFilteredTransactions(transactions);
-  }
   
     return (
       <Stack direction="row">
@@ -34,9 +30,7 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
             fullWidth
             onChange={(e) => searchTransaction(e)}
             endAdornment={
-              <IconButton onClick={handleResetSearch}>
-                <FilterListRoundedIcon color="primary" fontSize="small" />
-              </IconButton>
+              <SearchOutlinedIcon color="action" fontSize="small" />
             }
           />
         </FormControl>

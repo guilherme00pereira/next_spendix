@@ -47,6 +47,7 @@ const TransactionsPerDayListItems = ({ transactions }: { transactions: Map<strin
               variant="body1"
               color={transaction.categories?.type == "Receita" ? "success.dark" : "error.dark"}
             >
+              {transaction.categories?.type == "Receita" ? "+ " : "- "}
               {amountFormatter(transaction.payments?.amount ?? transaction.amount)}
             </Typography>
           </Box>

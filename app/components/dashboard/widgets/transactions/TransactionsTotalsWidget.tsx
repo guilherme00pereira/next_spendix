@@ -17,15 +17,17 @@ interface ITransactionsTotalsWidgetProps {
 }
 
 const Widget = styled(Card)(({ theme }) => ({
-  height: "80px",
-  borderRadius: "8px",
-  padding: "12px",
+
+  borderLeft: "2px solid",
+  padding: "8px 0 8px 36px",
+  borderRadius: "0px",
+  borderColor: alpha(theme.palette.text.primary, 0.12),
 }));
 
 const IconBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "income",
 })<{ income: boolean }>(({ theme, income }) => ({
-  borderRadius: "8px",
+  borderRadius: "4px",
   padding: "4px",
   backgroundColor: income ? theme.vars.palette.success.dark : theme.vars.palette.error.dark,
   color: "white",
@@ -34,11 +36,11 @@ const IconBox = styled(Box, {
 const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactionsTotalsWidgetProps) => {
   return (
     <Widget>
-      <Stack direction="row" justifyContent="space-around" alignItems="center">
+      <Stack direction="row" justifyContent="flex-start" alignItems="center">
         <IconBox income={income}>
           {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.25rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.25rem" }} />}
         </IconBox>
-        <Stack direction="column" alignItems="start">
+        <Stack direction="column" alignItems="start" sx={{pl: 3}}>
           <Box sx={{ fontSize: "0.75rem", color: "text.secondary" }}>{title}</Box>
           <Box sx={{ fontSize: "1.25rem", color: color }}>{amountFormatter(value)}</Box>
         </Stack>

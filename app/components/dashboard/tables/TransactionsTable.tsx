@@ -8,7 +8,7 @@ import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 const TransactionsTable = ({ children, filters }: {children: React.ReactNode, filters: React.ReactNode}) => {
   
   return (
-    <PaperContainer sx={{ width: "90%" }}>
+    <PaperContainer sx={{width: "100%"}}>
       <PaperHeader title="Transações">
         {filters}
       </PaperHeader>
