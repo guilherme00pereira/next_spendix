@@ -10,7 +10,8 @@ import {
   ISidebarContextData,
   ICategoryDetailContextData,
   ITransactionsFiltersContextData,
-} from "@/types/interfaces";
+  ICategoriesPageContextData,
+} from "@/types/context-interfaces";
 import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
@@ -34,20 +35,6 @@ export const useSidebarContext = () => {
 };
 
 export const TransactionContext = createContext<ITransactionContextData>({} as ITransactionContextData);
-export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>(
-  {} as ITransactionsPerDayContextData
-);
-export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>({} as ITransactionsFiltersContextData);
-export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
-export const CategoryDetailContext = createContext<ICategoryDetailContextData>({} as ICategoryDetailContextData);
-export const GroupContext = createContext<IGroupContextData>({} as IGroupContextData);
-export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>(
-  {} as IEditableObjectContextData<BankAccountType>
-);
-export const CreditCardContext = createContext<IEditableObjectContextData<CreditCardType>>(
-  {} as IEditableObjectContextData<CreditCardType>
-);
-export const TagContext = createContext<IEditableObjectContextData<TagType>>({} as IEditableObjectContextData<TagType>);
 
 export const useTransactionContext = () => {
   const context = useContext(TransactionContext);
@@ -57,6 +44,10 @@ export const useTransactionContext = () => {
   return context;
 };
 
+export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>(
+  {} as ITransactionsPerDayContextData
+);
+
 export const useTransactionsPerDayContext = () => {
   const context = useContext(TransactionsPerDayContext);
   if (!context) {
@@ -64,6 +55,10 @@ export const useTransactionsPerDayContext = () => {
   }
   return context;
 };
+
+export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>(
+  {} as ITransactionsFiltersContextData
+);
 
 export const useTransactionsTableFilterContext = () => {
   const context = useContext(TransactionsTableFilterContext);
@@ -73,6 +68,8 @@ export const useTransactionsTableFilterContext = () => {
   return context;
 };
 
+export const CategoryContext = createContext<ICateroryContextData>({} as ICateroryContextData);
+
 export const useCategoryContext = () => {
   const context = useContext(CategoryContext);
   if (!context) {
@@ -80,6 +77,8 @@ export const useCategoryContext = () => {
   }
   return context;
 };
+
+export const CategoryDetailContext = createContext<ICategoryDetailContextData>({} as ICategoryDetailContextData);
 
 export const useCategoryDetailContext = () => {
   const context = useContext(CategoryDetailContext);
@@ -89,6 +88,8 @@ export const useCategoryDetailContext = () => {
   return context;
 };
 
+export const GroupContext = createContext<IGroupContextData>({} as IGroupContextData);
+
 export const useGroupContext = () => {
   const context = useContext(GroupContext);
   if (!context) {
@@ -96,6 +97,11 @@ export const useGroupContext = () => {
   }
   return context;
 };
+
+
+export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>(
+  {} as IEditableObjectContextData<BankAccountType>
+);
 
 export const useBankAccountContext = () => {
   const context = useContext(BankAccountContext);
@@ -105,6 +111,11 @@ export const useBankAccountContext = () => {
   return context;
 };
 
+
+export const CreditCardContext = createContext<IEditableObjectContextData<CreditCardType>>(
+  {} as IEditableObjectContextData<CreditCardType>
+);
+
 export const useCreditCardContext = () => {
   const context = useContext(CreditCardContext);
   if (!context) {
@@ -113,10 +124,23 @@ export const useCreditCardContext = () => {
   return context;
 };
 
+
+export const TagContext = createContext<IEditableObjectContextData<TagType>>({} as IEditableObjectContextData<TagType>);
+
 export const useTagContext = () => {
   const context = useContext(TagContext);
   if (!context) {
     throw new Error("useTagContext must be used within a TagContextProvider");
+  }
+  return context;
+};
+
+export const CategoriesPageContext = createContext<ICategoriesPageContextData>({} as ICategoriesPageContextData);
+
+export const useCategoriesPageContext = () => {
+  const context = useContext(CategoriesPageContext);
+  if (!context) {
+    throw new Error("useCategoriesPageContext must be used within a CategoriesPageProvider");
   }
   return context;
 };

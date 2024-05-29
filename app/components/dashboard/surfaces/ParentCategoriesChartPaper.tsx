@@ -28,7 +28,9 @@ const ParentCategoriesChartPaper = async ({title}: {title:string}) => {
   const data = await fetchChartData();
   return (
     <PaperContainer>
-      <PaperHeader title={title} />
+      <PaperHeader title={title}>
+        
+      </PaperHeader>
       {data && <ApexParentCategoriesBarChart data={data} />}
     </PaperContainer>
   );

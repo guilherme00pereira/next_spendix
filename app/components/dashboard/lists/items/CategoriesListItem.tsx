@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -78,13 +77,6 @@ const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCa
             onClick={() => router.push(`/dashboard/categories/${category.slug}/transactions`)}
           >
             <BarChartOutlinedIcon />
-          </PrimaryActionButton>
-          <PrimaryActionButton
-            size="small"
-            variant="text"
-            onClick={() => router.push(`/dashboard/categories/${category.slug}`)}
-          >
-            <VisibilityOutlinedIcon />
           </PrimaryActionButton>
           <InfoActionButton size="small" variant="text" onClick={() => handleEdit(category.id)}>
             <EditOutlinedIcon />

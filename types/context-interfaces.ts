@@ -1,0 +1,70 @@
+import { Dispatch, SetStateAction } from "react";
+import { TransactionType, GroupType, GroupFormData } from "./entities";
+import { IRemovableEntity, IRemovableTransaction } from "./interfaces";
+
+export interface IEditableObjectContextData<T> {
+    editableObject: T;
+    setEditableObject: Dispatch<SetStateAction<T>>;
+}
+
+export interface IPageContextData {
+    showModal: boolean;
+    actionShowModal: (action: boolean) => void;
+    mediaQuery: string;
+}
+
+export interface ISidebarContextData {
+    openSidebar: boolean;
+    setOpenSidebar: (action: boolean) => void;
+}
+
+interface IDeletableObjectContextData {
+    removableObject: IRemovableEntity;
+    setRemovableObject: Dispatch<SetStateAction<IRemovableEntity>>;
+    openConfirm: boolean;
+    setOpenConfirm: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface ITransactionContextData {
+    selectedTransaction: TransactionType;
+    setSelectedTransaction: Dispatch<SetStateAction<TransactionType>>;
+    showTransactionDetail: boolean;
+    actionShowTransactionDetail: (action: boolean) => void;
+    removableTransaction: IRemovableTransaction;
+    setRemovableTransaction: Dispatch<SetStateAction<IRemovableTransaction>>;
+    openConfirm: boolean;
+    setOpenConfirm: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface ITransactionsPerDayContextData {
+    selectedDay: string;
+    setSelectedDay: Dispatch<SetStateAction<string>>;
+}
+
+export interface ITransactionsFiltersContextData {
+    filteredTransactions: TransactionType[];
+    setFilteredTransactions: Dispatch<SetStateAction<TransactionType[]>>;
+}
+
+export interface ICateroryContextData extends IDeletableObjectContextData{}
+
+export interface ICategoryDetailContextData extends IDeletableObjectContextData {
+    groupByMonth: boolean;
+    setGroupByMonth: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface IGroupContextData extends IDeletableObjectContextData {
+    selectedGroup: GroupType;
+    setSelectedGroup: Dispatch<SetStateAction<GroupType>>;
+    showGroupDialog: boolean;
+    setShowGroupDialog: (action: boolean) => void;
+    editableGroup: GroupFormData;
+    setEditableGroup: (g: GroupFormData) => void;
+    showChart: boolean;
+    setShowChart: (action: boolean) => void;
+}
+
+export interface ICategoriesPageContextData {
+    showChart: boolean;
+    setShowChart: (action: boolean) => void;
+}
