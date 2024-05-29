@@ -16,6 +16,7 @@ import {
   PrimaryActionButton,
   RegularLink,
 } from "@/app/components/dashboard/commonStyledComponents";
+import { useCategoriesPageContext } from "@/app/lib/contexts";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -47,6 +48,7 @@ const ListItem = styled(Stack)(({ theme }) => ({
 
 const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCategory }: ICategoryListItemProps) => {
   const router = useRouter();
+  const { setShowChart } = useCategoriesPageContext();
 
   return (
     <ListItem direction="row" justifyContent="space-between">

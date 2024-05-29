@@ -1,6 +1,6 @@
 import React from "react";
-import { PaperContainer } from "../commonStyledComponents";
-import PaperHeader from "./PaperHeader";
+import { PaperContainer } from "../../commonStyledComponents";
+import PaperHeader from "../PaperHeader";
 import { getExpenseCategoriesTransactionsSum } from "@/app/lib/supabase/methods/categories";
 import ApexCategoriesPieChart from "@/app/components/dashboard/charts/ApexCategoriesPieChart";
 import dayjs from "dayjs";

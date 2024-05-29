@@ -10,6 +10,7 @@ import { useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import CategoriesFilter from "@/app/components/dashboard/widgets/filters/CategoriesFilter";
+import CategoryProvider from "@/app/lib/providers/CategoryProvider";
 
 const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
@@ -36,40 +37,36 @@ const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   };
 
   const searchCategory = (search: string) => {
-      if (search === "") {
-        setFilteredCategories(categories);
-      } else {
-        setFilteredCategories(categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())));
-      }
+    if (search === "") {
+      setFilteredCategories(categories);
+    } else {
+      setFilteredCategories(categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())));
+    }
   };
 
   return (
-    <PaperContainer>
-      <PaperHeader title="Lista de categorias">
-        <CategoriesFilter action={searchCategory} />
-      </PaperHeader>
-      <Stack>
-        {filteredCategories.length > 0 &&
-          filteredCategories
-            .map((category) => (
-                <CategoriesListItem
-                  key={category.id}
-                  category={category}
-                  handleEdit={handleEdit}
-                  handleConfirmDelete={handleConfirmDelete}
-                />
+    <CategoryProvider>
+      <PaperContainer>
+        <PaperHeader title="Lista de categorias">
+          <CategoriesFilter action={searchCategory} />
+        </PaperHeader>
+        <Stack>
+          {filteredCategories.length > 0 &&
+            filteredCategories.map((category) => (
+              <CategoriesListItem key={category.id} category={category} handleEdit={handleEdit} handleConfirmDelete={handleConfirmDelete} />
             ))}
-      </Stack>
-      <ConfirmDeleteDialog
-        entity={removableObject}
-        open={openConfirm}
-        handleClose={setOpenConfirm}
-        handleDelete={() => {
-          removeCategory(removableObject.id);
-          setOpenConfirm(false);
-        }}
-      />
-    </PaperContainer>
+        </Stack>
+        <ConfirmDeleteDialog
+          entity={removableObject}
+          open={openConfirm}
+          handleClose={setOpenConfirm}
+          handleDelete={() => {
+            removeCategory(removableObject.id);
+            setOpenConfirm(false);
+          }}
+        />
+      </PaperContainer>
+    </CategoryProvider>
   );
 };
 

@@ -11,12 +11,12 @@ const ConfirmDeleteDialog = ({entity, open, handleClose, handleDelete}: IDeleteC
         <Dialog maxWidth="xs" open={open}>
             <DialogTitle>
                 <Typography variant="h6" component="div">
-                    Remover {entity.name}?
+                    Remover {entity?.name}?
                 </Typography>
             </DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>
-                    Deseja realmente remover o(a) {entity.type} `&quot;`{entity.name}`&quot;`?
+                    Deseja realmente remover o(a) {entity?.type} `&quot;`{entity?.name}`&quot;`?
                 </Typography>
             </DialogContent>
             <DialogActions>

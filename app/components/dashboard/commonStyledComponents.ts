@@ -20,6 +20,7 @@ export const DashboardTopCardContentRow = styled(Stack, {
 
 export const PaperContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
+  width: "100%",
 }));
 
 export const TransactionListItem = styled(Stack)(({ theme }) => ({

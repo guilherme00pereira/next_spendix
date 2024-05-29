@@ -4,7 +4,7 @@ import {darkBase, error, info, lightBase, neutral, primary, secondary, success, 
 export function createLightPalette() {
   return {
     action: {
-      active: neutral[500],
+      active: neutral[600],
       disabled: alpha(neutral[900], 0.38),
       disabledBackground: alpha(neutral[900], 0.12),
       focus: alpha(neutral[900], 0.16),
@@ -35,7 +35,7 @@ export function createLightPalette() {
 export function createDarkPalette() {
   return {
     action: {
-      active: neutral[500],
+      active: neutral[300],
       disabled: alpha(neutral[100], 0.38),
       disabledBackground: alpha(neutral[100], 0.12),
       focus: alpha(neutral[100], 0.16),

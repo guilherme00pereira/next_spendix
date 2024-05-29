@@ -6,13 +6,13 @@ import DashboardOverdueInvoices from "@/app/components/dashboard/widgets/home/Da
 import DashboardCardInvoices from "@/app/components/dashboard/widgets/home/DashboardCardInvoices";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
-import CategoriesPizzaChartPaper from "../components/dashboard/surfaces/CategoriesPizzaChartPaper";
+import CategoriesPizzaChartPaper from "../components/dashboard/surfaces/chart-papers/CategoriesPizzaChartPaper";
 
 const DashboardPage = () => {
 
   return (
     <PageContainer title="Dashboard" hideBreadcrumb>
-      <Grid container spacing={3} sx={{mb: 4}}>
+      {/* <Grid container spacing={3} sx={{mb: 4}}>
         <Grid item xs={12} md={3}>
           <DashboardTotalAmountAvailable />
         </Grid>
@@ -25,7 +25,7 @@ const DashboardPage = () => {
         <Grid item xs={12} md={3}>
           <DashboardTopCard title="New Card" bottomValue="0" loading={false}>Add text</DashboardTopCard>
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
             <CategoriesPizzaChartPaper title="Gastos por categoria no mês" />
