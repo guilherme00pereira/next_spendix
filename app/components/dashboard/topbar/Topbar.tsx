@@ -27,13 +27,13 @@ const AppBar = styled(MuiAppBar, {
     backgroundColor: theme.vars.palette.background.paper,
     color: theme.vars.palette.text.primary,
     "& .MuiSvgIcon-root": {
-      color: theme.vars.palette.primary.light,
+      color: theme.vars.palette.primary.main,
       [theme.getColorSchemeSelector("light")]: {
         color: theme.vars.palette.primary.dark,
       },
     },
     left: open ? "0px" : "52px",
-    width: open ? `calc(100% - 240px)` : `calc(100% - 52px)`,
+    width: open ? `calc(100% - 210px)` : `calc(100% - 52px)`,
   },
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {

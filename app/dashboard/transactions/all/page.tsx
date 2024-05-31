@@ -13,7 +13,7 @@ import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/Transact
 const AllTransactions = async ({searchParams}: {searchParams: { [key: string]: string | string[] | undefined }}) => {
   const startDate = searchParams.date ? dayjs(searchParams.date as string).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");
   const endDate = searchParams.date ? dayjs(searchParams.date as string).endOf("M").format("YYYY-MM-DD") : dayjs().endOf("M").format("YYYY-MM-DD");
-  const transactions = searchParams.due_date ? await getTransactions(startDate, endDate) : await getPayedTransactions(startDate, endDate);
+  const transactions = searchParams.due_date === "1" ? await getTransactions(startDate, endDate) : await getPayedTransactions(startDate, endDate);
 
 
   const totalIncome = transactions

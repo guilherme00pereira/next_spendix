@@ -32,7 +32,7 @@ const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
       </PaperHeaderButton>
       {showChart || (
         <PaperHeaderButton variant="outlined" size="small" onClick={() => setShowChart(true)} startIcon={<BarChartOutlinedIcon />}>
-          Show Categories Chart
+          Show Chart
         </PaperHeaderButton>
       )}
     </Stack>

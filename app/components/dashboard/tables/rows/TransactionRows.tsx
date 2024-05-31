@@ -6,6 +6,7 @@ import { TableRow, TableCell, TableBody, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import TransactionActionButtons from "@/app/components/dashboard/widgets/buttons/TransactionActionButtons";
 import { useTransactionsTableFilterContext } from "@/app/lib/contexts";
+import { RegularLink } from "@/app/components/dashboard/commonStyledComponents";
 
 const TransactionRows = ({ transactions }: { transactions: TransactionType[] }) => {
   const { filteredTransactions } = useTransactionsTableFilterContext();
@@ -18,7 +19,15 @@ const TransactionRows = ({ transactions }: { transactions: TransactionType[] }) 
         transactionsToRender.map((transaction: TransactionType) => (
           <TableRow key={transaction.id}>
             <TableCell align="center">{dayjs(transaction.due_date).format("DD/MM/YYYY")}</TableCell>
-            <TableCell>{transaction.categories?.name}</TableCell>
+            <TableCell>
+            <RegularLink
+              href={`/dashboard/categories/${transaction.categories?.slug}`}
+              underline="none"
+              variant="subtitle2"
+            >
+              {transaction.categories?.name}
+            </RegularLink>
+              </TableCell>
             <TableCell align="center">
             <Typography
               variant="body1"

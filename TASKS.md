@@ -1,36 +1,26 @@
-## New Features
+#TODO TASKS
 
-#### Supabase
+### PG categorias detalhes
 
-- Implementar autenticação com Google
+- grafico:
+    - preencher semana vazia/inexistente com 0
+    - possib. colocar por dia tbm
 
-##### Geral
-- ver possibilidade de usar o mesmo componente para botões de ver, editar e excluir
-- modal para icones
-- i18n
+- lista transações:
+    - colocar botão excluir transação
+    - filtro transações por período:
+        - colocar semana XX
+        - link clicavel para filtrar
 
-#### Home
+- top card:
+    - ver o q colocar
 
+### PG transações
 
-#### Cartão de crédito
-- box do cartão
-
-#### Categorias
-- campo metas 
-
-#### Grupos
-- função vincular categorias a grupo
-
-##### Dialogs
-- dialog transaction edit trazer as tags
-- ao add receita, campo data recebimento
-- dialog grupo com select de categorias
-- nova despesa:
-    - separar categorias em uma compra
-    - calculadora
-    - data vencimento com opções hoje, ontem e calendario
-    - meio de pagamento persist ultimo
-
-##### Charts
-- cores das barras
-- labels clicáveis
+- transações por dia:
+    - scroll to end
+    - refresh novo lançamento
+- grafico evolução por dia:
+    - passar o array para o chart
+- top card:
+    - definir 1° widget

@@ -9,11 +9,10 @@ import dayjs from "dayjs";
 import PaperHeaderLink from "../widgets/paper-header/PaperHeaderLink";
 import TabsDayOfMonth from "../calendar/TabsDayOfMonth";
 
-const TransactionsPerDayList = async ({ transactions }: { transactions: TransactionType[] }) => {
-  const mapped = groupTransactionsByDate(transactions);
+const TransactionsPerDayList = async ({ transactions }: { transactions: Map<string, TransactionType[]> }) => {
 
   const daysOfTheMonth = () => {
-    const existingDays = Array.from(mapped.keys());
+    const existingDays = Array.from(transactions.keys());
     const today = dayjs().format("YYYY-MM-DD");
     if (!existingDays.includes(today)) {
       existingDays.push(today);
@@ -22,15 +21,14 @@ const TransactionsPerDayList = async ({ transactions }: { transactions: Transact
   };
 
   return (
-    <PaperContainer sx={{ minHeight: "400px" }}>
+    <PaperContainer sx={{ minHeight: "400px", maxWidth: "50%" }}>
       <PaperHeader title="Transações realizadas no mês / dia">
         <PaperHeaderLink text="Ver todas" target="/dashboard/transactions/all" />
       </PaperHeader>
       <Stack>
         <TransactionsPerDayProvider>
-          {/* <SelectDayOfMonth days={daysOfTheMonth()} /> */}
           <TabsDayOfMonth days={daysOfTheMonth()} />
-          <TransactionsPerDayListItems transactions={mapped} />
+          <TransactionsPerDayListItems transactions={transactions} />
       </TransactionsPerDayProvider>
       </Stack>
     </PaperContainer>
