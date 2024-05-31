@@ -17,6 +17,16 @@ const getCategories = unstable_cache(async () => {
   return data;
 }, ["get_categories"]);
 
+const getCategoriesWithStats = async () => {
+  const { data, error } = await supabase
+    .from("categories_with_stats")
+    .select("*")
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
 const getSingleCategory = async (slug: string) => {
   const { data, error } = await supabase.from("categories").select("*").eq("slug", slug);
   if (error) {
@@ -77,6 +87,7 @@ const removeCategory = async (id: number) => {
 
 export {
   getCategories,
+  getCategoriesWithStats,
   getSingleCategory,
   addCategory,
   editCategory,

@@ -115,4 +115,6 @@ export const error = withAlphas({
 export const chartColors = {
   lightThemeLabel: '#333333',
   darkThemeLabel: '#BEBFBF',
+  spendingColor: error.dark,
+  incomeColor: success.dark,
 }

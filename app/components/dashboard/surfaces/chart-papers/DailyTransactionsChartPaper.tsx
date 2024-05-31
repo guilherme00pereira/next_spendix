@@ -1,14 +1,14 @@
 import React from 'react';
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
-import { ChartBarType } from '@/types/chart-types';
-import ApexDailyTransactionsChart from '../../charts/ApexDailyTransactionsChart';
+import ApexDailyTransactionsChart from '@/app/components/dashboard/charts/ApexDailyTransactionsLineChart';
+import { ApexDailyTransactionsChartProps } from '@/types/interfaces';
 
-const DailyTransactionsChartPaper = ({ data }: { data: ChartBarType[] }) => {
+const DailyTransactionsChartPaper = (props: ApexDailyTransactionsChartProps) => {
     return (
-        <PaperContainer>
+        <PaperContainer sx={{ minHeight: "400px", maxWidth: "50%" }}>
           <PaperHeader title="Evolução por dia" />
-            <ApexDailyTransactionsChart data={data} />
+            <ApexDailyTransactionsChart {...props}  />
         </PaperContainer>
     );
 };

@@ -11,6 +11,11 @@ export type CategoryType = {
     groups: GroupType[] | null;
 }
 
+export type CategoryWithStatsType = CategoryType & {
+    current_balance: number;
+    last_balance: number;
+}
+
 export type PaymentType = {
     id: number;
     date: string;

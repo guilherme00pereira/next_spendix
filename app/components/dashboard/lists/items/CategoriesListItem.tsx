@@ -63,6 +63,9 @@ const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCa
         </RegularLink>
       </Box>
       <Box sx={{ pr: "3em" }}>
+        {category.current_balance}
+      </Box>
+      <Box sx={{ pr: "3em" }}>
         <Chip
           label={category.type}
           size="small"

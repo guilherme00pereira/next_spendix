@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
-import { getCategories } from "@/app/lib/supabase/methods/categories";
-import { CategoryType } from "@/types/entities";
+import { getCategories, getCategoriesWithStats } from "@/app/lib/supabase/methods/categories";
+import { CategoryWithStatsType } from "@/types/entities";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import ChooseIconDialog from "@/app/components/dashboard/dialogs/ChooseIconDialog";
 import CategoriesList from "@/app/components/dashboard/lists/CategoriesList";
@@ -29,14 +29,14 @@ async function fetchChartData() {
 }
 
 const CategoriesPage = async () => {
-  const categories = await getCategories();
+  const categories = await getCategoriesWithStats();
   const chartData = await fetchChartData();
 
   return (
     <PageContainer title="Categorias">
       <CategoriesPageProvider>
         <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
-          {categories && <CategoriesList categories={categories as CategoryType[]} />}
+          {categories && <CategoriesList categories={categories as CategoryWithStatsType[]} />}
           <CategoriesChartPaper title="Despesas por categorias no mês" data={chartData} />
         </Stack>
         <ChooseIconDialog />

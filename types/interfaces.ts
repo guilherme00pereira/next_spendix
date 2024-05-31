@@ -6,9 +6,11 @@ import {
     TransactionFormData,
     BankAccountType,
     GroupType,
-    TagType
+    TagType,
+    CategoryWithStatsType
 } from "@/types/entities";
 import React, {Dispatch, SetStateAction} from "react";
+import { ChartBarType } from "@/types/chart-types";
 
 export interface ISelectOption {
     value: string;
@@ -86,7 +88,7 @@ export interface ICategoryListProps {
 }
 
 export interface ICategoryListItemProps {
-    category: CategoryType;
+    category: CategoryWithStatsType;
     handleEdit: (id: number) => void;
     handleConfirmDelete: (id: number, name: string) => void;
     isSubCategory?: boolean;
@@ -155,3 +157,8 @@ export interface ITransactionTopPageInfoProps {
     spendings: number;
     showDataSelector: boolean;
 }
+
+export interface ApexDailyTransactionsChartProps {
+    incomeData: ChartBarType[];
+    spendingsData: ChartBarType[];
+  }

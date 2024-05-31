@@ -3,13 +3,8 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import LoginForm from "@/app/components/auth/LoginForm";
-import RegisterForm from "./RegisterForm";
-
-export enum AuthType {
-  LOGIN,
-  REGISTER,
-  FORGOT_PASSWORD,
-}
+import RegisterForm from "@/app/components/auth/RegisterForm";
+import { AuthType } from "@/types/enums";
 
 export interface IAuthContainerProps {
   handler: React.Dispatch<React.SetStateAction<AuthType>>;

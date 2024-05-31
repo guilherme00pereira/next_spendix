@@ -170,6 +170,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "group_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories_with_stats"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "group_categories_group_id_fkey"
             columns: ["group_id"]
             isOneToOne: false
@@ -455,11 +462,59 @@ export type Database = {
             referencedRelation: "categories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "transactions_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories_with_stats"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      categories_with_stats: {
+        Row: {
+          color: string | null
+          current_balance: number | null
+          goal: number | null
+          goal_type: Database["public"]["Enums"]["goal_value_type"] | null
+          icon: string | null
+          id: number | null
+          last_balance: number | null
+          name: string | null
+          parent: number | null
+          slug: string | null
+          type: Database["public"]["Enums"]["category_type"] | null
+        }
+        Insert: {
+          color?: string | null
+          current_balance?: never
+          goal?: number | null
+          goal_type?: Database["public"]["Enums"]["goal_value_type"] | null
+          icon?: string | null
+          id?: number | null
+          last_balance?: never
+          name?: string | null
+          parent?: number | null
+          slug?: string | null
+          type?: Database["public"]["Enums"]["category_type"] | null
+        }
+        Update: {
+          color?: string | null
+          current_balance?: never
+          goal?: number | null
+          goal_type?: Database["public"]["Enums"]["goal_value_type"] | null
+          icon?: string | null
+          id?: number | null
+          last_balance?: never
+          name?: string | null
+          parent?: number | null
+          slug?: string | null
+          type?: Database["public"]["Enums"]["category_type"] | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       total_available_amount: {

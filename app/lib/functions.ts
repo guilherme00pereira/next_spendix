@@ -3,7 +3,7 @@ import { latinCharacters } from "./data";
 import { getAllPaymentMethods } from "./supabase/methods/payment-methods";
 import { ChartBarType } from "@/types/chart-types";
 
-const amountFormatter = (v: number) => {
+export const amountFormatter = (v: number) => {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -11,7 +11,7 @@ const amountFormatter = (v: number) => {
   }).format(v);
 };
 
-const convertNameToSlug = (name: string) => {
+export const convertNameToSlug = (name: string) => {
   name = name
     .split("")
     .map((char) => latinCharacters[char] || char)
@@ -24,7 +24,7 @@ const convertNameToSlug = (name: string) => {
     .replace(/^-+|-+$/g, "");
 };
 
-const groupTransactionsByDate = (transactions: TransactionType[]) => {
+export const groupTransactionsByDate = (transactions: TransactionType[]) => {
   const groups = new Map<string, TransactionType[]>();
   transactions.forEach((t) => {
     if (t.payments) {
@@ -44,14 +44,14 @@ const groupTransactionsByDate = (transactions: TransactionType[]) => {
   return new Map([...groups].sort());
 };
 
-const mapTransactionsToChart = (map: Map<string, TransactionType[]>) => {
+export const mapDailyTransactionsToChart = (map: Map<string, TransactionType[]>, type: string) => {
   const chartData: ChartBarType[] = [];
   map.forEach((transactions, day) => {
     const value = transactions.reduce((acc, curr) => {
-      return curr.categories?.type == "Despesa" ? acc + curr.amount : 0;
+      return curr.categories?.type === type ? acc + curr.amount : acc;
     }, 0);
     chartData.push({
-      name: day.substring(8, 10),
+      name: day,
       value: value,
       label: "",
     });
@@ -59,12 +59,12 @@ const mapTransactionsToChart = (map: Map<string, TransactionType[]>) => {
   return chartData;
 };
 
-const buildSelectPaymentMethods = async () => {
+export const buildSelectPaymentMethods = async () => {
   const res = await getAllPaymentMethods();
   return convertPaymentMethodsToSelect(res);
 };
 
-const convertPaymentMethodsToSelect = (payment_methods: any) => {
+export const convertPaymentMethodsToSelect = (payment_methods: any) => {
   return payment_methods.map((pm: any) => {
     if (pm.credit_cards) {
       return {
@@ -81,16 +81,6 @@ const convertPaymentMethodsToSelect = (payment_methods: any) => {
   });
 };
 
-const serializeToServeActions = (data: any) => {
+export const serializeToServeActions = (data: any) => {
   return JSON.parse(JSON.stringify(data));
-};
-
-export {
-  amountFormatter,
-  groupTransactionsByDate,
-  mapTransactionsToChart,
-  convertPaymentMethodsToSelect,
-  convertNameToSlug,
-  buildSelectPaymentMethods,
-  serializeToServeActions,
 };

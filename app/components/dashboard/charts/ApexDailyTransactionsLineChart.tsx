@@ -2,9 +2,9 @@
 import Chart from "react-apexcharts";
 import { useColorScheme } from "@mui/material";
 import { chartColors } from "@/theme/colors";
-import { ChartBarType } from "@/types/chart-types";
+import { ApexDailyTransactionsChartProps } from "@/types/interfaces";
 
-const ApexDailyTransactionsChart = ({ data }: { data: ChartBarType[] }) => {
+const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTransactionsChartProps) => {
   return (
     <Chart
       options={{
@@ -12,6 +12,9 @@ const ApexDailyTransactionsChart = ({ data }: { data: ChartBarType[] }) => {
           id: "daily-line",
           toolbar: {
             show: false,
+          },
+          zoom: {
+            enabled: false,
           },
         },
         yaxis: {
@@ -26,7 +29,7 @@ const ApexDailyTransactionsChart = ({ data }: { data: ChartBarType[] }) => {
           },
         },
         xaxis: {
-          type: "datetime",
+          type: "category",
         },
         stroke: {
           curve: "smooth",
@@ -34,8 +37,14 @@ const ApexDailyTransactionsChart = ({ data }: { data: ChartBarType[] }) => {
       }}
       series={[
         {
-          name: "series-1",
-          data: data.map((item) => item.value),
+          name: "gastos por dia",
+          data: spendingsData.map((item) => item.value),
+          color: chartColors.spendingColor,
+        },
+        {
+          name: "receitas por dia",
+          data: incomeData.map((item) => item.value),
+          color: chartColors.incomeColor,
         },
       ]}
       height="350"

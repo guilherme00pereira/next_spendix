@@ -2,7 +2,7 @@
 import React from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
-import { CategoryType } from "@/types/entities";
+import { CategoryWithStatsType } from "@/types/entities";
 import { Stack } from "@mui/system";
 import CategoriesListItem from "./items/CategoriesListItem";
 import { useSpeedDialStore } from "@/app/lib/store";
@@ -12,10 +12,10 @@ import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDelet
 import CategoriesFilter from "@/app/components/dashboard/widgets/filters/CategoriesFilter";
 import CategoryProvider from "@/app/lib/providers/CategoryProvider";
 
-const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
+const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
   const { openConfirm, setOpenConfirm, removableObject, setRemovableObject } = useCategoryContext();
-  const [filteredCategories, setFilteredCategories] = React.useState<CategoryType[]>(categories);
+  const [filteredCategories, setFilteredCategories] = React.useState<CategoryWithStatsType[]>(categories);
 
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableObject({ ...removableObject, id, name });
@@ -24,7 +24,7 @@ const CategoriesList = ({ categories }: { categories: CategoryType[] }) => {
 
   const handleEdit = (id: number) => {
     actionShowCategoryDialog(true);
-    const c = categories?.filter((category) => category.id === id)[0] ?? ({} as CategoryType);
+    const c = categories?.filter((category) => category.id === id)[0] ?? ({} as CategoryWithStatsType);
     setCategory({
       id,
       name: c.name ?? "",
