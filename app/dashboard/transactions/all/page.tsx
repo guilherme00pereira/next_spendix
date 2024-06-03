@@ -25,10 +25,10 @@ const AllTransactions = async ({searchParams}: {searchParams: { [key: string]: s
     .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
 
   return (
-    <PageContainer title="Lista de Transações por mês">
+    <PageContainer title="Lista de Transações por mês" showSelectMonthYear>
       <TransactionsTableFilterProvider>
         <PageTopCard>
-          <TransactionTopPageInfo income={totalIncome} spendings={totalExpense} />
+          <TransactionTopPageInfo income={totalIncome} paid={totalExpense} spendings={totalExpense} />
         </PageTopCard>
         <Stack direction={{ xs: "column", md: "row" }} sx={{width: "100%"}} justifyContent="center">
           <TransactionsTable filters={<TransactionsFilter transactions={transactions} />}>

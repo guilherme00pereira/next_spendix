@@ -52,7 +52,6 @@ export type Database = {
           icon: string | null
           id: number
           name: string
-          parent: number | null
           slug: string
           type: Database["public"]["Enums"]["category_type"]
         }
@@ -63,7 +62,6 @@ export type Database = {
           icon?: string | null
           id?: number
           name: string
-          parent?: number | null
           slug?: string
           type?: Database["public"]["Enums"]["category_type"]
         }
@@ -74,7 +72,6 @@ export type Database = {
           icon?: string | null
           id?: number
           name?: string
-          parent?: number | null
           slug?: string
           type?: Database["public"]["Enums"]["category_type"]
         }
@@ -483,7 +480,6 @@ export type Database = {
           icon: string | null
           id: number | null
           name: string | null
-          parent: number | null
           previous_balance: number | null
           slug: string | null
           type: Database["public"]["Enums"]["category_type"] | null
@@ -497,7 +493,6 @@ export type Database = {
           icon?: string | null
           id?: number | null
           name?: string | null
-          parent?: number | null
           previous_balance?: never
           slug?: string | null
           type?: Database["public"]["Enums"]["category_type"] | null
@@ -511,7 +506,6 @@ export type Database = {
           icon?: string | null
           id?: number | null
           name?: string | null
-          parent?: number | null
           previous_balance?: never
           slug?: string | null
           type?: Database["public"]["Enums"]["category_type"] | null

@@ -4,7 +4,6 @@ export type CategoryType = {
     id: number;
     name: string;
     slug: string;
-    parent: number | null;
     type: "Receita" | "Despesa" | "Transacao";
     color: string | null;
     icon: string | null;
@@ -47,7 +46,6 @@ export type CategoryFormData = {
     id?: number;
     name: string;
     slug: string;
-    parent: number | null;
     color: string | null;
     icon: string | null;
     type: "Receita" | "Despesa" | "Transacao";

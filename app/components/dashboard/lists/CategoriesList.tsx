@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { CategoryWithStatsType } from "@/types/entities";
@@ -16,7 +16,7 @@ import { ShowChart } from "@mui/icons-material";
 const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
   const { openConfirm, setOpenConfirm, removableObject, setRemovableObject } = useCategoryContext();
-  const [filteredCategories, setFilteredCategories] = React.useState<CategoryWithStatsType[]>(categories);
+  const [filterableCategories, setFilterableCategories] = React.useState<CategoryWithStatsType[]>(categories);
   const { showChart } = useCategoriesPageContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
@@ -31,7 +31,6 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
       id,
       name: c.name ?? "",
       type: c.type ?? "Receita",
-      parent: c.parent ?? 0,
       color: c.color ?? null,
       icon: c.icon ?? null,
       slug: c.slug ?? "",
@@ -40,11 +39,15 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
 
   const searchCategory = (search: string) => {
     if (search === "") {
-      setFilteredCategories(categories);
+      setFilterableCategories(categories);
     } else {
-      setFilteredCategories(categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())));
+      setFilterableCategories(categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())));
     }
   };
+
+  useEffect(() => {
+    console.log(filterableCategories.filter((c) => c.active));
+  }, []);
 
   return (
     <CategoryProvider>
@@ -53,8 +56,8 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
           <CategoriesFilter action={searchCategory} />
         </PaperHeader>
         <Stack>
-          {filteredCategories.length > 0 &&
-            filteredCategories.map((category) => (
+          {filterableCategories.length > 0 &&
+            filterableCategories.map((category) => (
               <CategoriesListItem key={category.id} category={category} handleEdit={handleEdit} handleConfirmDelete={handleConfirmDelete} />
             ))}
         </Stack>

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import TrendingFlatOutlinedIcon from "@mui/icons-material/TrendingFlatOutlined";
 import TrendingDownOutlinedIcon from "@mui/icons-material/TrendingDownOutlined";
@@ -21,9 +21,9 @@ const TrendComponent = ({ diff, color, children }: TrendComponentProps) => {
     );
 }
 
-const TrendSignal = ({ current, previous }: { current?: number; previous?: number }) => {
+const TrendSignal = ({ current, previous }: { current: number | null; previous: number | null }) => {
   if (!current || !previous) return null;
-  const diff = useMemo(() => calculatePercentageFromPrevious(current, previous), [current, previous]);
+  const diff = calculatePercentageFromPrevious(current, previous);
   console.log(diff);
 
   if (diff > 10)

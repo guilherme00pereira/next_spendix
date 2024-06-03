@@ -7,7 +7,7 @@ import PageContainer from "@/app/components/dashboard/page/PageContainer";
 const Settings = () => {
   return (
     <PageContainer title="Configurações">
-        <Paper>
+        <Paper sx={{width: "100%"}}>
           <Box sx={{ borderBottom: 1, borderColor: "divider", p: 2 }}>
             <Tabs value={0} aria-label="basic tabs example">
               <Tab label="Item One" />
@@ -16,7 +16,6 @@ const Settings = () => {
             </Tabs>
           </Box>
         </Paper>
-      
     </PageContainer>
   );
 };

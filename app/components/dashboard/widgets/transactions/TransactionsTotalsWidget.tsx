@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
-import { styled, alpha } from "@mui/material/styles";
+import React, { useMemo } from "react";
+import { styled, alpha, useTheme } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
-import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import PointOfSaleRoundedIcon from "@mui/icons-material/PointOfSaleRounded";
@@ -16,7 +15,7 @@ interface ITransactionsTotalsWidgetProps {
   color: string;
 }
 
-const Widget = styled(Card)(({ theme }) => ({
+const Widget = styled(Box)(({ theme }) => ({
   width: "100%",
   [theme.breakpoints.up("md")]: {
     width: "calc(50% - 16px)",
@@ -24,31 +23,54 @@ const Widget = styled(Card)(({ theme }) => ({
   [theme.breakpoints.up("lg")]: {
     width: "calc(20% - 16px)",
   },
-  borderLeft: "2px solid",
+  borderLeft: "none",
+  [theme.breakpoints.up("md")]: {
+    borderLeft: "2px solid",
+    borderColor: alpha(theme.palette.text.primary, 0.12),
+  },
   padding: "8px 0 8px 36px",
   borderRadius: "0px",
-  borderColor: alpha(theme.palette.text.primary, 0.12),
+  boxShadow: "none",
 }));
 
 const IconBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "income",
-})<{ income: boolean }>(({ theme, income }) => ({
+  shouldForwardProp: (prop) => prop !== "bgcolor",
+})<{ bgcolor: string }>(({ theme, bgcolor }) => ({
   borderRadius: "4px",
   padding: "4px",
-  backgroundColor: income ? theme.vars.palette.success.dark : theme.vars.palette.error.dark,
+  backgroundColor: bgcolor, //income ? theme.vars.palette.success.dark : theme.vars.palette.error.dark,
   color: "white",
 }));
 
 const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactionsTotalsWidgetProps) => {
+  const theme = useTheme();
+
+  const getColor = (colorType: string) => {
+    switch (colorType) {
+      case 'success':
+        return theme.palette.success.dark;
+      case 'warning':
+        return theme.palette.warning.dark;
+      case 'error':
+        return theme.palette.error.dark;
+      case 'info':
+        return theme.palette.info.dark;
+      default:
+        return theme.palette.text.primary;
+    }
+  };
+
+  
+
   return (
     <Widget>
       <Stack direction="row" justifyContent="flex-start" alignItems="center">
-        <IconBox income={income}>
+        <IconBox bgcolor={getColor(color)}>
           {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.25rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.25rem" }} />}
         </IconBox>
         <Stack direction="column" alignItems="start" sx={{pl: 3}}>
           <Box sx={{ fontSize: "0.75rem", color: "text.secondary" }}>{title}</Box>
-          <Box sx={{ fontSize: "1.25rem", color: color }}>{amountFormatter(value)}</Box>
+          <Box sx={{ fontSize: "1.25rem", color: getColor(color) }}>{amountFormatter(value)}</Box>
         </Stack>
       </Stack>
     </Widget>

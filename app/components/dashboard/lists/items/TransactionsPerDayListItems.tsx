@@ -27,7 +27,7 @@ const TransactionsPerDayListItems = ({ transactions }: ITransactionsPerDayListIt
         : transactions.get(dayjs().format("YYYY-MM-DD"));
     }
     return transactions.get(selectedDay);
-  }, [selectedDay]);
+  }, [params, selectedDay, transactions]);
 
   const dayBalance = useMemo(() => {
     if (transactions === undefined) return 0;
@@ -36,7 +36,7 @@ const TransactionsPerDayListItems = ({ transactions }: ITransactionsPerDayListIt
       const v = curr.payments?.amount ?? curr.amount;
       return curr.categories?.type == "Receita" ? acc + v : acc - v;
     }, 0);
-  }, [selectedDay]);
+  }, [selectedDay, transactions]);
 
   return (
     <>

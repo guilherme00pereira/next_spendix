@@ -1,7 +1,5 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { styled } from "@mui/material/styles";
-import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -15,6 +13,7 @@ import {
   DangerActionButton,
   PrimaryActionButton,
   RegularLink,
+  ListItem,
 } from "@/app/components/dashboard/commonStyledComponents";
 import { useCategoriesPageContext } from "@/app/lib/contexts";
 import TrendSignal from "../../widgets/stats/TrendSignal";
@@ -29,23 +28,6 @@ const getTypeColor = (type: string) => {
       return "primary";
   }
 };
-
-const ListItem = styled(Stack)(({ theme }) => ({
-  width: "100%",
-  margin: "4px 0",
-  padding: "8px 16px",
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  color: theme.vars.palette.text.primary,
-  backgroundColor: theme.vars.palette.background.paper,
-  borderBlockEnd: "1px solid",
-  borderColor: theme.vars.palette.divider,
-  "&:hover": {
-    backgroundColor: theme.vars.palette.action.hover,
-  },
-}));
 
 const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCategory }: ICategoryListItemProps) => {
   const router = useRouter();

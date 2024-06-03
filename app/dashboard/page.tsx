@@ -5,7 +5,6 @@ import DashboardTopCard from "@/app/components/dashboard/widgets/home/DashboardT
 import DashboardOverdueInvoices from "@/app/components/dashboard/widgets/home/DashboardOverdueInvoices";
 import DashboardCardInvoices from "@/app/components/dashboard/widgets/home/DashboardCardInvoices";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
-import ParentCategoriesChartPaper from "@/app/components/dashboard/surfaces/ParentCategoriesChartPaper";
 import CategoriesPizzaChartPaper from "../components/dashboard/surfaces/chart-papers/CategoriesPizzaChartPaper";
 
 const DashboardPage = () => {

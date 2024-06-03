@@ -19,7 +19,7 @@ const TransactionsPerDayList = async ({ transactions, headerLink, selectedDate }
   const daysOfTheMonth = () => {
     const existingDays = Array.from(transactions.keys());
     const today = dayjs();
-    if (!existingDays.includes(today.format("YYYY-MM-DD")) && (selectedDate === today.format("YYYYMM"))) {
+    if (!existingDays.includes(today.format("YYYY-MM-DD")) && (selectedDate === "" || selectedDate === today.format("YYYYMM"))) {
       existingDays.push(today.format("YYYY-MM-DD"));
     }
     return existingDays;

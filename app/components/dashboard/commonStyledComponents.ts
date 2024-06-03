@@ -25,6 +25,23 @@ export const PaperContainer = styled(Paper, {
   width: width ?? "100%",
 }));
 
+export const ListItem = styled(Stack)(({ theme }) => ({
+  width: "100%",
+  margin: "4px 0",
+  padding: "8px 16px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  color: theme.vars.palette.text.primary,
+  backgroundColor: theme.vars.palette.background.paper,
+  borderBlockEnd: "1px solid",
+  borderColor: theme.vars.palette.divider,
+  "&:hover": {
+    backgroundColor: theme.vars.palette.action.hover,
+  },
+}));
+
 export const TransactionListItem = styled(Stack)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",

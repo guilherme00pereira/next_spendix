@@ -131,6 +131,7 @@ export interface IPageContainerProps {
     title: string;
     children: React.ReactNode;
     hideBreadcrumb?: boolean;
+    showSelectMonthYear?: boolean;
 }
 
 export interface IPaperHeaderProps {
@@ -154,6 +155,7 @@ export interface IPaperHeaderSettingsType {
 
 export interface ITransactionTopPageInfoProps {
     income: number;
+    paid: number;
     spendings: number;
 }
 

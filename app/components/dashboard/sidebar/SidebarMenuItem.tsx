@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemButton, ListItemIcon, Tooltip, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 interface ISidebarItemsProps {
     title: string;
@@ -11,9 +11,7 @@ const SidebarMenuItem = ({title, icon, link}: ISidebarItemsProps) => {
     return (
         <ListItemButton LinkComponent="a" href={link}>
           <ListItemIcon>
-            <Tooltip title={title} placement="right" arrow>
               {icon}
-            </Tooltip>
           </ListItemIcon>
           <ListItemText primary={title} />
         </ListItemButton>

@@ -1,7 +1,7 @@
 import React from "react";
-import { ListItem, Button, Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { CategoryType } from "@/types/entities";
-import { DangerActionButton } from "@/app/components/dashboard/commonStyledComponents";
+import { DangerActionButton, ListItem } from "@/app/components/dashboard/commonStyledComponents";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 interface IGroupCategoriesListItemProps {

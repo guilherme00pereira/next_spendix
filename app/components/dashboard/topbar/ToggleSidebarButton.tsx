@@ -13,7 +13,7 @@ const ToggleIconBox = styled(Box)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       backgroundColor: theme.vars.palette.background.paper,
       "& .MuiSvgIcon-root": {
-        color: theme.vars.palette.text.primary,
+        color: theme.vars.palette.primary.main,
       },
     },
     padding: 0,

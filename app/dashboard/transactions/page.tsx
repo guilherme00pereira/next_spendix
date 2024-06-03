@@ -35,7 +35,10 @@ const TransactionsPage = async ({
   const totalIncome = transactions
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
     .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
-  const totalExpense = transactions
+  const totalPaidSpendings = transactions
+    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
+    .reduce((acc, transaction) => acc + (transaction.amount ?? 0), 0);
+  const totalSpendings = transactions
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
     .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
 
@@ -43,9 +46,9 @@ const TransactionsPage = async ({
   const incomeData = mapDailyTransactionsToChart(transactionsMappedPerDay, TransactionTypeEnum.INCOME);
 
   return (
-    <PageContainer title="Transações">
+    <PageContainer title="Transações" showSelectMonthYear>
       <PageTopCard>
-        <TransactionTopPageInfo income={totalIncome} spendings={totalExpense} />
+        <TransactionTopPageInfo income={totalIncome} paid={totalPaidSpendings} spendings={totalSpendings} />
       </PageTopCard>
       <Masonry columns={{xs: 1, md: 2}} spacing={2}>
         <TransactionsPerDayList
