@@ -81,6 +81,10 @@ export const convertPaymentMethodsToSelect = (payment_methods: any) => {
   });
 };
 
+export const calculatePercentageFromPrevious = (current: number, previous: number) => {
+  return ((current - previous) / previous) * 100;
+}
+
 export const serializeToServeActions = (data: any) => {
   return JSON.parse(JSON.stringify(data));
 };

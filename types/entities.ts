@@ -11,9 +11,10 @@ export type CategoryType = {
     groups: GroupType[] | null;
 }
 
-export type CategoryWithStatsType = CategoryType & {
-    current_balance: number;
-    last_balance: number;
+export type CategoryWithStatsType = Omit<CategoryType, 'groups'> & {
+    current_balance: number | null;
+    previous_balance: number | null;
+    active: string | null
 }
 
 export type PaymentType = {

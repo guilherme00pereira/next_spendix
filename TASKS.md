@@ -1,5 +1,10 @@
 #TODO TASKS
 
+### PG categorias
+
+- grafico por categoria
+- trazer metas nos items da lista
+
 ### PG categorias detalhes
 
 - grafico:
@@ -20,7 +25,5 @@
 - transações por dia:
     - scroll to end
     - refresh novo lançamento
-- grafico evolução por dia:
-    - passar o array para o chart
 - top card:
     - definir 1° widget

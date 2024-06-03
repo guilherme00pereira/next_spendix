@@ -155,7 +155,6 @@ export interface IPaperHeaderSettingsType {
 export interface ITransactionTopPageInfoProps {
     income: number;
     spendings: number;
-    showDataSelector: boolean;
 }
 
 export interface ApexDailyTransactionsChartProps {

@@ -9,7 +9,7 @@ import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { getGroups } from "@/app/lib/supabase/methods/groups";
 import GroupFormDialog from "@/app/components/dashboard/dialogs/GroupFormDialog";
 import { getDictionary } from "@/app/lib/i18n/dictionary";
-import TransactionsTotalPerPeriodChartPaper from "@/app/components/dashboard/surfaces/TransactionsTotalPerPeriodChartPaper";
+import TransactionsTotalPerPeriodChartPaper from "@/app/components/dashboard/surfaces/chart-papers/TransactionsTotalPerPeriodChartPaper";
 
 export const metadata: Metadata = {
   title: "Spdx - Category Groups",

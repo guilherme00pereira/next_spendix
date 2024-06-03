@@ -9,13 +9,23 @@ import { RegularLink, TransactionListItem } from "@/app/components/dashboard/com
 import TransactionActionButtons from "@/app/components/dashboard/widgets/buttons/TransactionActionButtons";
 import { useTransactionsPerDayContext } from "@/app/lib/contexts";
 import dayjs from "dayjs";
+import { useSearchParams } from "next/navigation";
 
-const TransactionsPerDayListItems = ({ transactions }: { transactions: Map<string, TransactionType[]> }) => {
+interface ITransactionsPerDayListItemsProps {
+  transactions: Map<string, TransactionType[]>;
+}
+
+const TransactionsPerDayListItems = ({ transactions }: ITransactionsPerDayListItemsProps) => {
   const { selectedDay } = useTransactionsPerDayContext();
+  const params = useSearchParams();
 
   const getTransactionsOfTheDay = useMemo(() => {
     if (transactions === undefined) return [];
-    if (selectedDay === undefined) return transactions.get(dayjs().format("YYYY-MM-DD"));
+    if (selectedDay === undefined) {
+      return params.get("date") !== null
+        ? transactions.get(params.get("day") as string)
+        : transactions.get(dayjs().format("YYYY-MM-DD"));
+    }
     return transactions.get(selectedDay);
   }, [selectedDay]);
 

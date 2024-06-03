@@ -15,7 +15,7 @@ const CategoriesChartPaper = ({ title, data }: { title: string; data: ChartBarTy
     <>
       {showChart && (
         <Fade in={showChart} timeout={1000} easing="ease-out">
-        <PaperContainer>
+        <PaperContainer width="40%">
           <PaperHeader title={title}>
             <PaperHeaderButton variant="outlined" size="small" onClick={() => setShowChart(false)} startIcon={<VisibilityOffOutlinedIcon />}>
               Hide

@@ -18,9 +18,11 @@ export const DashboardTopCardContentRow = styled(Stack, {
   width: width || "100%",
 }));
 
-export const PaperContainer = styled(Paper)(({ theme }) => ({
+export const PaperContainer = styled(Paper, {
+  shouldForwardProp: (prop) => prop !== "width",
+})<{ width?: string }>(({ theme, width }) => ({
   padding: theme.spacing(2),
-  width: "100%",
+  width: width ?? "100%",
 }));
 
 export const TransactionListItem = styled(Stack)(({ theme }) => ({
@@ -61,7 +63,7 @@ export const PrimaryActionButton = styled(ActionButton)(({ theme }) => ({
     backgroundColor: theme.vars.palette.primary.main,
     "& .MuiSvgIcon-root": {
       color: "white !important",
-    }
+    },
   },
   "& .MuiSvgIcon-root": {
     color: theme.vars.palette.primary.main,
@@ -79,7 +81,7 @@ export const InfoActionButton = styled(ActionButton)(({ theme }) => ({
     backgroundColor: theme.vars.palette.info.dark,
     "& .MuiSvgIcon-root": {
       color: "white !important",
-    }
+    },
   },
   "& .MuiSvgIcon-root": {
     color: theme.vars.palette.info.dark,
@@ -97,7 +99,7 @@ export const DangerActionButton = styled(ActionButton)(({ theme }) => ({
     backgroundColor: theme.vars.palette.error.dark,
     "& .MuiSvgIcon-root": {
       color: "white !important",
-    }
+    },
   },
   "& .MuiSvgIcon-root": {
     color: theme.vars.palette.error.dark,
@@ -128,5 +130,3 @@ export const PaperHeaderButton = styled(Button)(({ theme }) => ({
     color: "white",
   },
 }));
-
-

@@ -4,11 +4,12 @@ import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import ApexDailyTransactionsChart from '@/app/components/dashboard/charts/ApexDailyTransactionsLineChart';
 import { ApexDailyTransactionsChartProps } from '@/types/interfaces';
 
-const DailyTransactionsChartPaper = (props: ApexDailyTransactionsChartProps) => {
+const DailyTransactionsChartPaper = ({values, show}: {values: ApexDailyTransactionsChartProps, show:boolean}) => {
     return (
         <PaperContainer sx={{ minHeight: "400px", maxWidth: "50%" }}>
           <PaperHeader title="Evolução por dia" />
-            <ApexDailyTransactionsChart {...props}  />
+            {show && <ApexDailyTransactionsChart {...values}  />}
+            {show || "Nenhum dado disponível"}
         </PaperContainer>
     );
 };

@@ -6,16 +6,18 @@ import { CategoryWithStatsType } from "@/types/entities";
 import { Stack } from "@mui/system";
 import CategoriesListItem from "./items/CategoriesListItem";
 import { useSpeedDialStore } from "@/app/lib/store";
-import { useCategoryContext } from "@/app/lib/contexts";
+import { useCategoriesPageContext, useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import CategoriesFilter from "@/app/components/dashboard/widgets/filters/CategoriesFilter";
 import CategoryProvider from "@/app/lib/providers/CategoryProvider";
+import { ShowChart } from "@mui/icons-material";
 
 const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] }) => {
   const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
   const { openConfirm, setOpenConfirm, removableObject, setRemovableObject } = useCategoryContext();
   const [filteredCategories, setFilteredCategories] = React.useState<CategoryWithStatsType[]>(categories);
+  const { showChart } = useCategoriesPageContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableObject({ ...removableObject, id, name });
@@ -46,7 +48,7 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
 
   return (
     <CategoryProvider>
-      <PaperContainer>
+      <PaperContainer width={showChart ? "60%" : "90%"}>
         <PaperHeader title="Lista de categorias">
           <CategoriesFilter action={searchCategory} />
         </PaperHeader>

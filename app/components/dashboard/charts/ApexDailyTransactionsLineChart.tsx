@@ -32,7 +32,10 @@ const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTran
           type: "category",
         },
         stroke: {
-          curve: "smooth",
+          curve: "straight",
+        },
+        markers: {
+          size: 5,
         },
       }}
       series={[

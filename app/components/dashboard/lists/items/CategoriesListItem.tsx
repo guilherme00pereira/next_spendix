@@ -17,6 +17,7 @@ import {
   RegularLink,
 } from "@/app/components/dashboard/commonStyledComponents";
 import { useCategoriesPageContext } from "@/app/lib/contexts";
+import TrendSignal from "../../widgets/stats/TrendSignal";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -62,8 +63,8 @@ const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCa
           {category.name}
         </RegularLink>
       </Box>
-      <Box sx={{ pr: "3em" }}>
-        {category.current_balance}
+      <Box sx={{ pr: "6em" }}>
+        <TrendSignal current={category.current_balance} previous={category.previous_balance} />
       </Box>
       <Box sx={{ pr: "3em" }}>
         <Chip

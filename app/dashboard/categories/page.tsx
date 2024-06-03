@@ -1,5 +1,5 @@
 import Stack from "@mui/material/Stack";
-import { getCategories, getCategoriesWithStats } from "@/app/lib/supabase/methods/categories";
+import { getCategoriesWithStats } from "@/app/lib/supabase/methods/categories";
 import { CategoryWithStatsType } from "@/types/entities";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import ChooseIconDialog from "@/app/components/dashboard/dialogs/ChooseIconDialog";

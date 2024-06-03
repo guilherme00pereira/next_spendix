@@ -9,6 +9,7 @@ import TransactionsTableFilterProvider from "@/app/lib/providers/TransactionsTab
 import TransactionRows from "@/app/components/dashboard/tables/rows/TransactionRows";
 import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/TransactionTopPageInfo";
+import ScrollToTop from "@/app/components/dashboard/page/ScrollToTop";
 
 const AllTransactions = async ({searchParams}: {searchParams: { [key: string]: string | string[] | undefined }}) => {
   const startDate = searchParams.date ? dayjs(searchParams.date as string).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");
@@ -27,13 +28,14 @@ const AllTransactions = async ({searchParams}: {searchParams: { [key: string]: s
     <PageContainer title="Lista de Transações por mês">
       <TransactionsTableFilterProvider>
         <PageTopCard>
-          <TransactionTopPageInfo income={totalIncome} spendings={totalExpense} showDataSelector={true} />
+          <TransactionTopPageInfo income={totalIncome} spendings={totalExpense} />
         </PageTopCard>
         <Stack direction={{ xs: "column", md: "row" }} sx={{width: "100%"}} justifyContent="center">
           <TransactionsTable filters={<TransactionsFilter transactions={transactions} />}>
             <TransactionRows transactions={transactions} />
           </TransactionsTable>
         </Stack>
+        <ScrollToTop />
       </TransactionsTableFilterProvider>
     </PageContainer>
   );

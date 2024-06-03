@@ -17,7 +17,13 @@ interface ITransactionsTotalsWidgetProps {
 }
 
 const Widget = styled(Card)(({ theme }) => ({
-
+  width: "100%",
+  [theme.breakpoints.up("md")]: {
+    width: "calc(50% - 16px)",
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: "calc(20% - 16px)",
+  },
   borderLeft: "2px solid",
   padding: "8px 0 8px 36px",
   borderRadius: "0px",

@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemText,
   Button,
+  Box,
 } from "@mui/material";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
@@ -18,6 +19,7 @@ import { useGroupContext } from "@/app/lib/contexts";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import AddIcon from "@mui/icons-material/Add";
 import { CategoryType } from "@/types/entities";
+import GroupCategoriesListItem from "./items/GroupCategoriesListItem";
 
 const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { selectedGroup } = useGroupContext();
@@ -45,6 +47,11 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
     const cs = categories.filter((category) => checkedCategories.includes(category.name));
     setLinkedCategories(cs);
     setCheckedCategories([]);
+  };
+
+  const handleDelete = (category: CategoryType) => {
+    const cs = linkedCategories.filter((c) => c.id !== category.id);
+    setLinkedCategories(cs);
   };
 
   return (
@@ -87,10 +94,10 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
           <Stack direction="column" justifyContent="center">
             <List>
               {linkedCategories.map((category) => (
-                <ListItem key={category.id}>{category.name}</ListItem>
+                <GroupCategoriesListItem key={category.id} category={category} removeAction={handleDelete} />
               ))}
               {existingCategories?.map((category: CategoryType) => (
-                <ListItem key={category.id}>{category.name}</ListItem>
+                <GroupCategoriesListItem key={category.id} category={category} removeAction={handleDelete} />
               ))}
             </List>
           </Stack>

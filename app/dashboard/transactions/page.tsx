@@ -12,11 +12,25 @@ import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/
 import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/functions";
 import { TransactionTypeEnum } from "@/types/enums";
 
-const TransactionsPage = async () => {
-  const transactions = await getPayedTransactions(
-    dayjs().startOf("M").format("YYYY-MM-DD"),
-    dayjs().endOf("M").format("YYYY-MM-DD")
-  );
+const TransactionsPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const startDate = searchParams.date
+    ? dayjs(searchParams.date as string)
+        .startOf("M")
+        .format("YYYY-MM-DD")
+    : dayjs().startOf("M").format("YYYY-MM-DD");
+  const endDate = searchParams.date
+    ? dayjs(searchParams.date as string)
+        .endOf("M")
+        .format("YYYY-MM-DD")
+    : dayjs().endOf("M").format("YYYY-MM-DD");
+  const transactions = await getPayedTransactions(startDate, endDate);
+
+  const headerLink = "/dashboard/transactions/all" + (searchParams.date ? `?date=${searchParams.date}` : "");
+
   const transactionsMappedPerDay = groupTransactionsByDate(transactions);
   const totalIncome = transactions
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
@@ -28,15 +42,21 @@ const TransactionsPage = async () => {
   const spendingsData = mapDailyTransactionsToChart(transactionsMappedPerDay, TransactionTypeEnum.SPENDINGS);
   const incomeData = mapDailyTransactionsToChart(transactionsMappedPerDay, TransactionTypeEnum.INCOME);
 
-
   return (
     <PageContainer title="Transações">
       <PageTopCard>
-        <TransactionTopPageInfo income={totalIncome} spendings={totalExpense} showDataSelector={false} />
+        <TransactionTopPageInfo income={totalIncome} spendings={totalExpense} />
       </PageTopCard>
-      <Masonry columns={2} spacing={2}>
-        <TransactionsPerDayList transactions={transactionsMappedPerDay} />
-        <ApexDailyTransactionsLineChart spendingsData={spendingsData} incomeData={incomeData} />
+      <Masonry columns={{xs: 1, md: 2}} spacing={2}>
+        <TransactionsPerDayList
+          transactions={transactionsMappedPerDay}
+          headerLink={headerLink}
+          selectedDate={searchParams.date?.toString() ?? ""}
+        />
+        <ApexDailyTransactionsLineChart
+          values={{ spendingsData, incomeData }}
+          show={transactionsMappedPerDay.size > 0}
+        />
         <TransactionsForecast />
         <OverdueTransactionsList />
       </Masonry>

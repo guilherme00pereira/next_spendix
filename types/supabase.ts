@@ -475,41 +475,44 @@ export type Database = {
     Views: {
       categories_with_stats: {
         Row: {
+          active: string | null
           color: string | null
           current_balance: number | null
           goal: number | null
           goal_type: Database["public"]["Enums"]["goal_value_type"] | null
           icon: string | null
           id: number | null
-          last_balance: number | null
           name: string | null
           parent: number | null
+          previous_balance: number | null
           slug: string | null
           type: Database["public"]["Enums"]["category_type"] | null
         }
         Insert: {
+          active?: never
           color?: string | null
           current_balance?: never
           goal?: number | null
           goal_type?: Database["public"]["Enums"]["goal_value_type"] | null
           icon?: string | null
           id?: number | null
-          last_balance?: never
           name?: string | null
           parent?: number | null
+          previous_balance?: never
           slug?: string | null
           type?: Database["public"]["Enums"]["category_type"] | null
         }
         Update: {
+          active?: never
           color?: string | null
           current_balance?: never
           goal?: number | null
           goal_type?: Database["public"]["Enums"]["goal_value_type"] | null
           icon?: string | null
           id?: number | null
-          last_balance?: never
           name?: string | null
           parent?: number | null
+          previous_balance?: never
           slug?: string | null
           type?: Database["public"]["Enums"]["category_type"] | null
         }

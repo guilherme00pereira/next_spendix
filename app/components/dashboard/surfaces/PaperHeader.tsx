@@ -2,7 +2,6 @@
 import React from "react";
 import {styled} from "@mui/material/styles";
 import Stack from "@mui/system/Stack";
-import Button from "@mui/material/Button";
 import {IPaperHeaderProps} from "@/types/interfaces";
 
 
@@ -11,10 +10,6 @@ const Header = styled(Stack)(({theme}) => ({
   marginBlockEnd: theme.spacing(1),
   paddingBlockEnd: theme.spacing(1),
   position: "relative",
-}));
-
-const ActionButton = styled(Button)(({theme}) => ({
-  color: theme.vars.palette.text.secondary,
 }));
 
 const Title = styled("div")(({theme}) => ({

@@ -55,11 +55,14 @@ export const getPayedTransactions = unstable_cache(
       .select(getInnerPaymentsQuery)
       .eq("draft", false)
       .gte("payments.date", initial_date)
-      .lte("payments.date", final_date);
+      .lte("payments.date", final_date)
     if (error) {
       throw error;
     }
-    return data as TransactionType[];
+    const result = data.sort((a: any, b: any) => {
+      return a.payments.date.localeCompare(b.payments.date);
+    });
+    return result as TransactionType[];
   },
   ["get_payed_transactions"]
 );
