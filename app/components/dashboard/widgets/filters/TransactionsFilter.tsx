@@ -49,7 +49,7 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
         href={dueDateUrl}
         startIcon={<SyncRoundedIcon />}
       >
-        Listar por {params.get('due_date') === '1' ? "data de pagamento" : "data de vencimento"}
+        Mostrar por {params.get('due_date') === '1' ? "data de pagamento" : "data de vencimento"}
       </PaperHeaderButton>
     </Stack>
   );

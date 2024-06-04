@@ -58,7 +58,7 @@ const getExpenseCategoriesTransactionsSum = async (initial_date: string, final_d
     }, []);
 };
 
-const addCategory = async ({ name, type, slug, parent, color, icon }: CategoryFormData) => {
+const addCategory = async ({ name, type, slug, color, icon }: CategoryFormData) => {
   const { data, error } = await supabase.from("categories").insert({ name, type, slug, parent, color, icon });
   if (error) {
     throw error;
@@ -66,7 +66,7 @@ const addCategory = async ({ name, type, slug, parent, color, icon }: CategoryFo
   return data;
 };
 
-const editCategory = async ({ id, name, type, slug, parent, color, icon }: CategoryFormData) => {
+const editCategory = async ({ id, name, type, slug, color, icon }: CategoryFormData) => {
   const { data, error } = await supabase
     .from("categories")
     .update({ name, type, slug, parent, color, icon })

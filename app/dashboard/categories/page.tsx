@@ -12,8 +12,8 @@ import dayjs from "dayjs";
 
 const excludedCategories = [2, 43, 63];
 
-async function fetchChartData() {
-  const res = await getExpenseCategoriesTransactionsSum(dayjs().startOf("M").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD"));
+async function fetchChartData(startDate: string, endDate: string) {
+  const res = await getExpenseCategoriesTransactionsSum(startDate, endDate);
   const items = res.filter((item: any) => !excludedCategories.includes(item.id));
   const data: ChartBarType[] = items
     .sort((a: ChartBarType, b: ChartBarType) => a.value - b.value)
@@ -28,16 +28,31 @@ async function fetchChartData() {
   return data;
 }
 
-const CategoriesPage = async () => {
+const CategoriesPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   const categories = await getCategoriesWithStats();
-  const chartData = await fetchChartData();
+  const startDate = searchParams.date
+  ? dayjs(searchParams.date as string)
+      .startOf("M")
+      .format("YYYY-MM-DD")
+  : dayjs().startOf("M").format("YYYY-MM-DD");
+const endDate = searchParams.date
+  ? dayjs(searchParams.date as string)
+      .endOf("M")
+      .format("YYYY-MM-DD")
+  : dayjs().endOf("M").format("YYYY-MM-DD");
+  const chartData = await fetchChartData(startDate, endDate);
+  const actualMonthName = dayjs().format("MMMM");
 
   return (
-    <PageContainer title="Categorias">
+    <PageContainer title="Categorias" showSelectMonthYear>
       <CategoriesPageProvider>
         <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
           {categories && <CategoriesList categories={categories as CategoryWithStatsType[]} />}
-          <CategoriesChartPaper title="Despesas por categorias no mês" data={chartData} />
+          <CategoriesChartPaper title={`Despesas por categorias no mês ${actualMonthName}`} data={chartData} />
         </Stack>
         <ChooseIconDialog />
       </CategoriesPageProvider>

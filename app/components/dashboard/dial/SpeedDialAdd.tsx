@@ -87,7 +87,7 @@ const SpeedDialAdd = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) 
         break;
       case "category":
         actionShowCategoryDialog(true);
-        setCategory({ color: null, icon: null, name: "", slug: "", parent: 0, type: "Despesa" });
+        setCategory({ color: null, icon: null, name: "", slug: "", type: "Despesa" });
         break;
       case "recurring":
         actionShowRecurringDialog(true);

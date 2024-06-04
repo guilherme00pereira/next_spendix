@@ -11,46 +11,34 @@ import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/Transact
 import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/chart-papers/DailyTransactionsChartPaper";
 import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/functions";
 import { TransactionTypeEnum } from "@/types/enums";
+import { getDates, getTotals } from "@/app/lib/helpers";
 
 const TransactionsPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const startDate = searchParams.date
-    ? dayjs(searchParams.date as string)
-        .startOf("M")
-        .format("YYYY-MM-DD")
-    : dayjs().startOf("M").format("YYYY-MM-DD");
-  const endDate = searchParams.date
-    ? dayjs(searchParams.date as string)
-        .endOf("M")
-        .format("YYYY-MM-DD")
-    : dayjs().endOf("M").format("YYYY-MM-DD");
+  const [startDate, endDate] = getDates(searchParams.date as string);
   const transactions = await getPayedTransactions(startDate, endDate);
-
-  const headerLink = "/dashboard/transactions/all" + (searchParams.date ? `?date=${searchParams.date}` : "");
-
   const transactionsMappedPerDay = groupTransactionsByDate(transactions);
-  const totalIncome = transactions
-    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
-    .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
-  const totalPaidSpendings = transactions
-    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
-    .reduce((acc, transaction) => acc + (transaction.amount ?? 0), 0);
-  const totalSpendings = transactions
-    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
-    .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
+  const [totalIncome, totalPaidSpendings, totalSpendings, dailyAverage] = getTotals(transactions);
 
   const spendingsData = mapDailyTransactionsToChart(transactionsMappedPerDay, TransactionTypeEnum.SPENDINGS);
   const incomeData = mapDailyTransactionsToChart(transactionsMappedPerDay, TransactionTypeEnum.INCOME);
 
+  const headerLink = "/dashboard/transactions/all" + (searchParams.date ? `?date=${searchParams.date}` : "");
+
   return (
     <PageContainer title="Transações" showSelectMonthYear>
       <PageTopCard>
-        <TransactionTopPageInfo income={totalIncome} paid={totalPaidSpendings} spendings={totalSpendings} />
+        <TransactionTopPageInfo
+          income={totalIncome}
+          paid={totalPaidSpendings}
+          spendings={totalSpendings}
+          mean={dailyAverage}
+        />
       </PageTopCard>
-      <Masonry columns={{xs: 1, md: 2}} spacing={2}>
+      <Masonry columns={{ xs: 1, md: 2 }} spacing={2}>
         <TransactionsPerDayList
           transactions={transactionsMappedPerDay}
           headerLink={headerLink}

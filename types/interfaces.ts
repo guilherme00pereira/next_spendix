@@ -153,12 +153,6 @@ export interface IPaperHeaderSettingsType {
     buttonAction: () => void;
 }
 
-export interface ITransactionTopPageInfoProps {
-    income: number;
-    paid: number;
-    spendings: number;
-}
-
 export interface ApexDailyTransactionsChartProps {
     incomeData: ChartBarType[];
     spendingsData: ChartBarType[];

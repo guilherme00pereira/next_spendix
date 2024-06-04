@@ -34,7 +34,7 @@ const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCa
   const { setShowChart } = useCategoriesPageContext();
 
   return (
-    <ListItem direction="row" justifyContent="space-between">
+    <ListItem direction={{xs: "column", md: "row"}} justifyContent="space-between">
       {isSubCategory && (
         <Box sx={{ width: "50px" }}>
           <SubdirectoryArrowRightOutlinedIcon fontSize="small" />
