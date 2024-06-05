@@ -15,13 +15,13 @@ async function fetchFutureTransactions() {
   return res as TransactionType[];
 }
 
-const TransactionsForecast = async () => {
+const UpcomingTransactions = async () => {
   const transactions = await fetchFutureTransactions();
 
   return (
     <PaperContainer>
       <PaperHeader title="Próximos lançamentos">
-        <PaperHeaderLink text="Ver todos" target="/dashboard/transactions/forecast" />
+        <PaperHeaderLink text="Ver todos" target="/dashboard/transactions/upcoming" />
       </PaperHeader>
       <Stack>
         {transactions.slice(0, 6).map((transaction) => (
@@ -32,4 +32,4 @@ const TransactionsForecast = async () => {
   );
 };
 
-export default TransactionsForecast;
+export default UpcomingTransactions;

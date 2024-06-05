@@ -32,7 +32,6 @@ export default function Sidebar() {
       </Toolbar>
 
       <List component="nav">
-        <AddButton />
         <SidebarMenuItem title="Dashboard" icon={<DashboardIcon fontSize="small" />} link="/dashboard" />
         <SidebarMenuItem title="Transações" icon={<ReceiptLongRoundedIcon fontSize="small" />} link="/dashboard/transactions" />
         <SidebarMenuItem title="Categorias" icon={<ListAltRoundedIcon fontSize="small" />} link="/dashboard/categories" />

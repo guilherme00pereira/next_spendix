@@ -55,7 +55,7 @@ const SpeedDialButton = styled(SpeedDial)(({ theme }) => ({
   },
 }));
 
-const SpeedDialAdd = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) => {
+const SpeedDialMobile = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) => {
   const {
     setTransaction,
     showTransactionDialog,
@@ -121,4 +121,4 @@ const SpeedDialAdd = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) 
   );
 };
 
-export default SpeedDialAdd;
+export default SpeedDialMobile;

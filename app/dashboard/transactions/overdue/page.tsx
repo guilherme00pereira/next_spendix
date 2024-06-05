@@ -7,7 +7,6 @@ import Stack from "@mui/material/Stack";
 import { getCategories } from "@/app/lib/supabase/methods/categories";
 import OverdueTransactionRows from "@/app/components/dashboard/tables/rows/OverdueTransactionRows";
 import TransactionsTableFilterProvider from "@/app/lib/providers/TransactionsTableFilterProvider";
-import TransactionsFilter from "@/app/components/dashboard/widgets/filters/TransactionsFilter";
 
 const OverdueTransactions = async () => {
   const transactions = (await getOverdueTransactions()) as TransactionType[];

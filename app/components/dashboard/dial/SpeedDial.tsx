@@ -1,5 +1,5 @@
 import React from 'react';
-import SpeedDialAdd from './SpeedDialAdd';
+import SpeedDialMobile from '@/app/components/dashboard/dial/SpeedDialMobile';
 import { getCategories } from '@/app/lib/supabase/methods/categories';
 import { getTags } from '@/app/lib/supabase/methods/tags';
 import { buildSelectPaymentMethods } from '@/app/lib/functions';
@@ -12,7 +12,7 @@ const SpeedDial = async() => {
     
     return (
         <>
-          {categories && <SpeedDialAdd categories={categories} tags={tags} paymentMethods={paymentMethods} />}  
+          {categories && <SpeedDialMobile categories={categories} tags={tags} paymentMethods={paymentMethods} />}  
         </>
     );
 };

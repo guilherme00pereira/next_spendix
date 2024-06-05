@@ -1,7 +1,7 @@
 import React from "react";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import TransactionsPerDayList from "@/app/components/dashboard/lists/TransactionsPerDayList";
-import TransactionsForecast from "@/app/components/dashboard/lists/TransactionsForecast";
+import UpcomingTransactions from "@/app/components/dashboard/lists/UpcomingTransactions";
 import Masonry from "@mui/lab/Masonry";
 import OverdueTransactionsList from "@/app/components/dashboard/lists/OverdueTransactionsList";
 import { getPayedTransactions } from "@/app/lib/actions/transactions-actions";
@@ -48,7 +48,7 @@ const TransactionsPage = async ({
           values={{ spendingsData, incomeData }}
           show={transactionsMappedPerDay.size > 0}
         />
-        <TransactionsForecast />
+        <UpcomingTransactions />
         <OverdueTransactionsList />
       </Masonry>
     </PageContainer>

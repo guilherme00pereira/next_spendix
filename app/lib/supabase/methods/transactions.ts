@@ -62,8 +62,6 @@ const getOverdueTransactions = async () => {
   return data;
 };
 
-
-
 const addReccuringTransaction = async ({ amount, due_date, description, category_id, recurring_times }: RecurringFormData) => {
   const rows = [];
   for (let i = 0; i < recurring_times; i++) {
