@@ -42,7 +42,7 @@ const CategoryTransactionsTable = ({ transactions }: { transactions: Transaction
   return (
     <PaperContainer sx={{ width: "100%" }}>
       <PaperHeader title="Transações">
-        <PeriodFilter items={getFilterItems()} />
+        {transactions.length > 12 && <PeriodFilter items={getFilterItems()} />}
       </PaperHeader>
       <ScrollableTable>
         <Table stickyHeader size="small" aria-label="simple table">
@@ -54,7 +54,7 @@ const CategoryTransactionsTable = ({ transactions }: { transactions: Transaction
                   <TableCell>{amountFormatter(transaction.amount)}</TableCell>
                   <TableCell>{transaction.description}</TableCell>
                   <TableCell>
-                    <TransactionActionButtons transaction={transaction} />
+                    <TransactionActionButtons transaction={transaction} showDelete />
                   </TableCell>
                 </TableRow>
               ))}

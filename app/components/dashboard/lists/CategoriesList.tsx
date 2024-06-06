@@ -5,7 +5,6 @@ import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { CategoryWithStatsType } from "@/types/entities";
 import { Stack } from "@mui/system";
 import CategoriesListItem from "./items/CategoriesListItem";
-import { useSpeedDialStore } from "@/app/lib/store";
 import { useCategoriesPageContext, useCategoryContext } from "@/app/lib/contexts";
 import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
@@ -14,28 +13,9 @@ import CategoryProvider from "@/app/lib/providers/CategoryProvider";
 import { ShowChart } from "@mui/icons-material";
 
 const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] }) => {
-  const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
-  const { openConfirm, setOpenConfirm, removableObject, setRemovableObject } = useCategoryContext();
+  const { openConfirm, setOpenConfirm, removableObject } = useCategoryContext();
   const [filterableCategories, setFilterableCategories] = React.useState<CategoryWithStatsType[]>(categories);
   const { showChart } = useCategoriesPageContext();
-
-  const handleConfirmDelete = (id: number, name: string) => {
-    setRemovableObject({ ...removableObject, id, name });
-    setOpenConfirm(true);
-  };
-
-  const handleEdit = (id: number) => {
-    actionShowCategoryDialog(true);
-    const c = categories?.filter((category) => category.id === id)[0] ?? ({} as CategoryWithStatsType);
-    setCategory({
-      id,
-      name: c.name ?? "",
-      type: c.type ?? "Receita",
-      color: c.color ?? null,
-      icon: c.icon ?? null,
-      slug: c.slug ?? "",
-    });
-  };
 
   const searchCategory = (search: string) => {
     if (search === "") {
@@ -58,7 +38,7 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
         <Stack>
           {filterableCategories.length > 0 &&
             filterableCategories.map((category) => (
-              <CategoriesListItem key={category.id} category={category} handleEdit={handleEdit} handleConfirmDelete={handleConfirmDelete} />
+              <CategoriesListItem key={category.id} category={category} />
             ))}
         </Stack>
         <ConfirmDeleteDialog

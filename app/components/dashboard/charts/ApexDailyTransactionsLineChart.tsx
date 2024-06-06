@@ -5,6 +5,8 @@ import { chartColors } from "@/theme/colors";
 import { ApexDailyTransactionsChartProps } from "@/types/interfaces";
 
 const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTransactionsChartProps) => {
+  const { mode } = useColorScheme();
+
   return (
     <Chart
       options={{
@@ -26,16 +28,32 @@ const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTran
                 minimumFractionDigits: 2,
               }).format(value);
             },
+            style: {
+              colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+            },
           },
         },
         xaxis: {
           type: "category",
+          labels: {
+            style: {
+              colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+            },
+            formatter: function (val: any) {
+              return val;
+            },
+          },
         },
         stroke: {
           curve: "straight",
         },
         markers: {
           size: 5,
+        },
+        legend: {
+          labels: {
+            colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,
+          },
         },
       }}
       series={[

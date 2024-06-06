@@ -1,22 +1,11 @@
 import React from "react";
-import { useRouter } from "next/navigation";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import { ICategoryListItemProps } from "@/types/interfaces";
 import Chip from "@mui/material/Chip";
-import SubdirectoryArrowRightOutlinedIcon from "@mui/icons-material/SubdirectoryArrowRightOutlined";
-import {
-  InfoActionButton,
-  DangerActionButton,
-  PrimaryActionButton,
-  RegularLink,
-  ListItem,
-} from "@/app/components/dashboard/commonStyledComponents";
+import { RegularLink, ListItem } from "@/app/components/dashboard/commonStyledComponents";
 import { useCategoriesPageContext } from "@/app/lib/contexts";
 import TrendSignal from "../../widgets/stats/TrendSignal";
+import { CategoryWithStatsType } from "@/types/entities";
+import CategoryActionButtons from "../../widgets/buttons/CategoryActionButtons";
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -29,17 +18,11 @@ const getTypeColor = (type: string) => {
   }
 };
 
-const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCategory }: ICategoryListItemProps) => {
-  const router = useRouter();
+const CategoriesListItem = ({ category }: { category: CategoryWithStatsType }) => {
   const { setShowChart } = useCategoriesPageContext();
 
   return (
-    <ListItem direction={{xs: "column", md: "row"}} justifyContent="space-between">
-      {isSubCategory && (
-        <Box sx={{ width: "50px" }}>
-          <SubdirectoryArrowRightOutlinedIcon fontSize="small" />
-        </Box>
-      )}
+    <ListItem direction={{ xs: "column", md: "row" }} justifyContent="space-between">
       <Box sx={{ flexGrow: 1 }}>
         <RegularLink href={`/dashboard/categories/${category.slug}`} underline="none" variant="subtitle2">
           {category.name}
@@ -58,25 +41,7 @@ const CategoriesListItem = ({ category, handleEdit, handleConfirmDelete, isSubCa
         />
       </Box>
       <Box>
-        <Stack direction="row" spacing={1}>
-          <PrimaryActionButton
-            size="small"
-            variant="text"
-            onClick={() => router.push(`/dashboard/categories/${category.slug}/transactions`)}
-          >
-            <BarChartOutlinedIcon />
-          </PrimaryActionButton>
-          <InfoActionButton size="small" variant="text" onClick={() => handleEdit(category.id)}>
-            <EditOutlinedIcon />
-          </InfoActionButton>
-          <DangerActionButton
-            size="small"
-            variant="text"
-            onClick={() => handleConfirmDelete(category.id, category.name)}
-          >
-            <DeleteOutlinedIcon />
-          </DangerActionButton>
-        </Stack>
+        <CategoryActionButtons category={category} />
       </Box>
     </ListItem>
   );

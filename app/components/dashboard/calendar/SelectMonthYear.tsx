@@ -4,8 +4,8 @@ import { styled } from "@mui/material/styles";
 import { IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import dayjs from "dayjs";
 import { usePathname, useSearchParams } from "next/navigation";
+import dayjs from "dayjs";
 
 const DateSelector = styled(Stack)(({ theme }) => ({
   width: "100%",
@@ -40,10 +40,19 @@ const SelectMonthYear = () => {
   const prevLink = dayjs(date).subtract(1, "month").format("YYYYMM");
   const nextLink = dayjs(date).add(1, "month").format("YYYYMM");
 
+  const disablePrevLink = useMemo(() => {
+    if(pathname.includes("upcoming")) {
+      if(!searchParams.get("date") || dayjs(searchParams.get("date")).isBefore(dayjs(), "month")) {
+        return true
+      }
+    }
+    return false
+  }, [pathname, searchParams])
+
   return (
       <DateSelector direction="row" justifyContent="center" alignItems="center">
-        <IconButton href={`${pathname}?date=${prevLink}`}>
-          <ArrowBackIosRoundedIcon color="primary" />
+        <IconButton href={`${pathname}?date=${prevLink}`} disabled={disablePrevLink}>
+          <ArrowBackIosRoundedIcon color={disablePrevLink ? "disabled" : "primary"} />
         </IconButton>
         <DateText>{dayjs(date).format("MMMM YYYY")}</DateText>
         <IconButton href={`${pathname}?date=${nextLink}`}>

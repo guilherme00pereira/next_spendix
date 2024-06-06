@@ -9,10 +9,8 @@ import Paper from "@mui/material/Paper";
 import {Button, Chip, Typography} from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import {ICategoryListProps} from "@/types/interfaces";
-import ChildrenCategoriesTable from "./ChildrenCategoriesTable";
-import {CategoryType} from "@/types/entities";
+
 
 const getTypeColor = (type: string) => {
   switch (type) {
@@ -26,27 +24,7 @@ const getTypeColor = (type: string) => {
 }
 
 
-const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmDelete}: ICategoryListProps) => {
-
-  const getSubCategories = (id: number) => {
-    const subs = categories?.filter((c) => {
-      if (c.parent === id) {
-        return {
-          id: c.id,
-          name: c.name,
-          type: c.type,
-          parent: c.parent ?? null,
-          color: c.color ?? null,
-          icon: c.icon ?? null
-        }
-      }
-    });
-    return subs as CategoryType[];
-  }
-
-  const hasSubCategories = (id: number) => {
-    return categories?.filter((c) => c.parent === id).length > 0;
-  }
+const CategoriesTable = ({categories, handleEdit, handleConfirmDelete}: ICategoryListProps) => {
 
   return (
     <TableContainer component={Paper}>
@@ -60,8 +38,7 @@ const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmD
         </TableHead>
         <TableBody>
           { categories.length > 0 &&
-            categories?.filter((c) => c.parent === null).map((category) => (
-              <>
+            categories.map((category) => (
                 <TableRow
                   key={category.id}
                   sx={{"&:last-child td, &:last-child th": {border: 0}}}
@@ -75,11 +52,6 @@ const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmD
                     <Chip label={category.type} size="small" variant="outlined" color={getTypeColor(category.type)}/>
                   </TableCell>
                   <TableCell align="right">
-                    {hasSubCategories(category.id) || (
-                      <Button size="small" variant="text" color="info" onClick={() => handleCategory(category.id)}>
-                        <VisibilityRoundedIcon fontSize="small"/>
-                      </Button>
-                    )}
                     <Button size="small" variant="text" color="info" onClick={() => handleEdit(category.id)}>
                       <EditRoundedIcon fontSize="small"/>
                     </Button>
@@ -89,13 +61,6 @@ const CategoriesTable = ({handleCategory, categories, handleEdit, handleConfirmD
                     </Button>
                   </TableCell>
                 </TableRow>
-                <ChildrenCategoriesTable
-                  subcategories={getSubCategories(category.id)}
-                  handleEdit={handleEdit}
-                  handleConfirmDelete={handleConfirmDelete}
-                  handleView={handleCategory}
-                />
-              </>
             ))}
           {categories.length === 0 && (
             <TableRow>

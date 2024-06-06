@@ -26,9 +26,15 @@ const CategoryPage = async ({ params }: { params: { slug: string } }) => {
         <PageTopCard>
           <CategoryDetailsPageSelect categories={spendingsCategories} />
         </PageTopCard>
-        <Stack direction={{xs: "column", md: "row"}} justifyContent="center" alignItems="start" spacing={2} sx={{width: "100%"}}>
-            {transactions.length > 0 && <ApexTransactionsTotalPerPeriodBarChart transactions={transactions} />}
-            {transactions && <CategoryTransactionsTable transactions={transactions} />}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="center"
+          alignItems="start"
+          spacing={2}
+          sx={{ width: "100%" }}
+        >
+          {transactions.length > 0 && <ApexTransactionsTotalPerPeriodBarChart transactions={transactions} />}
+          {transactions && <CategoryTransactionsTable transactions={transactions} />}
         </Stack>
       </CategoryDetailProvider>
     </PageContainer>

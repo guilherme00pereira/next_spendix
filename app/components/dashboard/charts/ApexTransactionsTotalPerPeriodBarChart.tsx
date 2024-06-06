@@ -43,17 +43,19 @@ const ApexTransactionsTotalPerPeriodBarChart = ({ transactions }: { transactions
   };
 
   return (
-    <PaperContainer sx={{width: "80%"}}>
+    <PaperContainer sx={{ width: "80%" }}>
       <PaperHeader title="Evolução por período">
-        <PaperHeaderButton
-          variant="outlined"
-          size="small"
-          color="primary"
-          onClick={handleButtonClick}
-          startIcon={<SyncRoundedIcon />}
-        >
-          {buttonText}
-        </PaperHeaderButton>
+        {transactions.length > 12 && (
+          <PaperHeaderButton
+            variant="outlined"
+            size="small"
+            color="primary"
+            onClick={handleButtonClick}
+            startIcon={<SyncRoundedIcon />}
+          >
+            {buttonText}
+          </PaperHeaderButton>
+        )}
       </PaperHeader>
 
       <Chart

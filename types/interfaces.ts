@@ -87,13 +87,6 @@ export interface ICategoryListProps {
     handleConfirmDelete: (id: number, name: string) => void;
 }
 
-export interface ICategoryListItemProps {
-    category: CategoryWithStatsType;
-    handleEdit: (id: number) => void;
-    handleConfirmDelete: (id: number, name: string) => void;
-    isSubCategory?: boolean;
-}
-
 export interface IGroupListItemProps {
     group: GroupType;
     handleEdit: (id: number) => void;
