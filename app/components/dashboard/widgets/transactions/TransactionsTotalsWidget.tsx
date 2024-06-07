@@ -69,8 +69,8 @@ const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactions
           {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.25rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.25rem" }} />}
         </IconBox>
         <Stack direction="column" alignItems="start" sx={{pl: 3}}>
-          <Box sx={{ fontSize: "0.75rem", color: "text.secondary" }}>{title}</Box>
-          <Box sx={{ fontSize: "1.25rem", color: getColor(color) }}>{amountFormatter(value)}</Box>
+          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>{title}</Box>
+          <Box sx={{ fontSize: "1.5rem", color: getColor(color) }}>{amountFormatter(value)}</Box>
         </Stack>
       </Stack>
     </Widget>

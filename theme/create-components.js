@@ -324,7 +324,7 @@ export function createComponents() {
             styleOverrides: {
                 root: {
                     [`& .${typographyClasses.root}`]: {
-                    fontSize: '14px',
+                    fontSize: '16px',
                     }
                 }
             }

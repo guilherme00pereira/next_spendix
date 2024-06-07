@@ -10,7 +10,7 @@ const ActionButton = styled(Button)(({ theme }) => ({
 
 const PaperHeaderLink = ({ target, text }: IPaperHeaderLinkType) => {
   return (
-    <ActionButton size="small" variant="text" href={target}>
+    <ActionButton variant="text" href={target}>
       {text}
     </ActionButton>
   );
