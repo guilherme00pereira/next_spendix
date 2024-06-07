@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TransactionType, GroupType, GroupFormData } from "./entities";
+import { TransactionType, GroupType, CreditCardType } from "./entities";
 import { IRemovableEntity, IRemovableTransaction } from "./interfaces";
 
 export interface IEditableObjectContextData<T> {
@@ -53,16 +53,16 @@ export interface ICategoryDetailContextData extends IDeletableObjectContextData 
     setGroupByMonth: Dispatch<SetStateAction<boolean>>;
 }
 
-export interface IGroupContextData extends IDeletableObjectContextData {
+export interface IGroupContextData extends IDeletableObjectContextData, IEditableObjectContextData<GroupType> {
     selectedGroup: GroupType;
     setSelectedGroup: Dispatch<SetStateAction<GroupType>>;
     showGroupDialog: boolean;
     setShowGroupDialog: (action: boolean) => void;
-    editableGroup: GroupFormData;
-    setEditableGroup: (g: GroupFormData) => void;
     showChart: boolean;
     setShowChart: (action: boolean) => void;
 }
+
+export interface ICreditCardContextData extends IDeletableObjectContextData, IEditableObjectContextData<CreditCardType> {}
 
 export interface ICategoriesPageContextData {
     showChart: boolean;

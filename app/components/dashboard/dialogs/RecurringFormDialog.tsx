@@ -9,11 +9,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { addReccuringTransaction } from "@/app/lib/supabase/methods/transactions";
-import { getCategories } from "@/app/lib/supabase/methods/categories";
 import { useSpeedDialStore } from "@/app/lib/store";
-import { useQuery } from "@tanstack/react-query";
 import TopBarSpeedDialog from "./TopBarSpeedDialog";
+import dayjs from "dayjs";
+import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
+import { serializeToServeActions } from "@/app/lib/functions";
+import { ISpeedDiaDialogsData } from "@/types/interfaces";
 
 const validate = yup.object({
   amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
@@ -24,14 +25,9 @@ const validate = yup.object({
   recurring_times: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido"),
 });
 
-const RecurringFormDialog = () => {
+const RecurringFormDialog = ({ categories }: ISpeedDiaDialogsData) => {
   const { showRecurringDialog, actionShowRecurringDialog, recurring } = useSpeedDialStore();
   const [isPending, setIsPending] = useState<boolean>(false);
-
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getCategories(),
-  });
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("amount", e.target.value);
@@ -44,27 +40,24 @@ const RecurringFormDialog = () => {
   };
 
   const formik = useFormik({
-    initialValues: recurring,
+    initialValues: {
+      ...recurring,
+      due_date: dayjs(recurring.due_date),
+      payment_date: dayjs(),
+    },
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
-      if (values.id) {
-        console.log("edit recurring transaction");
-      } else {
-        addReccuringTransaction({
-          amount: values["amount"],
-          due_date: values["due_date"],
-          description: values["description"],
-          category_id: values["category_id"],
-          recurring: values["recurring"],
-          recurring_times: values["recurring_times"],
-        }).then((res) => {
-          if (res !== null) {
-            actionShowRecurringDialog(false);
-            setIsPending(false);
-          }
-        });
-      }
+      const data = {
+        ...values,
+        due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
+        payment_date: dayjs(values.due_date).format("YYYY-MM-DD"),
+        payed_amount: values.amount,
+      };
+      submitTransactionForm(serializeToServeActions(data)).then(() => {
+        setIsPending(false);
+        actionShowRecurringDialog(false);
+      });
     },
   });
 

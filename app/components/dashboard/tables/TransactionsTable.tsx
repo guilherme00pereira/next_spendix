@@ -12,8 +12,13 @@ const TransactionsTable = ({ children, filters }: {children: React.ReactNode, fi
   const { openConfirm, setOpenConfirm, removableTransaction, setRemovableTransaction } = useTransactionContext();
   
   const handleProceedDelete = () => {
-    removeTransaction({ id: removableTransaction.id, payment_id: removableTransaction.payment_id });
-    setOpenConfirm(false);
+    fetch(`/api/transactions/remove?id=${removableTransaction.id}&payment_id=${removableTransaction.payment_id}`, {
+      method: "POST",
+    }).then((res) => {
+      if (res.ok) {
+        setOpenConfirm(false);
+      }
+    });
   };
 
   return (

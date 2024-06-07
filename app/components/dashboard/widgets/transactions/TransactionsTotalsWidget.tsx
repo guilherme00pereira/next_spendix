@@ -13,9 +13,12 @@ interface ITransactionsTotalsWidgetProps {
   title: string;
   income: boolean;
   color: string;
+  first?: boolean;
 }
 
-const Widget = styled(Box)(({ theme }) => ({
+const Widget = styled(Box, 
+  { shouldForwardProp: (prop) => prop !== "first" }
+)<{first: boolean}>(({ theme, first }) => ({
   width: "100%",
   [theme.breakpoints.up("md")]: {
     width: "calc(50% - 16px)",
@@ -25,8 +28,8 @@ const Widget = styled(Box)(({ theme }) => ({
   },
   borderLeft: "none",
   [theme.breakpoints.up("md")]: {
-    borderLeft: "2px solid",
-    borderColor: alpha(theme.palette.text.primary, 0.12),
+    borderLeft: first ? "none" : "2px solid",
+    borderColor: first ? "none" : alpha(theme.palette.text.primary, 0.12),
   },
   padding: "8px 0 8px 36px",
   borderRadius: "0px",
@@ -42,7 +45,7 @@ const IconBox = styled(Box, {
   color: "white",
 }));
 
-const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactionsTotalsWidgetProps) => {
+const TransactionsTotalsWidget = ({ value, title, income, color, first }: ITransactionsTotalsWidgetProps) => {
   const theme = useTheme();
 
   const getColor = (colorType: string) => {
@@ -63,7 +66,7 @@ const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactions
   
 
   return (
-    <Widget>
+    <Widget first={first ?? false}>
       <Stack direction="row" justifyContent="flex-start" alignItems="center">
         <IconBox bgcolor={getColor(color)}>
           {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.25rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.25rem" }} />}

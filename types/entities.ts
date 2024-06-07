@@ -51,13 +51,6 @@ export type CategoryFormData = {
     type: "Receita" | "Despesa" | "Transacao";
 }
 
-export type GroupFormData = {
-    id?: number;
-    name: string;
-    color: string | null;
-    icon: string | null;
-}
-
 export type TransactionType = {
     id: number;
     due_date: string;
@@ -112,14 +105,14 @@ export type TransactionUpdateStatusProps = {
 }
 
 export type BankAccountType = {
-    id?: number;
+    id: number;
     bank: string;
     balance: number;
     color: string | "000"; 
 }
 
 export type CreditCardType = {
-    id?: number;
+    id: number;
     name: string;
     limit: number;
     closing_day: number;

@@ -11,6 +11,7 @@ import {
   ICategoryDetailContextData,
   ITransactionsFiltersContextData,
   ICategoriesPageContextData,
+  ICreditCardContextData,
 } from "@/types/context-interfaces";
 import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
@@ -44,9 +45,7 @@ export const useTransactionContext = () => {
   return context;
 };
 
-export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>(
-  {} as ITransactionsPerDayContextData
-);
+export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>({} as ITransactionsPerDayContextData);
 
 export const useTransactionsPerDayContext = () => {
   const context = useContext(TransactionsPerDayContext);
@@ -56,9 +55,7 @@ export const useTransactionsPerDayContext = () => {
   return context;
 };
 
-export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>(
-  {} as ITransactionsFiltersContextData
-);
+export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>({} as ITransactionsFiltersContextData);
 
 export const useTransactionsTableFilterContext = () => {
   const context = useContext(TransactionsTableFilterContext);
@@ -98,10 +95,7 @@ export const useGroupContext = () => {
   return context;
 };
 
-
-export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>(
-  {} as IEditableObjectContextData<BankAccountType>
-);
+export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>({} as IEditableObjectContextData<BankAccountType>);
 
 export const useBankAccountContext = () => {
   const context = useContext(BankAccountContext);
@@ -111,10 +105,7 @@ export const useBankAccountContext = () => {
   return context;
 };
 
-
-export const CreditCardContext = createContext<IEditableObjectContextData<CreditCardType>>(
-  {} as IEditableObjectContextData<CreditCardType>
-);
+export const CreditCardContext = createContext<ICreditCardContextData>({} as ICreditCardContextData);
 
 export const useCreditCardContext = () => {
   const context = useContext(CreditCardContext);
@@ -123,7 +114,6 @@ export const useCreditCardContext = () => {
   }
   return context;
 };
-
 
 export const TagContext = createContext<IEditableObjectContextData<TagType>>({} as IEditableObjectContextData<TagType>);
 

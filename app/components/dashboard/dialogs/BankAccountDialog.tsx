@@ -1,12 +1,13 @@
 'use client'
 import React, { useEffect } from "react";
 import { useBankAccountContext, usePageContext } from "@/app/lib/contexts";
-import { Dialog, DialogContent, Grid, Input, Stack, TextField } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid, Input, Stack, TextField } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import TopBarDialog from "./TopBarDialog";
 import { ColorPicker } from "material-ui-color";
-import { formSubmit } from "@/app/dashboard/bank-accounts/actions";
+import { formSubmit } from "@/app/lib/actions/account-actions";
+import DialogActionButtons from "./DialogActionButtons";
 
 const validate = yup.object({
   id: yup.number(),
@@ -35,8 +36,8 @@ const BankAccountDialog = () => {
 
   return (
     <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
+      <DialogTitle>{editableObject.id ? "Editar" : "Adicionar"} conta</DialogTitle>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Nova conta" />
         <DialogContent>
           <Stack direction="row">
             <Grid container spacing={3}>
@@ -71,6 +72,7 @@ const BankAccountDialog = () => {
             </Grid>
           </Stack>
         </DialogContent>
+        <DialogActionButtons showDialog={showModal} closeAction={actionShowModal} />
       </form>
     </Dialog>
   );

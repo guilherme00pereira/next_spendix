@@ -17,7 +17,7 @@ const GroupsList = ({ groups }: { groups: GroupType[] }) => {
     removableObject, 
     setRemovableObject, 
     setShowGroupDialog, 
-    setEditableGroup, 
+    setEditableObject, 
     setShowChart, 
     setSelectedGroup 
   } = useGroupContext();
@@ -30,7 +30,7 @@ const GroupsList = ({ groups }: { groups: GroupType[] }) => {
   const handleEdit = (id: number) => {
     setShowGroupDialog(true);
     const g = groups?.filter((group) => group.id === id)[0] ?? ({} as GroupType);
-    setEditableGroup({
+    setEditableObject({
       id: g.id ?? 0,
       name: g.name ?? "",
       icon: g.icon ?? null,
@@ -40,7 +40,7 @@ const GroupsList = ({ groups }: { groups: GroupType[] }) => {
 
   const handleAdd = () => {
     setShowGroupDialog(true);
-    setEditableGroup({
+    setEditableObject({
       id: 0,
       name: "",
       icon: null,

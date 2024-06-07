@@ -4,8 +4,7 @@ import TransactionsPerDayList from "@/app/components/dashboard/lists/Transaction
 import UpcomingTransactions from "@/app/components/dashboard/lists/UpcomingTransactions";
 import Masonry from "@mui/lab/Masonry";
 import OverdueTransactionsList from "@/app/components/dashboard/lists/OverdueTransactionsList";
-import { getPayedTransactions } from "@/app/lib/actions/transactions-actions";
-import dayjs from "dayjs";
+import { getPayedTransactions } from "@/app/lib/supabase/methods/transactions";
 import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/TransactionTopPageInfo";
 import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/chart-papers/DailyTransactionsChartPaper";

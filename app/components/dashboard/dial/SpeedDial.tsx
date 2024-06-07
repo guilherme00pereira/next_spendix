@@ -12,7 +12,7 @@ const SpeedDial = async() => {
     
     return (
         <>
-          {categories && <SpeedDialMobile categories={categories} tags={tags} paymentMethods={paymentMethods} />}  
+          {(categories && tags && paymentMethods) && <SpeedDialMobile categories={categories} tags={tags} paymentMethods={paymentMethods} />}  
         </>
     );
 };

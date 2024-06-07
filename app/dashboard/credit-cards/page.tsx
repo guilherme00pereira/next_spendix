@@ -1,22 +1,20 @@
-import { Stack, Grid } from "@mui/material";
+import { Stack } from "@mui/material";
 import CreditCardDialog from "@/app/components/dashboard/dialogs/CreditCardDialog";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import CreditCardProvider from "@/app/lib/providers/CreditCardProvider";
 import CreditCardsList from "@/app/components/dashboard/lists/CreditCardsList";
+import { getCreditCardPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
 
-const CreditCardsPage = () => {
+const CreditCardsPage = async () => {
+  const cards = await getCreditCardPaymentMethods();
+  
   return (
     <PageContainer title="Cartão de Crédito">
-      <Stack spacing={3} direction="row" justifyContent="center">
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={12} md={5}>
-          <CreditCardProvider>
-            <CreditCardsList />
-            <CreditCardDialog />
-          </CreditCardProvider>
-          </Grid>
-          <Grid item xs={12} md={7}></Grid>
-        </Grid>
+      <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
+        <CreditCardProvider>
+          <CreditCardsList cards={cards} />
+          <CreditCardDialog />
+        </CreditCardProvider>
       </Stack>
     </PageContainer>
   );

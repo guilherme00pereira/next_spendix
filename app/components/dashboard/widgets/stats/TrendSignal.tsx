@@ -15,7 +15,7 @@ interface TrendComponentProps {
 const TrendComponent = ({ diff, color, children }: TrendComponentProps) => {
     return (
         <Stack direction="row" alignItems="center" spacing={3}>
-            <Typography color={color}>{diff.toFixed(2)}%</Typography>
+            <Typography variant="body2" color={color}>{diff.toFixed(2)}%</Typography>
             {children}
         </Stack>
     );

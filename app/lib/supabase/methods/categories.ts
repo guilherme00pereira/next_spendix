@@ -1,9 +1,8 @@
-//import { createClientServerSide } from "@/app/lib/supabase/server";
-import { createClient } from "@/app/lib/supabase/client";
+import { createClientServerSide } from "@/app/lib/supabase/server";
 import { unstable_cache } from "next/cache";
 import { CategoryFormData } from "@/types/entities";
 
-const supabase = createClient();
+const supabase = createClientServerSide();
 
 const getCategories = unstable_cache(async () => {
   const { data, error } = await supabase

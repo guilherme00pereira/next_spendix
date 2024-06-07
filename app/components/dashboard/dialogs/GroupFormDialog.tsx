@@ -14,10 +14,10 @@ const validate = yup.object({
 });
 
 const GroupFormDialog = () => {
-  const { showGroupDialog, setShowGroupDialog, editableGroup } = useGroupContext();
+  const { showGroupDialog, setShowGroupDialog, editableObject } = useGroupContext();
 
   const formik = useFormik({
-    initialValues: editableGroup,
+    initialValues: editableObject,
     validationSchema: validate,
     onSubmit: (values) => {
       submitGroupForm(values).then( () => {
@@ -33,7 +33,7 @@ const GroupFormDialog = () => {
       maxWidth="md"
       onClose={() => setShowGroupDialog(!showGroupDialog)}
     >
-      <DialogTitle>{editableGroup.id ? "Editar" : "Adicionar"} grupo</DialogTitle>
+      <DialogTitle>{editableObject.id ? "Editar" : "Adicionar"} grupo</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent dividers>
           <Stack direction="row">

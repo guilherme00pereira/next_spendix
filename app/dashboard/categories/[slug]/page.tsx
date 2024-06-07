@@ -1,5 +1,5 @@
 import Stack from "@mui/material/Stack";
-import { getTransactionsByCategoriesLastSixMonths } from "@/app/lib/supabase/methods/transactions";
+import { getTransactionsByCategoriesLastYear } from "@/app/lib/supabase/methods/transactions";
 import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
 import CategoryTransactionsTable from "@/app/components/dashboard/tables/CategoryTransactionsTable";
@@ -17,7 +17,7 @@ async function fetchSpendingsCategories() {
 const CategoryPage = async ({ params }: { params: { slug: string } }) => {
   const category = await getSingleCategory(params.slug);
   const title = category.name;
-  const transactions = (await getTransactionsByCategoriesLastSixMonths(category.id)) as TransactionType[];
+  const transactions = await getTransactionsByCategoriesLastYear(category.id) as TransactionType[];
   const spendingsCategories = await fetchSpendingsCategories();
 
   return (

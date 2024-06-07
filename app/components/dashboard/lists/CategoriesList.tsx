@@ -6,11 +6,9 @@ import { CategoryWithStatsType } from "@/types/entities";
 import { Stack } from "@mui/system";
 import CategoriesListItem from "./items/CategoriesListItem";
 import { useCategoriesPageContext, useCategoryContext } from "@/app/lib/contexts";
-import { removeCategory } from "@/app/lib/supabase/methods/categories";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import CategoriesFilter from "@/app/components/dashboard/widgets/filters/CategoriesFilter";
 import CategoryProvider from "@/app/lib/providers/CategoryProvider";
-import { ShowChart } from "@mui/icons-material";
 
 const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] }) => {
   const { openConfirm, setOpenConfirm, removableObject } = useCategoryContext();
@@ -23,6 +21,16 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
     } else {
       setFilterableCategories(categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())));
     }
+  };
+
+  const handleProceedDelete = () => {
+    fetch(`/api/categories/remove?id=${removableObject.id}`, {
+      method: "POST",
+    }).then((res) => {
+      if (res.ok) {
+        setOpenConfirm(false);
+      }
+    });
   };
 
   useEffect(() => {
@@ -45,10 +53,7 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
           entity={removableObject}
           open={openConfirm}
           handleClose={setOpenConfirm}
-          handleDelete={() => {
-            removeCategory(removableObject.id);
-            setOpenConfirm(false);
-          }}
+          handleDelete={handleProceedDelete}
         />
       </PaperContainer>
     </CategoryProvider>

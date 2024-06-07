@@ -115,7 +115,7 @@ const SpeedDialMobile = ({categories, tags, paymentMethods}: ISpeedDiaDialogsDat
       </SpeedDialButton>
       { showTransactionDialog && <TransactionFormDialog categories={categories} tags={tags} paymentMethods={paymentMethods} /> }
       { showIncomeDialog && <IncomeFormDialog categories={categories} tags={tags} paymentMethods={paymentMethods} /> }
-      { showRecurringDialog &&  <RecurringFormDialog /> }
+      { showRecurringDialog &&  <RecurringFormDialog categories={categories} tags={tags} paymentMethods={paymentMethods} /> }
       { showCategoryDialog && <CategoryFormDialog /> }
     </>
   );
