@@ -4,6 +4,7 @@ import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import CreditCardProvider from "@/app/lib/providers/CreditCardProvider";
 import CreditCardsList from "@/app/components/dashboard/lists/CreditCardsList";
 import { getCreditCardPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
+import CreditCardInvoicesList from "@/app/components/dashboard/lists/CreditCardInvoicesList";
 
 const CreditCardsPage = async () => {
   const cards = await getCreditCardPaymentMethods();
@@ -13,6 +14,7 @@ const CreditCardsPage = async () => {
       <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
         <CreditCardProvider>
           <CreditCardsList cards={cards} />
+          <CreditCardInvoicesList />
           <CreditCardDialog />
         </CreditCardProvider>
       </Stack>

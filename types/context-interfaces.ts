@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TransactionType, GroupType, CreditCardType } from "./entities";
+import { TransactionType, GroupType, CreditCardType, CreditCardInvoiceType } from "./entities";
 import { IRemovableEntity, IRemovableTransaction } from "./interfaces";
 
 export interface IEditableObjectContextData<T> {
@@ -62,7 +62,12 @@ export interface IGroupContextData extends IDeletableObjectContextData, IEditabl
     setShowChart: (action: boolean) => void;
 }
 
-export interface ICreditCardContextData extends IDeletableObjectContextData, IEditableObjectContextData<CreditCardType> {}
+export interface ICreditCardContextData extends IDeletableObjectContextData, IEditableObjectContextData<CreditCardType> {
+    selectedCard: CreditCardType;
+    setSelectedCard: Dispatch<SetStateAction<CreditCardType>>;
+    cardInvoices: CreditCardInvoiceType[];
+    setCardInvoices: Dispatch<SetStateAction<CreditCardInvoiceType[]>>;
+}
 
 export interface ICategoriesPageContextData {
     showChart: boolean;

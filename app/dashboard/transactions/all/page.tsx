@@ -1,6 +1,6 @@
 import React from "react";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
-import { getPayedTransactions, getTransactions } from "@/app/lib/actions/transactions-actions";
+import { getPayedTransactions, getTransactions } from "@/app/lib/supabase/methods/transactions";
 import TransactionsTable from "@/app/components/dashboard/tables/TransactionsTable";
 import Stack from "@mui/material/Stack";
 import TransactionsFilter from "@/app/components/dashboard/widgets/filters/TransactionsFilter";

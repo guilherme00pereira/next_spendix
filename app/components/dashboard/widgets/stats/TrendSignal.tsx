@@ -6,41 +6,52 @@ import { calculatePercentageFromPrevious } from "@/app/lib/functions";
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 
-interface TrendComponentProps {
-    diff: number;
-    color: string;
-    children: React.ReactNode;
-    }
-
-const TrendComponent = ({ diff, color, children }: TrendComponentProps) => {
-    return (
-        <Stack direction="row" alignItems="center" spacing={3}>
-            <Typography variant="body2" color={color}>{diff.toFixed(2)}%</Typography>
-            {children}
-        </Stack>
-    );
+interface ITrendComponentProps {
+  variation: number;
+  showVariation?: boolean;
+  color: string;
+  children: React.ReactNode;
 }
 
-const TrendSignal = ({ current, previous }: { current: number | null; previous: number | null }) => {
-  if (!current || !previous) return null;
-  const diff = calculatePercentageFromPrevious(current, previous);
-  console.log(diff);
+interface ITrendSignalProps {
+  current: number | null;
+  previous: number | null;
+  showVariation?: boolean;
+}
 
-  if (diff > 10)
+const TrendComponent = ({ variation, showVariation, color, children }: ITrendComponentProps) => {
+  return (
+    <Stack direction="row" alignItems="center" spacing={3}>
+      {showVariation && (
+        <Typography variant="body2" color={color}>
+          {variation.toFixed(2)}%
+        </Typography>
+      )}
+      {children}
+    </Stack>
+  );
+};
+
+const TrendSignal = ({ current, previous, showVariation }: ITrendSignalProps) => {
+  if (!current || !previous) return null;
+  const variation = calculatePercentageFromPrevious(current, previous);
+
+  if (variation > 10)
     return (
-      <TrendComponent diff={diff} color="success.main">
+      <TrendComponent variation={variation} color="success.main" showVariation={showVariation}>
         <TrendingUpOutlinedIcon color="success" />
       </TrendComponent>
     );
-  if (diff < -10) return (
-    <TrendComponent diff={diff} color="error.main">
-    <TrendingDownOutlinedIcon color="error" />
-    </TrendComponent>
+  if (variation < -10)
+    return (
+      <TrendComponent variation={variation} color="error.main" showVariation={showVariation}>
+        <TrendingDownOutlinedIcon color="error" />
+      </TrendComponent>
     );
 
   return (
-    <TrendComponent diff={diff} color="info.main">
-        <TrendingFlatOutlinedIcon color="info" />
+    <TrendComponent variation={variation} color="info.main" showVariation={showVariation}>
+      <TrendingFlatOutlinedIcon color="info" />
     </TrendComponent>
   );
 };

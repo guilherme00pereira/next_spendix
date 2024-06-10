@@ -1,16 +1,18 @@
 'use client'
 import React, {useState} from 'react';
 import { CreditCardContext } from '@/app/lib/contexts';
-import { CreditCardType } from '@/types/entities';
+import { CreditCardInvoiceType, CreditCardType } from '@/types/entities';
 
 const CreditCardProvider = ({children}: {children: React.ReactNode}) => {
-  const [editableCard, setEditableCard] = useState({} as CreditCardType);
+  const [editableCard, setEditableCard] = useState<CreditCardType>({} as CreditCardType);
+  const [selectedCard, setSelectedCard] = useState<CreditCardType>({} as CreditCardType);
   const [openConfirm, setOpenConfirm] = useState(false);	
   const [removableCard, setRemovableCard] = useState({
     id: 0,
     name: '',
     type: 'cartão de crédito',
   });
+  const [invoices, setInvoices] = useState([] as CreditCardInvoiceType[]);
 
   return (
     <CreditCardContext.Provider value={
@@ -21,6 +23,10 @@ const CreditCardProvider = ({children}: {children: React.ReactNode}) => {
         setOpenConfirm,
         removableObject: removableCard,
         setRemovableObject: setRemovableCard,
+        selectedCard,
+        setSelectedCard,
+        cardInvoices: invoices,
+        setCardInvoices: setInvoices,
       }
     }>
       {children}

@@ -33,10 +33,6 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
     });
   };
 
-  useEffect(() => {
-    console.log(filterableCategories.filter((c) => c.active));
-  }, []);
-
   return (
     <CategoryProvider>
       <PaperContainer width={showChart ? "60%" : "90%"}>

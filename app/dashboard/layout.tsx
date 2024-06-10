@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Sidebar from "@/app/components/dashboard/sidebar/Sidebar";
 import Topbar from "@/app/components/dashboard/topbar/Topbar";
-import SpeedDial from "@/app/components/dashboard/dial/SpeedDial";
 import TransactionDetailRightDrawer from "@/app/components/dashboard/surfaces/TransactionDetailRightDrawer";
 import TransactionProvider from "../lib/providers/TransactionProvider";
 import PageProvider from "../lib/providers/PageProvider";
@@ -19,7 +18,6 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
               <Sidebar />
             </SidebarProvider>
             <PageWrapper>{children}</PageWrapper>
-            <SpeedDial />
           </Box>
           <TransactionDetailRightDrawer />
         </TransactionProvider>

@@ -1,7 +1,7 @@
-import { createClient } from "@/app/lib/supabase/client";
+import { createClientServerSide } from "@/app/lib/supabase/server";
 import {TagType} from "@/types/entities";
 
-const supabase = createClient()
+const supabase = createClientServerSide()
 
 const getTags = async () => {
   const {data, error} = await supabase.from('tags').select('*').order("name", {ascending: true})

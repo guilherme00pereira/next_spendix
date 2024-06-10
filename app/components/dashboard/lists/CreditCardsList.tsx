@@ -8,8 +8,8 @@ import Button from "@mui/material/Button";
 import { useCreditCardContext, usePageContext } from "@/app/lib/contexts";
 
 const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
-  const { showModal, actionShowModal } = usePageContext();
-  const { openConfirm, setOpenConfirm, removableObject, setRemovableObject, setEditableObject } = useCreditCardContext();
+  const { actionShowModal } = usePageContext();
+  const { setOpenConfirm, removableObject, setRemovableObject, setEditableObject } = useCreditCardContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableObject({ ...removableObject, id, name });
@@ -44,7 +44,7 @@ const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
   };
 
   return (
-    <PaperContainer width="90%">
+    <PaperContainer>
       <PaperHeader title="Cartões de Crédito">
         <Button variant="contained" size="small" color="primary" onClick={handleAdd}>
           Adicionar

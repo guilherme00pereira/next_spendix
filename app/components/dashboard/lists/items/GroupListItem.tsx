@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { styled } from "@mui/material/styles";
-import type {} from "@mui/material/themeCssVarsAugmentation";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";

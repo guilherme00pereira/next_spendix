@@ -2,7 +2,7 @@ import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
@@ -33,7 +33,7 @@ export default function Sidebar() {
 
       <List component="nav">
         <SidebarMenuItem title="Dashboard" icon={<DashboardIcon fontSize="small" />} link="/dashboard" />
-        <SidebarMenuItem title="Transações" icon={<ReceiptLongRoundedIcon fontSize="small" />} link="/dashboard/transactions" />
+        <SidebarMenuItem title="Transações" icon={<AttachMoneyRoundedIcon fontSize="small" />} link="/dashboard/transactions" />
         <SidebarMenuItem title="Categorias" icon={<ListAltRoundedIcon fontSize="small" />} link="/dashboard/categories" />
         <SidebarMenuItem title="Grupos" icon={<InterestsRoundedIcon fontSize="small" />} link="/dashboard/groups" />
         <SidebarMenuItem title="Contas" icon={<AccountBalanceRoundedIcon fontSize="small" />} link="/dashboard/bank-accounts" />

@@ -4,6 +4,7 @@ import Breadcrumb from "./Breadcrumb";
 import { Stack, Typography } from "@mui/material";
 import { IPageContainerProps } from "@/types/interfaces";
 import SelectMonthYear from "../calendar/SelectMonthYear";
+import SpeedDial from "@/app/components/dashboard/dial/SpeedDial";
 
 const PageContainer = ({ children, title, hideBreadcrumb, showSelectMonthYear }: IPageContainerProps) => {
   return (
@@ -18,6 +19,7 @@ const PageContainer = ({ children, title, hideBreadcrumb, showSelectMonthYear }:
       <Stack justifyContent="center" alignItems="center" spacing={2}>
         {children}
       </Stack>
+      <SpeedDial />
     </Container>
   );
 };

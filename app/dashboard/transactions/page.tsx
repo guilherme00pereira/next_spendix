@@ -8,7 +8,7 @@ import { getPayedTransactions } from "@/app/lib/supabase/methods/transactions";
 import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/TransactionTopPageInfo";
 import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/chart-papers/DailyTransactionsChartPaper";
-import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/functions";
+import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/helpers";
 import { TransactionTypeEnum } from "@/types/enums";
 import { getDates, getTotals } from "@/app/lib/helpers";
 

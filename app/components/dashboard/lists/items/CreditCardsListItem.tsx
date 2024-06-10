@@ -3,12 +3,10 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { amountFormatter } from "@/app/lib/functions";
 import { CreditCardType } from "@/types/entities";
 import Typography from "@mui/material/Typography";
 import { usePageContext, useCreditCardContext } from "@/app/lib/contexts";
+import CreditCardActionButtons from "@/app/components/dashboard/widgets/buttons/CreditCardActionButtons";
 
 const ListItem = styled(Stack)(({ theme }) => ({
   width: "100%",
@@ -59,18 +57,7 @@ const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
         <Typography fontWeight="bold">{card.name}</Typography>
       </Box>
       <Box>
-        <Stack direction="row" spacing={1}>
-          <Box>
-            <Button
-              size="small"
-              variant="text"
-              color="info"
-              onClick={handleEdit}
-            >
-              <EditRoundedIcon fontSize="small" />
-            </Button>
-          </Box>
-        </Stack>
+        <CreditCardActionButtons card={card} />
       </Box>
     </ListItem>
   );

@@ -6,7 +6,6 @@ import { PaperContainer } from "@/app/components/dashboard/commonStyledComponent
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { useTransactionContext } from "@/app/lib/contexts";
-import { removeTransaction } from "@/app/lib/supabase/methods/transactions";
 
 const TransactionsTable = ({ children, filters }: {children: React.ReactNode, filters?: React.ReactNode}) => {
   const { openConfirm, setOpenConfirm, removableTransaction, setRemovableTransaction } = useTransactionContext();

@@ -19,17 +19,17 @@ const getTypeColor = (type: string) => {
 };
 
 const CategoriesListItem = ({ category }: { category: CategoryWithStatsType }) => {
-  const { setShowChart } = useCategoriesPageContext();
+  const { showChart } = useCategoriesPageContext();
 
   return (
     <ListItem direction={{ xs: "column", md: "row" }} justifyContent="space-between">
       <Box sx={{ flexGrow: 1 }}>
-        <RegularLink href={`/dashboard/categories/${category.slug}`} underline="none" variant="subtitle2">
+        <RegularLink href={`/dashboard/categories/${category.id}/${category.slug}`} underline="none" variant="subtitle2">
           {category.name}
         </RegularLink>
       </Box>
       <Box sx={{ pr: "6em" }}>
-        <TrendSignal current={category.current_balance} previous={category.previous_balance} />
+        <TrendSignal current={category.current_balance} previous={category.previous_balance} showVariation={!showChart} />
       </Box>
       <Box sx={{ pr: "3em" }}>
         <Chip

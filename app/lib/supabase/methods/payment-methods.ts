@@ -1,7 +1,7 @@
-import { createClient } from "@/app/lib/supabase/client";
+import { createClientServerSide } from "@/app/lib/supabase/server";
 import { BankAccountType, CreditCardType, TransferMoneyFormData } from "@/types/entities";
 
-const supabase = createClient()
+const supabase = createClientServerSide()
 
 const getAllPaymentMethods = async () => {
     const {data, error} = await supabase.from('payment_methods').select('*, credit_cards(*), accounts(*)')
