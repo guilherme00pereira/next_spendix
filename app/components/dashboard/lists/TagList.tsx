@@ -1,7 +1,5 @@
 "use client";
 import { useState } from "react";
-import { getTags, removeTag } from "@/app/lib/supabase/methods/tags";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -9,10 +7,9 @@ import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRou
 import { usePageContext, useTagContext } from "@/app/lib/contexts";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { IRemovableEntity } from "@/types/interfaces";
-import NodeRepeaterLoader from "../loaders/RepeatableLoader";
+import { TagType } from "@/types/entities";
 
-const TagList = () => {
-  const queryClient = useQueryClient();
+const TagList = ({tags}: {tags: TagType[]}) => {
   const { actionShowModal } = usePageContext();
   const { setEditableObject } = useTagContext();
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -22,18 +19,6 @@ const TagList = () => {
     type: "tag",
   });
 
-  const { data: tags, isLoading } = useQuery({
-    queryKey: ["tags"],
-    queryFn: () => getTags(),
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: number) => removeTag(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tags"] });
-    },
-  });
-
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableTag({ ...removableTag, id, name });
     setOpenConfirm(true);
@@ -41,7 +26,7 @@ const TagList = () => {
 
   const processDelete = () => {
     if (removableTag.id > 0) {
-      deleteMutation.mutate(removableTag.id);
+      
     }
     setOpenConfirm(false);
   };
@@ -60,9 +45,8 @@ const TagList = () => {
   return (
     <Paper sx={{ p: 6 }}>
       <Stack direction="row" justifyContent="flex-start">
-        {isLoading && <NodeRepeaterLoader items={5} width={100} height={50} />}
-        {isLoading ||
-          tags?.map((tag) => (
+        
+          {tags.map((tag) => (
             <Chip
               key={tag.id}
               label={tag.name}

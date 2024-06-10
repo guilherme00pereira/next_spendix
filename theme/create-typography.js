@@ -1,6 +1,9 @@
+import { fontSize } from "@mui/system";
+
 export const createTypography = () => {
   return {
     fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    fontSize: 14,
     body1: {
       fontSize: '1.125rem',
       fontWeight: 400,

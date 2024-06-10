@@ -26,14 +26,13 @@ import dayjs from "dayjs";
 //   }
 // };
 
-const supabase = createClientServerSide();
-
 const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categories(*), payments!inner(*), 
                   installments: transaction_installments(*), tags(*)`;
 const getDefaultQuery = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
 export const getTransactions = unstable_cache(
   async (initial_date: string, final_date: string) => {
+    const supabase = createClientServerSide();
     const { data, error } = await supabase
       .from("transactions")
       .select(getDefaultQuery)
@@ -51,6 +50,7 @@ export const getTransactions = unstable_cache(
 
 export const getPayedTransactions = unstable_cache(
   async (initial_date: string, final_date: string) => {
+    const supabase = createClientServerSide();
     const { data, error } = await supabase
       .from("transactions")
       .select(getInnerPaymentsQuery)
@@ -70,6 +70,7 @@ export const getPayedTransactions = unstable_cache(
 
 export const getFutureTransactions = unstable_cache(
   async (initial_date: string, final_date: string) => {
+    const supabase = createClientServerSide();
     const { data, error } = await supabase
       .from("transactions")
       .select(getDefaultQuery)
@@ -104,6 +105,7 @@ export const addTransaction = async ({
   if (cashed) {
     pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
   }
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("transactions")
     .insert({
@@ -159,6 +161,7 @@ export const editTransaction = async ({
   if (cashed) {
     pay_id = await managePaymentRecord(payment_date, payed_amount, payment_id, payment_method_id);
   }
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("transactions")
     .update({
@@ -189,6 +192,7 @@ export const editTransaction = async ({
 };
 
 export const getTransactionsByCategory = async (di: string, df: string, category_id: number) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("transactions")
     .select(getInnerPaymentsQuery)
@@ -203,6 +207,7 @@ export const getTransactionsByCategory = async (di: string, df: string, category
 };
 
 export const getOverdueTransactions = async () => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("transactions")
     .select(getDefaultQuery)
@@ -217,6 +222,7 @@ export const getOverdueTransactions = async () => {
 };
 
 export const addReccuringTransaction = async ({ amount, due_date, description, category_id, recurring_times }: RecurringFormData) => {
+  const supabase = createClientServerSide();
   const rows = [];
   for (let i = 0; i < recurring_times; i++) {
     let desctext = `${description} (${i + 1}/${recurring_times})`;
@@ -236,6 +242,7 @@ export const addReccuringTransaction = async ({ amount, due_date, description, c
 };
 
 export const removeTransaction = async ({ id, payment_id }: IDeleteTransactionData) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase.from("transactions").delete().eq("id", id);
   if (error) {
     throw error;
@@ -250,6 +257,7 @@ export const removeTransaction = async ({ id, payment_id }: IDeleteTransactionDa
 };
 
 export const getSumIncomeTransactions = async (di: string, df: string) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("transactions")
     .select("amount, categories(type)")
@@ -265,6 +273,7 @@ export const getSumIncomeTransactions = async (di: string, df: string) => {
 };
 
 export const getTransactionsByCategoriesLastYear = async (category_id: number) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("transactions")
     .select(getDefaultQuery)
@@ -279,6 +288,7 @@ export const getTransactionsByCategoriesLastYear = async (category_id: number) =
 };
 
 export const managePaymentRecord = async (payment_date: string, payed_amount: number | null, payment_id: number | null, payment_method_id: number) => {
+  const supabase = createClientServerSide();
   let pay_id = null;
   if (payment_id) {
     const { data, error } = await supabase

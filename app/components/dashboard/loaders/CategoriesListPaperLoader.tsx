@@ -1,8 +1,7 @@
 import React from 'react';
 import { PaperContainer } from '@/app/components/dashboard/commonStyledComponents';
 import PaperHeader from '@/app/components/dashboard/surfaces/PaperHeader';
-import Skeleton from '@mui/material/Skeleton';
-import RepeatableLoader from '../RepeatableLoader';
+import RepeatableLoader from '@/app/components/dashboard/loaders/RepeatableLoader';
 
 const CategoriesListPaperLoader = () => {
     return (

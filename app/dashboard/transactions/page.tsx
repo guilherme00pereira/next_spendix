@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import TransactionsPerDayList from "@/app/components/dashboard/lists/TransactionsPerDayList";
 import UpcomingTransactions from "@/app/components/dashboard/lists/UpcomingTransactions";
@@ -11,12 +11,9 @@ import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/
 import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/helpers";
 import { TransactionTypeEnum } from "@/types/enums";
 import { getDates, getTotals } from "@/app/lib/helpers";
+import TransactionsTopCardLoader from "@/app/components/dashboard/loaders/TransactionsTopCardLoader";
 
-const TransactionsPage = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+const TransactionsPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
   const [startDate, endDate] = getDates(searchParams.date as string);
   const transactions = await getPayedTransactions(startDate, endDate);
   const transactionsMappedPerDay = groupTransactionsByDate(transactions);
@@ -30,26 +27,18 @@ const TransactionsPage = async ({
   return (
     <PageContainer title="Transações" showSelectMonthYear>
       <PageTopCard>
-        <TransactionTopPageInfo
-          income={totalIncome}
-          paid={totalPaidSpendings}
-          spendings={totalSpendings}
-          mean={dailyAverage}
-        />
+        <Suspense fallback={<TransactionsTopCardLoader />}>
+          <TransactionTopPageInfo income={totalIncome} paid={totalPaidSpendings} spendings={totalSpendings} mean={dailyAverage} />
+        </Suspense>
       </PageTopCard>
-      <Masonry columns={{ xs: 1, md: 2 }} spacing={2}>
-        <TransactionsPerDayList
-          transactions={transactionsMappedPerDay}
-          headerLink={headerLink}
-          selectedDate={searchParams.date?.toString() ?? ""}
-        />
-        <ApexDailyTransactionsLineChart
-          values={{ spendingsData, incomeData }}
-          show={transactionsMappedPerDay.size > 0}
-        />
-        <UpcomingTransactions />
-        <OverdueTransactionsList />
-      </Masonry>
+      <Suspense fallback={<p>loading</p>}>
+        <Masonry columns={{ xs: 1, md: 2 }} spacing={2}>
+          <TransactionsPerDayList transactions={transactionsMappedPerDay} headerLink={headerLink} selectedDate={searchParams.date?.toString() ?? ""} />
+          <ApexDailyTransactionsLineChart values={{ spendingsData, incomeData }} show={transactionsMappedPerDay.size > 0} />
+          <UpcomingTransactions />
+          <OverdueTransactionsList />
+        </Masonry>
+      </Suspense>
     </PageContainer>
   );
 };

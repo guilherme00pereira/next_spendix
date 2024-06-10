@@ -4,7 +4,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { ColorPicker } from "material-ui-color";
 import { submitGroupForm } from "@/app/lib/actions/group-actions";
 import DialogActionButtons from "./DialogActionButtons";
 import { useGroupContext } from "@/app/lib/contexts";

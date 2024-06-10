@@ -1,9 +1,8 @@
 import { createClientServerSide } from "@/app/lib/supabase/server";
 import { BankAccountType, CreditCardType, TransferMoneyFormData } from "@/types/entities";
 
-const supabase = createClientServerSide()
-
 const getAllPaymentMethods = async () => {
+    const supabase = createClientServerSide();
     const {data, error} = await supabase.from('payment_methods').select('*, credit_cards(*), accounts(*)')
     if (error) {
         throw error
@@ -12,6 +11,7 @@ const getAllPaymentMethods = async () => {
 }
 
 const getCreditCardPaymentMethods = async () => {
+    const supabase = createClientServerSide();
     const {data, error} = await supabase.from('payment_methods').select('credit_cards(*)').not('credit_card_id', 'is', null)
     if (error) {
         throw error
@@ -20,6 +20,7 @@ const getCreditCardPaymentMethods = async () => {
 }
 
 const getAccountPaymentMethods = async () => {
+    const supabase = createClientServerSide();
     const {data, error} = await supabase.from('payment_methods').select('accounts(*)').not('account_id', 'is', null)
     if (error) {
         throw error
@@ -28,6 +29,7 @@ const getAccountPaymentMethods = async () => {
 }
 
 const transferMoney = async ({outcomeId, outcomeType, incomeId, incomeType, amount }: TransferMoneyFormData) => {
+    const supabase = createClientServerSide();
     
     const {data, error} = await supabase.rpc('transfer_money', {
         outid: outcomeId, 
@@ -43,6 +45,7 @@ const transferMoney = async ({outcomeId, outcomeType, incomeId, incomeType, amou
 }
 
 const getTotalAmountAvailable = async () => {
+    const supabase = createClientServerSide();
     const {data, error} = await supabase.rpc('total_available_amount')
     if (error) {
         throw error

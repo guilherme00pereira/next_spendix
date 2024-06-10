@@ -2,9 +2,9 @@ import { createClientServerSide } from "@/app/lib/supabase/server";
 import { unstable_cache } from "next/cache";
 import { CategoryFormData } from "@/types/entities";
 
-const supabase = createClientServerSide();
 
 const getCategories = unstable_cache(async () => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("categories")
     .select("*, groups: groups(*)")
@@ -17,6 +17,7 @@ const getCategories = unstable_cache(async () => {
 }, ["get_categories"]);
 
 const getCategoriesWithStats = async () => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("categories_with_stats")
     .select("*")
@@ -27,6 +28,7 @@ const getCategoriesWithStats = async () => {
 }
 
 const getSingleCategory = async (slug: string) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase.from("categories").select("*").eq("slug", slug);
   if (error) {
     throw error;
@@ -35,6 +37,7 @@ const getSingleCategory = async (slug: string) => {
 };
 
 const getExpenseCategoriesTransactionsSum = async (initial_date: string, final_date: string) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("categories")
     .select("id, name, type, transactions: transactions(amount, due_date, payment_id)")
@@ -58,6 +61,7 @@ const getExpenseCategoriesTransactionsSum = async (initial_date: string, final_d
 };
 
 const addCategory = async ({ name, type, slug, color, icon }: CategoryFormData) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase.from("categories").insert({ name, type, slug, color, icon });
   if (error) {
     throw error;
@@ -66,6 +70,7 @@ const addCategory = async ({ name, type, slug, color, icon }: CategoryFormData) 
 };
 
 const editCategory = async ({ id, name, type, slug, color, icon }: CategoryFormData) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase
     .from("categories")
     .update({ name, type, slug, color, icon })
@@ -77,6 +82,7 @@ const editCategory = async ({ id, name, type, slug, color, icon }: CategoryFormD
 };
 
 const removeCategory = async (id: number) => {
+  const supabase = createClientServerSide();
   const { data, error } = await supabase.from("categories").delete().match({ id });
   if (error) {
     throw error;

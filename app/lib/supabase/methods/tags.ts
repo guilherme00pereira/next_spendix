@@ -1,9 +1,8 @@
 import { createClientServerSide } from "@/app/lib/supabase/server";
 import {TagType} from "@/types/entities";
 
-const supabase = createClientServerSide()
-
 const getTags = async () => {
+  const supabase = createClientServerSide();
   const {data, error} = await supabase.from('tags').select('*').order("name", {ascending: true})
   if (error) {
     throw error
@@ -12,6 +11,7 @@ const getTags = async () => {
 }
 
 const addTag = async (name: string) => {
+  const supabase = createClientServerSide();
   const {data, error} = await supabase.from('tags').insert({name})
   if (error) {
     throw error
@@ -20,6 +20,7 @@ const addTag = async (name: string) => {
 }
 
 const editTag = async ({id, name}: TagType) => {
+  const supabase = createClientServerSide();
   const {data, error} = await supabase.from('tags').update({name}).match({id: id})
   if (error) {
     throw error
@@ -28,6 +29,7 @@ const editTag = async ({id, name}: TagType) => {
 }
 
 const removeTag = async (id: number) => {
+  const supabase = createClientServerSide();
   const {data, error} = await supabase.from('tags').delete().match({id})
   if (error) {
     throw error
