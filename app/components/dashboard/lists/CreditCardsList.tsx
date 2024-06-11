@@ -49,7 +49,7 @@ const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
 
   return (
     <PaperContainer width="60%">
-      <PaperHeader title="Cartões de Crédito">
+      <PaperHeader title="Meus Cartões">
         <Button variant="contained" size="small" color="primary" onClick={handleAdd}>
           Adicionar
         </Button>

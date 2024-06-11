@@ -4,6 +4,7 @@ import { PaperContainer } from "../commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import { useCreditCardContext } from "@/app/lib/contexts";
 import Fade from "@mui/material/Fade";
+import CreditCardInvoiceListItem from "./items/CreditCardInvoiceListItem";
 
 const CreditCardInvoicesList = () => {
   const { selectedCard, cardInvoices } = useCreditCardContext();
@@ -16,10 +17,7 @@ const CreditCardInvoicesList = () => {
           <PaperHeader title={`Faturas do Cartão ${selectedCard.name}`} />
           {cardInvoices &&
             cardInvoices.map((invoice) => (
-              <div key={invoice.id}>
-                <p>{invoice.date}</p>
-                <p>{invoice.amount}</p>
-              </div>
+              <CreditCardInvoiceListItem key={invoice.id} invoice={invoice} />
             ))}
         </PaperContainer>
         </Fade>

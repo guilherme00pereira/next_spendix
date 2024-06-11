@@ -14,6 +14,7 @@ import {
   PrimaryActionButton,
   ListItem,
 } from "@/app/components/dashboard/commonStyledComponents";
+import Typography from "@mui/material/Typography";
 
 
 const GroupListItem = ({ group, handleConfirmDelete, handleEdit, handleOpenChart }: IGroupListItemProps) => {
@@ -26,7 +27,9 @@ const GroupListItem = ({ group, handleConfirmDelete, handleEdit, handleOpenChart
 
   return (
     <ListItem direction="row" justifyContent="space-between">
-      <Box sx={{ flexGrow: 1 }}>{group.name}</Box>
+      <Box sx={{ flexGrow: 1 }}>
+        <Typography variant="subtitle2">{group.name}</Typography>
+      </Box>
       <Box>
         <Stack direction="row" spacing={1}>
           <PrimaryActionButton size="small" variant="text" onClick={() => handleOpenChart(group.id)}>

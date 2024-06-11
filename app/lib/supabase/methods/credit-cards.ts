@@ -3,7 +3,7 @@ import { CreditCardType } from "@/types/entities";
 
 const supabase = createClient();
 
-const getCreditCards = async () => {
+export const getCreditCards = async () => {
   const { data, error } = await supabase.from("credit_cards").select("*");
   if (error) {
     throw error;
@@ -11,7 +11,7 @@ const getCreditCards = async () => {
   return data;
 };
 
-const getCreditCardsInvoices = async (id?: number) => {
+export const getCreditCardsInvoices = async (id?: number) => {
   if (id) {
     const { data, error } = await supabase
       .from("credit_cards_invoices")
@@ -29,7 +29,7 @@ const getCreditCardsInvoices = async (id?: number) => {
   return data;
 };
 
-const addCreditCard = async ({ name, limit, closing_day, due_day, color }: CreditCardType) => {
+export const addCreditCard = async ({ name, limit, closing_day, due_day, color }: CreditCardType) => {
   const { data, error } = await supabase.from("credit_cards").insert({ name, limit, closing_day, due_day, color });
   if (error) {
     throw error;
@@ -37,7 +37,7 @@ const addCreditCard = async ({ name, limit, closing_day, due_day, color }: Credi
   return data;
 };
 
-const editCreditCard = async ({ id, name, limit, closing_day, due_day, color }: CreditCardType) => {
+export const updateCreditCard = async ({ id, name, limit, closing_day, due_day, color }: CreditCardType) => {
   const { data, error } = await supabase
     .from("credit_cards")
     .update({ name, limit, closing_day, due_day, color })
@@ -48,7 +48,7 @@ const editCreditCard = async ({ id, name, limit, closing_day, due_day, color }: 
   return data;
 };
 
-const removeCreditCard = async (id: number) => {
+export const removeCreditCard = async (id: number) => {
   const { data, error } = await supabase.from("credit_cards").delete().match({ id });
   if (error) {
     throw error;
@@ -56,4 +56,10 @@ const removeCreditCard = async (id: number) => {
   return data;
 };
 
-export { getCreditCards, getCreditCardsInvoices, addCreditCard, editCreditCard, removeCreditCard };
+export const updateInvoiceAmount = async (id: number, amount: number) => {
+  const { data, error } = await supabase.from("credit_cards_invoices").update({ amount }).match({ id });
+  if (error) {
+    throw error;
+  }
+  return data;
+};

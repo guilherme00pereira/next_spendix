@@ -7,7 +7,6 @@ import PageProvider from "@/app/lib/providers/PageProvider";
 import BankAccountDialog from "@/app/components/dashboard/dialogs/BankAccountDialog";
 import BankAccountProvider from "@/app/lib/providers/BankAccountProvider";
 import {getAccountPaymentMethods} from "@/app/lib/supabase/methods/payment-methods";
-import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "Spdx - Accounts",
@@ -21,7 +20,7 @@ const BankAccountsPage = async () => {
       <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
         <PageProvider>
           <BankAccountProvider>
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<p>loading...</p>}>
               <AccountsList accounts={accounts} />
             </Suspense>
             <BankAccountDialog />

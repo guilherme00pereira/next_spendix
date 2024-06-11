@@ -1,12 +1,17 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { editCreditCard, addCreditCard } from "@/app/lib/supabase/methods/credit-cards";
+import { updateCreditCard, addCreditCard, updateInvoiceAmount } from "@/app/lib/supabase/methods/credit-cards";
 
 export async function submitCardForm(values: any): Promise<void> {
   if (values.id) {
-    editCreditCard(values);
+    updateCreditCard(values);
   } else {
     addCreditCard(values);
   }
   revalidatePath("/dashboard/credit-cards");
+}
+
+export async function submitUpdateInvoiceAmount(id: number, amount: number): Promise<void> {
+  updateInvoiceAmount(id, amount);
+  revalidatePath("/dashboard/credit-cards");  
 }

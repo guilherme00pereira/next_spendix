@@ -123,6 +123,24 @@ export const DangerActionButton = styled(ActionButton)(({ theme }) => ({
   },
 }));
 
+export const SuccessActionButton = styled(ActionButton)(({ theme }) => ({
+  //@ts-ignore
+  backgroundColor: theme.vars.palette.success.alpha20,
+  [theme.getColorSchemeSelector("light")]: {
+    //@ts-ignore
+    backgroundColor: theme.vars.palette.success.alpha8,
+  },
+  "&:hover": {
+    backgroundColor: theme.vars.palette.success.dark,
+    "& .MuiSvgIcon-root": {
+      color: "white !important",
+    },
+  },
+  "& .MuiSvgIcon-root": {
+    color: theme.vars.palette.success.dark,
+  },
+}));
+
 export const RegularLink = styled(Link)(({ theme }) => ({
   color: theme.vars.palette.text.primary,
 }));

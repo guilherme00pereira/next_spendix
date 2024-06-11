@@ -61,13 +61,13 @@ const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
         alignItems="end"
         sx={{ backgroundColor: "#" + card.color + " !important" }}
       >
-        <Typography fontWeight="semibold" fontSize="1em">
+        <Typography variant="subtitle2">
           {card.name}
         </Typography>
       </CreditCardBox>
       <Stack direction="row" justifyContent="space-evenly" sx={{ flexGrow: 1 }} spacing={3}>
         <Stack>
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="subtitle2" color="textSecondary">
             Limite: {amountFormatter(card.limit)}
           </Typography>
           <Typography variant="caption" color="textSecondary">
@@ -78,7 +78,7 @@ const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
           </Typography>
         </Stack>
         <Stack>
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="subtitle2" color="textSecondary">
             Disponível: {amountFormatter(avaliableAmount)}
           </Typography>
         </Stack>
