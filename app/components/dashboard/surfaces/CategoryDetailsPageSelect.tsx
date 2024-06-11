@@ -8,8 +8,8 @@ const CategoryDetailsPageSelect = ({categories}: {categories: CategoryType[]}) =
     const router = useRouter();
 
     const handleChangeSelect = (event: SelectChangeEvent<HTMLInputElement>) => {
-        const categoryId = event.target.value;
-        router.push(`/dashboard/categories/${categoryId}`);
+        const slug = event.target.value;
+        router.push(`/dashboard/categories/${slug}`);
       };
 
     return (

@@ -9,7 +9,7 @@ import { useCreditCardContext } from "@/app/lib/contexts";
 import { CreditCardType } from "@/types/entities";
 
 const CreditCardActionButtons = ({ card }: { card: CreditCardType }) => {
-  const {} = useCreditCardContext();
+  const {setSelectedCard, setCardInvoices} = useCreditCardContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
     console.log("delete", id, name);
@@ -19,15 +19,15 @@ const CreditCardActionButtons = ({ card }: { card: CreditCardType }) => {
     console.log("edit", id);
   };
 
-  const handleShowInvoices = (id: number) => {
-    fetch(`/api/invoices?id=${id}`)
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }
+  const handleShowInvoices = () => {
+    setSelectedCard(card);
+    card.credit_cards_invoices && setCardInvoices([...card.credit_cards_invoices]);
+  };
+
 
   return (
     <Stack direction="row" spacing={1}>
-      <PrimaryActionButton size="small" variant="text" onClick={() => handleShowInvoices(card.id)}>
+      <PrimaryActionButton size="small" variant="text" onClick={handleShowInvoices}>
         <ReceiptLongOutlinedIcon />
       </PrimaryActionButton>
       <InfoActionButton size="small" variant="text" onClick={() => handleEdit(card.id)}>

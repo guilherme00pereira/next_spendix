@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import { createClientServerSide } from "@/app/lib/supabase/server";
 import { RecurringFormData, TransactionFormData, TransactionType } from "@/types/entities";
 import { IDeleteTransactionData } from "@/types/interfaces";
@@ -30,8 +29,7 @@ const getInnerPaymentsQuery = `id, amount, due_date, description, draft, categor
                   installments: transaction_installments(*), tags(*)`;
 const getDefaultQuery = `id, amount, due_date, description, draft, categories(*), payments(*), installments: transaction_installments(*)`;
 
-export const getTransactions = unstable_cache(
-  async (initial_date: string, final_date: string) => {
+export const getTransactions = async (initial_date: string, final_date: string) => {
     const supabase = createClientServerSide();
     const { data, error } = await supabase
       .from("transactions")
@@ -44,12 +42,9 @@ export const getTransactions = unstable_cache(
       throw error;
     }
     return data as TransactionType[];
-  },
-  ["get_transactions"]
-);
+  }
 
-export const getPayedTransactions = unstable_cache(
-  async (initial_date: string, final_date: string) => {
+export const getPayedTransactions = async (initial_date: string, final_date: string) => {
     const supabase = createClientServerSide();
     const { data, error } = await supabase
       .from("transactions")
@@ -64,12 +59,9 @@ export const getPayedTransactions = unstable_cache(
       return a.payments.date.localeCompare(b.payments.date);
     });
     return result as TransactionType[];
-  },
-  ["get_payed_transactions"]
-);
+  }
 
-export const getFutureTransactions = unstable_cache(
-  async (initial_date: string, final_date: string) => {
+export const getFutureTransactions = async (initial_date: string, final_date: string) => {
     const supabase = createClientServerSide();
     const { data, error } = await supabase
       .from("transactions")
@@ -82,9 +74,7 @@ export const getFutureTransactions = unstable_cache(
       throw error;
     }
     return data;
-  },
-  ["get_future_transactions"]
-);
+  }
 
 export const addTransaction = async ({
   amount,

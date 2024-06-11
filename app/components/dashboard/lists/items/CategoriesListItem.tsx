@@ -24,7 +24,7 @@ const CategoriesListItem = ({ category }: { category: CategoryWithStatsType }) =
   return (
     <ListItem direction={{ xs: "column", md: "row" }} justifyContent="space-between">
       <Box sx={{ flexGrow: 1 }}>
-        <RegularLink href={`/dashboard/categories/${category.id}/${category.slug}`} underline="none" variant="subtitle2">
+        <RegularLink href={`/dashboard/categories/${category.slug}`} underline="none" variant="subtitle2">
           {category.name}
         </RegularLink>
       </Box>

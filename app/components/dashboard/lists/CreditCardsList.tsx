@@ -26,7 +26,9 @@ const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
       closing_day: c.closing_day ?? 0,
       due_day: c.due_day ?? 0,
       color: c.color ?? "000",
-      invoices: c.invoices ?? null,
+      final_numbers: c.final_numbers,
+      brand: c.brand,
+      credit_cards_invoices: c.credit_cards_invoices,
     });
   };
 
@@ -39,12 +41,14 @@ const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
       closing_day: 0,
       due_day: 0,
       color: "000",
-      invoices: null,
+      final_numbers: null,
+      brand: null,
+      credit_cards_invoices: null,
     });
   };
 
   return (
-    <PaperContainer>
+    <PaperContainer width="60%">
       <PaperHeader title="Cartões de Crédito">
         <Button variant="contained" size="small" color="primary" onClick={handleAdd}>
           Adicionar

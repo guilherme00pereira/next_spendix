@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { getTransactionsByCategoriesLastYear } from "@/app/lib/supabase/methods/transactions";
-  import { CategoryType, TransactionType } from "@/types/entities";
+import { CategoryType, TransactionType } from "@/types/entities";
 import { getCategories, getSingleCategory } from "@/app/lib/supabase/methods/categories";
 import CategoryTransactionsTable from "@/app/components/dashboard/tables/CategoryTransactionsTable";
 import ApexTransactionsTotalPerPeriodBarChart from "@/app/components/dashboard/charts/ApexTransactionsTotalPerPeriodBarChart";
@@ -11,8 +11,8 @@ import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import { Suspense } from "react";
 
 const CategoryPage = async ({ params }: { params: { slug: string; id: number } }) => {
-  const category = await getSingleCategory("acougue");
-  const transactions = (await getTransactionsByCategoriesLastYear(params.id)) as TransactionType[];
+  const category = await getSingleCategory(params.slug);
+  const transactions = (await getTransactionsByCategoriesLastYear(category.id)) as TransactionType[];
   const spendingsCategories = await getCategories();
 
   return (

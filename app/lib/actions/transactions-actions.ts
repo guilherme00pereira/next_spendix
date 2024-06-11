@@ -15,9 +15,6 @@ export async function submitTransactionForm(data: object): Promise<void> {
 }
 
 export const revalidateTransactions = () => {
-  revalidateTag("get_transactions");
-  revalidateTag("get_payed_transactions");
-  revalidateTag("get_future_transactions");
   revalidatePath("/dashboard/transactions");
   revalidatePath("/dashboard/transactions/all");
   revalidatePath("/dashboard/transactions/overdue");

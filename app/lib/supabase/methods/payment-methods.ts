@@ -12,11 +12,11 @@ const getAllPaymentMethods = async () => {
 
 const getCreditCardPaymentMethods = async () => {
     const supabase = createClientServerSide();
-    const {data, error} = await supabase.from('payment_methods').select('credit_cards(*)').not('credit_card_id', 'is', null)
+    const {data, error} = await supabase.from('credit_cards').select('*, credit_cards_invoices(*)')
     if (error) {
         throw error
     }
-    return data.map((pm: any) => pm.credit_cards as CreditCardType)
+    return data
 }
 
 const getAccountPaymentMethods = async () => {

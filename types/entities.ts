@@ -117,12 +117,13 @@ export type CreditCardType = {
     limit: number;
     closing_day: number;
     due_day: number;
-    color: string | "000";
-    invoices: CreditCardInvoiceType[] | null;
+    color?: string | null;
+    final_numbers: string | null;
+    brand: string | null;
+    credit_cards_invoices: CreditCardInvoiceType[] | null;
 }
 export type CreditCardInvoiceType = {
     id: number;
-    credit_cards: CreditCardType | null;
     date: string;
     amount: number;
 }

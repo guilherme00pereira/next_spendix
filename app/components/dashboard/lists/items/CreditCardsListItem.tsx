@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import { CreditCardType } from "@/types/entities";
 import Typography from "@mui/material/Typography";
 import { usePageContext, useCreditCardContext } from "@/app/lib/contexts";
 import CreditCardActionButtons from "@/app/components/dashboard/widgets/buttons/CreditCardActionButtons";
+import { amountFormatter } from "@/app/lib/functions";
 
 const ListItem = styled(Stack)(({ theme }) => ({
   width: "100%",
@@ -21,22 +22,31 @@ const ListItem = styled(Stack)(({ theme }) => ({
 }));
 
 const CreditCardBox = styled(Stack)(({ theme }) => ({
+  position: "relative",
   alignItems: "center",
   padding: "2px 4px",
   color: "white",
   borderRadius: "8px",
-  width: "140px",
-  height: "80px",
+  width: "180px",
+  height: "100px",
+  "& .MuiTypography-root": {
+    position: "absolute",
+    bottom: "10px",
+    right: "10px",
+  },
 }));
 
 const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
   const { showModal, actionShowModal } = usePageContext();
   const { setEditableObject } = useCreditCardContext();
 
-  const handleEdit = () => {
-    actionShowModal(!showModal);
-    setEditableObject(card);
-  };
+  const avaliableAmount = useMemo(() => {
+    if (card.credit_cards_invoices) {
+      const invoicesSum = card.credit_cards_invoices.reduce((acc, invoice) => acc + invoice.amount, 0);
+      return card.limit - invoicesSum;
+    }
+    return 0;
+  }, [card]);
 
   return (
     <ListItem
@@ -51,11 +61,28 @@ const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
         alignItems="end"
         sx={{ backgroundColor: "#" + card.color + " !important" }}
       >
-        <Typography fontWeight="bold" fontSize="0.75rem">{card.name}</Typography>
+        <Typography fontWeight="semibold" fontSize="1em">
+          {card.name}
+        </Typography>
       </CreditCardBox>
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography fontWeight="bold">{card.name}</Typography>
-      </Box>
+      <Stack direction="row" justifyContent="space-evenly" sx={{ flexGrow: 1 }} spacing={3}>
+        <Stack>
+          <Typography variant="body1" color="textSecondary">
+            Limite: {amountFormatter(card.limit)}
+          </Typography>
+          <Typography variant="caption" color="textSecondary">
+            Vencimento: {card.due_day}
+          </Typography>
+          <Typography variant="caption" color="textSecondary">
+            Fechamento: {card.closing_day}
+          </Typography>
+        </Stack>
+        <Stack>
+          <Typography variant="body1" color="textSecondary">
+            Disponível: {amountFormatter(avaliableAmount)}
+          </Typography>
+        </Stack>
+      </Stack>
       <Box>
         <CreditCardActionButtons card={card} />
       </Box>
