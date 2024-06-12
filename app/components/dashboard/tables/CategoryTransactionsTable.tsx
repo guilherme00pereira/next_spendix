@@ -53,6 +53,7 @@ const CategoryTransactionsTable = ({ transactions }: { transactions: Transaction
                   <TableCell align="center">{dayjs(transaction.due_date).format("DD/MM/YYYY")}</TableCell>
                   <TableCell>{amountFormatter(transaction.amount)}</TableCell>
                   <TableCell>{transaction.description}</TableCell>
+                  <TableCell>{transaction.tags}</TableCell>
                   <TableCell>
                     <TransactionActionButtons transaction={transaction} showDelete />
                   </TableCell>

@@ -11,16 +11,16 @@ import { submitUpdateInvoiceAmount } from "@/app/lib/actions/credit-card-actions
 
 const CreditCardInvoiceListItem = ({ invoice }: { invoice: CreditCardInvoiceType }) => {
   const [showInput, setShowInput] = React.useState(false);
-  const [amount, setAmount] = React.useState(invoice.amount);
+  const [amount, setAmount] = React.useState<string>(invoice.amount.toString());
 
   const handleEdit = () => {
     setShowInput(!showInput);
-    setAmount(invoice.amount);
+    setAmount(invoice.amount.toString());
   }
 
   const handleSave = () => {
     setShowInput(!showInput);
-    submitUpdateInvoiceAmount(invoice.id, amount);
+    submitUpdateInvoiceAmount(invoice.id, parseFloat(amount));
   };
 
   return (
@@ -29,14 +29,14 @@ const CreditCardInvoiceListItem = ({ invoice }: { invoice: CreditCardInvoiceType
         <Typography variant="body2">{invoice.date}</Typography>
       </Box>
       <Box sx={{ pl: "48px", flexGrow: 1 }}>
-        {showInput || <Typography variant="body2">{amountFormatter(invoice.amount)}</Typography>}
+        {showInput || <Typography variant="body2" onClick={handleEdit}>{amountFormatter(invoice.amount)}</Typography>}
         {showInput && (
           <FormControl>
             <Input
               id="edit-amount"
               size="small"
               value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value))}
+              onChange={(e) => setAmount(e.target.value)}
               endAdornment={
                   <IconButton onClick={() => setShowInput(!showInput)} color="primary" size="small">
                     <CloseOutlinedIcon color="action" fontSize="small" />
