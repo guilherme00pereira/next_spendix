@@ -167,6 +167,7 @@ export const editTransaction = async ({
   if (error) {
     throw error;
   } else {
+    //TODO: upsert tags not working
     if (data.length > 0) {
       const tid = data[0].id;
       if (tags && tags.length > 0) {

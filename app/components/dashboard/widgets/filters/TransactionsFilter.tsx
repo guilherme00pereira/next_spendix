@@ -6,7 +6,7 @@ import { FormControl, OutlinedInput, Paper } from "@mui/material";
 import { useTransactionsTableFilterContext } from "@/app/lib/contexts";
 import { TransactionType } from "@/types/entities";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { PaperHeaderButton } from "../../commonStyledComponents";
+import { OutlinedButtonWithHover } from "../../commonStyledComponents";
 import SyncRoundedIcon from "@mui/icons-material/SyncRounded";
 
 const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] }) => {
@@ -42,7 +42,7 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
           endAdornment={<SearchOutlinedIcon color="action" fontSize="small" />}
         />
       </FormControl>
-      <PaperHeaderButton
+      <OutlinedButtonWithHover
         variant="outlined"
         size="small"
         color="primary"
@@ -50,7 +50,7 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
         startIcon={<SyncRoundedIcon />}
       >
         Mostrar por {params.get('due_date') === '1' ? "data de pagamento" : "data de vencimento"}
-      </PaperHeaderButton>
+      </OutlinedButtonWithHover>
     </Stack>
   );
 };

@@ -159,7 +159,7 @@ export const ScrollableTable = styled(TableContainer)({
   },
 });
 
-export const PaperHeaderButton = styled(Button)(({ theme }) => ({
+export const OutlinedButtonWithHover = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.vars.palette.primary.main,
     color: "white",

@@ -5,7 +5,6 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { CreditCardType } from "@/types/entities";
 import Typography from "@mui/material/Typography";
-import { usePageContext, useCreditCardContext } from "@/app/lib/contexts";
 import CreditCardActionButtons from "@/app/components/dashboard/widgets/buttons/CreditCardActionButtons";
 import { amountFormatter } from "@/app/lib/functions";
 
@@ -37,8 +36,6 @@ const CreditCardBox = styled(Stack)(({ theme }) => ({
 }));
 
 const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
-  const { showModal, actionShowModal } = usePageContext();
-  const { setEditableObject } = useCreditCardContext();
 
   const avaliableAmount = useMemo(() => {
     if (card.credit_cards_invoices) {

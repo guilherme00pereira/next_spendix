@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PaperContainer, PaperHeaderButton } from "@/app/components/dashboard/commonStyledComponents";
+import { PaperContainer, OutlinedButtonWithHover } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import ApexParentCategoriesBarChart from "@/app/components/dashboard/charts/ApexParentCategoriesBarChart";
 import { useCategoriesPageContext } from "@/app/lib/contexts";
@@ -16,9 +16,9 @@ const CategoriesChartPaper = ({ title, data }: { title: string; data: ChartBarTy
         <Fade in={showChart} timeout={1000} easing="ease-out">
          <PaperContainer width="40%">
           <PaperHeader title={title}>
-            <PaperHeaderButton variant="outlined" size="small" onClick={() => setShowChart(false)} startIcon={<VisibilityOffOutlinedIcon />}>
+            <OutlinedButtonWithHover variant="outlined" size="small" onClick={() => setShowChart(false)} startIcon={<VisibilityOffOutlinedIcon />}>
               Hide
-            </PaperHeaderButton>
+            </OutlinedButtonWithHover>
           </PaperHeader>
           {data && <ApexParentCategoriesBarChart data={data} />}
         </PaperContainer>

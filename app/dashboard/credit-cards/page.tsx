@@ -10,7 +10,6 @@ import CreditCardPaperLoader from "@/app/components/dashboard/loaders/CreditCard
 
 const CreditCardsPage = async () => {
   const cards = await getCreditCardPaymentMethods();
-  //TODO: lista invoices seguind lógica dos grupos
   //TODO: editar cartão de crédito
   return (
     <PageContainer title="Cartão de Crédito">

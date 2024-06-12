@@ -9,28 +9,7 @@ import { useCreditCardContext, usePageContext } from "@/app/lib/contexts";
 
 const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
   const { actionShowModal } = usePageContext();
-  const { setOpenConfirm, removableObject, setRemovableObject, setEditableObject } = useCreditCardContext();
-
-  const handleConfirmDelete = (id: number, name: string) => {
-    setRemovableObject({ ...removableObject, id, name });
-    setOpenConfirm(true);
-  };
-
-  const handleEdit = (id: number) => {
-    actionShowModal(true);
-    const c = cards?.filter((card) => card.id === id)[0] ?? ({} as CreditCardType);
-    setEditableObject({
-      id: c.id ?? 0,
-      name: c.name ?? "",
-      limit: c.limit ?? 0,
-      closing_day: c.closing_day ?? 0,
-      due_day: c.due_day ?? 0,
-      color: c.color ?? "000",
-      final_numbers: c.final_numbers,
-      brand: c.brand,
-      credit_cards_invoices: c.credit_cards_invoices,
-    });
-  };
+  const { setEditableObject } = useCreditCardContext();
 
   const handleAdd = () => {
     actionShowModal(true);
@@ -38,8 +17,8 @@ const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
       id: 0,
       name: "",
       limit: 0,
-      closing_day: 0,
-      due_day: 0,
+      closing_day: 1,
+      due_day: 1,
       color: "000",
       final_numbers: null,
       brand: null,

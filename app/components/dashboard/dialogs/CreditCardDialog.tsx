@@ -5,7 +5,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { useFormik } from "formik";
 import { ColorPicker } from "material-ui-color";
-import { useEffect } from "react";
 import { submitCardForm } from "@/app/lib/actions/credit-card-actions";
 import * as yup from "yup";
 import DialogActionButtons from "./DialogActionButtons";
@@ -16,18 +15,14 @@ const validate = yup.object({
   limit: yup.number().required("Campo obrigatório"),
   closing_day: yup.number().required("Campo obrigatório"),
   due_day: yup.number().required("Campo obrigatório"),
-  current_balance: yup.number(),
-  current_invoice: yup.number(),
   color: yup.string(),
+  final_numbers: yup.string().nullable(),
+  brand: yup.string().nullable(),
 });
 
 const CreditCardDialog = () => {
   const { showModal, actionShowModal } = usePageContext();
   const { editableObject } = useCreditCardContext();
-
-  useEffect(() => {
-    formik.setValues(editableObject);
-  }, [editableObject]);
 
   const formik = useFormik({
     initialValues: editableObject,
@@ -100,7 +95,19 @@ const CreditCardDialog = () => {
           <Stack direction="row" sx={{ py: 2 }}>
             <Grid container spacing={3}>
               <Grid xs={12} md={4} item>
-                <ColorPicker onChange={formik.handleChange} value={"#" + formik.values.color} defaultValue={formik.values.color} />
+                <TextField
+                  helperText={formik.touched.final_numbers && formik.errors.final_numbers}
+                  error={formik.touched.final_numbers && Boolean(formik.errors.final_numbers)}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.final_numbers}
+                  fullWidth
+                  name="final_numbers"
+                  label="Last 4 digits"
+                />
+              </Grid>
+              <Grid xs={12} md={4} item>
+                <ColorPicker onChange={formik.handleChange} value={"#" + formik.values.color} defaultValue={"#000"} />
               </Grid>
             </Grid>
           </Stack>
