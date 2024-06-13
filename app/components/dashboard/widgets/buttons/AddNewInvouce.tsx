@@ -10,7 +10,12 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import { InputLabel } from "@mui/material";
-import { submitInvoiceForm } from "@/app/lib/actions/credit-card-actions";
+import { submitNewInvoiceData } from "@/app/lib/actions/credit-card-actions";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 const AddNewInvouce = () => {
   const { selectedCard } = useCreditCardContext();
@@ -25,7 +30,8 @@ const AddNewInvouce = () => {
 
   const handleSave = () => {
     setShowNewLine(false);
-    submitInvoiceForm({ credit_card_id: selectedCard.id, date, amount });
+    const d = dayjs(date).add(selectedCard.due_day - 1, 'day').format("YYYY-MM-DD")
+    submitNewInvoiceData({ credit_card_id: selectedCard.id, date: d, amount });
   };
 
   return (
@@ -34,8 +40,18 @@ const AddNewInvouce = () => {
         <ListItem>
           <Box>
             <FormControl>
-              <InputLabel htmlFor="edit-amount">Date</InputLabel>
-              <Input id="edit-amount" size="small" value={date} onChange={(e) => setDate(e.target.value)} />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]} sx={{ pt: "0" }}>
+                    <DatePicker
+                      format="MM/YYYY"
+                      onChange={(v) => setDate(v as string)}
+                      value={date}
+                      name="date"
+                      label="Vencimento"
+                      views={['month', 'year']}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
             </FormControl>
           </Box>
           <Box sx={{ pl: "12px", flexGrow: 1 }}>

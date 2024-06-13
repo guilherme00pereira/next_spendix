@@ -11,7 +11,7 @@ export async function submitCardForm(values: any): Promise<void> {
   revalidatePath("/dashboard/credit-cards");
 }
 
-export async function submitInvoiceForm(values: any): Promise<void> {
+export async function submitNewInvoiceData(values: any): Promise<void> {
   addCreditCardInvoice(values.credit_card_id, values.date, values.amount);
   revalidatePath("/dashboard/credit-cards");  
 }

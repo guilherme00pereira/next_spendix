@@ -10,15 +10,6 @@ const getAllPaymentMethods = async () => {
     return data
 }
 
-const getCreditCardPaymentMethods = async () => {
-    const supabase = createClientServerSide();
-    const {data, error} = await supabase.from('credit_cards').select('*, credit_cards_invoices(*)')
-    if (error) {
-        throw error
-    }
-    return data
-}
-
 const getAccountPaymentMethods = async () => {
     const supabase = createClientServerSide();
     const {data, error} = await supabase.from('payment_methods').select('accounts(*)').not('account_id', 'is', null)
@@ -56,7 +47,6 @@ const getTotalAmountAvailable = async () => {
 
 export {
     getAllPaymentMethods,
-    getCreditCardPaymentMethods,
     getAccountPaymentMethods,
     transferMoney,
     getTotalAmountAvailable

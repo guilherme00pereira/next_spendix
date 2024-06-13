@@ -26,6 +26,11 @@ export const calculatePercentageFromPrevious = (current: number, previous: numbe
   return ((current - previous) / previous) * 100;
 }
 
+export const formatCardNumbers = (lastNumbers: string) => {
+  const n = lastNumbers ?? "****";
+  return `**** **** **** ${n}`;
+}
+
 export const serializeToServeActions = (data: any) => {
   return JSON.parse(JSON.stringify(data));
 };

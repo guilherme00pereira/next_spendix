@@ -1,6 +1,6 @@
 {
   "name": "next_spendix",
-  "version": "0.21.7",
+  "version": "0.22.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -30,7 +30,7 @@
     "formik": "^2.4.5",
     "material-ui-color": "^1.2.0",
     "negotiator": "^0.6.3",
-    "next": "14.2.3",
+    "next": "14.2.4",
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18",

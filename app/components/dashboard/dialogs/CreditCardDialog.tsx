@@ -8,6 +8,7 @@ import { ColorPicker } from "material-ui-color";
 import { submitCardForm } from "@/app/lib/actions/credit-card-actions";
 import * as yup from "yup";
 import DialogActionButtons from "./DialogActionButtons";
+import { useEffect } from "react";
 
 const validate = yup.object({
   id: yup.number(),
@@ -19,7 +20,7 @@ const validate = yup.object({
   final_numbers: yup.string().nullable(),
   brand: yup.string().nullable(),
 });
-
+//TODO: change color not working
 const CreditCardDialog = () => {
   const { showModal, actionShowModal } = usePageContext();
   const { editableObject } = useCreditCardContext();
@@ -32,6 +33,10 @@ const CreditCardDialog = () => {
       submitCardForm(values);
     },
   });
+
+  useEffect(() => {
+    formik.setValues(editableObject);
+  }, [editableObject]);
 
   return (
     <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>

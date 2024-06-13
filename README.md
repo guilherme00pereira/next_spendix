@@ -11,4 +11,4 @@ Spendix is a web application that allows users to track their spending habits. U
 ### Version
 
 ##### 0.21
-- credit cards and bank accounts page layout
+- Next.js upgrade to 14.2.4

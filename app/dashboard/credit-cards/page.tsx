@@ -3,14 +3,14 @@ import CreditCardDialog from "@/app/components/dashboard/dialogs/CreditCardDialo
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import CreditCardProvider from "@/app/lib/providers/CreditCardProvider";
 import CreditCardsList from "@/app/components/dashboard/lists/CreditCardsList";
-import { getCreditCardPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
 import CreditCardInvoicesList from "@/app/components/dashboard/lists/CreditCardInvoicesList";
 import { Suspense } from "react";
 import CreditCardPaperLoader from "@/app/components/dashboard/loaders/CreditCardPaperLoader";
+import { getCreditCards } from "@/app/lib/supabase/methods/credit-cards";
 
 const CreditCardsPage = async () => {
-  const cards = await getCreditCardPaymentMethods();
-  //TODO: editar cartão de crédito
+  const cards = await getCreditCards();
+  
   return (
     <PageContainer title="Cartão de Crédito">
       <Stack

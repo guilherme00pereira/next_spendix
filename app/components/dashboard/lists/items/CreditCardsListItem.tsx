@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { CreditCardType } from "@/types/entities";
 import Typography from "@mui/material/Typography";
 import CreditCardActionButtons from "@/app/components/dashboard/widgets/buttons/CreditCardActionButtons";
-import { amountFormatter } from "@/app/lib/functions";
+import { amountFormatter, formatCardNumbers } from "@/app/lib/functions";
 
 const ListItem = styled(Stack)(({ theme }) => ({
   width: "100%",
@@ -28,7 +28,7 @@ const CreditCardBox = styled(Stack)(({ theme }) => ({
   borderRadius: "8px",
   width: "180px",
   height: "100px",
-  "& .MuiTypography-root": {
+  "& .MuiTypography-subtitle2": {
     position: "absolute",
     bottom: "10px",
     right: "10px",
@@ -58,6 +58,9 @@ const CreditCardsListItem = ({ card }: { card: CreditCardType }) => {
         alignItems="end"
         sx={{ backgroundColor: "#" + card.color + " !important" }}
       >
+        <Typography variant="caption">
+          {formatCardNumbers(card.final_numbers ?? "****")}
+        </Typography>
         <Typography variant="subtitle2">
           {card.name}
         </Typography>
