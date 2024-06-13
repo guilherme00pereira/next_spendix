@@ -1,6 +1,6 @@
 import { ChartBarType } from "@/types/chart-types";
 import { TransactionType } from "@/types/entities";
-import { TransactionTypeEnum } from "@/types/enums";
+import { EndDateEnum, TransactionTypeEnum } from "@/types/enums";
 import dayjs from "dayjs";
 import { getAllPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
 
@@ -68,14 +68,19 @@ export const getTotals = (transactions: TransactionType[]) => {
   const spendings = transactions.filter(
     (transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS
   );
-  const totalPaidSpendings = spendings.reduce((acc, transaction) => acc + (transaction.amount ?? 0), 0);
-  const totalSpendings = spendings.reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
+  const totalPaidSpendings = spendings.reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
+  const totalSpendings = spendings.reduce((acc, transaction) => acc + transaction.amount, 0);
   const dailyAverage = totalPaidSpendings / dayjs().date();
   return [totalIncome, totalPaidSpendings, totalSpendings, dailyAverage];
 };
 
-export const getDates = (date: string) => {
+export const getStartAndEndingDays = (date: string, end: EndDateEnum) => {
   const startDate = date ? dayjs(date).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");
-  const endDate = date ? dayjs(date).endOf("M").format("YYYY-MM-DD") : dayjs().endOf("M").format("YYYY-MM-DD");
+  let endDate = "";
+  if(end === EndDateEnum.TODAY) {
+    endDate = date ? dayjs(date).format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD");
+  } else {
+    endDate = date ? dayjs(date).endOf("M").format("YYYY-MM-DD") : dayjs().endOf("M").format("YYYY-MM-DD");
+  }
   return [startDate, endDate];
 };

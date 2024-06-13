@@ -1,5 +1,5 @@
 import { createClientServerSide } from "@/app/lib/supabase/server";
-import { BankAccountType, CreditCardType, TransferMoneyFormData } from "@/types/entities";
+import { BankAccountType, TransferMoneyFormData } from "@/types/entities";
 
 const getAllPaymentMethods = async () => {
     const supabase = createClientServerSide();

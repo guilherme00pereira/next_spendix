@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "../surfaces/PaperHeader";
 import { useCreditCardContext } from "@/app/lib/contexts";
@@ -20,7 +20,7 @@ const CreditCardInvoicesList = () => {
         <Fade in={selectedCard.id > 0} timeout={750} easing="ease-out">
           <PaperContainer width="40%">
             <PaperHeader title={`Faturas do Cartão ${selectedCard.name}`} />
-            {cardInvoices && cardInvoices.map((invoice) => <CreditCardInvoiceListItem key={invoice.id} invoice={invoice} />)}
+            {cardInvoices && cardInvoices.sort((a: any, b:any) => a.id - b.id).map((invoice) => <CreditCardInvoiceListItem key={invoice.id} invoice={invoice} />)}
             <AddNewInvouce />
           </PaperContainer>
         </Fade>

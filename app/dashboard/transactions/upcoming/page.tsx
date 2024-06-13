@@ -6,11 +6,12 @@ import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import TransactionsFilter from "@/app/components/dashboard/widgets/filters/TransactionsFilter";
 import TransactionsTableFilterProvider from "@/app/lib/providers/TransactionsTableFilterProvider";
 import { TransactionType } from "@/types/entities";
-import { getFutureTransactions } from "@/app/lib/actions/transactions-actions";
-import { getDates } from "@/app/lib/helpers";
+import { getFutureTransactions } from "@/app/lib/supabase/methods/transactions";
+import { getStartAndEndingDays } from "@/app/lib/helpers";
+import { EndDateEnum } from "@/types/enums";
 
 const PageUpcoming = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-  const [startDate, endDate] = getDates(searchParams.date as string);
+  const [startDate, endDate] = getStartAndEndingDays(searchParams.date as string, EndDateEnum.END_OF_MONTH);
   const transactions = (await getFutureTransactions(startDate, endDate)) as TransactionType[];
 
   return (

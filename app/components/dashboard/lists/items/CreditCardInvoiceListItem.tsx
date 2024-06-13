@@ -8,6 +8,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { submitUpdateInvoiceAmount } from "@/app/lib/actions/credit-card-actions";
+import dayjs from "dayjs";
 
 const CreditCardInvoiceListItem = ({ invoice }: { invoice: CreditCardInvoiceType }) => {
   const [showInput, setShowInput] = React.useState(false);
@@ -26,7 +27,7 @@ const CreditCardInvoiceListItem = ({ invoice }: { invoice: CreditCardInvoiceType
   return (
     <ListItem key={invoice.id}>
       <Box>
-        <Typography variant="body2">{invoice.date}</Typography>
+        <Typography variant="body2">{dayjs(invoice.date).format("DD/MM/YYYY") }</Typography>
       </Box>
       <Box sx={{ pl: "48px", flexGrow: 1 }}>
         {showInput || <Typography variant="body2" onClick={handleEdit}>{amountFormatter(invoice.amount)}</Typography>}

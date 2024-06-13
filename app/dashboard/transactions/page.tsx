@@ -9,12 +9,12 @@ import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/TransactionTopPageInfo";
 import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/chart-papers/DailyTransactionsChartPaper";
 import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/helpers";
-import { TransactionTypeEnum } from "@/types/enums";
-import { getDates, getTotals } from "@/app/lib/helpers";
+import { EndDateEnum, TransactionTypeEnum } from "@/types/enums";
+import { getStartAndEndingDays, getTotals } from "@/app/lib/helpers";
 import TransactionsTopCardLoader from "@/app/components/dashboard/loaders/TransactionsTopCardLoader";
 
 const TransactionsPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-  const [startDate, endDate] = getDates(searchParams.date as string);
+  const [startDate, endDate] = getStartAndEndingDays(searchParams.date as string, EndDateEnum.TODAY);
   const transactions = await getPayedTransactions(startDate, endDate);
   const transactionsMappedPerDay = groupTransactionsByDate(transactions);
   const [totalIncome, totalPaidSpendings, totalSpendings, dailyAverage] = getTotals(transactions);

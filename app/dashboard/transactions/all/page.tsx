@@ -9,14 +9,15 @@ import TransactionRows from "@/app/components/dashboard/tables/rows/TransactionR
 import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/TransactionTopPageInfo";
 import ScrollToTop from "@/app/components/dashboard/page/ScrollToTop";
-import { getDates, getTotals } from "@/app/lib/helpers";
+import { getStartAndEndingDays, getTotals } from "@/app/lib/helpers";
+import { EndDateEnum } from "@/types/enums";
 
 const AllTransactions = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const [startDate, endDate] = getDates(searchParams.date as string);
+  const [startDate, endDate] = getStartAndEndingDays(searchParams.date as string, EndDateEnum.TODAY);
   const transactions =
     searchParams.due_date === "1"
       ? await getTransactions(startDate, endDate)
@@ -24,7 +25,7 @@ const AllTransactions = async ({
   const [totalIncome, totalPaidSpendings, totalSpendings, dailyAverage] = getTotals(transactions);
 
   return (
-    <PageContainer title="Lista de Transações por mês" showSelectMonthYear>
+    <PageContainer title="Todas as transações do mês" showSelectMonthYear>
       <TransactionsTableFilterProvider>
         <PageTopCard>
           <TransactionTopPageInfo
