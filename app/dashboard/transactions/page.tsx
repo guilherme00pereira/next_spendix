@@ -1,11 +1,11 @@
 import React, { Suspense } from "react";
+import Stack from "@mui/material/Stack";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import TransactionsPerDayList from "@/app/components/dashboard/lists/TransactionsPerDayList";
 import UpcomingTransactions from "@/app/components/dashboard/lists/UpcomingTransactions";
 import Masonry from "@mui/lab/Masonry";
 import OverdueTransactionsList from "@/app/components/dashboard/lists/OverdueTransactionsList";
 import { getPayedTransactions, getTransactions } from "@/app/lib/supabase/methods/transactions";
-import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import TransactionTopPageInfo from "@/app/components/dashboard/surfaces/TransactionTopPageInfo";
 import ApexDailyTransactionsLineChart from "@/app/components/dashboard/surfaces/chart-papers/DailyTransactionsChartPaper";
 import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/helpers";
@@ -27,15 +27,18 @@ const TransactionsPage = async ({ searchParams }: { searchParams: { [key: string
 
   return (
     <PageContainer title="Transações" showSelectMonthYear>
-      <PageTopCard>
+      <Stack direction={{ xs: "column", md: "row" }} width="100%" >
         <Suspense fallback={<TransactionsTopCardLoader />}>
           <TransactionTopPageInfo income={totalIncome} paid={totalPaidSpendings} spendings={totalSpendings} mean={dailyAverage} />
         </Suspense>
-      </PageTopCard>
+        <Suspense fallback={<p>loading</p>}>
+          <ApexDailyTransactionsLineChart values={{ spendingsData, incomeData }} show={transactionsMappedPerDay.size > 0} />
+        </Suspense>
+      </Stack>
       <Suspense fallback={<p>loading</p>}>
         <Masonry columns={{ xs: 1, md: 2 }} spacing={2}>
           <TransactionsPerDayList transactions={transactionsMappedPerDay} headerLink={headerLink} selectedDate={searchParams.date?.toString() ?? ""} />
-          <ApexDailyTransactionsLineChart values={{ spendingsData, incomeData }} show={transactionsMappedPerDay.size > 0} />
+          
           <UpcomingTransactions />
           <OverdueTransactionsList />
         </Masonry>

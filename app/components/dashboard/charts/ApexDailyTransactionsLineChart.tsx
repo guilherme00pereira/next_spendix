@@ -45,7 +45,7 @@ const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTran
           },
         },
         stroke: {
-          curve: "straight",
+          curve: "smooth",
         },
         markers: {
           size: 5,
@@ -68,7 +68,7 @@ const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTran
           color: chartColors.incomeColor,
         },
       ]}
-      height="350"
+      height="280"
     />
   );
 };

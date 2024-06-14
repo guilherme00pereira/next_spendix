@@ -6,7 +6,7 @@ import { ApexDailyTransactionsChartProps } from '@/types/interfaces';
 
 const DailyTransactionsChartPaper = ({values, show}: {values: ApexDailyTransactionsChartProps, show:boolean}) => {
     return (
-        <PaperContainer sx={{ minHeight: "400px", maxWidth: "50%" }}>
+        <PaperContainer sx={{ minHeight: "280px", maxWidth: "50%" }}>
           <PaperHeader title="Evolução por dia" />
             {show && <ApexDailyTransactionsChart {...values}  />}
             {show || "Nenhum dado disponível"}
