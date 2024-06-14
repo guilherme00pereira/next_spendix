@@ -14,8 +14,8 @@ const TransactionTopPageInfo = ({ income, paid, spendings, mean }: ITransactionT
       <TransactionsTotalsWidget value={income} title="Total de receitas" income={true} color="success" first />
       <TransactionsTotalsWidget value={paid} title="Total pago" income={false} color="warning" />
       <TransactionsTotalsWidget value={mean} title="Média por dia" income={true} color="warning" />
+      <TransactionsTotalsWidget value={income - paid} title="Saldo" income={true} color="info" />
       <TransactionsTotalsWidget value={spendings} title="Despesas totais no mês" income={false} color="error" />
-      <TransactionsTotalsWidget value={income - spendings} title="Saldo" income={true} color="info" />
     </>
   );
 };

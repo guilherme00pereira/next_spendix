@@ -25,11 +25,12 @@ const ScrollToTop = () => {
       return;
     }
   };
-  window.addEventListener("scroll", handleShowButton);
+  window && window.addEventListener("scroll", handleShowButton);
 
 
   useEffect(() => {
-    return window.removeEventListener("scroll", handleShowButton);
+    if(typeof window !== "undefined")
+      return window.removeEventListener("scroll", handleShowButton);
   });
 
   const handleClick = () => {

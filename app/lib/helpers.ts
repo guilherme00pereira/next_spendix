@@ -61,23 +61,28 @@ export const convertPaymentMethodsToSelect = (payment_methods: any) => {
   });
 };
 
-export const getTotals = (transactions: TransactionType[]) => {
-  const totalIncome = transactions
+export const getTransactionsTotals = (transactions: TransactionType[], payed: TransactionType[]) => {
+  const totalIncome = payed
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
     .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
-  const spendings = transactions.filter(
-    (transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS
-  );
-  const totalPaidSpendings = spendings.reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
-  const totalSpendings = spendings.reduce((acc, transaction) => acc + transaction.amount, 0);
+
+  const totalPaidSpendings = payed
+    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
+    .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
+
+  const totalSpendings = transactions
+    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
+
   const dailyAverage = totalPaidSpendings / dayjs().date();
+
   return [totalIncome, totalPaidSpendings, totalSpendings, dailyAverage];
 };
 
 export const getStartAndEndingDays = (date: string, end: EndDateEnum) => {
   const startDate = date ? dayjs(date).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");
   let endDate = "";
-  if(end === EndDateEnum.TODAY) {
+  if (end === EndDateEnum.TODAY) {
     endDate = date ? dayjs(date).format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD");
   } else {
     endDate = date ? dayjs(date).endOf("M").format("YYYY-MM-DD") : dayjs().endOf("M").format("YYYY-MM-DD");
