@@ -62,9 +62,13 @@ export const convertPaymentMethodsToSelect = (payment_methods: any) => {
 };
 
 export const getTransactionsTotals = (transactions: TransactionType[], payed: TransactionType[]) => {
-  const totalIncome = payed
+  const totalCashed = payed
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
     .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
+
+    const totalIncome = transactions
+    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
 
   const totalPaidSpendings = payed
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
@@ -76,7 +80,7 @@ export const getTransactionsTotals = (transactions: TransactionType[], payed: Tr
 
   const dailyAverage = totalPaidSpendings / dayjs().date();
 
-  return [totalIncome, totalPaidSpendings, totalSpendings, dailyAverage];
+  return [totalCashed, totalIncome, totalPaidSpendings, totalSpendings, dailyAverage];
 };
 
 export const getStartAndEndingDays = (date: string, end: EndDateEnum) => {

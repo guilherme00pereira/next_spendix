@@ -15,7 +15,7 @@ async function fetchFutureTransactions() {
   return res as TransactionType[];
 }
 
-const UpcomingTransactions = async () => {
+const UpcomingTransactionsList = async () => {
   const transactions = await fetchFutureTransactions();
 
   return (
@@ -32,4 +32,4 @@ const UpcomingTransactions = async () => {
   );
 };
 
-export default UpcomingTransactions;
+export default UpcomingTransactionsList;

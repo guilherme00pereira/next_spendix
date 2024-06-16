@@ -47,9 +47,6 @@ const ApexDailyTransactionsChart = ({ incomeData, spendingsData }: ApexDailyTran
         stroke: {
           curve: "smooth",
         },
-        markers: {
-          size: 5,
-        },
         legend: {
           labels: {
             colors: mode === "dark" ? chartColors.darkThemeLabel : chartColors.lightThemeLabel,

@@ -17,17 +17,7 @@ interface ITransactionsTotalsWidgetProps {
   color: string;
 }
 
-const Widget = styled(Paper)(({ theme }) => ({
-  width: "100%",
-  height: "100px",
-  borderLeft: "none",
-  padding: "18px 0 8px 36px",
-  marginRight: "0px",
-  [theme.breakpoints.up("md")]: {
-    marginRight: "32px !important",
-    width: "calc(50% - 48px)",
-  },
-}));
+
 
 const IconBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "bgcolor",
@@ -59,7 +49,7 @@ const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactions
   
 
   return (
-    <Widget>
+    <>
       <Stack direction="row" justifyContent="flex-start" alignItems="center">
         <IconBox bgcolor={getColor(color)}>
           {income ? <PointOfSaleRoundedIcon sx={{ fontSize: "1.25rem" }} /> : <PaymentRoundedIcon sx={{ fontSize: "1.25rem" }} />}
@@ -77,7 +67,7 @@ const TransactionsTotalsWidget = ({ value, title, income, color }: ITransactions
           </Box>
         </Stack>
       </Stack>
-    </Widget>
+    </>
   );
 };
 
