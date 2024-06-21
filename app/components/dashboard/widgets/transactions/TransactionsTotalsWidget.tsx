@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import { styled, alpha, useTheme } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import PointOfSaleRoundedIcon from "@mui/icons-material/PointOfSaleRounded";
 import PaymentRoundedIcon from "@mui/icons-material/PaymentRounded";

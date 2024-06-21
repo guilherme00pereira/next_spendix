@@ -12,6 +12,7 @@ import {
   ITransactionsFiltersContextData,
   ICategoriesPageContextData,
   ICreditCardContextData,
+  ISettingsContextData,
 } from "@/types/context-interfaces";
 import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
 
@@ -131,6 +132,15 @@ export const useCategoriesPageContext = () => {
   const context = useContext(CategoriesPageContext);
   if (!context) {
     throw new Error("useCategoriesPageContext must be used within a CategoriesPageProvider");
+  }
+  return context;
+};
+
+export const SettingsContext = createContext<ISettingsContextData>({} as ISettingsContextData);
+export const useSettingsContext = () => {
+  const context = useContext(SettingsContext);
+  if (!context) {
+    throw new Error("useSettingsContext must be used within a SettingsProvider");
   }
   return context;
 };

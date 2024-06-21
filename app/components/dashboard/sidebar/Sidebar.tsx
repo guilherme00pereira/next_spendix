@@ -4,7 +4,7 @@ import List from "@mui/material/List";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
-import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
+import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DisplaySettingsRoundedIcon from "@mui/icons-material/DisplaySettingsRounded";
@@ -39,7 +39,7 @@ export default function Sidebar() {
         <SidebarMenuItem title="Grupos" icon={<InterestsRoundedIcon fontSize="small" />} link="/dashboard/groups" />
         <SidebarMenuItem title="Contas" icon={<AccountBalanceRoundedIcon fontSize="small" />} link="/dashboard/bank-accounts" />
         <SidebarMenuItem title="Cartões de Crédito" icon={<CreditCardRoundedIcon fontSize="small" />} link="/dashboard/credit-cards" />
-        <SidebarMenuItem title="Tags" icon={<LocalOfferRoundedIcon fontSize="small" />} link="/dashboard/tags" />
+        <SidebarMenuItem title="Tags" icon={<BookmarksRoundedIcon fontSize="small" />} link="/dashboard/tags" />
         <SidebarMenuItem title="Relatórios" icon={<AssessmentRoundedIcon />} link="/dashboard/report" />
         <SidebarMenuItem title="Configurações" icon={<DisplaySettingsRoundedIcon fontSize="small" />} link="/dashboard/settings" />
       </List>

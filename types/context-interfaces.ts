@@ -75,3 +75,8 @@ export interface ICategoriesPageContextData {
     showCategoryTotalsChart: boolean;
     setShowCategoryTotalsChart: (action: boolean) => void;
 }
+
+export interface ISettingsContextData {
+    openDrawer: boolean;
+    setOpenDrawer: (action: boolean) => void;
+}

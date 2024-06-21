@@ -13,13 +13,13 @@ const DateSelector = styled(Stack)(({ theme }) => ({
     width: "calc(50% - 16px)",
   },
   [theme.breakpoints.up("lg")]: {
-    width: "calc(20% - 16px)",
+    width: "calc(16% - 16px)",
   },
   borderBottom: "1px solid",
   borderTop: "1px solid",
   //@ts-ignore
   borderColor: theme.palette.primary.alpha50,
-  padding: "8px 0",
+  padding: "4px 0",
 }));
 
 const DateText = styled(Typography)(({ theme }) => ({

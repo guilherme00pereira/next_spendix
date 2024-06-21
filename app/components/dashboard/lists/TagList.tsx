@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import BookmarkAddRoundedIcon from '@mui/icons-material/BookmarkAddRounded';
 import { usePageContext, useTagContext } from "@/app/lib/contexts";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { IRemovableEntity } from "@/types/interfaces";
@@ -58,7 +58,7 @@ const TagList = ({tags}: {tags: TagType[]}) => {
               onDelete={() => handleConfirmDelete(tag.id, tag.name)}
             />
           ))}
-        <Chip label="Nova tag" color="success" sx={{ mx: 2 }} icon={<AddCircleOutlineRoundedIcon />} onClick={addTag} />
+        <Chip label="Nova tag" color="success" sx={{ mx: 2 }} icon={<BookmarkAddRoundedIcon />} onClick={addTag} />
       </Stack>
       <ConfirmDeleteDialog
         entity={removableTag}

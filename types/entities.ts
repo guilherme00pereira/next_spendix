@@ -29,6 +29,12 @@ export type TagType = {
     name: string;
 }
 
+export type SettingsType = {
+    id: number;
+    meta_key: string;
+    meta_value: string;
+}
+
 export type GroupType = {
     id: number;
     name: string;

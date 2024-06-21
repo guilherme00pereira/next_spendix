@@ -339,6 +339,27 @@ export type Database = {
           },
         ]
       }
+      settings: {
+        Row: {
+          created_at: string
+          id: number
+          meta_key: string
+          meta_value: Json | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          meta_key: string
+          meta_value?: Json | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          meta_key?: string
+          meta_value?: Json | null
+        }
+        Relationships: []
+      }
       tags: {
         Row: {
           id: number

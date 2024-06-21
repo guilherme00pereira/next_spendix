@@ -5,6 +5,7 @@ import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { CreditCardType } from "@/types/entities";
 import CreditCardsListItem from "@/app/components/dashboard/lists/items/CreditCardsListItem";
 import Button from "@mui/material/Button";
+import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
 import { useCreditCardContext, usePageContext } from "@/app/lib/contexts";
 
 const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
@@ -29,7 +30,7 @@ const CreditCardsList = ({ cards }: { cards: CreditCardType[] }) => {
   return (
     <PaperContainer width="60%">
       <PaperHeader title="Meus Cartões">
-        <Button variant="contained" size="small" color="primary" onClick={handleAdd}>
+        <Button variant="contained" size="small" color="primary" startIcon={<AddCardRoundedIcon />} onClick={handleAdd}>
           Adicionar
         </Button>
       </PaperHeader>
