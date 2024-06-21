@@ -62,7 +62,7 @@ const TransactionRowData = ({ transactions, open }: ITransactionRowDataProps) =>
       in_installments: !!t.installments,
       installments: 2,
       draft: t.draft,
-      tags: [],
+      tags_ids: [],
     });
     actionShowTransactionDialog(true);
   }

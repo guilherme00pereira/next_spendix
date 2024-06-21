@@ -30,23 +30,18 @@ async function fetchChartData(startDate: string, endDate: string) {
   return data;
 }
 
-
-const CategoriesPage = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+const CategoriesPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
   const categories = await getCategoriesWithStats();
   const startDate = searchParams.date
-  ? dayjs(searchParams.date as string)
-      .startOf("M")
-      .format("YYYY-MM-DD")
-  : dayjs().startOf("M").format("YYYY-MM-DD");
-const endDate = searchParams.date
-  ? dayjs(searchParams.date as string)
-      .endOf("M")
-      .format("YYYY-MM-DD")
-  : dayjs().endOf("M").format("YYYY-MM-DD");
+    ? dayjs(searchParams.date as string)
+        .startOf("M")
+        .format("YYYY-MM-DD")
+    : dayjs().startOf("M").format("YYYY-MM-DD");
+  const endDate = searchParams.date
+    ? dayjs(searchParams.date as string)
+        .endOf("M")
+        .format("YYYY-MM-DD")
+    : dayjs().endOf("M").format("YYYY-MM-DD");
   const chartData = await fetchChartData(startDate, endDate);
   const actualMonthName = dayjs().format("MMMM");
 
@@ -64,8 +59,9 @@ const endDate = searchParams.date
             <CategoriesList categories={categories as CategoryWithStatsType[]} />
           </Suspense>
           <Suspense fallback={<CategoriesChartPaperLoader />}>
-          <CategoriesChartPaper title={`Despesas por categorias no mês ${actualMonthName}`} data={chartData} />
+            <CategoriesChartPaper title={`Despesas por categorias no mês ${actualMonthName}`} data={chartData} />
           </Suspense>
+          
         </Stack>
         <ChooseIconDialog />
       </CategoriesPageProvider>

@@ -5,12 +5,12 @@ import { FormControl, Menu, MenuItem, OutlinedInput } from "@mui/material";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import SortByAlphaRoundedIcon from '@mui/icons-material/SortByAlphaRounded';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { OutlinedButtonWithHover } from "../../commonStyledComponents";
+import { PaperHeaderButtonWithHover } from "@/app/components/dashboard/commonStyledComponents";
 import { useCategoriesPageContext } from "@/app/lib/contexts";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 
 const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
-  const { showChart, setShowChart } = useCategoriesPageContext();
+  const { showCategoriesChart: showChart, setShowCategoriesChart: setShowChart } = useCategoriesPageContext();
   const [anchorFilter, setAnchorFilter] = React.useState<null | HTMLElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -29,22 +29,22 @@ const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
           endAdornment={<SearchOutlinedIcon color="action" fontSize="small" />}
         />
       </FormControl>
-      <OutlinedButtonWithHover
+      <PaperHeaderButtonWithHover
         variant="outlined"
         size="small"
         startIcon={<SortByAlphaRoundedIcon />}
-        onClick={(e) => setAnchorFilter(e.currentTarget)}
+        onClick={(e: any) => setAnchorFilter(e.currentTarget)}
       >
         Ordenar
-      </OutlinedButtonWithHover>
-      <OutlinedButtonWithHover
+      </PaperHeaderButtonWithHover>
+      <PaperHeaderButtonWithHover
         variant="outlined"
         size="small"
         startIcon={<FilterListRoundedIcon />}
-        onClick={(e) => setAnchorFilter(e.currentTarget)}
+        onClick={(e: any) => setAnchorFilter(e.currentTarget)}
       >
         Filtrar
-      </OutlinedButtonWithHover>
+      </PaperHeaderButtonWithHover>
       <Menu
         id="menu-filter"
         keepMounted
@@ -54,14 +54,14 @@ const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
         <MenuItem onClick={() => setShowChart(false)}>Hide Chart</MenuItem>
       </Menu>
       {showChart || (
-        <OutlinedButtonWithHover
+        <PaperHeaderButtonWithHover
           variant="outlined"
           size="small"
           onClick={() => setShowChart(true)}
           startIcon={<BarChartOutlinedIcon />}
         >
           Show Chart
-        </OutlinedButtonWithHover>
+        </PaperHeaderButtonWithHover>
       )}
     </Stack>
   );

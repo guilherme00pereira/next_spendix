@@ -19,7 +19,7 @@ const getTypeColor = (type: string) => {
 };
 
 const CategoriesListItem = ({ category }: { category: CategoryWithStatsType }) => {
-  const { showChart } = useCategoriesPageContext();
+  const { showCategoriesChart: showChart } = useCategoriesPageContext();
 
   return (
     <ListItem direction={{ xs: "column", md: "row" }} justifyContent="space-between">

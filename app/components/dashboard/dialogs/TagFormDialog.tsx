@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { usePageContext, useTagContext } from "@/app/lib/contexts";
 import TopBarDialog from "@/app/components/dashboard/dialogs/TopBarDialog";
 import { submitTagForm } from "@/app/lib/actions/tag-actions";
+import DialogActionButtons from "./DialogActionButtons";
 
 const validate = yup.object({
   id: yup.number(),
@@ -32,7 +33,6 @@ const TagFormDialog = () => {
     <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
       <DialogTitle>{editableObject.id ? "Editar" : "Adicionar"} tag</DialogTitle>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarDialog title="Nova tag" />
         <DialogContent>
           <Stack direction="row">
             <Grid container spacing={3}>
@@ -51,6 +51,7 @@ const TagFormDialog = () => {
             </Grid>
           </Stack>
         </DialogContent>
+        <DialogActionButtons showDialog={showModal} closeAction={actionShowModal} />
       </form>
     </Dialog>
   );

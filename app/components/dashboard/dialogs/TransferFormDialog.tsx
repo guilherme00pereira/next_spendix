@@ -1,12 +1,12 @@
 import React from 'react';
-import { useSpeedDialStore } from '@/app/lib/contexts';
+import { useSpeedDialStore } from '@/app/lib/store';
 import { Dialog, DialogContent, Grid, MenuItem, TextField } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as yup from "yup";
 import { useFormik } from "formik";
 import TopBarDialog from './TopBarDialog';
 import Stack from '@mui/system/Stack';
-import { buildSelectPaymentMethods } from '@/app/lib/functions';
+import { buildSelectPaymentMethods } from '@/app/lib/helpers';
 
 const validate = yup.object({
   outcomeId: yup.string().required("Campo obrigatório"),

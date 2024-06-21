@@ -89,7 +89,7 @@ export const addTransaction = async ({
   installments,
   draft,
   cashed,
-  tags,
+  tags_ids,
 }: TransactionFormData) => {
   let pay_id = null;
   if (cashed) {
@@ -121,8 +121,8 @@ export const addTransaction = async ({
         }
       }
 
-      if (tags && tags.length > 0) {
-        const rows = tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id }));
+      if (tags_ids && tags_ids.length > 0) {
+        const rows = tags_ids.map((tag) => ({ transaction_id: tid, tag_id: tag }));
         const { error } = await supabase.from("tags_transactions").insert(rows);
         if (error) {
           //throw error;
@@ -145,7 +145,7 @@ export const editTransaction = async ({
   payment_id,
   draft,
   cashed,
-  tags,
+  tags_ids,
 }: TransactionFormData) => {
   let pay_id = null;
   if (cashed) {
@@ -170,8 +170,8 @@ export const editTransaction = async ({
     //TODO: upsert tags not working
     if (data.length > 0) {
       const tid = data[0].id;
-      if (tags && tags.length > 0) {
-        const rows = tags.map((tag) => ({ transaction_id: tid, tag_id: tag.id }));
+      if (tags_ids && tags_ids.length > 0) {
+        const rows = tags_ids.map((tag) => ({ transaction_id: tid, tag_id: tag }));
         const { error } = await supabase.from("tags_transactions").insert(rows);
         if (error) {
           //throw error;

@@ -6,18 +6,14 @@ import { PaperContainer } from "@/app/components/dashboard/commonStyledComponent
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { useTransactionContext } from "@/app/lib/contexts";
+import { deleteTransaction } from "@/app/lib/actions/transactions-actions";
 
 const TransactionsTable = ({ children, filters }: {children: React.ReactNode, filters?: React.ReactNode}) => {
   const { openConfirm, setOpenConfirm, removableTransaction, setRemovableTransaction } = useTransactionContext();
   
   const handleProceedDelete = () => {
-    fetch(`/api/transactions/remove?id=${removableTransaction.id}&payment_id=${removableTransaction.payment_id}`, {
-      method: "POST",
-    }).then((res) => {
-      if (res.ok) {
-        setOpenConfirm(false);
-      }
-    });
+    deleteTransaction(removableTransaction.id, removableTransaction.payment_id);
+    setOpenConfirm(false);
   };
 
   return (

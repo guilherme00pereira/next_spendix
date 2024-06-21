@@ -23,17 +23,17 @@ const AllTransactions = async ({
   const payedTransactions = await getPayedTransactions(startDate, endDate);
   const [totalCashed, totalPaidSpendings, dailyAverage] = getTransactionsTotals(transactions, payedTransactions);
 
-  let filteredTransactions = searchParams.income
+  let queryTransactions = searchParams.income
     ? transactions.filter((t) => t.categories?.type === "Receita")
     : transactions;
 
-  filteredTransactions = searchParams.spendings
+  queryTransactions = searchParams.spendings
     ? transactions.filter((t) => t.categories?.type === "Despesa")
-    : filteredTransactions;
+    : queryTransactions;
 
-  filteredTransactions = searchParams.day
+  queryTransactions = searchParams.day
     ? transactions.filter((t) => t.due_date.substr(-2) === searchParams.day)
-    : filteredTransactions;
+    : queryTransactions;
 
   return (
     <PageContainer title="Todas as transações do mês" showSelectMonthYear>
@@ -45,8 +45,8 @@ const AllTransactions = async ({
         </Stack>
         <Stack direction={{ xs: "column", md: "row" }} sx={{ width: "100%" }} justifyContent="center">
           <Suspense fallback={<p>loading</p>}>
-          <TransactionsTable filters={<TransactionsFilter transactions={filteredTransactions} />}>
-            <TransactionRows transactions={filteredTransactions} />
+          <TransactionsTable filters={<TransactionsFilter transactions={queryTransactions} />}>
+            <TransactionRows transactions={queryTransactions} />
           </TransactionsTable>
           </Suspense>
         </Stack>

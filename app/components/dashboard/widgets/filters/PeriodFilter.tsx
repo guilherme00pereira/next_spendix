@@ -5,7 +5,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import { OutlinedButtonWithHover } from "@/app/components/dashboard/commonStyledComponents";
+import { PaperHeaderButtonWithHover } from "@/app/components/dashboard/commonStyledComponents";
 
 const PeriodFilter = ({items}: {items: string[]}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -20,7 +20,7 @@ const PeriodFilter = ({items}: {items: string[]}) => {
 
   return (
     <div>
-      <OutlinedButtonWithHover 
+      <PaperHeaderButtonWithHover 
         variant="outlined" 
         size="small" 
         onClick={handleClick} 
@@ -28,7 +28,7 @@ const PeriodFilter = ({items}: {items: string[]}) => {
         endIcon={<ExpandMoreOutlinedIcon />}
       >
         Período
-      </OutlinedButtonWithHover>
+      </PaperHeaderButtonWithHover>
       <Menu id="period-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         {items.map((item) => (
           <MenuItem key={item} onClick={() => {}}>

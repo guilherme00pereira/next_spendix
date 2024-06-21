@@ -85,8 +85,9 @@ export const getTransactionsTotals = (transactions: TransactionType[], payed: Tr
 
 export const getStartAndEndingDays = (date: string, end: EndDateEnum) => {
   const startDate = date ? dayjs(date).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");
+  const isCurrentMonth = dayjs().format("YYYY-MM") === dayjs(startDate).format("YYYY-MM");
   let endDate = "";
-  if (end === EndDateEnum.TODAY) {
+  if (end === EndDateEnum.TODAY && isCurrentMonth) {
     endDate = date ? dayjs(date).format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD");
   } else {
     endDate = date ? dayjs(date).endOf("M").format("YYYY-MM-DD") : dayjs().endOf("M").format("YYYY-MM-DD");

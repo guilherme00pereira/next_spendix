@@ -4,7 +4,7 @@ import { ChartBarType } from "@/types/chart-types";
 import { useColorScheme } from "@mui/material";
 import { chartColors } from "@/theme/colors";
 
-const ApexParentCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
+const ApexCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
   const { mode } = useColorScheme();
 
   return (
@@ -74,4 +74,4 @@ const ApexParentCategoriesBarChart = ({ data }: { data: ChartBarType[] }) => {
   );
 };
 
-export default ApexParentCategoriesBarChart;
+export default ApexCategoriesBarChart;

@@ -70,6 +70,8 @@ export interface ICreditCardContextData extends IDeletableObjectContextData, IEd
 }
 
 export interface ICategoriesPageContextData {
-    showChart: boolean;
-    setShowChart: (action: boolean) => void;
+    showCategoriesChart: boolean;
+    setShowCategoriesChart: (action: boolean) => void;
+    showCategoryTotalsChart: boolean;
+    setShowCategoryTotalsChart: (action: boolean) => void;
 }

@@ -13,7 +13,7 @@ import CategoryProvider from "@/app/lib/providers/CategoryProvider";
 const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] }) => {
   const { openConfirm, setOpenConfirm, removableObject } = useCategoryContext();
   const [filterableCategories, setFilterableCategories] = React.useState<CategoryWithStatsType[]>(categories);
-  const { showChart } = useCategoriesPageContext();
+  const { showCategoriesChart } = useCategoriesPageContext();
 
   const searchCategory = (search: string) => {
     if (search === "") {
@@ -35,7 +35,7 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
 
   return (
     <CategoryProvider>
-      <PaperContainer width={showChart ? "60%" : "90%"}>
+      <PaperContainer width={showCategoriesChart ? "60%" : "90%"}>
         <PaperHeader title="Lista de categorias">
           <CategoriesFilter action={searchCategory} />
         </PaperHeader>

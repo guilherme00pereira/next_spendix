@@ -34,7 +34,7 @@ const TransactionActionButtons = ({ transaction, showDelete }: { transaction: Tr
       in_installments: !!t.installments,
       installments: 2,
       draft: t.draft,
-      tags: [],
+      tags_ids: [],
     };
 
     if (t.categories?.type === "Receita") {

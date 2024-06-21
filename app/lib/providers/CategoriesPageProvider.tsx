@@ -7,8 +7,8 @@ const CategoriesPageProvider = ({ children }: { children: React.ReactNode }) => 
 
     return (
         <CategoriesPageContext.Provider value={{
-            showChart,
-            setShowChart,
+            showCategoriesChart: showChart,
+            setShowCategoriesChart: setShowChart,
         }}>
             {children}
         </CategoriesPageContext.Provider>

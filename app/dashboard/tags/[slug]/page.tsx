@@ -8,7 +8,7 @@ import PageContainer from "@/app/components/dashboard/page/PageContainer";
 //TODO: list transactions related to this tag
 const TagDetailsPage = ({ params }: { params: { slug: string } }) => {
   return (
-    <PageContainer>
+    <PageContainer title="Tags">
       <Stack>
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
           <Stack sx={{ width: "75%" }}>

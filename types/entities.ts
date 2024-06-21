@@ -77,7 +77,7 @@ export type TransactionFormData = {
     in_installments: boolean,
     installments: number,
     draft: boolean;
-    tags: TagType[];
+    tags_ids: number[];
 }
 
 export type RecurringFormData = {

@@ -107,14 +107,15 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
     validationSchema: validate,
     onSubmit: (values) => {
       setIsPending(true);
-      const data = {
+      const data = serializeToServeActions({
         ...values,
         due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
         payment_date: values.payment_date
           ? dayjs(values.payment_date).format("YYYY-MM-DD")
           : dayjs().format("YYYY-MM-DD"),
-      };
-      submitTransactionForm(serializeToServeActions(data)).then(() => {
+          tags_ids: selectedTagsIds
+      });
+      submitTransactionForm(data).then(() => {
         setIsPending(false);
         actionShowTransactionDialog(false);
       });

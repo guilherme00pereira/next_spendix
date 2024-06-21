@@ -2,12 +2,13 @@
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { usePageContext, useTagContext } from "@/app/lib/contexts";
 import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDeleteDialog";
 import { IRemovableEntity } from "@/types/interfaces";
 import { TagType } from "@/types/entities";
+import { deleteTag } from "@/app/lib/actions/tag-actions";
+import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 
 const TagList = ({tags}: {tags: TagType[]}) => {
   const { actionShowModal } = usePageContext();
@@ -26,7 +27,7 @@ const TagList = ({tags}: {tags: TagType[]}) => {
 
   const processDelete = () => {
     if (removableTag.id > 0) {
-      
+      deleteTag(removableTag.id);
     }
     setOpenConfirm(false);
   };
@@ -43,7 +44,7 @@ const TagList = ({tags}: {tags: TagType[]}) => {
 
   //TODO: change Chip component to a custom component that allows to delete, edit and go to the tag page. Also show a badge with the number of transactions related to this tag
   return (
-    <Paper sx={{ p: 6 }}>
+    <PaperContainer width="50%">
       <Stack direction="row" justifyContent="flex-start">
         
           {tags.map((tag) => (
@@ -65,7 +66,7 @@ const TagList = ({tags}: {tags: TagType[]}) => {
         handleClose={setOpenConfirm}
         handleDelete={processDelete}
       />
-    </Paper>
+    </PaperContainer>
   );
 };
 
