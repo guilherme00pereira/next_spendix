@@ -8,7 +8,7 @@ import { useGroupContext } from "@/app/lib/contexts";
 import { CategoryType } from "@/types/entities";
 import CheckableCategoriesListItem from "./items/CheckableCategoriesListItem";
 import CategoriesMultiSelect from "../widgets/selects/CategoriesMultiSelect";
-import { Button } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
 import { deleteGroupCategoryRelation, submitGroupCategories } from "@/app/lib/actions/group-actions";
 
 const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => {
@@ -45,7 +45,6 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
         selectedGroup.id,
         linkedCategories.map((c) => c.id)
       ).then((res) => {
-        setLinkedCategories([]);
         setHasChanges(false);
       });
     });
@@ -62,17 +61,29 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
             setHasChanges={setHasChanges}
           />
           <Stack direction="column" justifyContent="center">
-            {isPending && "Salvando..."}
-            {isPending || (
+            {isPending && (
+              <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
+                <LinearProgress />
+              </Stack>
+            )}
+            
               <List>
                 {linkedCategories.map((category) => (
-                  <CheckableCategoriesListItem key={category.id} category={category} removeAction={handleLinkedDelete} />
+                  <CheckableCategoriesListItem
+                    key={category.id}
+                    category={category}
+                    removeAction={handleLinkedDelete}
+                  />
                 ))}
                 {existingCategories?.map((category: CategoryType) => (
-                  <CheckableCategoriesListItem key={category.id} category={category} removeAction={handleExistingDelete} />
+                  <CheckableCategoriesListItem
+                    key={category.id}
+                    category={category}
+                    removeAction={handleExistingDelete}
+                  />
                 ))}
               </List>
-            )}
+            
             {hasChanges && (
               <Stack direction="row" alignItems="flex-end">
                 <Button size="small" variant="contained" color="primary" onClick={handleSave} disabled={isPending}>

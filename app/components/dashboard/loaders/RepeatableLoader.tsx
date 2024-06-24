@@ -7,8 +7,8 @@ const RepeatableLoader = ({
   height,
 }: {
   items: number;
-  width: number;
-  height: number;
+  width: number | string;
+  height: number | string;
 }) => {
   let list = [];
   for (let i = 0; i < items; i++) {

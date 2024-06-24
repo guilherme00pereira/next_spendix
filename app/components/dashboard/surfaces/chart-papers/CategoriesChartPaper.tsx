@@ -16,7 +16,7 @@ const CategoriesChartPaper = ({ title, data }: { title: string; data: ChartBarTy
     <>
       {showCategoriesChart && (
         <Fade in={showCategoriesChart} timeout={1000} easing="ease-out">
-          <PaperContainer width="40%">
+          <PaperContainer width="50%">
             <PaperHeader title={title}>
               <PaperHeaderButtonWithHover
                 variant="outlined"

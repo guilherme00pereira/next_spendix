@@ -35,7 +35,7 @@ const CategoriesList = ({ categories }: { categories: CategoryWithStatsType[] })
 
   return (
     <CategoryProvider>
-      <PaperContainer width={showCategoriesChart ? "60%" : "90%"}>
+      <PaperContainer width={showCategoriesChart ? "50%" : "90%"}>
         <PaperHeader title="Lista de categorias">
           <CategoriesFilter action={searchCategory} />
         </PaperHeader>

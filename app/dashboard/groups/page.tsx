@@ -30,7 +30,7 @@ const GroupsPage = async () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <GroupCategoriesList categories={categories} />
-            <TransactionsTotalPerPeriodChartPaper />
+            <TransactionsTotalPerPeriodChartPaper transactions={[]} />
           </Grid>
         </Grid>
         <GroupFormDialog />

@@ -1,12 +1,12 @@
 'use client';
 import React from "react";
-import { PaperContainer } from "../../commonStyledComponents";
-import PaperHeader from "../PaperHeader";
+import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
+import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
 import { useGroupContext } from "@/app/lib/contexts";
+import { TransactionType } from "@/types/entities";
 
-async function fetchChartData() {}
 
-const TransactionsTotalPerPeriodChartPaper = () => {
+const TransactionsTotalPerPeriodChartPaper = ({ transactions }: { transactions: TransactionType[] }) => {
   const { showChart } = useGroupContext();
 
   return (
@@ -14,6 +14,7 @@ const TransactionsTotalPerPeriodChartPaper = () => {
       {showChart && (
         <PaperContainer>
           <PaperHeader title="Evolução por período" />
+
         </PaperContainer>
       )}
     </>
