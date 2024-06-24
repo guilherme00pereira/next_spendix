@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Sidebar from "@/app/components/dashboard/sidebar/Sidebar";
 import Topbar from "@/app/components/dashboard/topbar/Topbar";
-import TransactionDetailRightDrawer from "@/app/components/dashboard/surfaces/TransactionDetailRightDrawer";
+import TransactionDetailRightDrawer from "@/app/components/dashboard/drawers/TransactionDetailRightDrawer";
 import TransactionProvider from "../lib/providers/TransactionProvider";
 import PageProvider from "../lib/providers/PageProvider";
 import SidebarProvider from "../lib/providers/SidebarProvider";

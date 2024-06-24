@@ -1,12 +1,11 @@
 import React from 'react';
+import Stack from '@mui/material/Stack';
 import { useSpeedDialStore } from '@/app/lib/store';
 import { Dialog, DialogContent, Grid, MenuItem, TextField } from '@mui/material';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as yup from "yup";
 import { useFormik } from "formik";
 import TopBarDialog from './TopBarDialog';
-import Stack from '@mui/system/Stack';
-import { buildSelectPaymentMethods } from '@/app/lib/helpers';
+import { ISpeedDiaDialogsData } from '@/types/interfaces';
 
 const validate = yup.object({
   outcomeId: yup.string().required("Campo obrigatório"),
@@ -14,14 +13,8 @@ const validate = yup.object({
   amount: yup.number().required("Campo obrigatório"),
 });
 
-const TransferFormDialog = () => {
-  const queryClient = useQueryClient();
-  const { showTransferDialog, actionShowTransferDialog, transfer} = useSpeedDialStore();
-
-  const {data: paymentMethods} = useQuery({
-    queryKey: ["payment_methods"],
-    queryFn: () => buildSelectPaymentMethods(),
-  });
+const TransferFormDialog = ({paymentMethods, }: ISpeedDiaDialogsData) => {
+  const {  } = useSpeedDialStore();
 
   const formik = useFormik({
     initialValues: {
@@ -40,7 +33,7 @@ const TransferFormDialog = () => {
   //TODO: handle submit
 
   return (
-    <Dialog open={showTransferDialog} fullWidth maxWidth="md" onClose={() => actionShowTransferDialog(!showTransferDialog)}>
+    <Dialog open={false} fullWidth maxWidth="md" onClose={() => console.log('a fazer')}>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
       <TopBarDialog title="Nova transferência" />
       <DialogContent>

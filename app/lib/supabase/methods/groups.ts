@@ -1,10 +1,9 @@
 import { createClientServerSide } from "@/app/lib/supabase/server";
-import { unstable_cache } from "next/cache";
 import { GroupType } from "@/types/entities";
 
 export const getGroups = async () => {
   const supabase = createClientServerSide();
-  const { data, error } = await supabase.from("groups").select("*");
+  const { data, error } = await supabase.from("groups").select("*").order("name");
   if (error) {
     throw error;
   }

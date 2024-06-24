@@ -1,28 +1,22 @@
 "use client";
-import React, { useMemo, useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  MenuItem,
-  Checkbox,
-  List,
-  ListItemText,
-  Button,
-} from "@mui/material";
+import React, { useMemo, useState, useTransition } from "react";
+import List from "@mui/material/List";
+import Stack from "@mui/material/Stack";
 import { PaperContainer } from "@/app/components/dashboard/commonStyledComponents";
 import PaperHeader from "@/app/components/dashboard/surfaces/PaperHeader";
-import Stack from "@mui/material/Stack";
 import { useGroupContext } from "@/app/lib/contexts";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import AddIcon from "@mui/icons-material/Add";
 import { CategoryType } from "@/types/entities";
-import GroupCategoriesListItem from "./items/GroupCategoriesListItem";
+import CheckableCategoriesListItem from "./items/CheckableCategoriesListItem";
+import CategoriesMultiSelect from "../widgets/selects/CategoriesMultiSelect";
+import { Button } from "@mui/material";
+import { deleteGroupCategoryRelation, submitGroupCategories } from "@/app/lib/actions/group-actions";
 
 const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => {
   const { selectedGroup } = useGroupContext();
-  const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
   const [linkedCategories, setLinkedCategories] = useState<CategoryType[]>([]);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  //TODO: delete and save status with useOptimistic or useTransition
 
   const filteredCategories = useMemo(() => {
     return categories.filter((category) => !category.groups?.some((group) => group.id === selectedGroup.id));
@@ -34,22 +28,27 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
     }
   }, [selectedGroup, categories]);
 
-  const handleChange = (event: SelectChangeEvent<typeof checkedCategories>) => {
-    const {
-      target: { value },
-    } = event;
-    setCheckedCategories(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const handleLinkCategories = () => {
-    const cs = categories.filter((category) => checkedCategories.includes(category.name));
-    setLinkedCategories(cs);
-    setCheckedCategories([]);
-  };
-
-  const handleDelete = (category: CategoryType) => {
+  const handleLinkedDelete = (category: CategoryType) => {
     const cs = linkedCategories.filter((c) => c.id !== category.id);
     setLinkedCategories(cs);
+  };
+
+  const handleExistingDelete = (category: CategoryType) => {
+    deleteGroupCategoryRelation(selectedGroup.id, category.id).then((res) => {
+      setHasChanges(false);
+    });
+  };
+
+  const handleSave = () => {
+    startTransition(() => {
+      submitGroupCategories(
+        selectedGroup.id,
+        linkedCategories.map((c) => c.id)
+      ).then((res) => {
+        setLinkedCategories([]);
+        setHasChanges(false);
+      });
+    });
   };
 
   return (
@@ -57,47 +56,30 @@ const GroupCategoriesList = ({ categories }: { categories: CategoryType[] }) => 
       {selectedGroup.id && (
         <PaperContainer>
           <PaperHeader title={`Categorias em ${selectedGroup.name}`} />
-          <Stack direction="row" justifyContent="center" alignItems="center">
-            <FormControl sx={{ m: 1, width: "60%" }} size="small">
-              <InputLabel>Categorias</InputLabel>
-              <Select
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                multiple
-                value={checkedCategories}
-                onChange={handleChange}
-                input={<OutlinedInput label="Categorias" />}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 48 * 4.5 + 8,
-                      width: 250,
-                    },
-                  },
-                }}
-              >
-                {filteredCategories.map((category) => (
-                  <MenuItem key={category.id} value={category.name}>
-                    <Checkbox checked={checkedCategories.indexOf(category.name) > -1} />
-                    <ListItemText primary={category.name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Button variant="contained" size="small" onClick={handleLinkCategories}>
-              <AddIcon />
-            </Button>
-          </Stack>
+          <CategoriesMultiSelect
+            categories={filteredCategories}
+            setLinkedCategories={setLinkedCategories}
+            setHasChanges={setHasChanges}
+          />
           <Stack direction="column" justifyContent="center">
-            <List>
-              {linkedCategories.map((category) => (
-                <GroupCategoriesListItem key={category.id} category={category} removeAction={handleDelete} />
-              ))}
-              {existingCategories?.map((category: CategoryType) => (
-                <GroupCategoriesListItem key={category.id} category={category} removeAction={handleDelete} />
-              ))}
-            </List>
+            {isPending && "Salvando..."}
+            {isPending || (
+              <List>
+                {linkedCategories.map((category) => (
+                  <CheckableCategoriesListItem key={category.id} category={category} removeAction={handleLinkedDelete} />
+                ))}
+                {existingCategories?.map((category: CategoryType) => (
+                  <CheckableCategoriesListItem key={category.id} category={category} removeAction={handleExistingDelete} />
+                ))}
+              </List>
+            )}
+            {hasChanges && (
+              <Stack direction="row" alignItems="flex-end">
+                <Button size="small" variant="contained" color="primary" onClick={handleSave} disabled={isPending}>
+                  Salvar
+                </Button>
+              </Stack>
+            )}
           </Stack>
         </PaperContainer>
       )}

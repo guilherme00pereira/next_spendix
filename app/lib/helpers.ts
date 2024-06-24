@@ -2,7 +2,6 @@ import { ChartBarType } from "@/types/chart-types";
 import { TransactionType } from "@/types/entities";
 import { EndDateEnum, TransactionTypeEnum } from "@/types/enums";
 import dayjs from "dayjs";
-import { getAllPaymentMethods } from "@/app/lib/supabase/methods/payment-methods";
 
 export const groupTransactionsByDate = (transactions: TransactionType[]) => {
   const groups = new Map<string, TransactionType[]>();
@@ -39,28 +38,6 @@ export const mapDailyTransactionsToChart = (map: Map<string, TransactionType[]>,
   return chartData;
 };
 
-export const buildSelectPaymentMethods = async () => {
-  const res = await getAllPaymentMethods();
-  return convertPaymentMethodsToSelect(res);
-};
-
-export const convertPaymentMethodsToSelect = (payment_methods: any) => {
-  return payment_methods.map((pm: any) => {
-    if (pm.credit_cards) {
-      return {
-        value: pm.id,
-        label: pm.credit_cards.name + " | Credit Card",
-      };
-    }
-    if (pm.accounts) {
-      return {
-        value: pm.id,
-        label: pm.accounts.bank,
-      };
-    }
-  });
-};
-
 export const getTransactionsTotals = (transactions: TransactionType[], payed: TransactionType[]) => {
   const totalCashed = payed
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
@@ -70,18 +47,33 @@ export const getTransactionsTotals = (transactions: TransactionType[], payed: Tr
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  const totalPaidSpendings = payed
+  const totalPaidExpenses = payed
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
     .reduce((acc, transaction) => acc + (transaction.payments?.amount ?? 0), 0);
 
-  const totalSpendings = transactions
+  const totalExpenses = transactions
     .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  const dailyAverage = totalPaidSpendings / dayjs().date();
+  const dailyAverage = totalPaidExpenses / dayjs().date();
 
-  return [totalCashed, totalIncome, totalPaidSpendings, totalSpendings, dailyAverage];
+  return [totalCashed, totalIncome, totalPaidExpenses, totalExpenses, dailyAverage];
 };
+
+export const getSimpleTransactionsTotals = (transactions: TransactionType[]) => {
+  const totalIncome = transactions
+    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.INCOME)
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
+
+  const totalExpenses = transactions
+    .filter((transaction) => transaction.categories?.type === TransactionTypeEnum.SPENDINGS)
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
+
+  const dailyAverage = totalExpenses / dayjs().date();
+
+  return [totalIncome, totalExpenses, dailyAverage];
+}
+
 
 export const getStartAndEndingDays = (date: string, end: EndDateEnum) => {
   const startDate = date ? dayjs(date).startOf("M").format("YYYY-MM-DD") : dayjs().startOf("M").format("YYYY-MM-DD");

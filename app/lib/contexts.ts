@@ -13,8 +13,10 @@ import {
   ICategoriesPageContextData,
   ICreditCardContextData,
   ISettingsContextData,
+  IAllTransactionsPageContextData,
+  ISelectableCategoriesContextData,
 } from "@/types/context-interfaces";
-import { BankAccountType, CreditCardType, TagType } from "@/types/entities";
+import { BankAccountType, TagType } from "@/types/entities";
 
 export const PageContext = createContext<IPageContextData>({} as IPageContextData);
 
@@ -46,7 +48,9 @@ export const useTransactionContext = () => {
   return context;
 };
 
-export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>({} as ITransactionsPerDayContextData);
+export const TransactionsPerDayContext = createContext<ITransactionsPerDayContextData>(
+  {} as ITransactionsPerDayContextData
+);
 
 export const useTransactionsPerDayContext = () => {
   const context = useContext(TransactionsPerDayContext);
@@ -56,7 +60,9 @@ export const useTransactionsPerDayContext = () => {
   return context;
 };
 
-export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>({} as ITransactionsFiltersContextData);
+export const TransactionsTableFilterContext = createContext<ITransactionsFiltersContextData>(
+  {} as ITransactionsFiltersContextData
+);
 
 export const useTransactionsTableFilterContext = () => {
   const context = useContext(TransactionsTableFilterContext);
@@ -96,7 +102,9 @@ export const useGroupContext = () => {
   return context;
 };
 
-export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>({} as IEditableObjectContextData<BankAccountType>);
+export const BankAccountContext = createContext<IEditableObjectContextData<BankAccountType>>(
+  {} as IEditableObjectContextData<BankAccountType>
+);
 
 export const useBankAccountContext = () => {
   const context = useContext(BankAccountContext);
@@ -144,3 +152,18 @@ export const useSettingsContext = () => {
   }
   return context;
 };
+export const AllTransactionsPageContext = createContext<IAllTransactionsPageContextData>(
+  {} as IAllTransactionsPageContextData
+);
+
+export const useAllTransactionsPageContext = () => {
+  const context = useContext(AllTransactionsPageContext);
+  if (!context) {
+    throw new Error("useAllTransactionsPageContext must be used within a AllTransactionsPageProvider");
+  }
+  return context;
+};
+
+export const SelectableCategoriesContext = createContext<ISelectableCategoriesContextData>({} as ISelectableCategoriesContextData);
+
+

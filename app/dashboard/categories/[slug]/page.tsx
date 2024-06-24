@@ -6,7 +6,7 @@ import CategoryTransactionsTable from "@/app/components/dashboard/tables/Categor
 import ApexTransactionsTotalPerPeriodBarChart from "@/app/components/dashboard/charts/ApexTransactionsTotalPerPeriodBarChart";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import CategoryDetailProvider from "@/app/lib/providers/CategoryDetailProvider";
-import CategoryDetailsPageSelect from "@/app/components/dashboard/surfaces/CategoryDetailsPageSelect";
+import CategoryDetailsPageSelect from "@/app/components/dashboard/widgets/selects/CategoryDetailsPageSelect";
 import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import { Suspense } from "react";
 

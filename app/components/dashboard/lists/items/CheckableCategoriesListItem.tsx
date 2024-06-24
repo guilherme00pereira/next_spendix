@@ -5,12 +5,12 @@ import { DangerActionButton, ListItem } from "@/app/components/dashboard/commonS
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Typography } from "@mui/material";
 
-interface IGroupCategoriesListItemProps {
+interface ICheckableCategoriesListItemProps {
   category: CategoryType;
   removeAction: (category: CategoryType) => void;
 }
 
-const GroupCategoriesListItem = ({ category, removeAction }: IGroupCategoriesListItemProps) => {
+const CheckableCategoriesListItem = ({ category, removeAction }: ICheckableCategoriesListItemProps) => {
   return (
     <ListItem key={category.id}>
       <Box sx={{ flexGrow: 1 }}>
@@ -25,4 +25,4 @@ const GroupCategoriesListItem = ({ category, removeAction }: IGroupCategoriesLis
   );
 };
 
-export default GroupCategoriesListItem;
+export default CheckableCategoriesListItem;

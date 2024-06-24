@@ -12,7 +12,8 @@ import CategoriesListPaperLoader from "@/app/components/dashboard/loaders/Catego
 import dayjs from "dayjs";
 import { ChartBarType } from "@/types/chart-types";
 import SettingsProvider from "@/app/lib/providers/SettingsProvider";
-import SettingsRightDrawer from "@/app/components/dashboard/surfaces/SettingsRightDrawer";
+import SettingsRightDrawer from "@/app/components/dashboard/drawers/SettingsRightDrawer";
+import SelectableCategories from "@/app/components/dashboard/drawers/content/SelectableCategories";
 
 async function fetchChartData(startDate: string, endDate: string) {
   const res = await getExpenseCategoriesTransactionsSum(startDate, endDate);
@@ -48,18 +49,28 @@ const CategoriesPage = async ({ searchParams }: { searchParams: { [key: string]:
   return (
     <PageContainer title="Categorias" showSelectMonthYear>
       <CategoriesPageProvider>
-        <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="center"
+          alignItems="start"
+          spacing={2}
+          sx={{ width: "100%" }}
+        >
           <Suspense fallback={<CategoriesListPaperLoader />}>
             <CategoriesList categories={categories as CategoryWithStatsType[]} />
           </Suspense>
           <SettingsProvider>
             <Suspense fallback={<CategoriesChartPaperLoader />}>
               <CategoriesChartPaper title={`Despesas por categorias no mês ${actualMonthName}`} data={chartData} />
+              {categories && (
+                <SettingsRightDrawer title="Categorias a exibir">
+                  <SelectableCategories categories={categories as CategoryWithStatsType[]} />
+                </SettingsRightDrawer>
+              )}
             </Suspense>
           </SettingsProvider>
         </Stack>
         <ChooseIconDialog />
-        <SettingsRightDrawer entity={categories} /> 
       </CategoriesPageProvider>
     </PageContainer>
   );

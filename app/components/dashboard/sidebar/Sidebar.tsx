@@ -37,9 +37,9 @@ export default function Sidebar() {
         <SidebarMenuItem title="Transações" icon={<AttachMoneyRoundedIcon fontSize="small" />} link="/dashboard/transactions" />
         <SidebarMenuItem title="Categorias" icon={<ListAltRoundedIcon fontSize="small" />} link="/dashboard/categories" />
         <SidebarMenuItem title="Grupos" icon={<InterestsRoundedIcon fontSize="small" />} link="/dashboard/groups" />
+        <SidebarMenuItem title="Tags" icon={<BookmarksRoundedIcon fontSize="small" />} link="/dashboard/tags" />
         <SidebarMenuItem title="Contas" icon={<AccountBalanceRoundedIcon fontSize="small" />} link="/dashboard/bank-accounts" />
         <SidebarMenuItem title="Cartões de Crédito" icon={<CreditCardRoundedIcon fontSize="small" />} link="/dashboard/credit-cards" />
-        <SidebarMenuItem title="Tags" icon={<BookmarksRoundedIcon fontSize="small" />} link="/dashboard/tags" />
         <SidebarMenuItem title="Relatórios" icon={<AssessmentRoundedIcon />} link="/dashboard/report" />
         <SidebarMenuItem title="Configurações" icon={<DisplaySettingsRoundedIcon fontSize="small" />} link="/dashboard/settings" />
       </List>

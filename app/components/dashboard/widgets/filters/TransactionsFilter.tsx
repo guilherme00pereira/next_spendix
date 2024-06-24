@@ -40,7 +40,7 @@ const TransactionsFilter = ({ transactions }: { transactions: TransactionType[] 
     setFilteredTransactions(transactions.filter((t) => t.due_date === date.format("YYYY-MM-DD")));
   };
 
-  const dueDateUrl = params.get("due_date") === "1" ? pathname : `${pathname}?due_date=1`;
+  const dueDateUrl = params.get("dd") === "1" ? pathname : `${pathname}?dd=1`;
 
   return (
     <Stack direction="row" alignItems="center" spacing={2}>

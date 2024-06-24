@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TransactionType, GroupType, CreditCardType, CreditCardInvoiceType } from "./entities";
+import { TransactionType, GroupType, CreditCardType, CreditCardInvoiceType, CategoryType } from "./entities";
 import { IRemovableEntity, IRemovableTransaction } from "./interfaces";
 
 export interface IEditableObjectContextData<T> {
@@ -79,4 +79,20 @@ export interface ICategoriesPageContextData {
 export interface ISettingsContextData {
     openDrawer: boolean;
     setOpenDrawer: (action: boolean) => void;
+}
+
+export interface IAllTransactionsPageContextData {
+    totalIncome: number;
+    setTotalIncome: Dispatch<SetStateAction<number>>;
+    totalExpense: number;
+    setTotalExpense: Dispatch<SetStateAction<number>>;
+    dailyMean: number;
+    setDailyMean: Dispatch<SetStateAction<number>>;
+}
+
+export interface ISelectableCategoriesContextData {
+    linkedCategories: CategoryType[];
+    setLinkedCategories: Dispatch<SetStateAction<CategoryType[]>>;
+    hasChanges: boolean;
+    setHasChanges: Dispatch<SetStateAction<boolean>>;
 }

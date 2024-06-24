@@ -8,9 +8,10 @@ import TransactionsTableFilterProvider from "@/app/lib/providers/TransactionsTab
 import TransactionRows from "@/app/components/dashboard/tables/rows/TransactionRows";
 import TransactionsTopCardLoader from "@/app/components/dashboard/loaders/TransactionsTopCardLoader";
 import ScrollToTop from "@/app/components/dashboard/page/ScrollToTop";
-import { getStartAndEndingDays, getTransactionsTotals } from "@/app/lib/helpers";
+import { getStartAndEndingDays } from "@/app/lib/helpers";
 import { EndDateEnum } from "@/types/enums";
 import AllTransactionsPageHeroSection from "@/app/components/dashboard/surfaces/hero-sections/AllTransactionsPageHeroSection";
+import AllTransactionsPageProvider from "@/app/lib/providers/AllTransactionsPageProvider";
 
 const AllTransactions = async ({
   searchParams,
@@ -21,9 +22,10 @@ const AllTransactions = async ({
   const [startDate, endDate] = getStartAndEndingDays(searchParams.date as string, end);
   const transactions = await getTransactions(startDate, endDate);
   const payedTransactions = await getPayedTransactions(startDate, endDate);
-  const [totalCashed, totalPaidSpendings, dailyAverage] = getTransactionsTotals(transactions, payedTransactions);
 
-  let queryTransactions = searchParams.income
+  let queryTransactions = searchParams.dd ? transactions : payedTransactions;
+
+  queryTransactions = searchParams.income
     ? transactions.filter((t) => t.categories?.type === "Receita")
     : transactions;
 
@@ -38,19 +40,20 @@ const AllTransactions = async ({
   return (
     <PageContainer title="Todas as transações do mês" showSelectMonthYear>
       <TransactionsTableFilterProvider>
-        <Stack direction={{ xs: "column", md: "row" }} width="100%">
-          <Suspense fallback={<TransactionsTopCardLoader />}>
-            <AllTransactionsPageHeroSection cashed={totalCashed} paid={totalPaidSpendings} mean={dailyAverage} />
-          </Suspense>
-        </Stack>
-        <Stack direction={{ xs: "column", md: "row" }} sx={{ width: "100%" }} justifyContent="center">
-          <Suspense fallback={<p>loading</p>}>
-          <TransactionsTable filters={<TransactionsFilter transactions={queryTransactions} />}>
-            <TransactionRows transactions={queryTransactions} />
-          </TransactionsTable>
-          </Suspense>
-        </Stack>
-        
+        <AllTransactionsPageProvider>
+          <Stack direction={{ xs: "column", md: "row" }} width="100%">
+            <Suspense fallback={<TransactionsTopCardLoader />}>
+              <AllTransactionsPageHeroSection />
+            </Suspense>
+          </Stack>
+          <Stack direction={{ xs: "column", md: "row" }} sx={{ width: "100%" }} justifyContent="center">
+            <Suspense fallback={<p>loading</p>}>
+              <TransactionsTable filters={<TransactionsFilter transactions={queryTransactions} />}>
+                <TransactionRows transactions={queryTransactions} />
+              </TransactionsTable>
+            </Suspense>
+          </Stack>
+        </AllTransactionsPageProvider>
       </TransactionsTableFilterProvider>
     </PageContainer>
   );

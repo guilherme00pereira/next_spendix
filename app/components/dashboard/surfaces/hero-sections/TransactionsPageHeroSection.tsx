@@ -30,10 +30,16 @@ const TransactionsPageHeroSection = ({ cashed, income, paid, spendings, mean }: 
         <TransactionsTotalsWidget value={mean} title="Média por dia" income={true} color="warning" />
       </Totals2Columns>
       <Totals2Columns>
-      <TransactionsTotalsWidget value={cashed - paid} title="Saldo" income={true} color="info" />
+        <TransactionsTotalsWidget value={cashed - paid} title="Saldo" income={true} color="info" />
       </Totals2Columns>
       <Totals2Columns>
-        <TransactionsTotalsWidget value={income} title="Total de receitas previstas" income={true} color="success" />
+        <TransactionsTotalsWidget
+          value={income}
+          title="Total de receitas previstas"
+          income={true}
+          color="success"
+          link="/dashboard/transactions/all?income=true"
+        />
       </Totals2Columns>
       <Totals2Columns>
         <TransactionsTotalsWidget value={spendings} title="Despesas totais previstas" income={false} color="error" />
