@@ -4,12 +4,13 @@ import TagFormDialog from "@/app/components/dashboard/dialogs/TagFormDialog";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
 import TagProvider from "@/app/lib/providers/TagProvider";
 import { getTags } from "@/app/lib/supabase/methods/tags";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 const TagsPage =  async () => {
   const tags = await getTags();
 
   return (
-      <PageContainer title="Tags">
+      <PageContainer title="Tags" breadcrumb={<Breadcrumbs steps={[{title: "Tags"}]} />}>
         <Stack
         direction={{ xs: "column", md: "row" }}
         justifyContent="start"

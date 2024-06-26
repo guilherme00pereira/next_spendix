@@ -8,7 +8,13 @@ import ConfirmDeleteDialog from "@/app/components/dashboard/dialogs/ConfirmDelet
 import { useTransactionContext } from "@/app/lib/contexts";
 import { deleteTransaction } from "@/app/lib/actions/transactions-actions";
 
-const TransactionsTable = ({ children, filters }: {children: React.ReactNode, filters?: React.ReactNode}) => {
+interface ITransactionsTableProps {
+  title: string;
+  children: React.ReactNode;
+  filters?: React.ReactNode;
+}
+
+const TransactionsTable = ({ title, children, filters }: ITransactionsTableProps) => {
   const { openConfirm, setOpenConfirm, removableTransaction, setRemovableTransaction } = useTransactionContext();
   
   const handleProceedDelete = () => {
@@ -18,7 +24,7 @@ const TransactionsTable = ({ children, filters }: {children: React.ReactNode, fi
 
   return (
     <PaperContainer sx={{width: "100%"}}>
-      <PaperHeader title="Transações">
+      <PaperHeader title={title}>
         {filters}
       </PaperHeader>
       <TableContainer>

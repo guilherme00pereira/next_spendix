@@ -33,7 +33,7 @@ const TagFormDialog = () => {
     <Dialog open={showModal} fullWidth maxWidth="md" onClose={() => actionShowModal(!showModal)}>
       <DialogTitle>{editableObject.id ? "Editar" : "Adicionar"} tag</DialogTitle>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <DialogContent>
+        <DialogContent dividers>
           <Stack direction="row">
             <Grid container spacing={3}>
               <Grid xs={12} md={6} item>

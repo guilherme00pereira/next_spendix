@@ -9,6 +9,7 @@ import CategoryDetailProvider from "@/app/lib/providers/CategoryDetailProvider";
 import CategoryDetailsPageSelect from "@/app/components/dashboard/widgets/selects/CategoryDetailsPageSelect";
 import PageTopCard from "@/app/components/dashboard/surfaces/PageTopCard";
 import { Suspense } from "react";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 const CategoryPage = async ({ params }: { params: { slug: string; id: number } }) => {
   const category = await getSingleCategory(params.slug);
@@ -17,20 +18,12 @@ const CategoryPage = async ({ params }: { params: { slug: string; id: number } }
 
   return (
     <Suspense fallback={<p>loading</p>}>
-      <PageContainer title="">
+      <PageContainer title="" breadcrumb={<Breadcrumbs steps={[{ title: "Categorias", href: "/dashboard/categories" }, { title: category.name }]} />}>
         <CategoryDetailProvider>
           <PageTopCard>
-            <CategoryDetailsPageSelect
-              categories={spendingsCategories.filter((category: CategoryType) => category.type === "Despesa")}
-            />
+            <CategoryDetailsPageSelect categories={spendingsCategories.filter((category: CategoryType) => category.type === "Despesa")} />
           </PageTopCard>
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            justifyContent="center"
-            alignItems="start"
-            spacing={2}
-            sx={{ width: "100%" }}
-          >
+          <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
             {transactions.length > 0 && <ApexTransactionsTotalPerPeriodBarChart transactions={transactions} />}
             {transactions && <CategoryTransactionsTable transactions={transactions} />}
           </Stack>

@@ -7,6 +7,7 @@ import PageProvider from "@/app/lib/providers/PageProvider";
 import BankAccountDialog from "@/app/components/dashboard/dialogs/BankAccountDialog";
 import BankAccountProvider from "@/app/lib/providers/BankAccountProvider";
 import {getAccountPaymentMethods} from "@/app/lib/supabase/methods/payment-methods";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Spdx - Accounts",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 const BankAccountsPage = async () => {
   const accounts = await getAccountPaymentMethods();
   return (
-    <PageContainer title="Contas Bancárias">
+    <PageContainer title="Contas Bancárias" breadcrumb={<Breadcrumbs steps={[{title: "Contas"}]} />}>
       <Stack direction={{ xs: "column", md: "row" }} justifyContent="center" alignItems="start" spacing={2} sx={{ width: "100%" }}>
         <PageProvider>
           <BankAccountProvider>

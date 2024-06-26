@@ -12,6 +12,7 @@ import { groupTransactionsByDate, mapDailyTransactionsToChart } from "@/app/lib/
 import { EndDateEnum, TransactionTypeEnum } from "@/types/enums";
 import { getStartAndEndingDays, getTransactionsTotals } from "@/app/lib/helpers";
 import TransactionsTopCardLoader from "@/app/components/dashboard/loaders/TransactionsTopCardLoader";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 const TransactionsPage = async ({
   searchParams,
@@ -33,7 +34,7 @@ const TransactionsPage = async ({
   const headerLink = "/dashboard/transactions/all" + (searchParams.date ? `?date=${searchParams.date}` : "");
 
   return (
-    <PageContainer title="Transações" showSelectMonthYear>
+    <PageContainer title="Transações" showSelectMonthYear breadcrumb={<Breadcrumbs steps={[{title: "Transações"}]} />}>
       <Stack direction={{ xs: "column", md: "row" }} width="100%">
         <Suspense fallback={<TransactionsTopCardLoader />}>
           <TransactionsPageHeroSection

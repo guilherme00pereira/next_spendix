@@ -197,7 +197,7 @@ const TransactionPageForm = ({ transaction, categories, tags, paymentMethods}: I
                 labelId="select-tags-label"
                 id="select-tags"
                 multiple
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" sx={{height: "54px"}} />}
                 value={selectedTagsIds}
                 onChange={(e) => handleTagSelect(e)}
                 name="tags"

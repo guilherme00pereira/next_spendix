@@ -3,10 +3,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Paper from "@mui/material/Paper";
 import PageContainer from "@/app/components/dashboard/page/PageContainer";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 const Settings = () => {
   return (
-    <PageContainer title="Configurações">
+    <PageContainer title="Configurações" breadcrumb={<Breadcrumbs steps={[{title: "Configurações"}]} />}>
         <Paper sx={{width: "100%"}}>
           <Box sx={{ borderBottom: 1, borderColor: "divider", p: 2 }}>
             <Tabs value={0} aria-label="basic tabs example">

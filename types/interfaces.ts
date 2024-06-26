@@ -120,13 +120,6 @@ export interface IDashboardTopCardProps {
     loading?: boolean;
 }
 
-export interface IPageContainerProps {
-    title: string;
-    children: React.ReactNode;
-    hideBreadcrumb?: boolean;
-    showSelectMonthYear?: boolean;
-}
-
 export interface IPaperHeaderProps {
     title: string;
     children?: React.ReactNode;

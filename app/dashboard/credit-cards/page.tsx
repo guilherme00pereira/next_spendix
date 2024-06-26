@@ -7,12 +7,13 @@ import CreditCardInvoicesList from "@/app/components/dashboard/lists/CreditCardI
 import { Suspense } from "react";
 import CreditCardPaperLoader from "@/app/components/dashboard/loaders/CreditCardPaperLoader";
 import { getCreditCards } from "@/app/lib/supabase/methods/credit-cards";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 const CreditCardsPage = async () => {
   const cards = await getCreditCards();
   
   return (
-    <PageContainer title="Cartão de Crédito">
+    <PageContainer title="Cartão de Crédito" breadcrumb={<Breadcrumbs steps={[{title: "Cartões de Crédito"}]} />}>
       <Stack
         direction={{ xs: "column", md: "row" }}
         justifyContent="start"

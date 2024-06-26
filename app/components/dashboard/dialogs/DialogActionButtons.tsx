@@ -5,10 +5,10 @@ import React from 'react';
 const DialogActionButtons = ({showDialog, closeAction}: {showDialog: boolean, closeAction: (action: boolean) => void}) => {
     return (
         <DialogActions>
-          <Button size="small" onClick={() => closeAction(!showDialog)}>
+          <Button onClick={() => closeAction(!showDialog)}>
             Cancelar
           </Button>
-          <Button variant='contained' size="small" type="submit">Salvar</Button>
+          <Button variant='contained' type="submit">Salvar</Button>
         </DialogActions>
     );
 };

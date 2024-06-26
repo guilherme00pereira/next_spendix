@@ -10,6 +10,7 @@ import { getGroups } from "@/app/lib/supabase/methods/groups";
 import GroupFormDialog from "@/app/components/dashboard/dialogs/GroupFormDialog";
 import { getDictionary } from "@/app/lib/i18n/dictionary";
 import TransactionsTotalPerPeriodChartPaper from "@/app/components/dashboard/surfaces/chart-papers/TransactionsTotalPerPeriodChartPaper";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Spdx - Category Groups",
@@ -22,7 +23,7 @@ const GroupsPage = async () => {
   const d = await getDictionary();
 
   return (
-    <PageContainer title={d.entities.groups.name}>
+    <PageContainer title={d.entities.groups.name} breadcrumb={<Breadcrumbs steps={[{ title: "Grupos" }]} />}>
       <GroupProvider>
         <Grid container spacing={3} sx={{ mb: 4 }}>
           <Grid item xs={12} md={6}>

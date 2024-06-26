@@ -14,6 +14,7 @@ import { ChartBarType } from "@/types/chart-types";
 import SettingsProvider from "@/app/lib/providers/SettingsProvider";
 import SettingsRightDrawer from "@/app/components/dashboard/drawers/SettingsRightDrawer";
 import SelectableCategories from "@/app/components/dashboard/drawers/content/SelectableCategories";
+import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
 
 async function fetchChartData(startDate: string, endDate: string) {
   const res = await getExpenseCategoriesTransactionsSum(startDate, endDate);
@@ -47,7 +48,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: { [key: string]:
   const actualMonthName = dayjs().format("MMMM");
 
   return (
-    <PageContainer title="Categorias" showSelectMonthYear>
+    <PageContainer title="Categorias" showSelectMonthYear breadcrumb={<Breadcrumbs steps={[{title: "Categorias"}]} />} >
       <CategoriesPageProvider>
         <Stack
           direction={{ xs: "column", md: "row" }}

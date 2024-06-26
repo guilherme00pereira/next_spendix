@@ -2,16 +2,17 @@
 import React, { useState } from "react";
 import {
   Box,
+  Button,
   Checkbox,
   Chip,
   DialogTitle,
   FormControl,
   FormControlLabel,
   Grid,
+  Select,
   InputLabel,
   MenuItem,
   OutlinedInput,
-  Select,
   SelectChangeEvent,
   Stack,
   TextField,
@@ -26,7 +27,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useSpeedDialStore } from "@/app/lib/store";
-import TopBarSpeedDialog from "./TopBarSpeedDialog";
 import { serializeToServeActions } from "@/app/lib/functions";
 import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
 import dayjs from "dayjs";
@@ -35,13 +35,10 @@ import { CategoryType, TagType } from "@/types/entities";
 import DialogActionButtons from "./DialogActionButtons";
 
 const validate = yup.object({
-  amount: yup
-    .number()
-    .min(1, "Insira apenas valores maiores que 1")
-    .typeError("não é um número válido")
-    .required("Campo obrigatório"),
+  amount: yup.number().min(1, "Insira apenas valores maiores que 1").typeError("não é um número válido").required("Campo obrigatório"),
   category_id: yup.string().required("Campo obrigatório"),
   cashed: yup.boolean(),
+  description: yup.string(),
   due_date: yup.date().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
@@ -84,6 +81,12 @@ const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDi
     formik.setFieldValue("cashed", e.target.checked);
   };
 
+  const handleTagSelect = (e: SelectChangeEvent<unknown>) => {
+    const values = e.target.value as number[];
+    setSelectedTagsIds(values);
+    formik.setFieldValue("tags", values);
+  };
+
   const formik = useFormik({
     initialValues: {
       ...transaction,
@@ -96,9 +99,7 @@ const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDi
       const data = serializeToServeActions({
         ...values,
         due_date: dayjs(values.due_date).format("YYYY-MM-DD"),
-        payment_date: values.payment_date
-          ? dayjs(values.payment_date).format("YYYY-MM-DD")
-          : dayjs().format("YYYY-MM-DD"),
+        payment_date: values.payment_date ? dayjs(values.payment_date).format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD"),
         tags_ids: selectedTagsIds,
       });
       submitTransactionForm(data).then(() => {
@@ -109,13 +110,13 @@ const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDi
   });
 
   return (
-    <Dialog
-      open={showTransactionDialog}
-      fullWidth
-      maxWidth="lg"
-      onClose={() => actionShowTransactionDialog(!showTransactionDialog)}
-    >
-      <DialogTitle>{transaction.id ? "Editar" : "Adicionar"} despesa</DialogTitle>
+    <Dialog open={showTransactionDialog} fullWidth maxWidth="lg" onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+      <DialogTitle>
+        <Stack direction="row" justifyContent="space-between">
+        {transaction.id ? "Editar" : "Adicionar"} despesa
+        <Button href="/dashboard/transactions/new" variant="outlined">Abrir formulário completo</Button>
+        </Stack>
+      </DialogTitle>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <DialogContent dividers>
           {isPending && (
@@ -163,13 +164,7 @@ const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDi
               <Grid item xs={12} md={3}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]} sx={{ pt: "0" }}>
-                    <DatePicker
-                      format="DD/MM/YYYY"
-                      onChange={handleDueDateChange}
-                      value={formik.values.due_date}
-                      name="due_date"
-                      label="Vencimento"
-                    />
+                    <DatePicker format="DD/MM/YYYY" onChange={handleDueDateChange} value={formik.values.due_date} name="due_date" label="Vencimento" />
                   </DemoContainer>
                 </LocalizationProvider>
               </Grid>
@@ -186,6 +181,50 @@ const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDi
                   }
                   label="Pago?"
                 />
+              </Grid>
+            </Grid>
+          </Stack>
+
+          <Stack direction="row" sx={{ pt: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  helperText={formik.touched.description && formik.errors.description}
+                  error={formik.touched.description && Boolean(formik.errors.description)}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.description}
+                  fullWidth
+                  name="description"
+                  label="Descrição"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <FormControl sx={{ width: "100%" }}>
+                  <InputLabel id="select-tags-label">Tags</InputLabel>
+                  <Select
+                    labelId="select-tags-label"
+                    id="select-tags"
+                    multiple
+                    input={<OutlinedInput id="select-multiple-chip" label="Chip" sx={{height: "54px"}} />}
+                    value={selectedTagsIds}
+                    onChange={(e) => handleTagSelect(e)}
+                    name="tags"
+                    renderValue={(selected: any) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+                        {selected.map((value: any) => (
+                          <Chip key={value} label={tags?.find((tag) => tag.id === value)?.name} />
+                        ))}
+                      </Box>
+                    )}
+                  >
+                    {tags?.map((tag: TagType) => (
+                      <MenuItem key={tag.id} value={tag.id}>
+                        {tag.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
           </Stack>
