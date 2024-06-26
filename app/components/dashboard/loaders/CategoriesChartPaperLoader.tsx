@@ -5,7 +5,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 const CategoriesChartPaperLoader = () => {
     return (
-        <PaperContainer width="40%">
+        <PaperContainer width="50%">
             <PaperHeader title="Loading..." />
             <Skeleton
                 variant="rectangular"

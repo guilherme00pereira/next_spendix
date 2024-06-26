@@ -1,9 +1,10 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import {
   Box,
   Checkbox,
   Chip,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   Grid,
@@ -31,6 +32,7 @@ import { submitTransactionForm } from "@/app/lib/actions/transactions-actions";
 import dayjs from "dayjs";
 import { ISpeedDiaDialogsData } from "@/types/interfaces";
 import { CategoryType, TagType } from "@/types/entities";
+import DialogActionButtons from "./DialogActionButtons";
 
 const validate = yup.object({
   amount: yup
@@ -40,15 +42,11 @@ const validate = yup.object({
     .required("Campo obrigatório"),
   category_id: yup.string().required("Campo obrigatório"),
   cashed: yup.boolean(),
-  description: yup.string(),
   due_date: yup.date().required("Campo obrigatório"),
   payment_date: yup.date().nullable(),
   payed_amount: yup.number().nullable(),
   payment_method_id: yup.string(),
   payment_id: yup.string().nullable(),
-  in_installments: yup.boolean(),
-  installments: yup.number().min(2, "Insira apenas valores maiores que 2"),
-  draft: yup.boolean(),
 });
 
 const ITEM_HEIGHT = 48;
@@ -65,10 +63,9 @@ const SelectTagMenuProps = {
 //TODO: Adjust credit card or bank account balance when adding or updating a transaction
 //TOD: hide installmennts when editing a transaction
 
-const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDialogsData) => {
+const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDialogsData) => {
   const { showTransactionDialog, actionShowTransactionDialog, transaction } = useSpeedDialStore();
   const [isCashed, setIsCashed] = useState<boolean>(true);
-  const [hasInstallments, setHasInstallments] = useState<boolean>(false);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
   const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -87,17 +84,6 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
     formik.setFieldValue("cashed", e.target.checked);
   };
 
-  const handleInstallmentsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    formik.setFieldValue("in_installments", e.target.checked);
-    setHasInstallments(e.target.checked);
-  };
-
-  const handleTagSelect = (e: SelectChangeEvent<number[]>) => {
-    const values = e.target.value as number[];
-    setSelectedTagsIds(values);
-    formik.setFieldValue("tags", values);
-  };
-
   const formik = useFormik({
     initialValues: {
       ...transaction,
@@ -113,7 +99,7 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
         payment_date: values.payment_date
           ? dayjs(values.payment_date).format("YYYY-MM-DD")
           : dayjs().format("YYYY-MM-DD"),
-          tags_ids: selectedTagsIds
+        tags_ids: selectedTagsIds,
       });
       submitTransactionForm(data).then(() => {
         setIsPending(false);
@@ -123,20 +109,21 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
   });
 
   return (
-    <Dialog open={showTransactionDialog} fullScreen onClose={() => actionShowTransactionDialog(!showTransactionDialog)}>
+    <Dialog
+      open={showTransactionDialog}
+      fullWidth
+      maxWidth="lg"
+      onClose={() => actionShowTransactionDialog(!showTransactionDialog)}
+    >
+      <DialogTitle>{transaction.id ? "Editar" : "Adicionar"} despesa</DialogTitle>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
-        <TopBarSpeedDialog
-          title="Despesa"
-          showDialog={showTransactionDialog}
-          closeAction={actionShowTransactionDialog}
-        />
-        <DialogContent>
+        <DialogContent dividers>
           {isPending && (
             <Stack sx={{ width: "100%", pb: 3 }} spacing={2}>
               <LinearProgress />
             </Stack>
           )}
-          <Stack direction="row">
+          <Stack direction="row" width="100%">
             <Grid container spacing={2}>
               <Grid item xs={12} md={2}>
                 <TextField
@@ -186,68 +173,6 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
                   </DemoContainer>
                 </LocalizationProvider>
               </Grid>
-              <Grid item xs={12} md={3}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="draft"
-                      value={formik.values.draft}
-                      onChange={formik.handleChange}
-                      checked={formik.values.draft}
-                    />
-                  }
-                  label="Marcar como previsto"
-                />
-              </Grid>
-            </Grid>
-          </Stack>
-
-          <Stack direction="row" sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  helperText={formik.touched.description && formik.errors.description}
-                  error={formik.touched.description && Boolean(formik.errors.description)}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.description}
-                  fullWidth
-                  name="description"
-                  label="Descrição"
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <FormControl sx={{ width: "100%" }}>
-                  <InputLabel id="select-tags-label">Tags</InputLabel>
-                  <Select
-                    labelId="select-tags-label"
-                    id="select-tags"
-                    multiple
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    value={selectedTagsIds}
-                    onChange={(e) => handleTagSelect(e)}
-                    name="tags"
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={tags?.find((tag) => tag.id === value)?.name} />
-                        ))}
-                      </Box>
-                    )}
-                  >
-                    {tags?.map((tag: TagType) => (
-                      <MenuItem key={tag.id} value={tag.id}>
-                        {tag.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Stack>
-
-          <Stack direction="row" sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
               <Grid item xs={6} md={2}>
                 <FormControlLabel
                   control={
@@ -262,7 +187,11 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
                   label="Pago?"
                 />
               </Grid>
+            </Grid>
+          </Stack>
 
+          <Stack direction="row" sx={{ pt: 2 }}>
+            <Grid container spacing={2}>
               {isCashed && (
                 <>
                   <Grid item xs={12} md={2}>
@@ -315,41 +244,8 @@ const TransactionFormDialog = ({categories, tags, paymentMethods}: ISpeedDiaDial
               )}
             </Grid>
           </Stack>
-
-          <Stack direction="row" sx={{ py: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={6} md={2}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="in_installments"
-                      value={formik.values.in_installments}
-                      onChange={handleInstallmentsChange}
-                      onBlur={formik.handleBlur}
-                      checked={formik.values.in_installments}
-                    />
-                  }
-                  label="É Parcelado?"
-                />
-              </Grid>
-
-              {hasInstallments && (
-                <Grid item xs={12} md={2}>
-                  <TextField
-                    helperText={formik.touched.installments && formik.errors.installments}
-                    error={formik.touched.installments && Boolean(formik.errors.installments)}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.installments}
-                    fullWidth
-                    name="installments"
-                    label="Nº de parcelas"
-                  />
-                </Grid>
-              )}
-            </Grid>
-          </Stack>
         </DialogContent>
+        <DialogActionButtons showDialog={showTransactionDialog} closeAction={actionShowTransactionDialog} />
       </form>
     </Dialog>
   );
