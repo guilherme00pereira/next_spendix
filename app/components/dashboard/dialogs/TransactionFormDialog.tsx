@@ -46,17 +46,6 @@ const validate = yup.object({
   payment_id: yup.string().nullable(),
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const SelectTagMenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 //TODO: Adjust credit card or bank account balance when adding or updating a transaction
 //TOD: hide installmennts when editing a transaction
 

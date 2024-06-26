@@ -15,12 +15,12 @@ interface IBreadcrumbsProps {
 const Breadcrumbs = ({steps}: IBreadcrumbsProps) => {
     return (
         <MuiBreadcrumbs maxItems={3} separator={<NavigateNextIcon fontSize="small" />}>
-            <Link underline="hover" color="action" href="/" variant='caption'>
+            <Link underline="hover" color="secondary.main" href="/" variant='caption'>
                 <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
                 Home
             </Link>
             {steps.map((step, index) => (
-                <Link underline="hover" key={index} color="action" href={step.href}  variant='caption'>
+                <Link underline={step.href ? "hover" : "none"} key={index} color={step.href ? "secondary.main" : "action"} href={step.href}  variant='caption'>
                     {step.title}
                 </Link>
             ))}
