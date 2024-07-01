@@ -15,6 +15,7 @@ import SettingsProvider from "@/app/lib/providers/SettingsProvider";
 import SettingsRightDrawer from "@/app/components/dashboard/drawers/SettingsRightDrawer";
 import SelectableCategories from "@/app/components/dashboard/drawers/content/SelectableCategories";
 import Breadcrumbs from "@/app/components/dashboard/widgets/Breadcrumbs";
+import TransactionsTotalPerPeriodChartPaper from "@/app/components/dashboard/surfaces/chart-papers/TransactionsTotalPerPeriodChartPaper";
 
 async function fetchChartData(startDate: string, endDate: string) {
   const res = await getExpenseCategoriesTransactionsSum(startDate, endDate);
@@ -48,7 +49,11 @@ const CategoriesPage = async ({ searchParams }: { searchParams: { [key: string]:
   const actualMonthName = dayjs().format("MMMM");
 
   return (
-    <PageContainer title="Categorias" showSelectMonthYear breadcrumb={<Breadcrumbs steps={[{title: "Categorias"}]} />} >
+    <PageContainer
+      title="Categorias"
+      showSelectMonthYear
+      breadcrumb={<Breadcrumbs steps={[{ title: "Categorias" }]} />}
+    >
       <CategoriesPageProvider>
         <Stack
           direction={{ xs: "column", md: "row" }}
@@ -60,16 +65,19 @@ const CategoriesPage = async ({ searchParams }: { searchParams: { [key: string]:
           <Suspense fallback={<CategoriesListPaperLoader />}>
             <CategoriesList categories={categories as CategoryWithStatsType[]} />
           </Suspense>
-          <SettingsProvider>
-            <Suspense fallback={<CategoriesChartPaperLoader />}>
-              <CategoriesChartPaper title={`Despesas por categorias no mês ${actualMonthName}`} data={chartData} />
+          <Suspense fallback={<CategoriesChartPaperLoader />}>
+            <CategoriesChartPaper title={`Despesas por categorias no mês ${actualMonthName}`} data={chartData} />
+            <SettingsProvider>
               {categories && (
                 <SettingsRightDrawer title="Categorias a exibir">
                   <SelectableCategories categories={categories as CategoryWithStatsType[]} />
                 </SettingsRightDrawer>
               )}
+            </SettingsProvider>
+            <Suspense fallback={<CategoriesChartPaperLoader />}>
+              <TransactionsTotalPerPeriodChartPaper />
             </Suspense>
-          </SettingsProvider>
+          </Suspense>
         </Stack>
         <ChooseIconDialog />
       </CategoriesPageProvider>

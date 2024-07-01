@@ -12,7 +12,7 @@ const getTypeColor = (type: string) => {
     case "Receita":
       return "success";
     case "Despesa":
-      return "secondary";
+      return "error";
     default:
       return "primary";
   }

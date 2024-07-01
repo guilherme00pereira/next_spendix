@@ -10,12 +10,17 @@ import { useCategoriesPageContext } from "@/app/lib/contexts";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 
 const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
-  const { showCategoriesChart: showChart, setShowCategoriesChart: setShowChart } = useCategoriesPageContext();
+  const { showCategoriesChart, setShowCategoriesChart, setShowCategoryTotalsChart } = useCategoriesPageContext();
   const [anchorFilter, setAnchorFilter] = React.useState<null | HTMLElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     action((e.target as HTMLInputElement).value);
   };
+
+const handleShowChart = (show: boolean) => {
+  setShowCategoriesChart(show);
+  setShowCategoryTotalsChart(false);
+}
 
   return (
     <Stack direction="row" spacing={2}>
@@ -51,13 +56,13 @@ const CategoriesFilter = ({ action }: { action: (search: string) => void }) => {
         open={Boolean(anchorFilter)}
         onClose={() => setAnchorFilter(null)}
       >
-        <MenuItem onClick={() => setShowChart(false)}>Hide Chart</MenuItem>
+        <MenuItem onClick={() => handleShowChart(false)}>Hide Chart</MenuItem>
       </Menu>
-      {showChart || (
+      {showCategoriesChart || (
         <PaperHeaderButtonWithHover
           variant="outlined"
           size="small"
-          onClick={() => setShowChart(true)}
+          onClick={() => handleShowChart(true)}
           startIcon={<BarChartOutlinedIcon />}
         >
           Show Chart

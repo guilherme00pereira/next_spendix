@@ -74,6 +74,8 @@ export interface ICategoriesPageContextData {
     setShowCategoriesChart: (action: boolean) => void;
     showCategoryTotalsChart: boolean;
     setShowCategoryTotalsChart: (action: boolean) => void;
+    transactions: TransactionType[];
+    setTransactions: Dispatch<SetStateAction<TransactionType[]>>;
 }
 
 export interface ISettingsContextData {

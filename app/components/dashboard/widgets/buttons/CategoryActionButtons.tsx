@@ -1,19 +1,18 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import Stack from "@mui/material/Stack";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import { useSpeedDialStore } from "@/app/lib/store";
 import { PrimaryActionButton, InfoActionButton, DangerActionButton } from "../../commonStyledComponents";
-import { useCategoryContext } from "@/app/lib/contexts";
+import { useCategoriesPageContext, useCategoryContext } from "@/app/lib/contexts";
 import { CategoryWithStatsType } from "@/types/entities";
 
 const CategoryActionButtons = ({category}: {category: CategoryWithStatsType}) => {
     const { actionShowCategoryDialog, setCategory } = useSpeedDialStore();
     const { setOpenConfirm, removableObject, setRemovableObject } = useCategoryContext();
-  const router = useRouter();
+    const { setTransactions, setShowCategoriesChart, setShowCategoryTotalsChart } = useCategoriesPageContext();
 
   const handleConfirmDelete = (id: number, name: string) => {
     setRemovableObject({ ...removableObject, id, name });
@@ -33,12 +32,20 @@ const CategoryActionButtons = ({category}: {category: CategoryWithStatsType}) =>
     });
   };
 
+  const handleGetTransactions = async (id: number) => {
+    setShowCategoriesChart(false);
+    setShowCategoryTotalsChart(true);
+    const res = await fetch(`/api/categories/${id}/transactions`);
+    const data = await res.json();
+    setTransactions(data);
+  }
+
   return (
     <Stack direction="row" spacing={1}>
       <PrimaryActionButton
         size="small"
         variant="text"
-        onClick={() => router.push(`/dashboard/categories/${category.slug}/transactions`)}
+        onClick={() => handleGetTransactions(category.id)}
       >
         <BarChartOutlinedIcon />
       </PrimaryActionButton>

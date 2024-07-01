@@ -1,14 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { CategoriesPageContext } from "../contexts";
+import { TransactionType } from "@/types/entities";
 
 const CategoriesPageProvider = ({ children }: { children: React.ReactNode }) => {
-    const [showChart, setShowChart] = useState(true);
+    const [showCategoriesChart, setShowCategoriesChart] = useState(true);
+    const [showCategoryTotalsChart, setShowCategoryTotalsChart] = useState(false);
+    const [transactions, setTransactions] = useState([] as TransactionType[])
 
     return (
         <CategoriesPageContext.Provider value={{
-            showCategoriesChart: showChart,
-            setShowCategoriesChart: setShowChart,
+            showCategoriesChart,
+            setShowCategoriesChart,
+            showCategoryTotalsChart,
+            setShowCategoryTotalsChart,
+            transactions,
+            setTransactions
         }}>
             {children}
         </CategoriesPageContext.Provider>

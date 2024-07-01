@@ -103,7 +103,7 @@ const TransactionFormDialog = ({ categories, tags, paymentMethods }: ISpeedDiaDi
       <DialogTitle>
         <Stack direction="row" justifyContent="space-between">
         {transaction.id ? "Editar" : "Adicionar"} despesa
-        <Button href="/dashboard/transactions/new" variant="outlined">Abrir formulário completo</Button>
+        <Button href="/dashboard/transactions/new" variant="contained" color="info">Abrir formulário completo</Button>
         </Stack>
       </DialogTitle>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
